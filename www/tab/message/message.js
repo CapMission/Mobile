@@ -1,6 +1,6 @@
 var message = angular.module('capMission.tab.message', []);
 
-message.controller('MessageCtrl', function ($scope, Chats, $location) {
+message.controller('MessageCtrl', ['$scope', 'Chats', function ($scope, Chats) {
   // With the new view caching in Ionic, Controllers are only called
   // when they are recreated or on app start, instead of every page change.
   // To listen for when this page is active (for example, to refresh data),
@@ -14,13 +14,13 @@ message.controller('MessageCtrl', function ($scope, Chats, $location) {
     Chats.remove(chat);
 
   };
-});
+}]);
 
-message.controller('MessageNewCtrl', function ($scope) {
-});
+message.controller('MessageNewCtrl', ['$scope',function ($scope) {
+}]);
 
 
 
-message.controller('MessageDetailsCtrl', function ($scope, $stateParams, Chats) {
+message.controller('MessageDetailsCtrl', ['$scope', '$stateParams', 'Chats', function ($scope, $stateParams, Chats) {
   $scope.chat = Chats.get($stateParams.messageId);
-});
+}]);

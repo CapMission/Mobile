@@ -1,6 +1,6 @@
 var quiz = angular.module('capMission.tab.quiz', []);
 
-quiz.controller('QuizzCtrl', function ($scope) {
+quiz.controller('QuizzCtrl', ['$scope', function ($scope) {
   $scope.data = {};
   $scope.courses = [
     {id: 0, name: "Mathématiques"},
@@ -13,9 +13,9 @@ quiz.controller('QuizzCtrl', function ($scope) {
   };
 
   $scope.quizzes = [];
-});
+}]);
 
-quiz.controller('QuizzQuestionsCtrl', function ($scope, $location, $state, $stateParams) {
+quiz.controller('QuizzQuestionsCtrl', ['$scope', '$location', '$state', '$stateParams', function ($scope, $location, $state, $stateParams) {
   $scope.validateDisabled = true;
 
   $scope.unselectOthers = function (index) {
@@ -39,7 +39,7 @@ quiz.controller('QuizzQuestionsCtrl', function ($scope, $location, $state, $stat
 
   $scope.answers = [{id: 1, name: 2}, {id: 0, name: 4}, {id: 2, name: 3}, {id: 3, name: 1}];
 
-});
+}]);
 
-quiz.controller('QuizzEndCtrl', function ($scope) {
-});
+quiz.controller('QuizzEndCtrl', ['$scope', function ($scope) {
+}]);

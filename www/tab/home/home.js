@@ -1,6 +1,6 @@
 var home = angular.module('capMission.tab.home', []);
 
-home.controller('HomeCtrl', function ($scope, $ionicPopover) {
+home.controller('HomeCtrl', ['$scope','$ionicPopover', function ($scope, $ionicPopover) {
 
   $ionicPopover.fromTemplateUrl('templates/popover.html', {
     scope: $scope
@@ -8,11 +8,11 @@ home.controller('HomeCtrl', function ($scope, $ionicPopover) {
     $scope.popover = popover;
   });
 
-});
+}]);
 
 
-home.controller('OffersCtrl', function ($scope) {
-});
+home.controller('OffersCtrl', ['$scope', function ($scope) {
+}]);
 
-home.controller('ProfileCtrl', function ($scope) {
-});
+home.controller('ProfileCtrl', ['$scope', function ($scope) {
+}]);

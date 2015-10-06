@@ -15,7 +15,7 @@ var CapMission = angular.module('capMission', [
   'capMission.services'
 ]);
 
-CapMission.run(function ($ionicPlatform, $rootScope) {
+CapMission.run(['$ionicPlatform', '$rootScope', function ($ionicPlatform, $rootScope) {
   $ionicPlatform.ready(function () {
     // Hide the accessory bar by default (remove this to show the accessory bar above the keyboard
     // for form inputs)
@@ -29,9 +29,9 @@ CapMission.run(function ($ionicPlatform, $rootScope) {
       StatusBar.styleLightContent();
     }
   });
-});
+}]);
 
-CapMission.config(function ($stateProvider, $urlRouterProvider, $ionicConfigProvider) {
+CapMission.config(['$stateProvider', '$urlRouterProvider', '$ionicConfigProvider', function ($stateProvider, $urlRouterProvider, $ionicConfigProvider) {
 
   $ionicConfigProvider.backButton.previousTitleText(false).text('');
 
@@ -162,7 +162,7 @@ CapMission.config(function ($stateProvider, $urlRouterProvider, $ionicConfigProv
 // if none of the above states are matched, use this as the fallback
   $urlRouterProvider.otherwise('/tab/home');
 
-});
+}]);
 
 CapMission.factory('Data', function () {
   var data =
@@ -180,7 +180,7 @@ CapMission.factory('Data', function () {
   };
 });
 
-CapMission.directive('hideTabs', function ($rootScope) {
+CapMission.directive('hideTabs', ['$rootScope', function ($rootScope) {
   return {
     restrict: 'A',
     link: function ($scope, $el) {
@@ -192,24 +192,11 @@ CapMission.directive('hideTabs', function ($rootScope) {
       });
     }
   };
-});
-
-CapMission.directive('navIcons', function ($rootScope) {
-  return {
-    restrict: 'A',
-    link: function ($scope, $el, attrs) {
-      $scope.$on("$ionicView.enter", function () {
-        $rootScope.iconDisplayed = attrs.navIcons;
-      });
-      $scope.$on("$ionicView.beforeLeave", function () {
-        $rootScope.iconDisplayed = null;
-      });
-    }
-  };
-});
+}]);
 
 
-CapMission.directive('navLogo', function ($rootScope) {
+
+CapMission.directive('navLogo', ['$rootScope', function ($rootScope) {
   return {
     restrict: 'A',
     link: function ($scope, $el, attrs) {
@@ -221,4 +208,4 @@ CapMission.directive('navLogo', function ($rootScope) {
       });
     }
   };
-});
+}]);
