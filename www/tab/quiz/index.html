@@ -1,0 +1,20 @@
+<ion-view view-title="Quizz" nav-logo="enabled" hide-back-button="true">
+  <ion-content>
+
+    <h4 class="item item-icon-left"><i class="icon icon ion-record number one fs-m"></i>Choisis une matière</h4>
+    <br>
+    <div class="padding">
+      <select id="courses" style="width: 100%" ng-model="data.course"
+              ng-options="course.name for course in courses track by course.id" ng-change="courseSelected()">
+      </select>
+    </div>
+    <br>
+    <h4 class="item item-icon-left"><i class="icon icon ion-record number two fs-m"></i>Sélectionne ton quizz</h4>
+    <ion-list>
+      <ion-item ng-repeat="quizz in quizzes" ng-href="#/tab/quizz/{{quizz.id}}">
+        {{quizz.name}}
+      </ion-item>
+    </ion-list>
+
+  </ion-content>
+</ion-view>

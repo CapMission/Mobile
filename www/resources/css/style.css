@@ -1,0 +1,81 @@
+.logo-nav {
+  height:30px;
+  width:auto;
+}
+
+/* GENERAL */
+
+h4 label {
+  font-size: inherit
+}
+
+h4 label.icon-label {
+  position: relative;
+  left: 10px;
+  top: -10px;
+}
+
+.validate-button {
+  position: absolute;
+  right: 20px;
+  bottom: 70px
+}
+
+/* UTILS */
+
+.grey {
+  color: #444444;
+}
+
+.fs-xxxl {
+  font-size: 80px;
+}
+
+.fs-xxl {
+  font-size: 70px;
+}
+
+.fs-xl {
+  font-size: 60px;
+}
+
+.fs-l {
+  font-size: 50px;
+}
+
+.fs-m {
+  font-size: 40px;
+}
+
+.fs-s {
+  font-size: 30px;
+}
+
+.fs-xs {
+  font-size: 20px;
+}
+
+.fs-xxs {
+  font-size: 10px;
+}
+
+.rotate-90 {
+  transform: rotate(90deg);
+}
+
+.ion-record.number:after {
+  font-size: 50%;
+  position: relative;
+  left: -20px;
+  font-weight: 600;
+  top: 0;
+  color: #fff;
+}
+
+.ion-record.number.one:after {
+  content: '1';
+}
+
+.ion-record.number.two:after {
+  content: '2';
+}

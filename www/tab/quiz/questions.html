@@ -1,0 +1,20 @@
+<ion-view view-title="Quizz" hide-back-button="true" nav-logo="enabled">
+  <ion-content class="padding">
+
+    <div class="card">
+      <div class="item item-divider">
+        <p>Quel est le résulat de l'équation 2x=4 ?</p>
+      </div>
+      <div class="item item-text-wrap">
+        <ion-checkbox ng-model="answers[$index].Selected" ng-repeat="answer in answers"
+                      ng-click="unselectOthers($index)">
+          {{answer.name}}
+        </ion-checkbox>
+      </div>
+    </div>
+
+  </ion-content>
+  <button class="button validate-button"
+          ng-click="validateQuestion()"
+          ng-disabled="validateDisabled">Valider</button>
+</ion-view>

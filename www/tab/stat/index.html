@@ -1,0 +1,22 @@
+<ion-view view-title="Statistiques" hide-back-button="true">
+  <ion-content>
+    <h4 class="item item-icon-left"><i class="icon icon ion-record number one fs-m"></i>Choisis une matière</h4>
+    <br>
+    <div class="padding">
+      <select id="courses" style="width: 100%" ng-model="data.course"
+              ng-options="course.name for course in courses track by course.id" ng-change="courseSelected()">
+      </select>
+    </div>
+    <br>
+    <h4 class="item item-icon-left"><i class="icon icon ion-record number two fs-m"></i>Visualise tes statistiques</h4>
+    <ion-list>
+      <ion-item>
+        Stat 1
+      </ion-item>
+      <ion-item>
+        Stat 2
+      </ion-item>
+    </ion-list>
+  </ion-content>
+
+</ion-view>
