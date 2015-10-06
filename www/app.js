@@ -193,19 +193,3 @@ CapMission.directive('hideTabs', ['$rootScope', function ($rootScope) {
     }
   };
 }]);
-
-
-
-CapMission.directive('navLogo', ['$rootScope', function ($rootScope) {
-  return {
-    restrict: 'A',
-    link: function ($scope, $el, attrs) {
-      $scope.$on("$ionicView.enter", function () {
-        $rootScope.logoState = attrs.navLogo;
-      });
-      $scope.$on("$ionicView.beforeLeave", function () {
-        $rootScope.logoState = null;
-      });
-    }
-  };
-}]);
