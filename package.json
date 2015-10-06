@@ -19,9 +19,12 @@
     "cordova-plugin-console",
     "cordova-plugin-whitelist",
     "cordova-plugin-splashscreen",
+    "cordova-transport-security",
+    "org.apache.cordova.inappbrowser",
     "com.ionic.keyboard"
   ],
   "cordovaPlatforms": [
+    "ios",
     "android"
   ]
 }
