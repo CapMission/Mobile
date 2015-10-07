@@ -9,6 +9,15 @@ _Application mobile de Cap Mission_
 
 _Note : Les lignes précédées d'un **$** sont à tapper dans l'invite de commande. Pour les utilisateurs de windows, il est préférable d'utiliser **l'invite de commande Git (Git Bash)**_
 
+##Prérequis
+
+- Git installé ([Lien Installation](https://git-scm.com))
+- NodeJS installé ([Lien Installation](https://nodejs.org))
+- Bower installé _[via npm/nodeJS]_ ([Lien Installation](http://bower.io/#install-bower))
+- Apache cordova installé _[via npm/nodeJS]_ ([Lien Installation](http://cordova.apache.org/#getstarted))
+- Ionic installé _[via npm/nodeJS]_ ([Lien Installation](http://ionicframework.com/getting-started))
+
+
 ##Installation et lancement en Local
 
 **1.** Clonage du projet :
