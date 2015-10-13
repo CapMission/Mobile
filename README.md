@@ -9,7 +9,7 @@ _Application mobile de Cap Mission_
 
 _Note : Les lignes précédées d'un **$** sont à tapper dans l'invite de commande. Pour les utilisateurs de windows, il est préférable d'utiliser **l'invite de commande Git (Git Bash)**_
 
-##Prérequis
+##Prérequis 
 
 - Git installé ([Lien Installation](https://git-scm.com))
 - NodeJS installé ([Lien Installation](https://nodejs.org))
@@ -19,6 +19,8 @@ _Note : Les lignes précédées d'un **$** sont à tapper dans l'invite de comma
 
 
 ##Installation et lancement en Local
+
+Se placer dans le répertoire où le dossier du projet sera créé.
 
 **1.** Clonage du projet :
 
