@@ -50,4 +50,7 @@ $ bower install
 ```bash
 #Remplacer <platform> par le système voulu (ios/android...)
 $ ionic run <platform>
+
+#Ou pour lancer dans un nvaigateur web
+$ ionic serve
 ```
