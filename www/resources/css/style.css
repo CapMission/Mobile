@@ -1,6 +1,6 @@
 .logo-nav {
-  height:30px;
-  width:auto;
+  height: 30px;
+  width: auto;
 }
 
 /* GENERAL */
@@ -78,4 +78,72 @@ h4 label.icon-label {
 
 .ion-record.number.two:after {
   content: '2';
+}
+
+.course-list {
+  border-radius: 10px 10px!important;
+  border: none;
+  color: #fff;
+  margin-top:8px;
+}
+
+.course-list a {
+  background-color: inherit !important;
+}
+
+.course-list i {
+  color:inherit!important;
+}
+
+.answers-list {
+  margin-top:20px;
+  border-radius: 10px 10px!important;
+}
+
+.title-item {
+  font-size: 18px;
+}
+
+
+.correct-answer {
+  background-color: #dff0d8;
+}
+
+.wrong-answer {
+  background-color: #b56861;
+}
+
+.point-arrow {
+  position: relative;
+  top: -3px;
+}
+
+.point-arrow.left {
+  left:-5px;
+}
+
+.point-arrow.right {
+  left: 5px;
+}
+
+.point-questions {
+  width:80%;
+  height:20px;
+  overflow: hidden;
+}
+
+.point-questions p {
+  white-space: nowrap;
+}
+
+.tabs {
+  -webkit-transition: all linear 0.2s;
+  transition: all linear 0.2s;
+}
+
+.tabs-item-hide > .tabs {
+  -webkit-transition: all linear 0.2s;
+  transition: all linear 0.2s;
+  bottom: -49px;
+  display: flex;
 }

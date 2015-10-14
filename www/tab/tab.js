@@ -7,7 +7,7 @@ var tab = angular.module('capMission.tab', [
 ]);
 
 tab.controller('TabsCtrl', ['$scope', function ($scope) {
-  $scope.badgeQuizz = 1;
+  $scope.badgequiz = 1;
   $scope.badgeFollow = 0;
   $scope.badgeMessages = 0;
 }]);

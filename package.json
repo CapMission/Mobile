@@ -21,7 +21,8 @@
     "cordova-plugin-splashscreen",
     "cordova-transport-security",
     "org.apache.cordova.inappbrowser",
-    "com.ionic.keyboard"
+    "com.ionic.keyboard",
+    " org.apache.cordova.dialog"
   ],
   "cordovaPlatforms": [
     "ios",

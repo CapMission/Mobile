@@ -3,17 +3,17 @@ Create tabs with an icon and label, using the tabs-positive style.
 Each tab's child <ion-nav-view> directive will have its own
 navigation history that also transitions its views in and out.
 -->
-<ion-tabs class="tabs-icon-top tabs-color-active-positive">
+<ion-tabs class="tabs-icon-top tabs-color-active-positive" ng-class="{'tabs-item-hide': $root.hideTabs}">
 
   <!-- Home Tab -->
   <ion-tab href="#/tab/home" hidden="true">
     <ion-nav-view name="tab-home"></ion-nav-view>
   </ion-tab>
 
-  <!-- Quizz Tab -->
-  <ion-tab title="Quizz" icon-off="ion-ios-timer-outline" icon-on="ion-ios-timer" href="#/tab/quizz" badge="badgeQuizz"
+  <!-- quiz Tab -->
+  <ion-tab title="quiz" icon-off="ion-ios-timer-outline" icon-on="ion-ios-timer" href="#/tab/quiz" badge="badgequiz"
            badge-style="badge-assertive">
-    <ion-nav-view name="tab-quizz"></ion-nav-view>
+    <ion-nav-view name="tab-quiz"></ion-nav-view>
   </ion-tab>
 
   <!-- Follow Tab -->

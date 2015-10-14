@@ -1,0 +1,14 @@
+<ion-view view-title="Quizz">
+  <ion-content class="padding">
+    <br>
+    <h3 class="title-item item item-divider">Choisis ton quizz</h3>
+
+    <ion-list class="padding">
+      <ion-item ng-repeat="quiz in quizzes" ng-click="go('tab.quiz-questions', {idCourse: idCourse, idQuiz: quiz.id})" class=" item-icon-right course-list" ng-class="classes[$index % classes.length]">
+        <b>{{quiz.title | uppercase}}</b>
+        <i class="icon ion-chevron-right icon-accessory"></i>
+      </ion-item>
+    </ion-list>
+
+  </ion-content>
+</ion-view>

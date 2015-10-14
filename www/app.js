@@ -8,12 +8,19 @@
 var CapMission = angular.module('capMission', [
   'ionic',
   'ngCordova',
+  'ngCookies',
   'ngCordovaOauth',
   'ngCordovaOauth.canvas',
+  'hmTouchEvents',
   'capMission.authentication',
   'capMission.tab',
   'capMission.services'
 ]);
+
+CapMission.constant("Constants", {
+  "URL_API": "http://localhost:8081/CapMission",
+  "URL_CANVAS": "http://192.168.1.9/"
+});
 
 CapMission.run(['$ionicPlatform', '$rootScope', function ($ionicPlatform, $rootScope) {
   $ionicPlatform.ready(function () {
@@ -28,10 +35,14 @@ CapMission.run(['$ionicPlatform', '$rootScope', function ($ionicPlatform, $rootS
       // org.apache.cordova.statusbar required
       StatusBar.styleLightContent();
     }
+
+    $rootScope.$on('$stateChangeError', function (event, toState, toParams, fromState, fromParams, error) {
+      console.warn(error);
+    });
   });
 }]);
 
-CapMission.config(['$stateProvider', '$urlRouterProvider', '$ionicConfigProvider', function ($stateProvider, $urlRouterProvider, $ionicConfigProvider) {
+CapMission.config(['$stateProvider', '$urlRouterProvider', '$ionicConfigProvider', '$httpProvider', function ($stateProvider, $urlRouterProvider, $ionicConfigProvider, $httpProvider) {
 
   $ionicConfigProvider.backButton.previousTitleText(false).text('');
 
@@ -86,30 +97,68 @@ CapMission.config(['$stateProvider', '$urlRouterProvider', '$ionicConfigProvider
         }
       }
     })
-    .state('tab.quizz', {
-      url: '/quizz',
+    .state('tab.quiz', {
+      url: '/quiz',
       views: {
-        'tab-quizz': {
+        'tab-quiz': {
           templateUrl: 'tab/quiz/index.html',
-          controller: 'QuizzCtrl'
+          controller: 'quizCtrl',
+          resolve: {
+            courses: ['$http', 'Constants', '$q', function ($http, Constants, $q) {
+              var deferred = $q.defer();
+              $http.get(Constants.URL_API + '/courses').then(function (response) {
+                deferred.resolve(response.data);
+              });
+              return deferred.promise;
+            }]
+          }
         }
       }
     })
-    .state('tab.quizz-questions', {
-      url: '/quizz/:id',
+    .state('tab.quiz-questions', {
+      cache: false,
+      url: '/quiz/:idCourse/quizzes/:idQuiz',
       views: {
-        'tab-quizz': {
-          templateUrl: 'tab/quizz/questions.html',
-          controller: 'QuizzQuestionsCtrl'
+        'tab-quiz': {
+          templateUrl: 'tab/quiz/questions.html',
+          controller: 'quizQuestionsCtrl',
+          resolve: {
+            questions: ['$http', 'Constants', '$q', '$stateParams', function ($http, Constants, $q, $stateParams) {
+              console.warn($stateParams);
+              var deferred = $q.defer();
+              $http.get(Constants.URL_API + '/courses/' + $stateParams.idCourse + '/quizzes/' + $stateParams.idQuiz + '/questions').then(function (response) {
+                deferred.resolve(response.data);
+              });
+              return deferred.promise;
+            }]
+          }
         }
       }
     })
-    .state('tab.quizz-end', {
-      url: '/quizz/:id/end',
+    .state('tab.quiz-list', {
+      url: '/quiz/:idCourse/list',
       views: {
-        'tab-quizz': {
-          templateUrl: 'tab/quizz/end.html',
-          controller: 'QuizzEndCtrl'
+        'tab-quiz': {
+          templateUrl: 'tab/quiz/quiz-list.html',
+          controller: 'quizListCtrl',
+          resolve: {
+            quizzes: ['$http', 'Constants', '$q', '$stateParams', function ($http, Constants, $q, $stateParams) {
+              var deferred = $q.defer();
+              $http.get(Constants.URL_API + '/courses/' + $stateParams.idCourse + '/quizzes').then(function (response) {
+                deferred.resolve(response.data);
+              });
+              return deferred.promise;
+            }]
+          }
+        }
+      }
+    })
+    .state('tab.quiz-end', {
+      url: '/quiz/:id/end',
+      views: {
+        'tab-quiz': {
+          templateUrl: 'tab/quiz/end.html',
+          controller: 'quizEndCtrl'
         }
       }
     })
@@ -160,7 +209,40 @@ CapMission.config(['$stateProvider', '$urlRouterProvider', '$ionicConfigProvider
     });
 
 // if none of the above states are matched, use this as the fallback
-  $urlRouterProvider.otherwise('/tab/home');
+  $urlRouterProvider.otherwise('/login');
+
+  $httpProvider.interceptors.push(['$q', 'Constants', function ($q, Constants) {
+    return {
+
+      request: function (config) {
+       /* console.warn(config.url);
+        if (config.url.indexOf(Constants.URL_CANVAS) !== -1) {
+          config.headers.Authorization = "Bearer fgnxtyZlcqMsMOT6GGpUfeBtlstr0JjuOBh0mPE1peOwj7jJzsOTTAm483Ykai1i";
+        }*/
+        return config || $q.when(config);
+      },
+      response: function (response) {
+        if (response.config.url.indexOf(Constants.URL_API) > -1) {
+          var find = '<img src=\\"';
+          var re = new RegExp(find, 'g');
+
+          String.prototype.replaceAll = function(target, replacement) {
+            return this.split(target).join(replacement);
+          };
+
+
+          var string = angular.toJson(response.data);
+          console.warn(string);
+          string = string.replaceAll(find, '<img src=\\"'+Constants.URL_CANVAS);
+          //string = string.replace(re, '<img src=\"http://192.168.1.9/courses');
+          console.warn(string);
+         // response.data = angular.toJson(response.data).replace(/<img src="courses/g, '<img src="http://192.168.1.9/courses');
+          response.data = angular.fromJson(string);
+        }
+        return response
+      }
+    };
+  }]);
 
 }]);
 
@@ -187,9 +269,14 @@ CapMission.directive('hideTabs', ['$rootScope', function ($rootScope) {
       $scope.$on("$ionicView.enter", function () {
         $rootScope.hideTabs = true;
       });
-      $scope.$on("$ionicView.leave", function () {
+      $scope.$on("$ionicView.beforeLeave", function () {
         $rootScope.hideTabs = false;
       });
+
+      $rootScope.$on('$stateChangeStart', function (event, toState, toParams, fromState, fromParams) {
+        $rootScope.hideTabs = false;
+      });
+
     }
   };
 }]);

@@ -1,20 +1,36 @@
-<ion-view view-title="Quizz" hide-back-button="true">
+<ion-view view-title="quiz" hide-back-button="true" hide-nav-bar="true" hide-tabs>
   <ion-content class="padding">
+    <div>
+      <a style="float:left; top: -10px;" class="button button-icon ion ion-ios-close-outline fs-s"
+         ng-click="quitQuiz()"></a>
+      <span style="float:right;">{{questionNumber+1}}/{{questions.length}}</span>
+      <br>
 
-    <div class="card">
-      <div class="item item-divider">
-        <p>Quel est le résulat de l'équation 2x=4 ?</p>
+      <div style="margin:auto; width:53%;top: -20px;position: relative;">
+        <span ng-if="delta < 0" class="icon ion-ios-arrow-back point-arrow left fs-xs"
+              ng-click="deltaClick(15)"></span>
+
+        <div class="point-questions inline" hm-pan="pan($event)"><p id="point-questions"><i
+          ng-repeat="question in questions" class="fs-m inline"
+          ng-class="{'balanced' :question.correct === true, 'assertive' : question.correct === false}">•</i></p></div>
+        <span class="icon ion-ios-arrow-forward point-arrow right fs-xs" ng-click="deltaClick(-15)"></span>
       </div>
-      <div class="item item-text-wrap">
-        <ion-checkbox ng-model="answers[$index].Selected" ng-repeat="answer in answers"
-                      ng-click="unselectOthers($index)">
-          {{answer.name}}
-        </ion-checkbox>
-      </div>
+      <br>
+      <br>
+      <br>
     </div>
 
+    <div>
+      <div class="item item-divider">
+        <h2>{{questions[questionNumber].question_name}}</h2>
+        <p style="white-space:normal; font-size: 16px" ng-bind-html="questions[questionNumber].question_text"></p>
+      </div>
+      <ion-item class="item item-text-wrap answers-list" ng-repeat="answer in questions[questionNumber].answers"
+                ng-click="nextQuestion(answer, $event)" ng-bind-html="answer.text || answer.html">
+      </ion-item>
+    </div>
+
+    {{answers}}
+
   </ion-content>
-  <button class="button validate-button"
-          ng-click="validateQuestion()"
-          ng-disabled="validateDisabled">Valider</button>
 </ion-view>
