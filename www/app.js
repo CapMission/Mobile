@@ -50,7 +50,7 @@ CapMission.config(['$stateProvider', '$urlRouterProvider', '$ionicConfigProvider
   // Ionic uses AngularUI Router which uses the concept of states
   // Learn more here: https://github.com/angular-ui/ui-router
   // Set up the various states which the app can be in.
-  // Each state's controller can be found in controllers.js
+  // Each state's controller can be found in 'nom de la partie'.js par exemple: authentication.js, follow.js, home.js etc etc
   $stateProvider
 
 
@@ -58,13 +58,34 @@ CapMission.config(['$stateProvider', '$urlRouterProvider', '$ionicConfigProvider
       url: '/login',
       controller: 'LoginCtrl',
       templateUrl: 'authentication/login.html'
-    })
+    }) 
+      
+    .state('ecole', {
+      url: '/ecole',
+      controller: 'EcoleCtrl',
+      templateUrl: 'authentication/ecole.html'
+    }) 
+    
+    .state('niveau', {
+      url: '/niveau',
+      controller: 'NiveauCtrl',
+      templateUrl: 'authentication/niveau.html'
+    }) 
+      
+    .state('filiere', {
+      url: '/filiere',
+      controller: 'FiliereCtrl',
+      templateUrl: 'authentication/filiere.html'
+    }) 
+      
+   
 
     // setup an abstract state for the tabs directive
+  
     .state('tab', {
       url: '/tab',
-      abstract: true,
-      controller: 'TabsCtrl',
+      abstract: true,//Si je tape l'url avec /tab rien ne va se produire, c'est juste pour l'organisation du code
+      controller: 'TabsCtrl', //Ce controller est défini au niveau de tab.js dans le dossier tab de la repository www
       templateUrl: 'templates/tabs.html'
     })
 
@@ -79,6 +100,7 @@ CapMission.config(['$stateProvider', '$urlRouterProvider', '$ionicConfigProvider
         }
       }
     })
+
     .state('tab.home-offers', {
       url: '/offers/:id',
       views: {
@@ -95,6 +117,16 @@ CapMission.config(['$stateProvider', '$urlRouterProvider', '$ionicConfigProvider
           templateUrl: 'tab/home/profile.html',
           controller: 'ProfileCtrl'
         }
+      }
+    })
+    
+   .state('tab.test', {
+      url: '/test',
+      views:{ 
+          'test':{
+                templateUrl: 'tab/test/test.html',
+                controller: ''
+                 }
       }
     })
     .state('tab.quiz', {
@@ -115,6 +147,7 @@ CapMission.config(['$stateProvider', '$urlRouterProvider', '$ionicConfigProvider
         }
       }
     })
+  
     .state('tab.quiz-questions', {
       cache: false,
       url: '/quiz/:idCourse/quizzes/:idQuiz',
@@ -135,6 +168,7 @@ CapMission.config(['$stateProvider', '$urlRouterProvider', '$ionicConfigProvider
         }
       }
     })
+  
     .state('tab.quiz-list', {
       url: '/quiz/:idCourse/list',
       views: {
@@ -189,6 +223,9 @@ CapMission.config(['$stateProvider', '$urlRouterProvider', '$ionicConfigProvider
         }
       }
     })
+  
+  
+
     .state('tab.message-detail', {
       url: '/message/:messageId',
       views: {
