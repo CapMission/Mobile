@@ -1,0 +1,9 @@
+<ion-view view-title="Choisis ta filière" hide-back-button="true">
+  <ion-content>
+    <ion-list>
+      <ion-item ng-repeat="filiere in filieres" ng-href="#/tab/home">
+        {{filiere.name}}
+      </ion-item>
+    </ion-list>
+  </ion-content>
+</ion-view>

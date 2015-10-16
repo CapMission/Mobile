@@ -13,6 +13,7 @@ message.controller('MessageCtrl', ['$scope', 'Chats', function ($scope, Chats) {
   $scope.remove = function (chat) {
     Chats.remove(chat);
 
+
   };
 }]);
 

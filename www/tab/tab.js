@@ -4,6 +4,7 @@ var tab = angular.module('capMission.tab', [
   'capMission.tab.message',
   'capMission.tab.quiz',
   'capMission.tab.stat'
+    
 ]);
 
 tab.controller('TabsCtrl', ['$scope', function ($scope) {
