@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 # Cap Mission | Mobile 
 
 _Application mobile de Cap Mission_
@@ -56,3 +57,7 @@ $ ionic run <platform>
 #Ou pour lancer dans un nvaigateur web
 $ ionic serve
 ```
+=======
+# Mobile
+Application mobile
+>>>>>>> origin/master
