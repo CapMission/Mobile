@@ -1,4 +1,10 @@
 {
-  "name": "CapMission",
-  "app_id": ""
+  "name": "Cap Mission",
+  "app_id": "",
+  "proxies": [
+      {
+        "path": "/CapMissionApp",
+        "proxyUrl": "http://81.192.194.109:8182/CapMissionApp"
+      }
+    ]
 }

@@ -1,0 +1,60 @@
+<ion-view  title='<img class="title-image" src="parent/icon.png"> Cap Mission </img>' cache-view="false">
+  <ion-nav-buttons side="right">
+    <a class="button button-icon ion-ios-more rotate-90 fs-s" ng-click="popover.show($event)"></a>
+  </ion-nav-buttons>
+
+  <ion-tabs class="tabs-icon-top tabs-color-active-positive" ng-class="{'tabs-item-hide': $root.hideTabs}">
+
+
+    <ion-tab  hidden="true" >
+
+    </ion-tab>
+
+
+    <ion-tab title="quiz" icon-off="ion-ios-timer-outline" icon-on="ion-ios-timer" badge="badgequiz"
+             badge-style="badge-assertive" ng-click="onTabSelected()">
+
+    </ion-tab>
+
+
+    <ion-tab title="Suivi" icon-off="ion-ios-pulse" icon-on="ion-ios-pulse-strong"  badge="badgeFollow"
+             badge-style="badge-assertive" ng-click="onTabSelected()">
+
+    </ion-tab>
+
+
+    <!-- <ion-tab title="Résultats" icon-off="ion-ios-pie-outline" icon-on="ion-ios-pie" ng-click="onTabSelected()">
+
+     </ion-tab>-->
+
+
+    <ion-tab title="Messages" icon-off="ion-ios-email-outline" icon-on="ion-ios-email"
+             badge="badgeMessages" badge-style="badge-assertive" ng-click="onTabSelected()">
+
+    </ion-tab>
+
+
+
+
+  </ion-tabs>
+  <br>
+
+  <ion-content>
+    <br><br><br>
+    <div class="divEmploi"><i class="ion-calendar">&nbsp;Planning </i></div><br>
+    <div class="card divCard"
+         ng-repeat="timetables in teacher.entity.timetables | orderBy:'start'"
+         ng-if="timetables.start >  now">
+      <div style="width: 330px;height: 15px;font-family: sans-serif;font-size: small;background-color: #acbca0" class="item item-divider">
+        {{timetables.start | date: 'EEEE dd MMMM'}}&nbsp;&nbsp;{{timetables.start | date: 'HH:mm'}}&nbsp;-
+        {{timetables.end | date: 'HH:mm'}}&nbsp;&nbsp;<strong> {{timetables.name}} </strong></div>
+
+    </div>
+    <!--pagination data-boundary-links="true" data-num-pages="noOfPages" data-current-page="currentPage" max-size="maxSize"
+                class="pagination-small"
+                data-previous-text="&laquo;" data-next-text="&raquo;"></pagination-->
+
+  </ion-content>
+
+</ion-view>
+

@@ -1,8 +1,51 @@
-<ion-view view-title="Profil">
+<ion-view view-title="" hide-back-button="true">
   <ion-nav-buttons side="right">
-    <a class="button button-icon ion-ios-color-wand-outline fs-s" ng-click="go('#/tab/message/new')"></a>
+    <a class="button button-icon ion-ios-more rotate-90 fs-s" ng-click="popover.show($event)"></a>
   </ion-nav-buttons>
-  <ion-content class="padding">
-    Ici le contenu du profil
+  <ion-nav-buttons side="left">
+    <button class="button back-button buttons button-clear header-item" ng-click="goBack()">
+      <i class="icon ion-ios-arrow-back"></i>
+    </button>
+  </ion-nav-buttons>
+  <ion-content>
+    <div class="panel panel-default">
+      <div class="panel-body">
+        &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<legend><i class="ion-clipboard"></i> My Profile&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+          &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+          &nbsp;&nbsp;&nbsp;<i class="icon ion-compose" ng-click=""></i></legend>
+        <form >
+          <br>
+          <!--div class="form-group">
+            &nbsp;<label class="control-label"><i class="ion-person"></i> Login</label> <br>
+            &nbsp;{{us.entity.login}}
+            <br><br>
+          </div-->
+          <div class="form-group">
+            &nbsp;<label class="control-label"><i class="ion-person"></i> Name</label> <br>
+            &nbsp;{{us.entity.name}}
+            <br><br>
+          </div>
+          <div class="form-group">
+            &nbsp;<label class="control-label"><i class="ion-android-phone-portrait"></i> Téléphone</label><br>
+            &nbsp;{{us.entity.phone}}
+          </div><br>
+          <div class="form-group">
+            &nbsp;<label class="control-label"><i class="ion-ios-calendar-outline"></i> Date de naissance </label><br>
+            &nbsp;{{us.entity.birthDateString}}
+            <br><br>
+          </div>
+          <div class="form-group">
+            &nbsp;<label class="control-label"><i class="ion-university"></i> Ecole </label><br>
+            &nbsp;{{us.entity.school.name}}
+            <br><br>
+          </div>
+          <div class="form-group">
+            &nbsp;<label class="control-label"><i class="ion-at"></i> Email </label><br>
+            &nbsp;{{us.entity.mail}}
+          </div><br>
+        </form>
+      </div>
+    </div>
+
   </ion-content>
 </ion-view>

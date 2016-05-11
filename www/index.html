@@ -5,9 +5,16 @@
   <meta name="viewport" content="initial-scale=1, maximum-scale=1, user-scalable=no, width=device-width">
   <title></title>
   <link href="resources/bower_components/ionic/css/ionic.css" rel="stylesheet">
+  <link href="resources/bower_components/toastr/toastr.css" rel="stylesheet">
+  <link href="resources/bower_components/ionic-toast/src/style.css" rel="stylesheet">
+  <!--<link href="resources/bower_components/bootstrap/dist/css/bootstrap.css" rel="stylesheet">
+  <link href="resources/bower_components/bootstrap/dist/css/bootstrap.css.map" rel="stylesheet">-->
+
   <link href="resources/css/style.css" rel="stylesheet">
 </head>
-<body ng-app="capMission">
+
+<body ng-app="capMission" ng-controller="capController">
+
 <!--
   The nav bar that will be updated as we navigate between views.
 -->
@@ -42,7 +49,10 @@
 <script src="resources/bower_components/angular-animate/angular-animate.js"></script>
 <script src="resources/bower_components/ionic/js/ionic-angular.js"></script>
 <script src="resources/bower_components/angular-cookies/angular-cookies.js"></script>
-
+<script src="resources/bower_components/angular-bootstrap/ui-bootstrap.js"></script>
+<script src="resources/bower_components/angular-bootstrap/ui-bootstrap-tpls.js"></script>
+<script src="resources/bower_components/bootstrap/dist/js/bootstrap.js"></script>
+<script src="resources/bower_components/angularUtils-pagination/dirPagination.js"></script>
 <script src="resources/bower_components/ngCordova/dist/ng-cordova.js"></script>
 <script src="resources/bower_components/ng-cordova-oauth/dist/ng-cordova-oauth.js"></script>
 <script src="resources/js/oAuth.canvas.js"></script>
@@ -50,8 +60,17 @@
 <!-- cordova script (this will be a 404 during development) -->
 <script src="cordova.js"></script>
 
+<!-- satellizer -->
+<script src="resources/bower_components/satellizer/satellizer.js"></script>
+
+<script src="resources/bower_components/toastr/toastr.min.js"></script>
+<script src="resources/bower_components/toastr/toastr.js"></script>
+<script src="resources/bower_components/ionic-toast/src/ionic-toast.js"></script>
+<script src="resources/bower_components/ionic-process-spinner/src/ionic-process-spinner.js"></script>
+<script src="resources/bower_components/angular-i18n/angular-locale_fr-fr.js"></script>
 
 <script src="app.js"></script>
+<script src="services.js"></script>
 <script src="authentication/authentication.js"></script>
 <script src="tab/tab.js"></script>
 <script src="tab/follow/follow.js"></script>
@@ -60,6 +79,12 @@
 <script src="tab/quiz/quiz.js"></script>
 <script src="tab/stat/stat.js"></script>
 <script src="resources/js/services.js"></script>
+<script src="account.js"></script>
+<script src="logout/logout.js"></script>
+<script src="student/student.js"></script>
+<script src="teacher/teacher.js"></script>
+<script src="parent/parent.js"></script>
+
 
 </body>
 </html>

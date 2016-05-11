@@ -2,21 +2,30 @@
   <ion-nav-buttons side="right">
     <a class="button button-icon ion-ios-more rotate-90 fs-s" ng-click="popover.show($event)"></a>
   </ion-nav-buttons>
+  <ion-nav-buttons side="left">
+    <button class="button back-button buttons button-clear header-item" ng-click="goBack()">
+      <i class="icon ion-ios-arrow-back"></i>
+    </button>
+  </ion-nav-buttons>
   <ion-content>
-    <h4 class="item item-icon-left"><i class="icon icon ion-ios-calendar"></i>Emploi du temps</h4>
-    <br>
-    <br>
-    <br>
-    <br>
-    <br>
-    <h4 class="item item-icon-left"><i class="icon ion-ios-star"></i>Offres spéciales</h4>
-    <ion-list>
-      <ion-item href="#/tab/offers/1">
-        Offre 1
-      </ion-item>
-      <ion-item href="#/tab/offers/2">
-        Offre 2
-      </ion-item>
-    </ion-list>
+     <i class="ion-calendar"> &nbsp;Emploi du temps : {{resp.entity.id}}</i><br>
+    <!--h4><i class="fa fa-arrow-left"></i>Week Of {{currentWeekStart()}} - {{currentWeekEnd()}}<i class="fa fa-arrow-right"></i></h4>
+    <button ng-click="prevWeek()">previous week</button>
+    <button ng-click="nextWeek()">next week</button-->
+    <div style="border-style: double; border-color:dimgrey"  class="card" ng-repeat="timetables in time.entity.timetables"
+         ng-if="timetables.start >  now" >
+    <div style="width: 310px;height: 10px;font-family: sans-serif;font-size: small" class="item item-divider">{{timetables.name}}
+      {{timetables.start | date: 'EEEE dd MMMM yyyy'}} à <strong>{{timetables.start | date: 'HH:mm'}}</strong>&nbsp;&nbsp;{{timetables.end - timetables.start  | date: 'HH:mm'}} </div>
+    <div style="width: 300px;height: 5px;font-family: sans-serif;font-size: small" class="item item-text-wrap">
+      <ul style="list-style-type:square">
+        <!--li>Heure début&nbsp;: <strong>{{timetables.start | date: 'HH:mm'}}</strong></li>
+        <li>Heure Fin&nbsp;&nbsp;&nbsp;&nbsp;: <strong>{{timetables.end | date: 'HH:mm'}}</strong></li-->
+        <li>Enseignant&nbsp; : {{timetables.professor}} </li>
+      </ul>
+     </div>
+    </div>
+
+
   </ion-content>
+
 </ion-view>

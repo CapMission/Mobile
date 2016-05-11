@@ -26,13 +26,13 @@ Se placer dans le répertoire où le dossier du projet sera créé.
 **1.** Clonage du projet :
 
 ```bash
-$ git clone https://github.com/CapMission/CapMission-Mobile.git
+$ git clone https://github.com/CapMission/Mobile.git
 ```
 
 **2.** Se placer dans le dossier nouvellement cloné/créé par la commande précédente
 
 ```bash
-$ cd CapMission-Mobile
+$ cd CapMission-Mobile-v1
 ```
 
 **3.** Ajout des plugins et des platforms Cordova

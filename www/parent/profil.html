@@ -1,0 +1,68 @@
+<ion-view  title='<img class="title-image" src="parent/icon.png"> Cap Mission </img>' cache-view="false">
+  <ion-nav-buttons side="right">
+    <a class="button button-icon ion-ios-more rotate-90 fs-s" ng-click="popover.show($event)"></a>
+  </ion-nav-buttons>
+
+  <ion-tabs class="tabs-icon-top tabs-color-active-positive" ng-class="{'tabs-item-hide': $root.hideTabs}">
+
+
+    <ion-tab  hidden="true" >
+
+    </ion-tab>
+
+
+    <ion-tab title="quiz" icon-off="ion-ios-timer-outline" icon-on="ion-ios-timer" badge="badgequiz"
+             badge-style="badge-assertive" ng-click="onTabSelected()">
+
+    </ion-tab>
+
+
+    <ion-tab title="Suivi" icon-off="ion-ios-pulse" icon-on="ion-ios-pulse-strong"  badge="badgeFollow"
+             badge-style="badge-assertive" ng-click="onTabSelected()">
+
+    </ion-tab>
+
+
+    <ion-tab title="Messages" icon-off="ion-ios-email-outline" icon-on="ion-ios-email"
+             badge="badgeMessages" badge-style="badge-assertive" ng-click="onTabSelected()">
+
+    </ion-tab>
+    <ion-tab title="Solde" icon-off="icon ion-ios-calculator-outline" icon-on="icon ion-ios-calculator" ng-click="onTabSelected()">
+
+    </ion-tab>
+
+
+
+  </ion-tabs>
+  <br><br><br><br>
+  <ion-content >
+    <br><br><br>
+    <div class="panel panel-default">
+      <div class="panel-body">
+       <div class="profilLegend" ><legend class="legendP"> <i class="ion-clipboard"></i><strong> Mon profil<!--i class="icon ion-compose" ng-click=""></i--></strong></legend></div>
+        <form >
+          <br>
+          <div class="form-group">
+            <label class="control-label labelF"><i class="ion-person"></i> Name</label> <br>
+            {{parent.entity.name}}
+            <br><br>
+          </div>
+          <div class="form-group">
+           <label  class="control-label labelF"><i class="ion-android-phone-portrait"></i> Téléphone</label><br>
+            {{parent.entity.phone}}
+          </div><br>
+          <div class="form-group">
+            <label  class="control-label labelF"><i class="ion-at"></i> Email </label><br>
+            {{parent.entity.mail}}
+          </div><br>
+          <div ng-if="parent.entity.job != ''">
+          <div class="form-group">
+            <label  class="control-label labelF"><i class="icon ion-briefcase"></i> Fonction </label><br>
+            {{parent.entity.job}}
+          </div></div><br>
+        </form>
+      </div>
+    </div>
+
+  </ion-content>
+</ion-view>

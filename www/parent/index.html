@@ -1,0 +1,61 @@
+<!--
+<ion-view view-title="Cap Mission" hide-back-button="true">
+  <ion-nav-buttons side="right">
+    <a class="button button-icon ion-ios-more rotate-90 fs-s" ng-click="popover.show($event)"></a>
+  </ion-nav-buttons>
+
+  <ion-tabs class="tabs-icon-top tabs-color-active-positive" ng-class="{'tabs-item-hide': $root.hideTabs}">
+
+    &lt;!&ndash; Home Tab &ndash;&gt;
+    <ion-tab href="#/parent" hidden="true">
+      <ion-nav-view name="tab-home"></ion-nav-view>
+    </ion-tab>
+
+    &lt;!&ndash; quiz Tab &ndash;&gt;
+    <ion-tab title="quiz" icon-off="ion-ios-timer-outline" icon-on="ion-ios-timer" href="#/tab/quiz" badge="badgequiz"
+             badge-style="badge-assertive">
+      <ion-nav-view name="tab-quiz"></ion-nav-view>
+    </ion-tab>
+
+    &lt;!&ndash; Follow Tab &ndash;&gt;
+    <ion-tab title="Suivi" icon-off="ion-ios-pulse" icon-on="ion-ios-pulse-strong" href="#/tab/follow" badge="badgeFollow"
+             badge-style="badge-assertive">
+      <ion-nav-view name="tab-follow"></ion-nav-view>
+    </ion-tab>
+
+    &lt;!&ndash; Stats Tab &ndash;&gt;
+    <ion-tab title="Stats" icon-off="ion-ios-pie-outline" icon-on="ion-ios-pie" href="#/tab/stats">
+      <ion-nav-view name="tab-stats"></ion-nav-view>
+    </ion-tab>
+
+    &lt;!&ndash; Messages Tab &ndash;&gt;
+    <ion-tab title="Messages" icon-off="ion-ios-email-outline" icon-on="ion-ios-email" href="#/tab/message"
+             badge="badgeMessages" badge-style="badge-assertive">
+      <ion-nav-view name="tab-messages"></ion-nav-view>
+    </ion-tab>
+    &lt;!&ndash; Test Tab &ndash;&gt;
+    &lt;!&ndash;ion-tab title="test" icon-off="ion-help" icon-on="ion-help" ui-sref="tab.test">
+      <ion-nav-view name="test"></ion-nav-view> //name c'est le nom du state à appeler
+    </ion-tab&ndash;&gt;
+
+
+
+  </ion-tabs>
+
+
+  <ion-content>
+    <br><br><br>
+    <div style="width: 310px;height: 10px;font-family: sans-serif;font-size: small"><strong> {{parent.entity.name}}</strong>, vous voulez voir l'emploi de : </div>
+    <br><br>
+    <center>
+
+      <div ng-repeat="children in resp.entity.students" >
+        <div style="width: 310px;height: 10px;font-family: sans-serif;font-size: small" class="item item-divider" ng-app="capMission.parent" ng-controller="EnfantCtrl"> {{children.name}} <button clear>Afficher</button></div>
+
+      </div>
+    </center>
+  </ion-content>
+
+</ion-view>
+
+-->

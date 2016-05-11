@@ -1,18 +1,22 @@
+<body ng-app="capMission">
 <ion-popover-view>
   <ion-content>
     <div class="list">
-      <a class="item" href="#/tab/profile" target="_blank">
+      <a class="item" href="/parent/profil" ng-click="popover.hide()">
         Profil
       </a>
-      <a class="item" href="http://ionicframework.com/docs/" target="_blank">
+      <a class="item" href="#/tab/solde" ng-click="popover.hide()">
         Solde
       </a>
-      <a class="item" href="http://showcase.ionicframework.com/" target="_blank">
+      <a class="item" href="#/tab/profile" ng-click="popover.hide()">
         Paramètres
       </a>
-      <a class="item" href="http://ionicframework.com/submit-issue/" target="_blank">
+
+      <a class="item" href="#/logout/logout.js" ng-click="popover.hide()" >
         Quitter l'application
       </a>
+
     </div>
   </ion-content>
 </ion-popover-view>
+</body>

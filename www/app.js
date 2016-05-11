@@ -14,15 +14,93 @@ var CapMission = angular.module('capMission', [
   'hmTouchEvents',
   'capMission.authentication',
   'capMission.tab',
-  'capMission.services'
+  'capMission.parent',
+  'capMission.student',
+  'capMission.teacher',
+  'capMission.services',
+  'satellizer',
+  'ui.bootstrap',
+  'ionicProcessSpinner',
+  'services'
 ]);
+CapMission.controller('capController',function($scope,$rootScope, $location, $auth, $http,$ionicLoading,$ionicHistory){
+
+  $rootScope.login = function(user) {
+
+    $ionicLoading.show({
+      template: 'Chargement...'
+    });
+    $http.post('http://81.192.194.109:8182/CapMissionApp/auth/login', user).success(function(data, status, headers, config){
+      $rootScope.resp = data
+
+      $ionicLoading.hide();
+
+      console.log(JSON.stringify({data: data}))
+      $ionicHistory.clearHistory();
+      $ionicHistory.clearCache();
+      $ionicHistory.nextViewOptions({ disableBack: true, disableAnimate: true, historyRoot: true });
+      $location.path('/role');
+    }).error(function(data){
+      $rootScope.errorMessage = 'Login/Mot de passe incorrect';
+
+      $ionicLoading.hide();
+      $location.path('/login');
+    });
+
+  }
+
+  //console.log(data)
+})
+/*
+CapMission.directive('uiShowPassword', [
+  function () {
+    return {
+      restrict: 'A',
+      scope: true,
+      link: function (scope, elem, attrs) {
+        var btnShowPass = angular.element('<button class="button button-clear"><i class="ion-eye"></i></button>'),
+          elemType = elem.attr('type');
+
+        // this hack is needed because Ionic prevents browser click event
+        // from elements inside label with input
+        btnShowPass.on('mousedown', function (evt) {
+          (elem.attr('type') === elemType) ?
+            elem.attr('type', 'text') : elem.attr('type', elemType);
+          btnShowPass.toggleClass('button-positive');
+          //prevent input field focus
+          evt.stopPropagation();
+        });
+
+        btnShowPass.on('touchend', function (evt) {
+          var syntheticClick = new Event('mousedown');
+          evt.currentTarget.dispatchEvent(syntheticClick);
+
+          //stop to block ionic default event
+          evt.stopPropagation();
+        });
+
+        if (elem.attr('type') === 'password') {
+          elem.after(btnShowPass);
+        }
+      }
+    };
+  }]);
+*/
 
 CapMission.constant("Constants", {
-  "URL_API": "http://localhost:8081/CapMission",
-  "URL_CANVAS": "http://192.168.1.9/"
+  "URL_API": "http://localhost:8182/CapMissionApp"
+  //"URL_CANVAS": "http://192.168.1.9/"
 });
+/*CapMission.filter('offset', function() {
+  return function(input, start) {
+    if (!input || !input.length) { return; }
+    start = +start; //parse to int
+    return input.slice(start);
+  }
+});*/
 
-CapMission.run(['$ionicPlatform', '$rootScope', function ($ionicPlatform, $rootScope) {
+
+CapMission.run(['$ionicPlatform', '$rootScope','$state','authService', function ($ionicPlatform, $rootScope,$state,authService) {
   $ionicPlatform.ready(function () {
     // Hide the accessory bar by default (remove this to show the accessory bar above the keyboard
     // for form inputs)
@@ -41,6 +119,66 @@ CapMission.run(['$ionicPlatform', '$rootScope', function ($ionicPlatform, $rootS
     });
   });
 }]);
+/*CapMission.run(function($ionicPlatform, $ionicPopup) {
+  $ionicPlatform.onHardwareBackButton(function () {
+    if(true) { // your check here
+      $ionicPopup.confirm({
+        title: 'Avertissement',
+        template: 'Etes-vous sûrs de vouloir quitter?'
+      }).then(function(res){
+        if( res ){
+          navigator.app.exitApp();
+        }
+      })
+    }
+  })
+});*/
+CapMission.config(function($authProvider) {
+  $authProvider.facebook({
+    clientId: '561387454023937',
+    redirectUri : 'http://localhost:8100/'
+  });
+
+  $authProvider.google({
+    clientId: '44134246491-n2ehu6gvrjvcti4jap05kkig4adsgtr9.apps.googleusercontent.com'
+  });
+
+  /*$authProvider.baseUrl = 'http://localhost:8100/';
+    var commonConfig = {
+      popupOptions: {
+        location: 'no',
+        toolbar: 'yes',
+        width: window.screen.width,
+        height: window.screen.height
+      }
+    };
+
+    if (ionic.Platform.isIOS() || ionic.Platform.isAndroid()) {
+      //$authProvider.Platform ='mobile';
+      //commonConfig.redirectUri = 'http://localhost:8100/';
+      $authProvider.cordova = true;
+      commonConfig.redirectUri = 'http://localhost:8100/';
+    }
+
+    //$authProvider.redirectUri = 'http://localhost:8100/';
+
+    $authProvider.facebook(angular.extend({}, commonConfig, {
+      clientId: '561387454023937',
+      //responseType : 'token'
+      url: 'http://localhost:8182/auth/facebook'
+      //redirectUri : 'http://localhost:8100/'
+    }));
+
+
+   /* $authProvider.twitter(angular.extend({}, commonConfig, {
+      url: 'http://localhost:3000/auth/twitter'
+    }));
+
+    $authProvider.google(angular.extend({}, commonConfig, {
+      clientId: '44134246491-n2ehu6gvrjvcti4jap05kkig4adsgtr9.apps.googleusercontent.com'
+      //redirectUri : 'http://localhost:8100/home/'
+    }));*/
+  });
 
 CapMission.config(['$stateProvider', '$urlRouterProvider', '$ionicConfigProvider', '$httpProvider', function ($stateProvider, $urlRouterProvider, $ionicConfigProvider, $httpProvider) {
 
@@ -56,32 +194,121 @@ CapMission.config(['$stateProvider', '$urlRouterProvider', '$ionicConfigProvider
 
     .state('login', {
       url: '/login',
-      controller: 'LoginCtrl',
-      templateUrl: 'authentication/login.html'
-    }) 
-      
-    .state('ecole', {
+      controller: 'capController',
+      templateUrl: 'authentication/login.html',
+
+    })
+    .state('logout', {
+        url: '/logout',
+        template: null,
+        controller: 'LogoutCtrl'
+      })
+
+   /* .state('ecole', {
       url: '/ecole',
       controller: 'EcoleCtrl',
       templateUrl: 'authentication/ecole.html'
-    }) 
-    
+    })
+
     .state('niveau', {
       url: '/niveau',
       controller: 'NiveauCtrl',
       templateUrl: 'authentication/niveau.html'
-    }) 
-      
-    .state('filiere', {
-      url: '/filiere',
-      controller: 'FiliereCtrl',
-      templateUrl: 'authentication/filiere.html'
-    }) 
-      
-   
+    })
+*/
+    .state('role', {
+      url: '/role',
+      controller: 'RoleCtrl',
+      templateUrl: 'authentication/role.html'
+    })
+
+    .state('choix', {
+      url: '/choix',
+      controller: 'ChoixCtrl',
+      templateUrl: 'authentication/choix.html'
+    })
+
+    .state('parent', {
+      url: '/parent/index',
+      templateUrl: 'parent/index.html',
+      controller: 'ParentCtrl'
+
+    })
+    .state('apropos', {
+      url: '/parent/apropos',
+      templateUrl: 'parent/apropos.html',
+      controller: 'ProposCtrl'
+
+    })
+    .state('feedback', {
+      url: '/parent/feedback',
+      templateUrl: 'parent/feedback.html',
+      controller: 'BackCtrl'
+
+    })
+    .state('emploiEnfant', {
+      url: '/parent/emploiEnfant',
+      controller: 'EnfantCtrl',
+      templateUrl: 'parent/empoiEnfant.html'
+    })
+    .state('parent_profil', {
+     // parent: parent,
+      url: '/parent/profil',
+      templateUrl: 'parent/profil.html',
+      controller: 'PprofileCtrl'
+
+    })
+    .state('parent_solde', {
+     // parent : parent,
+      url: '/parent/solde',
+      templateUrl: 'parent/solde.html',
+      controller: 'PsoldeCtrl'
+
+    })
+    .state('student', {
+      url: '/student',
+      templateUrl: 'student/index.html',
+      controller: 'StudentCtrl'
+
+    })
+    .state('student_profil', {
+      // parent: parent,
+      url: '/student/profil',
+      templateUrl: 'student/profil.html',
+      controller: 'SprofileCtrl'
+
+    })
+    .state('student_solde', {
+      // parent : parent,
+      url: '/student/solde',
+      templateUrl: 'student/solde.html',
+      controller: 'SsoldeCtrl'
+
+    })
+    .state('teacher', {
+      url: '/teacher',
+      templateUrl: 'teacher/index.html',
+      controller: 'TeacherCtrl'
+
+    })
+    .state('teacher_profil', {
+      // parent: parent,
+      url: '/teacher/profil',
+      templateUrl: 'teacher/profil.html',
+      controller: 'TprofileCtrl'
+
+    })
+    .state('teacher_solde', {
+      // parent : parent,
+      url: '/teacher/solde',
+      templateUrl: 'teacher/solde.html',
+      controller: 'TsoldeCtrl'
+
+    })
+
 
     // setup an abstract state for the tabs directive
-  
+
     .state('tab', {
       url: '/tab',
       abstract: true,//Si je tape l'url avec /tab rien ne va se produire, c'est juste pour l'organisation du code
@@ -115,21 +342,30 @@ CapMission.config(['$stateProvider', '$urlRouterProvider', '$ionicConfigProvider
       views: {
         'tab-home': {
           templateUrl: 'tab/home/profile.html',
-          controller: 'ProfileCtrl'
+          controller: 'ProfileCtrl',
         }
       }
     })
-    
+    .state('tab.home-solde', {
+      url: '/solde',
+      views: {
+        'tab-home': {
+          templateUrl: 'tab/home/solde.html',
+          controller: 'SoldeCtrl',
+        }
+      }
+    })
+
    .state('tab.test', {
       url: '/test',
-      views:{ 
+      views:{
           'test':{
                 templateUrl: 'tab/test/test.html',
                 controller: ''
                  }
       }
     })
-    .state('tab.quiz', {
+    /*.state('tab.quiz', {
       url: '/quiz',
       views: {
         'tab-quiz': {
@@ -147,7 +383,7 @@ CapMission.config(['$stateProvider', '$urlRouterProvider', '$ionicConfigProvider
         }
       }
     })
-  
+
     .state('tab.quiz-questions', {
       cache: false,
       url: '/quiz/:idCourse/quizzes/:idQuiz',
@@ -168,7 +404,7 @@ CapMission.config(['$stateProvider', '$urlRouterProvider', '$ionicConfigProvider
         }
       }
     })
-  
+
     .state('tab.quiz-list', {
       url: '/quiz/:idCourse/list',
       views: {
@@ -204,7 +440,7 @@ CapMission.config(['$stateProvider', '$urlRouterProvider', '$ionicConfigProvider
           controller: 'FollowCtrl'
         }
       }
-    })
+    })*/
     .state('tab.stats', {
       url: '/stats',
       views: {
@@ -223,8 +459,8 @@ CapMission.config(['$stateProvider', '$urlRouterProvider', '$ionicConfigProvider
         }
       }
     })
-  
-  
+
+
 
     .state('tab.message-detail', {
       url: '/message/:messageId',
@@ -247,15 +483,24 @@ CapMission.config(['$stateProvider', '$urlRouterProvider', '$ionicConfigProvider
 
 // if none of the above states are matched, use this as the fallback
   $urlRouterProvider.otherwise('/login');
+  function skipIfLoggedIn($q, $auth) {
+    var deferred = $q.defer();
+    if ($auth.isAuthenticated()) {
+      deferred.reject();
+    } else {
+      deferred.resolve();
+    }
+    return deferred.promise;
+  }
 
-  $httpProvider.interceptors.push(['$q', 'Constants', function ($q, Constants) {
+  /*$httpProvider.interceptors.push(['$q', 'Constants', function ($q, Constants) {
     return {
 
       request: function (config) {
        /* console.warn(config.url);
         if (config.url.indexOf(Constants.URL_CANVAS) !== -1) {
           config.headers.Authorization = "Bearer fgnxtyZlcqMsMOT6GGpUfeBtlstr0JjuOBh0mPE1peOwj7jJzsOTTAm483Ykai1i";
-        }*/
+        }
         return config || $q.when(config);
       },
       response: function (response) {
@@ -279,7 +524,7 @@ CapMission.config(['$stateProvider', '$urlRouterProvider', '$ionicConfigProvider
         return response
       }
     };
-  }]);
+  }]);*/
 
 }]);
 
@@ -298,6 +543,11 @@ CapMission.factory('Data', function () {
     }
   };
 });
+/*CapMission.factory('UserService', [function(user) {
+  return {
+    login : user.login
+  };
+}])*/
 
 CapMission.directive('hideTabs', ['$rootScope', function ($rootScope) {
   return {
