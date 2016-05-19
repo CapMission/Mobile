@@ -20,12 +20,13 @@ authentication.controller('ChoixCtrl', ['$scope','$rootScope','$http','$location
     $http.get('http://81.192.194.109:8182/CapMissionApp/parents/' + id).success(function (data, status, headers, config) {
       //$scope.test="safaa"
       $rootScope.parent = data
-      //console.log(data)
+      console.log(data)
      if(data.entity == null){
         toastr.warning("Désolés, vous n'êtes pas autorisés à accéder en tant que parent");
         $location.path('/role');
       }
       else{
+
         $location.path('/choix');
 
       }

@@ -42,36 +42,137 @@
     <br><br><br>
     <div class="panel panel-default">
       <div class="panel-body">
-        <div class="profilLegend" ><legend class="legendP"> <i class="ion-clipboard"></i><strong> Mon profil<!--i class="icon ion-compose" ng-click=""></i--></strong></legend></div>
+        <div class="profilLegend" ><legend class="legendP"> <i class="ion-clipboard"></i><strong> Mon profil</strong></legend></div>
         <form >
-          <br>
 
           <div class="form-group">
-           <label class="control-label labelF"><i class="ion-person"></i> Name</label> <br>
-            {{student.entity.name}}
+           <label class="control-label labelF"><i class="ion-person"></i> Nom & Prénom</label> <br>
+            {{student.entity.name}}<i class="icon ion-compose updateIcon" ng-click="openModal(1)"></i>
             <br><br>
           </div>
           <div class="form-group" ng-if="student.entity.birthDate != ''">
             <label  class="control-label labelF"><i class="ion-ios-calendar"></i> Date de naissance</label> <br>
-            {{student.entity.birthDateString}}
+            {{student.entity.birthDateString}}<i class="icon ion-compose updateIcon" ng-click="openModal(2)"></i>
             <br><br>
           </div>
           <div class="form-group" ng-if="student.entity.phone != ''">
             <label class="control-label labelF"><i class="ion-android-phone-portrait"></i> Téléphone</label><br>
-            {{student.entity.phone}}
+            {{student.entity.phone}}<i class="icon ion-compose updateIcon" ng-click="openModal(3)"></i>
           </div><br>
           <div class="form-group" ng-if="student.entity.mail != ''">
             <label class="control-label labelF"><i class="ion-at"></i> Email </label><br>
-            {{student.entity.mail}}
-          </div><br>
-          <div class="form-group" ng-if="student.entity.school != ''">
-            <label class="control-label labelF"><i class="ion-university"></i> Ecole </label><br>
-           {{student.entity.school.name}}
+            {{student.entity.mail}}<i class="icon ion-compose updateIcon" ng-click="openModal(4)"></i>
           </div><br>
 
         </form>
       </div>
     </div>
+    <!-- Modals -->
+    <script id="templates/modal-1.html" type="text/ng-template">
+      <div class="modal transparent">
+        <div class="card">
+          <i class="icon ion-ios-close close-modal" ng-click="closeModal(1)"></i>
+          <div class="item item-divider">
+            Modification
+          </div>
+          <p class="headerModal item-divider padding">Etes-vous sûr de vouloir modifier votre nom : {{student.entity.name}} ?</p>
+          <form name="myForm"  novalidate>
+            <ion-list>
+              <label class="item item-input item-stacked-label">
+                <input ng-model="mail.to" type="hidden">
+                <input ng-model="mail.from" type="hidden">
+                <input ng-model="mail.subject" type="hidden">
+                <input type="text" name="name" ng-model="mail.body" placeholder="Nouvelle valeur" required>
+              </label>
+              <button ng-disabled="myForm.$invalid" class="button button-full button-stable buttonEmp" ng-click="sendSN(mail);closeModal(1)">Envoyer</button>
+            </ion-list>
+          </form>
+          <div class="padding">
+            <p ng-show="myForm.name.$error.required">* Nouvelle valeur est obligatoire</p>
+          </div>
+        </div>
+      </div>
+    </script>
+
+    <script id="templates/modal-2.html" type="text/ng-template">
+      <div class="modal transparent">
+        <div class="card">
+          <i class="icon ion-ios-close close-modal" ng-click="closeModal(2)"></i>
+          <div class="item item-divider">
+            Modification
+          </div>
+          <p class="headerModal item-divider padding">Etes-vous sûr de vouloir modifier votre date de naissance : {{student.entity.birthDateString}} ?</p>
+          <form name="myForm"  novalidate>
+            <ion-list>
+              <label class="item item-input item-stacked-label">
+                <input ng-model="mail.to" type="hidden">
+                <input ng-model="mail.from" type="hidden">
+                <input ng-model="mail.subject" type="hidden">
+                <input type="date" name="date" ng-model="mail.body" placeholder="Nouvelle valeur" max="2014-12-21" min="1920-01-01" required >
+              </label>
+              <button ng-disabled="myForm.$invalid" class="button button-full button-stable buttonEmp" ng-click="sendSB(mail);closeModal(2)">Envoyer</button>
+            </ion-list>
+          </form>
+          <div class="padding">
+            <p ng-show="myForm.date.$error.required">* Nouvelle valeur est obligatoire</p>
+            <p ng-show="myForm.date.$error.date">* Date invalide</p>
+          </div>
+        </div>
+      </div>
+    </script>
+
+    <script id="templates/modal-3.html" type="text/ng-template">
+      <div class="modal transparent">
+        <div class="card">
+          <i class="icon ion-ios-close close-modal" ng-click="closeModal(3)"></i>
+          <div class="item item-divider">
+            Modification
+          </div>
+          <p class="headerModal item-divider padding">Etes-vous sûr de vouloir modifier votre téléphone : {{student.entity.phone}} ?</p>
+          <form name="myForm"  novalidate>
+            <ion-list>
+              <label class="item item-input item-stacked-label">
+                <input ng-model="mail.to" type="hidden">
+                <input ng-model="mail.from" type="hidden">
+                <input ng-model="mail.subject" type="hidden">
+                <input type="tel" name="tel" ng-model="mail.body" placeholder="Nouvelle valeur" required>
+              </label>
+              <button ng-disabled="myForm.$invalid" class="button button-full button-stable buttonEmp" ng-click="sendST(mail);closeModal(3)">Envoyer</button>
+            </ion-list>
+          </form>
+          <div class="padding">
+            <p ng-show="myForm.tel.$error.required">* Nouvelle valeur est obligatoire</p>
+          </div>
+        </div>
+      </div>
+    </script>
+
+    <script id="templates/modal-4.html" type="text/ng-template">
+      <div class="modal transparent">
+        <div class="card">
+          <i class="icon ion-ios-close close-modal" ng-click="closeModal(4)"></i>
+          <div class="item item-divider">
+            Modification
+          </div>
+          <p class="headerModal item-divider padding">Etes-vous sûr de vouloir modifier votre email : {{student.entity.mail}} ?</p>
+          <form name="myForm"  novalidate>
+            <ion-list>
+              <label class="item item-input item-stacked-label">
+                <input ng-model="mail.to" type="hidden">
+                <input ng-model="mail.from" type="hidden">
+                <input ng-model="mail.subject" type="hidden">
+                <input type="email" name="mail" ng-model="mail.body" placeholder="Nouvelle valeur" required>
+              </label>
+              <button ng-disabled="myForm.$invalid" class="button button-full button-stable buttonEmp" ng-click="sendSE(mail);closeModal(4)">Envoyer</button>
+            </ion-list>
+          </form>
+          <div class="padding">
+            <p ng-show="myForm.mail.$error.required">* Nouvelle valeur est obligatoire</p>
+            <p ng-show="myForm.mail.$error.email">* Adresse email non valide</p>
+          </div>
+        </div>
+      </div>
+    </script>
 
   </ion-content>
 </ion-view>

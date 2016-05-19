@@ -8,26 +8,25 @@
     </div>
     <br><br><br>
     <div class="divRole">
-     Vous voulez accéder en tant que :
+     Vous êtes ? :
     <br><br><br>
-      <div ng-if="resp.entity.id != ''">
 
     <div  ng-app="capMission.parent" ng-controller="ChoixCtrl">
       <center>  <button ng-click="get(resp.entity.id)" class="button icon-right ion-chevron-right buttonEmp" >Parent</button></center>
       <br>
     </div>
-      </div>
-      <div ng-if="teacher.entity.name != ''">
+
+
     <div  ng-app="capMission.teacher" ng-controller="TeacherCtrl">
       <center>  <button ng-click="get(resp.entity.id)" class="button icon-right ion-chevron-right buttonEmp">Enseignant</button></center>
       <br>
     </div>
-        </div>
-      <div ng-if="student.entity.name != ''">
+
+
     <div  ng-app="capMission.student" ng-controller="StudentCtrl">
       <center>  <button ng-click="get(resp.entity.id)" class="button icon-right ion-chevron-right buttonEmp" >Etudiant</button></center>
     </div><br>
-      </div>
+
       </div>
   </ion-content>
 </ion-view>

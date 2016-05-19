@@ -21,24 +21,30 @@ var CapMission = angular.module('capMission', [
   'satellizer',
   'ui.bootstrap',
   'ionicProcessSpinner',
-  'services'
+  'services',
+  'ngStorage'
 ]);
-CapMission.controller('capController',function($scope,$rootScope, $location, $auth, $http,$ionicLoading,$ionicHistory){
+CapMission.controller('capController',function($scope,$rootScope, $location, $auth, $http,$ionicLoading,$localStorage){
+
 
   $rootScope.login = function(user) {
 
+   /* $localStorage.login = user.login
+    $localStorage.password = user.password*/
+
+    //console.log('login storage :'+$localStorage.login)
+    //console.log('password storage :'+$localStorage.password)
+
     $ionicLoading.show({
-      template: 'Chargement...'
+      template: 'Chargement'
     });
     $http.post('http://81.192.194.109:8182/CapMissionApp/auth/login', user).success(function(data, status, headers, config){
       $rootScope.resp = data
+     /* $localStorage.id = data.entity.id*/
 
       $ionicLoading.hide();
 
-      console.log(JSON.stringify({data: data}))
-      $ionicHistory.clearHistory();
-      $ionicHistory.clearCache();
-      $ionicHistory.nextViewOptions({ disableBack: true, disableAnimate: true, historyRoot: true });
+      //console.log(JSON.stringify({data: data}))
       $location.path('/role');
     }).error(function(data){
       $rootScope.errorMessage = 'Login/Mot de passe incorrect';
@@ -51,6 +57,106 @@ CapMission.controller('capController',function($scope,$rootScope, $location, $au
 
   //console.log(data)
 })
+CapMission.controller("EmailController",function($scope,$ionicPopup,$rootScope,$ionicModal,$http,$ionicLoading,$ionicHistory){
+  $ionicModal.fromTemplateUrl('templates/modal.html', {
+    scope: $scope
+  }).then(function(modal) {
+    $scope.modal = modal;
+  });
+  $rootScope.get = function(id,enfant,period,debut){
+    $rootScope.idF = id
+    $rootScope.child = enfant
+    $rootScope.period = period
+    $rootScope.debut = debut
+    debutDate = new Date(debut).toLocaleDateString('fr-FR', {
+      day : 'numeric',
+      month : 'short',
+      year : 'numeric',
+      hour : 'numeric',
+      minute : 'numeric'
+    }).split(' ').join('-');
+    console.log('idF: '+id)
+    console.log('enfant: '+enfant)
+    console.log('period: '+period)
+    console.log('debut: '+debutDate)
+  }
+  $rootScope.send = function(mail,id,enfant,period,debut) {
+
+    $test = $rootScope.parent.entity.mail
+
+    mail.to='info@capmission.com'
+    mail.from= 'capmission.com@gmail.com'
+    //mail.subject='Modification séance de : '+ enfant + 'le : ' + debutDate
+    id = $rootScope.idF
+    enfant = $rootScope.child
+    period = $rootScope.period
+    debut = $rootScope.debut
+    debutDate = new Date(debut).toLocaleDateString('fr', {
+      weekday : 'long',
+      month : 'short',
+      year : 'numeric',
+      hour : 'numeric',
+      minute : 'numeric'
+    }).split(' ').join('-');
+    mail.subject='Modification de la séance ' + period  + ' de : '+ enfant + ' le : ' + debutDate
+
+    console.log('idHF: '+id)
+    console.log('child: '+enfant)
+    console.log('period: '+period)
+    console.log('debut: '+debutDate)
+    console.log('to: '+mail.to)
+    console.log('from: '+mail.from)
+    console.log('subject: '+mail.subject)
+    console.log('body: '+mail.body)
+
+    $ionicLoading.show({
+      template: "En cours d'envoi !"
+    });
+    $http.post('http://81.192.194.109:8182/CapMissionApp/send-mail', mail).success(function(data, status, headers, config){
+      $ionicLoading.hide();
+        toastr.success('Votre demande a été envoyée avec succès')
+        //$ionicHistory.goBack();
+    }).error(function(data){
+      $ionicLoading.hide();
+      toastr.error("Echec envoi de message ! Réessayez plus tart !")
+    });
+
+  }
+
+  /*$scope.showConfirm = function() {
+    var confirmPopup = $ionicPopup.confirm({
+      title: 'Attention',
+      template: 'Etes-vous sûrs de vouloir modifier cette séance?',
+      cancelText: 'Annuler',
+      cancelType: 'button-assertive',
+      okText: 'Continuer',
+      okType: 'button-balanced'
+      /!*buttons: [
+        { text: 'Annuler',
+          type: 'button-assertive',
+          onTap: function(e) {
+            alert('not suuuure')
+          }
+        },
+        {
+          text: '<b>Continuer</b>',
+          type: 'button-balanced',
+          onTap: function(e){
+        }
+        }
+      ]*!/
+    });
+    confirmPopup.then(function(res) {
+      if(res) {
+
+        console.log('You are sure');
+      } else {
+        console.log('You are not sure');
+      }
+    });
+  };*/
+
+});
 /*
 CapMission.directive('uiShowPassword', [
   function () {
@@ -88,7 +194,7 @@ CapMission.directive('uiShowPassword', [
 */
 
 CapMission.constant("Constants", {
-  "URL_API": "http://localhost:8182/CapMissionApp"
+  "URL_API": "http://81.192.194.109:8182/CapMissionApp"
   //"URL_CANVAS": "http://192.168.1.9/"
 });
 /*CapMission.filter('offset', function() {
@@ -100,7 +206,7 @@ CapMission.constant("Constants", {
 });*/
 
 
-CapMission.run(['$ionicPlatform', '$rootScope','$state','authService', function ($ionicPlatform, $rootScope,$state,authService) {
+CapMission.run(['$ionicPlatform', '$rootScope','$state','authService','$ionicHistory', function ($ionicPlatform, $rootScope,$state,authService,$ionicHistory) {
   $ionicPlatform.ready(function () {
     // Hide the accessory bar by default (remove this to show the accessory bar above the keyboard
     // for form inputs)
@@ -113,10 +219,37 @@ CapMission.run(['$ionicPlatform', '$rootScope','$state','authService', function 
       // org.apache.cordova.statusbar required
       StatusBar.styleLightContent();
     }
+    $ionicPlatform.registerBackButtonAction(function(e) {
+      e.preventDefault();
+      function showConfirm() {
+        var confirmPopup = $ionicPopup.show({
+          title : 'Exit AppName?',
+          template : 'Are you sure you want to exit AppName?',
+          buttons : [{
+            text : 'Cancel',
+            type : 'button-royal button-outline',
+          }, {
+            text : 'Ok',
+            type : 'button-royal',
+            onTap : function() {
+              ionic.Platform.exitApp();
+            }
+          }]
+        });
+      };
 
-    $rootScope.$on('$stateChangeError', function (event, toState, toParams, fromState, fromParams, error) {
-      console.warn(error);
-    });
+      // Is there a page to go back to?
+      if ($ionicHistory.backView()) {
+      // Go back in history
+        $ionicHistory.backView().go();
+      } else {
+      // This is the last page: Show confirmation popup
+        showConfirm();
+      }
+
+      return false;
+    }, 101);
+
   });
 }]);
 /*CapMission.run(function($ionicPlatform, $ionicPopup) {

@@ -41,19 +41,56 @@
 
   <ion-content>
     <br><br><br>
-    <div class="divEmploi"><i class="ion-calendar">&nbsp;Planning </i></div><br>
-    <div class="card divCard"
-         ng-repeat="timetables in teacher.entity.timetables | orderBy:'start'"
-         ng-if="timetables.start >  now">
-      <div style="width: 330px;height: 15px;font-family: sans-serif;font-size: small;background-color: #acbca0" class="item item-divider">
-        {{timetables.start | date: 'EEEE dd MMMM'}}&nbsp;&nbsp;{{timetables.start | date: 'HH:mm'}}&nbsp;-
-        {{timetables.end | date: 'HH:mm'}}&nbsp;&nbsp;<strong> {{timetables.name}} </strong></div>
+    <div class="divEmploi"><i class="ion-calendar">&nbsp;Planning</i></div><br>
+    <!--<div><p>Vous voulez modifier ou annuler une séance? Cliquer sur <i class="icon ion-compose"></i> à côté de la séance concernée pour nous envoyer un message pour plus de détails !</p><br></div>-->
+    <div  class="card divCard item-text-wrap"
+          ng-repeat="timetables in teacher.entity.timetables | orderBy:'start'"
+          ng-if="timetables.start >  now">
 
+      <div  class="item item-divider divItem item-icon-right">
+        <a href="#" ng-app="capMission.teacher" ng-controller="TEmailController" ng-click="modal.show();getT(timetables.id,timetables.name,timetables.start)"><i class="icon ion-compose iMod"></i></a>
+        <div class="TextS">
+          {{timetables.start  | date: 'EEEE dd MMMM'}}&nbsp;&nbsp;{{timetables.start | date: 'HH:mm'}}&nbsp;-
+          {{timetables.end  | date: 'HH:mm'}}&nbsp;&nbsp;<strong> {{timetables.name}} </strong></div>
+      </div>
     </div>
     <!--pagination data-boundary-links="true" data-num-pages="noOfPages" data-current-page="currentPage" max-size="maxSize"
                 class="pagination-small"
                 data-previous-text="&laquo;" data-next-text="&raquo;"></pagination-->
+    <script id="templates/modalT.html" type="text/ng-template">
+      <div class="modal">
+      <ion-modal-view >
+        <ion-header-bar class="bar bar-header bar-stable">
+          <div class="headerModal">Vous voulez modifier ou supprimer cette séance? Envoyez-nous un message !</div>
+          <div><h1 class="title"></h1>
+            <i class="icon ion-ios-close close-modal" ng-click="modal.hide()"></i>
 
+         </div>
+        </ion-header-bar>
+        <ion-content class="padding">
+          <div class="list">
+            <form name="myForm" novalidate>
+              <input ng-model="id" type="hidden">
+              <input ng-model="period" type="hidden">
+              <input ng-model="debut" type="hidden">
+              <input ng-model="mail.to" type="hidden">
+              <input ng-model="mail.from" type="hidden">
+              <input ng-model="mail.subject" type="hidden">
+              <label class="item item-input item-floating-label">
+                <span class="input-label">Message</span>
+                <textarea name="msg" ng-model="mail.body" placeholder="Votre message" required></textarea>
+              </label>
+              <button ng-disabled="myForm.$invalid" class="button button-full button-stable buttonEmp" ng-click="sendT(mail,id,period,debut);modal.hide()">Envoyer</button>
+              <!--<button class="button button-clear button-primary" ng-click="modal.hide()">Annuler</button>-->
+            </form>
+            <div class="padding">
+              <p ng-show="myForm.msg.$error.required">* Message est obligatoire</p>
+            </div>
+          </div>
+        </ion-content>
+      </ion-modal-view>
+        </div>
+    </script>
   </ion-content>
 
 </ion-view>

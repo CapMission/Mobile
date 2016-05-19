@@ -40,6 +40,7 @@
     <file url="file://$PROJECT_DIR$/www/teacher/teacher-popover.html" charset="UTF-8" />
     <file url="file://$PROJECT_DIR$/www/teacher/teacher.js" charset="UTF-8" />
     <file url="file://$PROJECT_DIR$/www/templates/parent-popover.html" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/www/templates/sendMail.html" charset="UTF-8" />
     <file url="file://$PROJECT_DIR$/www/templates/student-popover.html" charset="UTF-8" />
     <file url="file://$PROJECT_DIR$/www/templates/teacher-popover.html" charset="UTF-8" />
   </component>
