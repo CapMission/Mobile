@@ -8,10 +8,9 @@
       <a class="item" href="#/parent/apropos" ng-click="popover.hide()">
         A propos
       </a>
-      <a class="item" href="#/logout/logout.js" ng-click="popover.hide()" >
+      <a class="item" ng-controller="LogoutCtrl" ng-click="logout();popover.hide()">
         Quitter l'application
       </a>
-
     </div>
   </ion-content>
 </ion-popover-view>

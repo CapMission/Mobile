@@ -54,13 +54,19 @@ teacher.controller("TEmailController",function($scope,$ionicPopup,$rootScope,$io
     $ionicLoading.show({
       template: "En cours d'envoi !"
     });
-    $http.post('http://81.192.194.109:8182/CapMissionApp/send-mail', mail).success(function(data, status, headers, config){
+    $http.post('http://81.192.194.109:8182/CapMissionApp/send-mail', mail, {timeout: 120000}).success(function (data, status, headers, config) {
       $ionicLoading.hide();
       toastr.success('Votre demande a été envoyée avec succès')
       //$ionicHistory.goBack();
-    }).error(function(data){
-      $ionicLoading.hide();
-      toastr.error("Echec envoi de message ! Réessayez plus tart !")
+    }).error(function (data, status) {
+      if (status == 0) {
+        toastr.error('Echec de connexion ! Veuillez réessayer dans quelques instants !', 'Désolés !', {displayDuration: 1000});
+        navigator.app.exitApp();
+      }
+      else {
+        $ionicLoading.hide();
+        toastr.error("Echec envoi de message ! Réessayez plus tart !")
+      }
     });
 
   }
@@ -70,12 +76,13 @@ teacher.controller("TEmailController",function($scope,$ionicPopup,$rootScope,$io
 
 teacher.controller('TeacherCtrl', ['$scope','$location','$rootScope','$http','$ionicPopover','$ionicLoading', function ($scope,$location,$rootScope,$http,$ionicPopover,$ionicLoading) {
 
+  $scope.idTeacher = window.localStorage.getItem('id')
   $scope.now = new Date()
   $scope.get = function(id) {
     $ionicLoading.show({
       template: 'Chargement'
     });
-    $http.get('http://81.192.194.109:8182/CapMissionApp/teachers/' + id).success(function (data, status, headers, config) {
+    $http.get('http://81.192.194.109:8182/CapMissionApp/teachers/' + id, {timeout: 35000}).success(function (data, status, headers, config) {
 
       $rootScope.teacher = data
       $ionicLoading.hide();
@@ -89,8 +96,8 @@ teacher.controller('TeacherCtrl', ['$scope','$location','$rootScope','$http','$i
 
       }
     }).error(function (data) {
-      toastr.error('Echec de connexion');
-
+      toastr.error('Echec de connexion ! Veuillez réessayer dans quelques instants !', 'Désolés !', {displayDuration: 1000});
+      navigator.app.exitApp();
     });
 
   }
@@ -165,12 +172,18 @@ teacher.controller('TprofileCtrl', ['$scope','$rootScope','$ionicPopover','$ioni
     $ionicLoading.show({
       template: "En cours d'envoi !"
     });
-    $http.post('http://81.192.194.109:8182/CapMissionApp/send-mail', mail).success(function(data, status, headers, config){
+    $http.post('http://81.192.194.109:8182/CapMissionApp/send-mail', mail, {timeout: 120000}).success(function (data, status, headers, config) {
       $ionicLoading.hide();
       toastr.success('Votre demande a été envoyée avec succès')
-    }).error(function(data){
-      $ionicLoading.hide();
-      toastr.error("Echec envoi de message ! Réessayez plus tart !")
+    }).error(function (data, status) {
+      if (status == 0) {
+        toastr.error('Echec de connexion ! Veuillez réessayer dans quelques instants !', 'Désolés !', {displayDuration: 1000});
+        navigator.app.exitApp();
+      }
+      else {
+        $ionicLoading.hide();
+        toastr.error("Echec envoi de message ! Réessayez plus tart !")
+      }
     });
 
   }
@@ -194,12 +207,18 @@ teacher.controller('TprofileCtrl', ['$scope','$rootScope','$ionicPopover','$ioni
     $ionicLoading.show({
       template: "En cours d'envoi !"
     });
-    $http.post('http://81.192.194.109:8182/CapMissionApp/send-mail', mail).success(function(data, status, headers, config){
+    $http.post('http://81.192.194.109:8182/CapMissionApp/send-mail', mail, {timeout: 120000}).success(function (data, status, headers, config) {
       $ionicLoading.hide();
       toastr.success('Votre demande a été envoyée avec succès')
-    }).error(function(data){
-      $ionicLoading.hide();
-      toastr.error("Echec envoi de message ! Réessayez plus tart !")
+    }).error(function (data, status) {
+      if (status == 0) {
+        toastr.error('Echec de connexion ! Veuillez réessayer dans quelques instants !', 'Désolés !', {displayDuration: 1000});
+        navigator.app.exitApp();
+      }
+      else {
+        $ionicLoading.hide();
+        toastr.error("Echec envoi de message ! Réessayez plus tart !")
+      }
     });
 
   }
@@ -223,12 +242,18 @@ teacher.controller('TprofileCtrl', ['$scope','$rootScope','$ionicPopover','$ioni
     $ionicLoading.show({
       template: "En cours d'envoi !"
     });
-    $http.post('http://81.192.194.109:8182/CapMissionApp/send-mail', mail).success(function(data, status, headers, config){
+    $http.post('http://81.192.194.109:8182/CapMissionApp/send-mail', mail, {timeout: 120000}).success(function (data, status, headers, config) {
       $ionicLoading.hide();
       toastr.success('Votre demande a été envoyée avec succès')
-    }).error(function(data){
-      $ionicLoading.hide();
-      toastr.error("Echec envoi de message ! Réessayez plus tart !")
+    }).error(function (data, status) {
+      if (status == 0) {
+        toastr.error('Echec de connexion ! Veuillez réessayer dans quelques instants !', 'Désolés !', {displayDuration: 1000});
+        navigator.app.exitApp();
+      }
+      else {
+        $ionicLoading.hide();
+        toastr.error("Echec envoi de message ! Réessayez plus tart !")
+      }
     });
 
   }
@@ -246,14 +271,15 @@ teacher.controller('TsoldeCtrl', ['$scope','$ionicPopover','$ionicHistory', func
 }]);
 teacher.controller('TtimeCtrl', ['$scope','$ionicPopover','$rootScope','$http','$location', function ($scope, $ionicPopover,$rootScope,$http,$location) {
   $id = resp.entity.id
-  $http.get('http://81.192.194.109:8182/CapMissionApp/teachers/' + $id).success(function (data, status, headers, config) {
+  $http.get('http://81.192.194.109:8182/CapMissionApp/teachers/' + $id, {timeout: 35000}).success(function (data, status, headers, config) {
     //$scope.test="safaa"
 
     $rootScope.teach = data
     console.log('Data emploi'+JSON.stringify({data: data}))
     $location.path('teacher/index.html');
   }).error(function (data) {
-    toastr.error('Echec de connexion');
+    toastr.error('Echec de connexion ! Veuillez réessayer dans quelques instants !', 'Désolés !', {displayDuration: 1000});
+    navigator.app.exitApp();
 
   });
   $ionicPopover.fromTemplateUrl('teacher/teacher-popover.html', {

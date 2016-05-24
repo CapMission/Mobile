@@ -13,6 +13,7 @@ authentication.controller('ChoixCtrl', ['$scope','$rootScope','$http','$location
     toastr.clear();
 
   };
+  $scope.idParent = window.localStorage.getItem('id')
   //$ionicLoading.show();
   $scope.getd = function(){}
  // $id = $rootScope.resp.entity.id

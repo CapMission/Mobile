@@ -17,7 +17,8 @@
     "angular-i18n": "^1.5.5",
     "bootstrap": "^3.3.6",
     "ionic-toast": "^0.2.0",
-    "ionic-process-spinner": "^0.0.1"
+    "ionic-process-spinner": "^0.0.1",
+    "ngstorage": "^0.3.10"
   },
   "resolutions": {
     "angular": "1.4.x"

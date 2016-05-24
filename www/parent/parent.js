@@ -1,4 +1,4 @@
-var parent = angular.module('capMission.parent', ['ngResource', 'ui.router', 'ui.bootstrap','ionicProcessSpinner','ngCordova']);
+var parent = angular.module('capMission.parent', ['ngResource', 'ui.router', 'ui.bootstrap', 'ionicProcessSpinner', 'ngCordova', 'ngStorage']);
 
 parent.filter('startFrom', function () {
   /*return function(input, start) {
@@ -14,22 +14,7 @@ parent.filter('startFrom', function () {
     return [];
   }
 });
-parent.controller('LogoutCtrl', function($location, $auth, $state,$ionicHistory,authService) {
-  /*$scope.logout = function(){
-   authService.logout()
-   .then(function(result){
-   $ionicHistory.clearHistory();
-   $ionicHistory.clearCache();
-   $ionicHistory.nextViewOptions({ disableBack: true, disableAnimate: true, historyRoot: true });
 
-   $state.go('login', {}, {reload: true});
-   });
-   };*/
-  //alert('exit !!')
-  //navigator.app.exitApp();
-
-
-});
 parent.controller('ParentCtrl', ['$scope', '$rootScope', '$http', '$location', '$ionicPopover', function ($scope, $rootScope, $http, $location, $ionicPopover) {
 
 
@@ -67,18 +52,18 @@ parent.controller('BackCtrl', ['$scope', '$rootScope', '$http', '$location', '$i
 }]);
 
 
-parent.controller('EnfantCtrl', ['$scope', '$rootScope', '$http', '$location', '$ionicPopover', '$ionicHistory','$ionicLoading','$ionicPopup', function ($scope, $rootScope, $http, $location, $ionicPopover, $ionicHistory,$ionicLoading,$ionicPopup) {
-
+parent.controller('EnfantCtrl', ['$scope', '$rootScope', '$http', '$location', '$ionicPopover', '$ionicHistory', '$ionicLoading', '$ionicPopup', '$q', function ($scope, $rootScope, $http, $location, $ionicPopover, $ionicHistory, $ionicLoading, $ionicPopup, $q) {
 
   $scope.now = new Date()
   $scope.getd = function (id) {
     $ionicLoading.show({
       template: 'Chargement'
     });
-    $http.get('http://81.192.194.109:8182/CapMissionApp/students/' + id).success(function (data, status, headers, config) {
+    $http.get('http://81.192.194.109:8182/CapMissionApp/students/' + id, {timeout: 35000}).success(function (data, status, headers, config) {
       //$scope.items = []
       $rootScope.son = data
       $ionicLoading.hide();
+      console.log('value : ' + window.localStorage.getItem('login'))
      /* $rootScope.currentPage = 1;
       $scope.itemsPerPage = 2;
       $rootScope.pageSize = 10;*/
@@ -88,7 +73,9 @@ parent.controller('EnfantCtrl', ['$scope', '$rootScope', '$http', '$location', '
 
       $location.path('/parent/emploiEnfant');
     }).error(function (data) {
-      toastr.error('Echec de connexion');
+      //alert("Désolés , échec de connexion ! Veuillez réessayer dans quelques instants !")
+      toastr.error('Echec de connexion ! Veuillez réessayer dans quelques instants !', 'Désolés !', {displayDuration: 1000});
+      navigator.app.exitApp();
 
     })
 
@@ -173,13 +160,19 @@ parent.controller('PprofileCtrl', ['$scope', '$ionicPopover', '$ionicHistory', '
     $ionicLoading.show({
       template: "En cours d'envoi !"
     });
-    $http.post('http://81.192.194.109:8182/CapMissionApp/send-mail', mail).success(function(data, status, headers, config){
+    $http.post('http://81.192.194.109:8182/CapMissionApp/send-mail', mail, {timeout: 120000}).success(function (data, status, headers, config) {
       $ionicLoading.hide()
       toastr.success('Votre demande a été envoyée avec succès')
       $ionicLoading.hide();
-    }).error(function(data){
-      $ionicLoading.hide();
-      toastr.error("Echec envoi de message ! Réessayez plus tart !")
+    }).error(function (data, status) {
+      if (status == 0) {
+        toastr.error('Echec de connexion ! Veuillez réessayer dans quelques instants !', 'Désolés !', {displayDuration: 1000});
+        navigator.app.exitApp();
+      }
+      else {
+        $ionicLoading.hide();
+        toastr.error("Echec envoi de message ! Réessayez plus tart !")
+      }
     });
 
   }
@@ -203,13 +196,19 @@ parent.controller('PprofileCtrl', ['$scope', '$ionicPopover', '$ionicHistory', '
     $ionicLoading.show({
       template: "En cours d'envoi !"
     });
-    $http.post('http://81.192.194.109:8182/CapMissionApp/send-mail', mail).success(function(data, status, headers, config){
+    $http.post('http://81.192.194.109:8182/CapMissionApp/send-mail', mail, {timeout: 120000}).success(function (data, status, headers, config) {
       $ionicLoading.hide();
       toastr.success('Votre demande a été envoyée avec succès')
       $ionicLoading.hide();
-    }).error(function(data){
-      $ionicLoading.hide();
-      toastr.error("Echec envoi de message ! Réessayez plus tart !")
+    }).error(function (data, status) {
+      if (status == 0) {
+        toastr.error('Echec de connexion ! Veuillez réessayer dans quelques instants !', 'Désolés !', {displayDuration: 1000});
+        navigator.app.exitApp();
+      }
+      else {
+        $ionicLoading.hide();
+        toastr.error("Echec envoi de message ! Réessayez plus tart !")
+      }
     });
 
   }
@@ -233,13 +232,19 @@ parent.controller('PprofileCtrl', ['$scope', '$ionicPopover', '$ionicHistory', '
     $ionicLoading.show({
       template: "En cours d'envoi !"
     });
-    $http.post('http://81.192.194.109:8182/CapMissionApp/send-mail', mail).success(function(data, status, headers, config){
+    $http.post('http://81.192.194.109:8182/CapMissionApp/send-mail', mail, {timeout: 120000}).success(function (data, status, headers, config) {
       $ionicLoading.hide();
       toastr.success('Votre demande a été envoyée avec succès')
       //$ionicLoading.hide();
-    }).error(function(data){
-      $ionicLoading.hide();
-      toastr.error("Echec envoi de message ! Réessayez plus tart !")
+    }).error(function (data, status) {
+      if (status == 0) {
+        toastr.error('Echec de connexion ! Veuillez réessayer dans quelques instants !', 'Désolés !', {displayDuration: 1000});
+        navigator.app.exitApp();
+      }
+      else {
+        $ionicLoading.hide();
+        toastr.error("Echec envoi de message ! Réessayez plus tart !")
+      }
     });
 
   }
@@ -263,13 +268,19 @@ parent.controller('PprofileCtrl', ['$scope', '$ionicPopover', '$ionicHistory', '
     $ionicLoading.show({
       template: "En cours d'envoi !"
     });
-    $http.post('http://81.192.194.109:8182/CapMissionApp/send-mail', mail).success(function(data, status, headers, config){
+    $http.post('http://81.192.194.109:8182/CapMissionApp/send-mail', mail, {timeout: 120000}).success(function (data, status, headers, config) {
       $ionicLoading.hide();
       toastr.success('Votre demande a été envoyée avec succès')
       $ionicLoading.hide();
-    }).error(function(data){
-      $ionicLoading.hide();
-      toastr.error("Echec envoi de message ! Réessayez plus tart !")
+    }).error(function (data, status) {
+      if (status == 0) {
+        toastr.error('Echec de connexion ! Veuillez réessayer dans quelques instants !', 'Désolés !', {displayDuration: 1000});
+        navigator.app.exitApp();
+      }
+      else {
+        $ionicLoading.hide();
+        toastr.error("Echec envoi de message ! Réessayez plus tart !")
+      }
     });
 
   }

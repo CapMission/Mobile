@@ -24,36 +24,52 @@ var CapMission = angular.module('capMission', [
   'services',
   'ngStorage'
 ]);
-CapMission.controller('capController',function($scope,$rootScope, $location, $auth, $http,$ionicLoading,$localStorage){
+CapMission.controller('capController', function ($scope, $rootScope, $location, $auth, $http, $ionicLoading, $localStorage, $window) {
 
-
-  $rootScope.login = function(user) {
-
-   /* $localStorage.login = user.login
-    $localStorage.password = user.password*/
-
-    //console.log('login storage :'+$localStorage.login)
-    //console.log('password storage :'+$localStorage.password)
-
+  $scope.username = window.localStorage.getItem('login')
+  $scope.password = window.localStorage.getItem('password')
+  if (window.localStorage.getItem('id') !== undefined && window.localStorage.getItem('login') !== undefined && window.localStorage.getItem('password') !== undefined) {
+    $location.path('/login')
+  }
+  $rootScope.login = function (user) {
+    /*user.login = $scope.username
+     user.password = $scope.password
+     console.log('user login'+ user.login)*/
     $ionicLoading.show({
       template: 'Chargement'
     });
-    $http.post('http://81.192.194.109:8182/CapMissionApp/auth/login', user).success(function(data, status, headers, config){
+    $http.post('http://81.192.194.109:8182/CapMissionApp/auth/login', user, {timeout: 30000}).success(function (data, status, headers, config) {
       $rootScope.resp = data
-     /* $localStorage.id = data.entity.id*/
-
+      $scope.test = data
+      console.log('login before : ' + $scope.test.entity.login)
+      window.localStorage.setItem('id', $scope.test.entity.id);
+      window.localStorage.setItem('login', $scope.test.entity.login);
+      window.localStorage.setItem('password', $scope.test.entity.password);
+      console.log('value id : ' + window.localStorage.getItem('id'))
+      console.log('value login : ' + window.localStorage.getItem('login'))
+      console.log('value password : ' + window.localStorage.getItem('password'))
       $ionicLoading.hide();
 
       //console.log(JSON.stringify({data: data}))
       $location.path('/role');
-    }).error(function(data){
-      $rootScope.errorMessage = 'Login/Mot de passe incorrect';
-
+    }).error(function (data, status) {
+      if (status == 0) {
+        toastr.error('Echec de connexion ! Veuillez réessayer dans quelques instants !', 'Désolés !', {displayDuration: 1000});
+        navigator.app.exitApp();
+      }
+      else if (data.login != window.localStorage.getItem('login') || data.password != window.localStorage.getItem('password')) {
+        $rootScope.errorMessageChang = "Votre login ou mot de passe a été changé ! Veuillez contacter Cap Mission pour plus d'informations";
+      }
+      else if (data.login != user.login || data.password != user.password) {
+        $rootScope.errorMessage = 'Login/Mot de passe incorrect';
+      }
       $ionicLoading.hide();
       $location.path('/login');
+
     });
 
   }
+
 
   //console.log(data)
 })
@@ -82,7 +98,7 @@ CapMission.controller("EmailController",function($scope,$ionicPopup,$rootScope,$
   }
   $rootScope.send = function(mail,id,enfant,period,debut) {
 
-    $test = $rootScope.parent.entity.mail
+    //$test = $rootScope.parent.entity.mail
 
     mail.to='info@capmission.com'
     mail.from= 'capmission.com@gmail.com'
@@ -112,13 +128,19 @@ CapMission.controller("EmailController",function($scope,$ionicPopup,$rootScope,$
     $ionicLoading.show({
       template: "En cours d'envoi !"
     });
-    $http.post('http://81.192.194.109:8182/CapMissionApp/send-mail', mail).success(function(data, status, headers, config){
+    $http.post('http://81.192.194.109:8182/CapMissionApp/send-mail', mail, {timeout: 120000}).success(function (data, status, headers, config) {
       $ionicLoading.hide();
         toastr.success('Votre demande a été envoyée avec succès')
         //$ionicHistory.goBack();
-    }).error(function(data){
-      $ionicLoading.hide();
-      toastr.error("Echec envoi de message ! Réessayez plus tart !")
+    }).error(function (data, status) {
+      if (status == 0) {
+        toastr.error('Echec de connexion ! Veuillez réessayer dans quelques instants !', 'Désolés !', {displayDuration: 1000});
+        navigator.app.exitApp();
+      }
+      else {
+        $ionicLoading.hide();
+        toastr.error("Echec envoi de message ! Réessayez plus tart !")
+      }
     });
 
   }
@@ -205,7 +227,6 @@ CapMission.constant("Constants", {
   }
 });*/
 
-
 CapMission.run(['$ionicPlatform', '$rootScope','$state','authService','$ionicHistory', function ($ionicPlatform, $rootScope,$state,authService,$ionicHistory) {
   $ionicPlatform.ready(function () {
     // Hide the accessory bar by default (remove this to show the accessory bar above the keyboard
@@ -219,37 +240,6 @@ CapMission.run(['$ionicPlatform', '$rootScope','$state','authService','$ionicHis
       // org.apache.cordova.statusbar required
       StatusBar.styleLightContent();
     }
-    $ionicPlatform.registerBackButtonAction(function(e) {
-      e.preventDefault();
-      function showConfirm() {
-        var confirmPopup = $ionicPopup.show({
-          title : 'Exit AppName?',
-          template : 'Are you sure you want to exit AppName?',
-          buttons : [{
-            text : 'Cancel',
-            type : 'button-royal button-outline',
-          }, {
-            text : 'Ok',
-            type : 'button-royal',
-            onTap : function() {
-              ionic.Platform.exitApp();
-            }
-          }]
-        });
-      };
-
-      // Is there a page to go back to?
-      if ($ionicHistory.backView()) {
-      // Go back in history
-        $ionicHistory.backView().go();
-      } else {
-      // This is the last page: Show confirmation popup
-        showConfirm();
-      }
-
-      return false;
-    }, 101);
-
   });
 }]);
 /*CapMission.run(function($ionicPlatform, $ionicPopup) {
@@ -266,6 +256,14 @@ CapMission.run(['$ionicPlatform', '$rootScope','$state','authService','$ionicHis
     }
   })
 });*/
+CapMission.controller('LogoutCtrl', function ($location, $auth, $state, $ionicHistory, authService, $scope) {
+
+  $scope.logout = function () {
+    alert('A bientôt !');
+    navigator.app.exitApp();
+  }
+
+});
 CapMission.config(function($authProvider) {
   $authProvider.facebook({
     clientId: '561387454023937',
@@ -333,7 +331,7 @@ CapMission.config(['$stateProvider', '$urlRouterProvider', '$ionicConfigProvider
     })
     .state('logout', {
         url: '/logout',
-        template: null,
+      //template: 'authentication/logout.html',
         controller: 'LogoutCtrl'
       })
 
@@ -616,15 +614,6 @@ CapMission.config(['$stateProvider', '$urlRouterProvider', '$ionicConfigProvider
 
 // if none of the above states are matched, use this as the fallback
   $urlRouterProvider.otherwise('/login');
-  function skipIfLoggedIn($q, $auth) {
-    var deferred = $q.defer();
-    if ($auth.isAuthenticated()) {
-      deferred.reject();
-    } else {
-      deferred.resolve();
-    }
-    return deferred.promise;
-  }
 
   /*$httpProvider.interceptors.push(['$q', 'Constants', function ($q, Constants) {
     return {
