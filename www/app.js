@@ -25,16 +25,28 @@ var CapMission = angular.module('capMission', [
   'ngStorage'
 ]);
 CapMission.controller('capController', function ($scope, $rootScope, $location, $auth, $http, $ionicLoading, $localStorage, $window) {
+  $scope.checkStatus = window.localStorage.getItem('status')
+  if ($scope.checkStatus === 'undefined') {
+    window.localStorage.clear()
+    $scope.checkStatus = false
+    console.log('false checkbox : ' + $scope.checkStatus)
 
-  $scope.username = window.localStorage.getItem('login')
-  $scope.password = window.localStorage.getItem('password')
-  if (window.localStorage.getItem('id') !== undefined && window.localStorage.getItem('login') !== undefined && window.localStorage.getItem('password') !== undefined) {
-    $location.path('/login')
   }
+  else if ($scope.checkStatus === 'true') {
+    $scope.username = window.localStorage.getItem('login')
+    $scope.password = window.localStorage.getItem('password')
+    $scope.checkStatus = true
+    window.localStorage.setItem('status', 'true');
+    console.log('true checkbox : ' + $scope.checkStatus)
+  }
+
+  /*if (window.localStorage.getItem('status') !== undefined && window.localStorage.getItem('id') !== undefined && window.localStorage.getItem('login') !== undefined && window.localStorage.getItem('password') !== undefined) {
+    $location.path('/login')
+   }*/
   $rootScope.login = function (user) {
-    /*user.login = $scope.username
-     user.password = $scope.password
-     console.log('user login'+ user.login)*/
+    console.log('status before : ' + $scope.checkStatus)
+    window.localStorage.setItem('status', $scope.checkStatus);
+    console.log('status  : ' + $scope.checkStatus)
     $ionicLoading.show({
       template: 'Chargement'
     });
@@ -42,9 +54,11 @@ CapMission.controller('capController', function ($scope, $rootScope, $location, 
       $rootScope.resp = data
       $scope.test = data
       console.log('login before : ' + $scope.test.entity.login)
+
       window.localStorage.setItem('id', $scope.test.entity.id);
       window.localStorage.setItem('login', $scope.test.entity.login);
       window.localStorage.setItem('password', $scope.test.entity.password);
+
       console.log('value id : ' + window.localStorage.getItem('id'))
       console.log('value login : ' + window.localStorage.getItem('login'))
       console.log('value password : ' + window.localStorage.getItem('password'))
@@ -75,7 +89,9 @@ CapMission.controller('capController', function ($scope, $rootScope, $location, 
 })
 CapMission.controller("EmailController",function($scope,$ionicPopup,$rootScope,$ionicModal,$http,$ionicLoading,$ionicHistory){
   $ionicModal.fromTemplateUrl('templates/modal.html', {
-    scope: $scope
+    scope: $scope,
+    backdropClickToClose: false,
+    animation: 'slide-in-up'
   }).then(function(modal) {
     $scope.modal = modal;
   });

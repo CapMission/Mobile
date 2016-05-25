@@ -44,21 +44,29 @@
           <br>
           <div class="form-group">
             <label class="control-label labelF"><i class="ion-person"></i> Nom & Prénom</label> <br>
-            {{parent.entity.name}}<i class="icon ion-compose updateIcon" ng-click="openModal(1)"></i>
+
+            <div class="left">{{parent.entity.name}}</div>
+            <div class="right"><i class="icon ion-compose updateIcon" ng-click="openModal(1)"></i></div>
             <br><br>
           </div>
           <div class="form-group">
            <label  class="control-label labelF"><i class="ion-android-phone-portrait"></i> Téléphone</label><br>
-            {{parent.entity.phone}}<i class="icon ion-compose updateIcon" ng-click="openModal(2)"></i>
+
+            <div class="left">{{parent.entity.phone}}</div>
+            <div class="right"><i class="icon ion-compose updateIcon" ng-click="openModal(2)"></i></div>
           </div><br>
           <div class="form-group">
             <label  class="control-label labelF"><i class="ion-at"></i> Email </label><br>
-            {{parent.entity.mail}}<i class="icon ion-compose updateIcon" ng-click="openModal(3)"></i>
+
+            <div class="left">{{parent.entity.mail}}</div>
+            <div class="right"><i class="icon ion-compose updateIcon" ng-click="openModal(3)"></i></div>
           </div><br>
           <div ng-if="parent.entity.job != ''">
           <div class="form-group">
             <label  class="control-label labelF"><i class="icon ion-briefcase"></i> Fonction </label><br>
-            {{parent.entity.job}}<i class="icon ion-compose updateIcon" ng-click="openModal(4)"></i>
+
+            <div class="left">{{parent.entity.job}}</div>
+            <div class="right"><i class="icon ion-compose updateIcon" ng-click="openModal(4)"></i></div>
           </div></div><br>
         </form>
       </div>
@@ -80,7 +88,11 @@
                 <input ng-model="mail.subject" type="hidden">
                 <input type="text" name="name" ng-model="mail.body" placeholder="Nouvelle valeur" required>
               </label>
-              <button ng-disabled="myForm.$invalid" class="button button-full button-stable buttonEmp" ng-click="sendPN(mail);closeModal(1)">Envoyer</button>
+              <center>
+                <button ng-disabled="myForm.$invalid" class="button button-small buttonEmail button-dark "
+                        ng-click="sendPN(mail);closeModal(1)">Envoyer
+                </button>
+              </center>
             </ion-list>
           </form>
           <div class="padding">
@@ -106,7 +118,11 @@
                 <input ng-model="mail.subject" type="hidden">
                 <input type="text" name="tel" ng-model="mail.body" placeholder="Nouvelle valeur" required>
               </label>
-              <button ng-disabled="myForm.$invalid" class="button button-full button-stable buttonEmp" ng-click="sendPT(mail);closeModal(2)">Envoyer</button>
+              <center>
+                <button ng-disabled="myForm.$invalid" class="button button-small buttonEmail button-dark "
+                        ng-click="sendPT(mail);closeModal(2)">Envoyer
+                </button>
+              </center>
             </ion-list>
           </form>
           <div class="padding">
@@ -132,7 +148,11 @@
                 <input ng-model="mail.subject" type="hidden">
                 <input type="email" name="mail" ng-model="mail.body" placeholder="Nouvelle valeur" required>
               </label>
-              <button ng-disabled="myForm.$invalid" class="button button-full button-stable buttonEmp" ng-click="sendPE(mail);closeModal(3)">Envoyer</button>
+              <center>
+                <button ng-disabled="myForm.$invalid" class="button button-small buttonEmail button-dark "
+                        ng-click="sendPE(mail);closeModal(3)">Envoyer
+                </button>
+              </center>
             </ion-list>
           </form>
           <div class="padding">

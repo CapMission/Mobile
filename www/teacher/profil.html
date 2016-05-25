@@ -45,18 +45,25 @@
         <div class="profilLegend" ><legend class="legendP"><span> <i class="ion-clipboard"></i><strong> Mon profil</strong></span><!--<span></span><span></span><span></span><span></span><span></span><span></span><span></span><span><i class="icon ion-compose iModP" ng-click="modal.show()"></i></span>--></legend></div>
         <form >
           <br>
-          <div class="form-group">
+
+          <div class="form-group" id="container">
             <label class="control-label labelF"><i class="ion-person"></i> Nom & Prénom</label> <br>
-            {{teacher.entity.name}}<i class="icon ion-compose updateIcon" ng-click="openModal(1)"></i>
+
+            <div class="left">{{teacher.entity.name}}</div>
+            <div class="right"><i class="icon ion-compose updateIcon" ng-click="openModal(1)"></i></div>
             <br><br>
           </div>
           <div class="form-group">
             <label class="control-label labelF"><i class="ion-android-phone-portrait"></i> Téléphone</label><br>
-            {{teacher.entity.phone}}<i class="icon ion-compose updateIcon" ng-click="openModal(2)"></i>
+
+            <div class="left">{{teacher.entity.phone}}</div>
+            <div class="right"><i class="icon ion-compose updateIcon" ng-click="openModal(2)"></i></div>
           </div><br>
           <div class="form-group">
             <label  class="control-label labelF"><i class="ion-at"></i> Email </label><br>
-            {{teacher.entity.mail}}<i class="icon ion-compose updateIcon" ng-click="openModal(3)"></i>
+
+            <div class="left">{{teacher.entity.mail}}</div>
+            <div class="right"><i class="icon ion-compose updateIcon" ng-click="openModal(3)"></i></div>
           </div><br>
 
         </form>
@@ -79,7 +86,11 @@
                 <input ng-model="mail.subject" type="hidden">
                 <input type="text" name="name" ng-model="mail.body" placeholder="Nouvelle valeur" required>
               </label>
-              <button ng-disabled="myForm.$invalid" class="button button-full button-stable buttonEmp" ng-click="sendTN(mail);closeModal(1)">Envoyer</button>
+              <center>
+                <button ng-disabled="myForm.$invalid" class="button button-small buttonEmail button-dark "
+                        ng-click="sendTN(mail);closeModal(1)">Envoyer
+                </button>
+              </center>
               </ion-list>
           </form>
           <div class="padding">
@@ -105,7 +116,11 @@
                 <input ng-model="mail.subject" type="hidden">
                 <input type="text" name="tel" ng-model="mail.body" placeholder="Nouvelle valeur" required>
               </label>
-              <button ng-disabled="myForm.$invalid" class="button button-full button-stable buttonEmp" ng-click="sendTT(mail);closeModal(2)">Envoyer</button>
+              <center>
+                <button ng-disabled="myForm.$invalid" class="button button-small buttonEmail button-dark"
+                        ng-click="sendTT(mail);closeModal(2)">Envoyer
+                </button>
+              </center>
             </ion-list>
           </form>
           <div class="padding">
@@ -131,7 +146,11 @@
                 <input ng-model="mail.subject" type="hidden">
                 <input type="email" name="mail" ng-model="mail.body" placeholder="Nouvelle valeur" required>
               </label>
-              <button ng-disabled="myForm.$invalid" class="button button-full button-stable buttonEmp" ng-click="sendTE(mail);closeModal(3)">Envoyer</button>
+              <center>
+                <button ng-disabled="myForm.$invalid" class="button button-small buttonEmail button-dark "
+                        ng-click="sendTE(mail);closeModal(3)">Envoyer
+                </button>
+              </center>
             </ion-list>
           </form>
           <div class="padding">

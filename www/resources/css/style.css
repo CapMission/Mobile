@@ -345,8 +345,9 @@ span:last-of-type{
 }
 
 .updateIcon {
-  padding-left: 95%;
+  padding-left: 90%;
   align-items: baseline;
+  font-size: 1.5em;
 
 }
 .transparent {
@@ -369,7 +370,7 @@ span:last-of-type{
 }
 /* Fix modal backdrop for smaller devices */
 
-@media (max-width: 679px) {
+/*@media (max-width: 679px) {
   .active .modal-backdrop-bg {
     opacity: .5;
   }
@@ -379,5 +380,60 @@ span:last-of-type{
     background-color: #000;
     opacity: 0;
   }
+}*/
+
+.buttonEmail {
+  border: none;
+  padding: 8px 32px;
+  text-align: center;
+  font-size: 16px;
+  margin: 4px 2px;
+  width: 220px;
+  border-radius: 12px;
 }
+
+.buttonEmail2 {
+  border: none;
+  padding: 8px 32px;
+  text-align: center;
+  font-size: 16px;
+  margin: 4px 2px;
+  width: 100px;
+  border-radius: 12px;
+}
+
+@media (min-width: 680px) {
+  .modalSize {
+    width: 90%;
+    height: 90%;
+    top: 5%;
+    left: 5%;
+    right: 5%;
+    bottom: 5%;
+  }
+}
+
+textarea {
+  display: block;
+  box-sizing: padding-box;
+  overflow: hidden;
+
+  padding: 10px;
+  width: 4000px;
+  font-size: 14px;
+  margin-left: 1px;
+  border-radius: 8px;
+  border: 2px solid #556677;
+}
+
+.left {
+  width: 140px;
+  float: left;
+  height: 100%;
+}
+
+.right {
+  margin-left: 140px;
+}
+
 

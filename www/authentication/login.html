@@ -12,7 +12,7 @@
              Choisissez une méthode de connexion !
             </div>
           </div-->
-            <form name="myForm" novalidate ng-controller="capController">
+            <form name="myForm" id="myForm" novalidate ng-controller="capController">
           <div class="list list-inset">
             <br><br>
             <label class="item item-input">
@@ -24,11 +24,31 @@
                      ng-init="user.password = password" ng-minlength="6" required>
             </label>
             <div class="padding">
-            <button style="background-color:#007bb5 " class="button button-full button-positive" ng-disabled="myForm.$invalid"  ng-click="login(user)">Se connecter
+              <button class="button button-full button-positive buttonEmp" ng-disabled="myForm.$invalid"
+                      ng-click="login(user)">Se connecter
               <!--<span ng-show="!myForm.loading">Se connecter</span>
               <span class="overlord-loading-spinner fa fa-spinner" ng-show="myForm.loading" ></span>
               <span ng-show="myForm.loading">En cours de préparation...</span>-->
             </button>
+
+              <div class="item item-checkbox  checkbox-positive">
+                Remember Me
+                <label class="checkbox">
+                  <!-- <div ng-if="checkbox == 'undefined'">-->
+                  <input type="checkbox" ng-checked="checkStatus" id="rememberMe" ng-model='checkStatus'
+                         ng-init="checkStatus">
+                  <!--  </div>-->
+                  <!--<div ng-if="checkbox == 'true'">-->
+                  <!-- <input type="checkbox" ng-checked="true" ng-model='checkStatus' ng-init="checkStatus == checkbox">
+                   </div>-->
+                </label>
+              </div>
+
+
+              <!-- <div class="slideThree">
+                 <input type="checkbox" value="None" id="slideThree" name="check" />
+                 <label for="slideThree"></label>
+               </div>-->
 </div>
           </div>
             </form>
@@ -40,18 +60,16 @@
             </div>
             <div class="error" ng-if="errorMessage">{{ errorMessage }}</div>
             <div class="error" ng-if="errorMessageChang">{{errorMessageChang}}</div>
-            <div class="padding">
-            <button style="background-color:#3b5998 " ng-click="authenticate('facebook')" class="button button-block icon-left ion-social-facebook" >
-                  &nbsp;Login avec Facebook
-              </button>
-               <button style="background-color:#dd4b39" ng-click="authenticate('google')" class="button button-block icon-left ion-social-googleplus">
-                  &nbsp;Login avec Google+
-              </button>
+            <!-- <div class="padding">
+             <button style="background-color:#3b5998 " ng-click="authenticate('facebook')" class="button button-block icon-left ion-social-facebook" >
+                   &nbsp;Login avec Facebook
+               </button>
+                <button style="background-color:#dd4b39" ng-click="authenticate('google')" class="button button-block icon-left ion-social-googleplus">
+                   &nbsp;Login avec Google+
+               </button>
 
-
+             </div>-->
 
       </div></ion-content>
 
   </ion-view>
-
-<!-- style="color: #fa1a18;font-family:Ionicons;font-size:medium;font-weight: bold" >

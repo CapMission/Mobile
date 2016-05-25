@@ -1,3 +1,21 @@
+<script>
+  $(document)
+    .one('focus.textarea', '.autoExpand', function () {
+      var savedValue = this.value;
+      this.value = '';
+      this.baseScrollHeight = this.scrollHeight;
+      this.value = savedValue;
+      savedValue = 'msg'
+    })
+    .on('input.textarea', '.autoExpand', function () {
+      var minRows = this.getAttribute('data-min-rows') | 0,
+        rows;
+      this.rows = minRows;
+      console.log(this.scrollHeight, this.baseScrollHeight);
+      rows = Math.ceil((this.scrollHeight - this.baseScrollHeight) / 17);
+      this.rows = minRows + rows;
+    });
+</script>
 <ion-view  title='<img class="title-image" src="parent/icon.png"> Cap Mission </img>' cache-view="false">
   <ion-nav-buttons side="right">
     <a class="button button-icon ion-ios-more rotate-90 fs-s" ng-click="popover.show($event)"></a>
@@ -57,24 +75,15 @@
         {{timetables.end  | date: 'HH:mm'}}&nbsp;&nbsp;<strong> {{timetables.name}} </strong></div>
       </div>
     </div>
-
-    <!--pagination data-boundary-links="true" data-num-pages="noOfPages" data-current-page="currentPage" max-size="maxSize"
-                class="pagination-small"
-                data-previous-text="&laquo;" data-next-text="&raquo;"></pagination-->
-
     <script id="templates/modal.html" type="text/ng-template">
-      <div class="modal">
-      <ion-modal-view >
-        <ion-header-bar class="bar bar-header bar-stable">
-          <div class="headerModal">Vous voulez modifier ou supprimer cette séance? Envoyez-nous un message !</div>
-          <div><h1 class="title"></h1>
-            <i class="icon ion-ios-close close-modal" ng-click="modal.hide()"></i>
+      <div class="modal transparent modalSize">
+        <div class="card">
+          <i class="icon ion-ios-close close-modal" ng-click="modal.hide()"></i>
 
-          </div>
-        </ion-header-bar>
-        <ion-content class="padding">
-          <div class="list">
-            <form name="myForm" novalidate>
+          <p class="headerModal item-divider padding"> Vous voulez modifier ou supprimer cette séance? Envoyez-nous un
+            message !</p>
+
+          <form name="myForm" novalidate>
             <input ng-model="id" type="hidden">
             <input ng-model="enfant" type="hidden">
             <input ng-model="period" type="hidden">
@@ -82,18 +91,22 @@
             <input ng-model="mail.to" type="hidden">
             <input ng-model="mail.from" type="hidden">
             <input ng-model="mail.subject" type="hidden">
-            <label class="item item-input item-floating-label">
-              <span class="input-label">Message</span>
-              <textarea name="msg" ng-model="mail.body" placeholder="Votre message" required></textarea>
+            <label class="item item-input">
+              <center><textarea class='autoExpand' rows='3' data-min-rows='3' name="msg" ng-model="mail.body"
+                                placeholder="Votre message" required></textarea></center>
             </label>
-            <button ng-disabled="myForm.$invalid" class="button button-full button-stable buttonEmp" ng-click="send(mail,id,enfant,period,debut);modal.hide()">Envoyer</button>
+            <br>
+            <center>
+              <button ng-disabled="myForm.$invalid" class="button button-small buttonEmail button-dark "
+                      ng-click="send(mail,id,enfant,period,debut);modal.hide()">Envoyer
+              </button>
+            </center>
           </form>
             <div class="padding">
               <p ng-show="myForm.msg.$error.required">* Message est obligatoire</p>
             </div>
-          </div>
-        </ion-content>
-      </ion-modal-view>
+
+      </div>
       </div>
     </script>
   </ion-content>
