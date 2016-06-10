@@ -15,7 +15,23 @@ student.controller('StudentCtrl', ['$scope','$http','$rootScope','$location','$i
       //$scope.test="safaa"
 
       $rootScope.student = data
-      //console.log('Data choix'+JSON.stringify({data: data}))
+      //console.log(data.recaps.length)
+      //console.log( JSON.stringify(data) );
+      $rootScope.limit = 10;
+
+      $rootScope.showMore = function () {
+        $rootScope.limit += 3;
+      }
+      $rootScope.showLess = function () {
+        $rootScope.limit -= 3;
+      }
+
+
+      $scope.hasMore = function () {
+        return data.length > $rootScope.limit;
+
+      }
+
       $ionicLoading.hide();
       if(data.entity == null){
         toastr.warning("Désolés, vous n'êtes pas autorisés à accéder en tant qu'étudiant");
@@ -249,9 +265,36 @@ student.controller('SprofileCtrl', ['$scope','$rootScope','$ionicPopover','$http
     $scope.popover = popover;
   });
 }]);
-student.controller('SsoldeCtrl', ['$scope','$ionicPopover','$http','$ionicHistory', function ($scope,$ionicPopover, $http,$ionicHistory) {
+student.controller('SsoldeCtrl', ['$scope', '$rootScope', '$ionicModal', '$http', '$ionicPopover', '$ionicHistory', '$ionicLoading', '$ionicPopup', '$filter', function ($scope, $rootScope, $ionicModal, $http, $ionicPopover, $ionicHistory, $ionicLoading, $ionicPopup, $filter) {
+
+  $scope.showAlert = function (id, tarif, period, hour, absence, date) {
+    console.log("id recap : " + id)
+    if (absence = "null") {
+      absence = "Présent"
+    }
+
+    var alertPopup = $ionicPopup.alert({
+      title: 'Détails récapitulatif solde',
+      template: '<ul>Tarif horaire : ' + tarif + ' MAD</ul><br> <ul>Tarif de la séance : ' + period + ' MAD</ul><br> <ul>Nombre heures : ' + hour + '</ul><br>' + absence
+    });
+
+    alertPopup.then(function (res) {
+      console.log('OK');
+    });
+  };
 
   $scope.goBack = function(){
+    $ionicHistory.goBack();
+  }
+  $ionicPopover.fromTemplateUrl('student/student-popover.html', {
+    scope: $scope
+  }).then(function (popover) {
+    $scope.popover = popover;
+  });
+}]);
+student.controller('SProposCtrl', ['$scope', '$rootScope', '$http', '$location', '$ionicPopover', '$ionicHistory', function ($scope, $rootScope, $http, $location, $ionicPopover, $ionicHistory) {
+
+  $scope.goBack = function () {
     $ionicHistory.goBack();
   }
   $ionicPopover.fromTemplateUrl('student/student-popover.html', {

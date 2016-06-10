@@ -1,7 +1,7 @@
 // Ionic Starter App
 
 // angular.module is a global place for creating, registering and retrieving Angular modules
-// 'starter' is the name of this angular module example (also set in a <body> attribute in index.html)
+// 'starter' is the name of this angular module example (also set in a <body> attribute in indexT.html)
 // the 2nd parameter is an array of 'requires'
 // 'starter.services' is found in services.js
 // 'starter.controllers' is found in controllers.js
@@ -22,9 +22,62 @@ var CapMission = angular.module('capMission', [
   'ui.bootstrap',
   'ionicProcessSpinner',
   'services',
-  'ngStorage'
+  'ngStorage',
+  'simplePagination'
 ]);
+
+CapMission.filter('singleDecimal', function ($filter) {
+  return function (input) {
+    if (isNaN(input)) return input;
+    return Math.round(input * 10) / 10;
+  };
+});
+
+CapMission.filter('setDecimal', function ($filter) {
+  return function (input, places) {
+    if (isNaN(input)) return input;
+    // If we want 1 decimal place, we want to mult/div by 10
+    // If we want 2 decimal places, we want to mult/div by 100, etc
+    // So use the following to create that factor
+    var factor = "1" + Array(+(places > 0 && places + 1)).join("0");
+    return Math.round(input * factor) / factor;
+  };
+});
 CapMission.controller('capController', function ($scope, $rootScope, $location, $auth, $http, $ionicLoading, $localStorage, $window) {
+  var currentDate,
+    weekStart,
+    weekEnd,
+    shortWeekFormat = "dddd DD MMMM";
+
+  function setCurrentDate(aMoment) {
+    currentDate = aMoment,
+      weekStart = currentDate.clone().startOf('week'),
+      weekEnd = currentDate.clone().endOf('week')
+  }
+
+  setCurrentDate(moment());
+
+  $scope.currentWeek = function () {
+    return currentDate.format(shortWeekFormat);
+  };
+  $scope.currentWeekStart = function () {
+    return weekStart.format(shortWeekFormat);
+  };
+  $scope.currentWeekEnd = function () {
+    return weekEnd.format(shortWeekFormat);
+  };
+  $scope.nextWeek = function () {
+    setCurrentDate(currentDate.add(7, 'days'));
+  };
+  $scope.prevWeek = function () {
+    setCurrentDate(currentDate.subtract(7, 'days'));
+  };
+
+  $scope.week = function (item) {
+    var eventTime = moment(item.start);
+
+    return (eventTime >= weekStart && eventTime <= weekEnd);
+  };
   $scope.checkStatus = window.localStorage.getItem('status')
   if ($scope.checkStatus === 'undefined') {
     window.localStorage.clear()
@@ -146,8 +199,8 @@ CapMission.controller("EmailController",function($scope,$ionicPopup,$rootScope,$
     });
     $http.post('http://81.192.194.109:8182/CapMissionApp/send-mail', mail, {timeout: 120000}).success(function (data, status, headers, config) {
       $ionicLoading.hide();
-        toastr.success('Votre demande a été envoyée avec succès')
-        //$ionicHistory.goBack();
+      toastr.success('Votre demande a été envoyée avec succès')
+      //$ionicHistory.goBack();
     }).error(function (data, status) {
       if (status == 0) {
         toastr.error('Echec de connexion ! Veuillez réessayer dans quelques instants !', 'Désolés !', {displayDuration: 1000});
@@ -162,37 +215,36 @@ CapMission.controller("EmailController",function($scope,$ionicPopup,$rootScope,$
   }
 
   /*$scope.showConfirm = function() {
-    var confirmPopup = $ionicPopup.confirm({
-      title: 'Attention',
-      template: 'Etes-vous sûrs de vouloir modifier cette séance?',
-      cancelText: 'Annuler',
-      cancelType: 'button-assertive',
-      okText: 'Continuer',
-      okType: 'button-balanced'
-      /!*buttons: [
-        { text: 'Annuler',
-          type: 'button-assertive',
-          onTap: function(e) {
-            alert('not suuuure')
-          }
-        },
-        {
-          text: '<b>Continuer</b>',
-          type: 'button-balanced',
-          onTap: function(e){
-        }
-        }
-      ]*!/
-    });
-    confirmPopup.then(function(res) {
-      if(res) {
-
-        console.log('You are sure');
-      } else {
-        console.log('You are not sure');
-      }
-    });
-  };*/
+   var confirmPopup = $ionicPopup.confirm({
+   title: 'Attention',
+   template: 'Etes-vous sûrs de vouloir modifier cette séance?',
+   cancelText: 'Annuler',
+   cancelType: 'button-assertive',
+   okText: 'Continuer',
+   okType: 'button-balanced'
+   /!*buttons: [
+   { text: 'Annuler',
+   type: 'button-assertive',
+   onTap: function(e) {
+   alert('not suuuure')
+   }
+   },
+   {
+   text: '<b>Continuer</b>',
+   type: 'button-balanced',
+   onTap: function(e){
+   }
+   }
+   ]*!/
+   });
+   confirmPopup.then(function(res) {
+   if(res) {
+   console.log('You are sure');
+   } else {
+   console.log('You are not sure');
+   }
+   });
+   };*/
 
 });
 /*
@@ -329,6 +381,7 @@ CapMission.config(function($authProvider) {
 
 CapMission.config(['$stateProvider', '$urlRouterProvider', '$ionicConfigProvider', '$httpProvider', function ($stateProvider, $urlRouterProvider, $ionicConfigProvider, $httpProvider) {
 
+  $ionicConfigProvider.tabs.position('top');
   $ionicConfigProvider.backButton.previousTitleText(false).text('');
 
 
@@ -387,6 +440,18 @@ CapMission.config(['$stateProvider', '$urlRouterProvider', '$ionicConfigProvider
       controller: 'ProposCtrl'
 
     })
+    .state('aproposS', {
+      url: '/student/apropos',
+      templateUrl: 'student/apropos.html',
+      controller: 'SProposCtrl'
+
+    })
+    .state('aproposT', {
+      url: '/teacher/apropos',
+      templateUrl: 'teacher/apropos.html',
+      controller: 'TProposCtrl'
+
+    })
     .state('feedback', {
       url: '/parent/feedback',
       templateUrl: 'parent/feedback.html',
@@ -397,6 +462,11 @@ CapMission.config(['$stateProvider', '$urlRouterProvider', '$ionicConfigProvider
       url: '/parent/emploiEnfant',
       controller: 'EnfantCtrl',
       templateUrl: 'parent/empoiEnfant.html'
+    })
+    .state('ChoixEnfantSolde', {
+      url: '/parent/ChoixEnfantSolde',
+      controller: 'PsoldeCtrl',
+      templateUrl: 'parent/ChoixEnfantSolde.html'
     })
     .state('parent_profil', {
      // parent: parent,
@@ -414,7 +484,7 @@ CapMission.config(['$stateProvider', '$urlRouterProvider', '$ionicConfigProvider
     })
     .state('student', {
       url: '/student',
-      templateUrl: 'student/index.html',
+      templateUrl: 'student/indexS.html',
       controller: 'StudentCtrl'
 
     })
@@ -434,7 +504,7 @@ CapMission.config(['$stateProvider', '$urlRouterProvider', '$ionicConfigProvider
     })
     .state('teacher', {
       url: '/teacher',
-      templateUrl: 'teacher/index.html',
+      templateUrl: 'teacher/indexT.html',
       controller: 'TeacherCtrl'
 
     })
@@ -516,7 +586,7 @@ CapMission.config(['$stateProvider', '$urlRouterProvider', '$ionicConfigProvider
       url: '/quiz',
       views: {
         'tab-quiz': {
-          templateUrl: 'tab/quiz/index.html',
+     templateUrl: 'tab/quiz/indexT.html',
           controller: 'quizCtrl',
           resolve: {
             courses: ['$http', 'Constants', '$q', function ($http, Constants, $q) {
@@ -583,7 +653,7 @@ CapMission.config(['$stateProvider', '$urlRouterProvider', '$ionicConfigProvider
       url: '/follow',
       views: {
         'tab-follow': {
-          templateUrl: 'tab/follow/index.html',
+     templateUrl: 'tab/follow/indexT.html',
           controller: 'FollowCtrl'
         }
       }

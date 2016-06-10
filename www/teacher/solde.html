@@ -1,10 +1,76 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <title></title>
-</head>
-<body>
+<ion-view title='<img class="title-image" src="parent/icon.png"> Cap Mission </img>' cache-view="false">
+  <ion-nav-buttons side="right">
+    <a class="button button-icon ion-ios-more rotate-90 fs-s" ng-click="popover.show($event)"></a>
+  </ion-nav-buttons>
 
-</body>
-</html>
+  <ion-tabs class="tabs-icon-top tabs-color-active-positive" ng-class="{'tabs-item-hide': $root.hideTabs}">
+
+
+    <ion-tab hidden="true">
+
+    </ion-tab>
+
+
+    <ion-tab title="quiz" icon-off="ion-ios-timer-outline" icon-on="ion-ios-timer" badge="badgequiz"
+             badge-style="badge-assertive" ng-click="onTabSelected()">
+
+    </ion-tab>
+
+
+    <ion-tab title="Suivi" icon-off="ion-ios-pulse" icon-on="ion-ios-pulse-strong" badge="badgeFollow"
+             badge-style="badge-assertive" ng-click="onTabSelected()">
+
+    </ion-tab>
+
+
+    <!-- <ion-tab title="Résultats" icon-off="ion-ios-pie-outline" icon-on="ion-ios-pie" ng-click="onTabSelected()">
+
+     </ion-tab>-->
+
+
+    <ion-tab title="Messages" icon-off="ion-ios-email-outline" icon-on="ion-ios-email"
+             badge="badgeMessages" badge-style="badge-assertive" ng-click="onTabSelected()">
+
+    </ion-tab>
+
+    <ion-tab title="Solde" href="#/teacher/solde" icon-off="icon ion-ios-calculator-outline"
+             icon-on="icon ion-ios-calculator">
+
+    </ion-tab>
+
+
+  </ion-tabs>
+  <ion-content>
+    <br><br><br><br>
+
+    <div ng-show="teacher.entity.solde <= 0" class="negativeSolde">
+      Solde depuis le début des temps : <strong>{{teacher.entity.solde | number:2}}</strong> MAD
+    </div>
+    <div ng-show="teacher.entity.solde > 0" class="positiveSolde">
+      Solde depuis le début des temps: <strong>{{teacher.entity.solde | number:2}}</strong> MAD
+    </div>
+    <br>
+
+    <div class="row header">
+      <div class="col">Date</div>
+      <div class="col">Matière</div>
+      <div class="col">Solde</div>
+      <div class="col">Détails</div>
+    </div>
+    <div class="row" ng-repeat="payment in teacher.entity.payments | orderBy:'date' |limitTo:-limit">
+      <div class="col">{{payment.date | date:'dd MMM à HH:mm'}}</div>
+      <div class="col">{{payment.course.name}}</div>
+      <div class="col"><strong>{{payment.cumul | number:2}}</strong> MAD</div>
+      <div class="col"><a ng-app="capMission.teacher" ng-controller="TsoldeCtrl" href="#"
+                          ng-click="showAlert(payment.id,payment.solde,payment.nbreHeures,payment.nbreStudents,payment.coutHoraire,payment.date)">Détails</a>
+      </div>
+    </div>
+    <br>
+
+    <div>
+      <a class="aRight" href="" ng-click="showMore()">Plus</a>
+      <a class="aLeft" href="" ng-click="showLess()">Moins</a>
+    </div>
+
+  </ion-content>
+</ion-view>

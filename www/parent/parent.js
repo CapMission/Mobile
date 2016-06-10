@@ -62,6 +62,7 @@ parent.controller('EnfantCtrl', ['$scope', '$rootScope', '$http', '$location', '
     $http.get('http://81.192.194.109:8182/CapMissionApp/students/' + id, {timeout: 35000}).success(function (data, status, headers, config) {
       //$scope.items = []
       $rootScope.son = data
+
       $ionicLoading.hide();
       console.log('value : ' + window.localStorage.getItem('login'))
      /* $rootScope.currentPage = 1;
@@ -290,8 +291,56 @@ parent.controller('PprofileCtrl', ['$scope', '$ionicPopover', '$ionicHistory', '
     $scope.popover = popover;
   });
 }]);
-parent.controller('PsoldeCtrl', ['$scope', '$ionicPopover', '$ionicHistory', function ($scope, $ionicPopover, $ionicHistory) {
+parent.controller('PsoldeCtrl', ['$scope', '$rootScope', '$http', '$ionicPopover', '$ionicHistory', '$location', '$ionicLoading', '$ionicPopup', function ($scope, $rootScope, $http, $ionicPopover, $ionicHistory, $location, $ionicLoading, $ionicPopup) {
 
+  $scope.limit = 10;
+
+  $scope.showMore = function () {
+    $scope.limit += 3;
+  }
+  $scope.showLess = function () {
+    $scope.limit -= 3;
+  }
+  $scope.getd = function (id) {
+    console.log("id function getd : " + id)
+    $ionicLoading.show({
+      template: 'Chargement'
+    });
+    $http.get('http://81.192.194.109:8182/CapMissionApp/students/' + id, {timeout: 35000}).success(function (data, status, headers, config) {
+      //$scope.items = []
+      $rootScope.sonSolde = data
+
+      $ionicLoading.hide();
+
+
+      $location.path('/parent/solde');
+    }).error(function (data) {
+      //alert("Désolés , échec de connexion ! Veuillez réessayer dans quelques instants !")
+      toastr.error('Echec de connexion ! Veuillez réessayer dans quelques instants !', 'Désolés !', {displayDuration: 1000});
+      navigator.app.exitApp();
+
+    })
+
+  }
+  $scope.showAlert = function (id, tarif, period, hour, absence) {
+    console.log("id recap : " + id)
+    if (absence = "null") {
+      absence = "Présent"
+    }
+
+    var alertPopup = $ionicPopup.alert({
+      title: 'Détails récapitulatif solde',
+      template: '<ul>Tarif horaire : ' + tarif + ' MAD</ul><br> <ul>Tarif de la séance : ' + period + ' MAD</ul><br> <ul>Nombre heures : ' + hour + '</ul><br>' + absence
+    });
+
+    alertPopup.then(function (res) {
+      console.log('OK');
+    });
+  };
+
+  $rootScope.getSolde = function (id) {
+
+  }
   $scope.goBack = function () {
     $ionicHistory.goBack();
   }

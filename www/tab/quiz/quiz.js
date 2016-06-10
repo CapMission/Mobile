@@ -1,5 +1,5 @@
-// ce fichier comporte les controllers de la partie 'quiz': 
-//controller de end.html, controller de index.html, controller de questions.html
+// ce fichier comporte les controllers de la partie 'quiz':
+//controller de end.html, controller de indexT.html, controller de questions.html
 
 var quiz = angular.module('capMission.tab.quiz', []);
 

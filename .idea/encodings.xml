@@ -9,6 +9,7 @@
     <file url="file://$PROJECT_DIR$/www/authentication/choix.html" charset="UTF-8" />
     <file url="file://$PROJECT_DIR$/www/authentication/role.html" charset="UTF-8" />
     <file url="file://$PROJECT_DIR$/www/logout/logout.js" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/www/parent/ChoixEnfantSolde.html" charset="UTF-8" />
     <file url="file://$PROJECT_DIR$/www/parent/apropos.html" charset="UTF-8" />
     <file url="file://$PROJECT_DIR$/www/parent/empoiEnfant.html" charset="UTF-8" />
     <file url="file://$PROJECT_DIR$/www/parent/feedback.html" charset="UTF-8" />
@@ -19,11 +20,13 @@
     <file url="file://$PROJECT_DIR$/www/parent/solde.html" charset="UTF-8" />
     <file url="file://$PROJECT_DIR$/www/resources/bower_components/angularUtils-pagination/dirPagination.js" charset="UTF-8" />
     <file url="file://$PROJECT_DIR$/www/resources/bower_components/angularUtils-pagination/dirPagination.tpl.html" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/www/resources/bower_components/bootstrap/Gruntfile.js" charset="UTF-8" />
     <file url="file://$PROJECT_DIR$/www/resources/bower_components/bootstrap/dist/css/bootstrap.css.map" charset="UTF-8" />
     <file url="file://$PROJECT_DIR$/www/resources/bower_components/satellizer/satellizer.js" charset="UTF-8" />
     <file url="file://$PROJECT_DIR$/www/resources/css/style.css" charset="UTF-8" />
     <file url="file://$PROJECT_DIR$/www/services.js" charset="UTF-8" />
-    <file url="file://$PROJECT_DIR$/www/student/index.html" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/www/student/apropos.html" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/www/student/indexS.html" charset="UTF-8" />
     <file url="file://$PROJECT_DIR$/www/student/profil.html" charset="UTF-8" />
     <file url="file://$PROJECT_DIR$/www/student/solde.html" charset="UTF-8" />
     <file url="file://$PROJECT_DIR$/www/student/student-popover.html" charset="UTF-8" />
@@ -33,7 +36,8 @@
     <file url="file://$PROJECT_DIR$/www/tab/home/profile.html" charset="UTF-8" />
     <file url="file://$PROJECT_DIR$/www/tab/home/solde.html" charset="UTF-8" />
     <file url="file://$PROJECT_DIR$/www/tab/tab.js" charset="UTF-8" />
-    <file url="file://$PROJECT_DIR$/www/teacher/index.html" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/www/teacher/apropos.html" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/www/teacher/indexT.html" charset="UTF-8" />
     <file url="file://$PROJECT_DIR$/www/teacher/profil.html" charset="UTF-8" />
     <file url="file://$PROJECT_DIR$/www/teacher/solde.html" charset="UTF-8" />
     <file url="file://$PROJECT_DIR$/www/teacher/teacher-popover.html" charset="UTF-8" />

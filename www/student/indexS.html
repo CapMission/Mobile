@@ -1,21 +1,3 @@
-<script>
-  $(document)
-    .one('focus.textarea', '.autoExpand', function () {
-      var savedValue = this.value;
-      this.value = '';
-      this.baseScrollHeight = this.scrollHeight;
-      this.value = savedValue;
-      savedValue = 'msg';
-    })
-    .on('input.textarea', '.autoExpand', function () {
-      var minRows = this.getAttribute('data-min-rows') | 0,
-        rows;
-      this.rows = minRows;
-      console.log(this.scrollHeight, this.baseScrollHeight);
-      rows = Math.ceil((this.scrollHeight - this.baseScrollHeight) / 17);
-      this.rows = minRows + rows;
-    });
-</script>
 <ion-view  title='<img class="title-image" src="parent/icon.png"> Cap Mission </img>' cache-view="false">
   <ion-nav-buttons side="right">
     <a class="button button-icon ion-ios-more rotate-90 fs-s" ng-click="popover.show($event)"></a>
@@ -40,21 +22,20 @@
 
     </ion-tab>
 
+    <!--
+        <ion-tab title="Résultats" icon-off="ion-ios-pie-outline" icon-on="ion-ios-pie" ng-click="onTabSelected()">
 
-    <!-- <ion-tab title="Résultats" icon-off="ion-ios-pie-outline" icon-on="ion-ios-pie" ng-click="onTabSelected()">
-
-     </ion-tab>-->
+        </ion-tab>-->
 
 
     <ion-tab title="Messages" icon-off="ion-ios-email-outline" icon-on="ion-ios-email"
              badge="badgeMessages" badge-style="badge-assertive" ng-click="onTabSelected()">
 
     </ion-tab>
+    <ion-tab title="Solde" href="#/student/solde" icon-off="icon ion-ios-calculator-outline"
+             icon-on="icon ion-ios-calculator" href="#/student/solde"></ion-tab>
 
-    <ion-tab title="Solde" icon-off="icon ion-ios-calculator-outline" icon-on="icon ion-ios-calculator"
-             ng-click="onTabSelected()">
 
-    </ion-tab>
 
 
   </ion-tabs>
@@ -62,21 +43,33 @@
 
   <ion-content>
     <br><br><br>
-    <div class="divEmploi"><i class="ion-calendar">&nbsp;Planning</i></div><br>
-    <!--<div><p>Vous voulez modifier ou annuler une séance? Cliquer sur <i class="icon ion-compose"></i> à côté de la séance concernée pour nous envoyer un message pour plus de détails !</p><br></div>-->
+
+    <div class="divEmploi"><i class="ion-calendar">&nbsp;Planning</i></div>
+    <center><h5><i class="fa fa-arrow-left"></i>Semaine du {{currentWeekStart()}} - {{currentWeekEnd()}}<i
+      class="fa fa-arrow-right"></i></h5></center>
+    <button class="button icon-left ion-chevron-left button-clear button-dark btnLeft" ng-click="prevWeek()">
+      Précédent
+    </button>
+    <button class="button icon-right ion-chevron-right button-clear button-dark btnRight" ng-click="nextWeek()">
+      Suivant
+    </button>
     <div  class="card divCard item-text-wrap"
-          ng-repeat="timetables in teacher.entity.timetables | orderBy:'start'"
-          ng-if="timetables.start >  now">
+          ng-repeat="timetables in student.entity.timetables | orderBy:'start' | filter:week">
 
       <div  class="item item-divider divItem item-icon-right">
-        <a href="#" ng-app="capMission.teacher" ng-controller="TEmailController" ng-click="modal.show();getT(timetables.id,timetables.name,timetables.start)"><i class="icon ion-compose iMod"></i></a>
+        <div ng-if="timetables.start > now"><a href="#" ng-app="capMission.student" ng-controller="SEmailController"
+                                               ng-click="modal.show();getS(timetables.id,timetables.name,timetables.start)"><i
+          class="icon ion-compose iMod"></i></a></div>
         <div class="TextS">
           {{timetables.start  | date: 'EEEE dd MMMM'}}&nbsp;&nbsp;{{timetables.start | date: 'HH:mm'}}&nbsp;-
           {{timetables.end  | date: 'HH:mm'}}&nbsp;&nbsp;<strong> {{timetables.name}} </strong></div>
       </div>
     </div>
+    <!--pagination data-boundary-links="true" data-num-pages="noOfPages" data-current-page="currentPage" max-size="maxSize"
+                class="pagination-small"
+                data-previous-text="&laquo;" data-next-text="&raquo;"></pagination-->
 
-    <script id="templates/modalT.html" type="text/ng-template">
+    <script id="templates/modalS.html" type="text/ng-template">
       <div class="modal transparent modalSize">
         <div class="card">
           <i class="icon ion-ios-close close-modal" ng-click="modal.hide()"></i>
@@ -98,7 +91,7 @@
             <br>
             <center>
               <button ng-disabled="myForm.$invalid" class="button button-small buttonEmail button-dark "
-                      ng-click="sendT(mail,id,enfant,period,debut);modal.hide()">Envoyer
+                      ng-click="sendS(mail,id,period,debut);modal.hide()">Envoyer
               </button>
             </center>
           </form>
@@ -109,7 +102,6 @@
         </div>
       </div>
     </script>
-
   </ion-content>
 
 </ion-view>

@@ -1,7 +1,8 @@
 /**
  * Created by MSIKA.SAFAA on 25/04/2016.
  */
-var teacher = angular.module('capMission.teacher', ['ngResource','ui.router','ui.bootstrap']);
+var teacher = angular.module('capMission.teacher', ['ngResource', 'ui.router', 'ui.bootstrap', 'simplePagination']);
+
 
 teacher.controller("TEmailController",function($scope,$ionicPopup,$rootScope,$ionicModal,$http,$ionicLoading,$ionicHistory){
   $ionicModal.fromTemplateUrl('templates/modalT.html', {
@@ -73,18 +74,25 @@ teacher.controller("TEmailController",function($scope,$ionicPopup,$rootScope,$io
 
 
 });
-
 teacher.controller('TeacherCtrl', ['$scope','$location','$rootScope','$http','$ionicPopover','$ionicLoading', function ($scope,$location,$rootScope,$http,$ionicPopover,$ionicLoading) {
 
   $scope.idTeacher = window.localStorage.getItem('id')
   $scope.now = new Date()
-  $scope.get = function(id) {
+  $scope.get = function (id) {
     $ionicLoading.show({
       template: 'Chargement'
     });
     $http.get('http://81.192.194.109:8182/CapMissionApp/teachers/' + id, {timeout: 35000}).success(function (data, status, headers, config) {
 
       $rootScope.teacher = data
+      $scope.limit = 10;
+
+      $scope.showMore = function () {
+        $scope.limit += 3;
+      }
+      $scope.showLess = function () {
+        $scope.limit -= 3;
+      }
       $ionicLoading.hide();
       //console.log('Data teacher'+JSON.stringify({data: data}))
       if(data.entity == null){
@@ -100,6 +108,17 @@ teacher.controller('TeacherCtrl', ['$scope','$location','$rootScope','$http','$i
       navigator.app.exitApp();
     });
 
+  }
+  $ionicPopover.fromTemplateUrl('teacher/teacher-popover.html', {
+    scope: $scope
+  }).then(function (popover) {
+    $scope.popover = popover;
+  });
+}]);
+teacher.controller('TProposCtrl', ['$scope', '$rootScope', '$http', '$location', '$ionicPopover', '$ionicHistory', function ($scope, $rootScope, $http, $location, $ionicPopover, $ionicHistory) {
+
+  $scope.goBack = function () {
+    $ionicHistory.goBack();
   }
   $ionicPopover.fromTemplateUrl('teacher/teacher-popover.html', {
     scope: $scope
@@ -258,8 +277,40 @@ teacher.controller('TprofileCtrl', ['$scope','$rootScope','$ionicPopover','$ioni
 
   }
 }]);
-teacher.controller('TsoldeCtrl', ['$scope','$ionicPopover','$ionicHistory', function ($scope, $ionicPopover,$ionicHistory) {
+teacher.controller('TsoldeCtrl', ['$scope', '$rootScope', '$http', '$ionicPopup', '$ionicLoading', '$ionicPopover', '$ionicHistory', function ($scope, $rootScope, $http, $ionicPopup, $ionicLoading, $ionicPopover, $ionicHistory) {
+  /*$scope.lastKey;
+   for($scope.key in $rootScope.teacher.entity.payments){
+   if($rootScope.teacher.entity.payments.hasOwnProperty($scope.key)){
+   $scope.lastKey = $scope.key;
+   }
+   }
+   alert($scope.lastKey + ': ' + $rootScope.teacher.entity.payments[$scope.lastKey]);*/
+  $scope.limit = 10;
 
+  $scope.showMore = function () {
+    $scope.limit += 3;
+  }
+  $scope.showLess = function () {
+    $scope.limit -= 3;
+  }
+  $scope.showAlert = function (id, solde, nbreHeures, nbreStudents, coutHoraire, date) {
+    console.log("id recap : " + id)
+    date = new Date(date).toLocaleDateString('fr-FR', {
+      day: 'numeric',
+      month: 'short',
+      hour: 'numeric',
+      minute: 'numeric'
+    }).split(' ').join(' ');
+    var alertPopup = $ionicPopup.alert({
+      title: 'Détails récapitulatif solde',
+      template: '<ul>Solde : ' + solde + ' MAD</ul><br> <ul>Nombre heures : ' + nbreHeures + '</ul><br> <ul>Nombre étudiants : ' + nbreStudents + '</ul><br> <ul>Coût horaire : ' + coutHoraire + ' MAD</ul>'
+    });
+
+    alertPopup.then(function (res) {
+      console.log('OK');
+    });
+
+  };
   $scope.goBack = function(){
     $ionicHistory.goBack();
   }
@@ -276,7 +327,7 @@ teacher.controller('TtimeCtrl', ['$scope','$ionicPopover','$rootScope','$http','
 
     $rootScope.teach = data
     console.log('Data emploi'+JSON.stringify({data: data}))
-    $location.path('teacher/index.html');
+    $location.path('teacher/indexT.html');
   }).error(function (data) {
     toastr.error('Echec de connexion ! Veuillez réessayer dans quelques instants !', 'Désolés !', {displayDuration: 1000});
     navigator.app.exitApp();
@@ -288,3 +339,9 @@ teacher.controller('TtimeCtrl', ['$scope','$ionicPopover','$rootScope','$http','
     $scope.popover = popover;
   });
 }]);
+teacher.filter('startFrom', function () {
+  return function (input, start) {
+    start = +start; //parse to int
+    return input.slice(start);
+  }
+});

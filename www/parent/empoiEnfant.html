@@ -1,21 +1,3 @@
-<script>
-  $(document)
-    .one('focus.textarea', '.autoExpand', function () {
-      var savedValue = this.value;
-      this.value = '';
-      this.baseScrollHeight = this.scrollHeight;
-      this.value = savedValue;
-      savedValue = 'msg'
-    })
-    .on('input.textarea', '.autoExpand', function () {
-      var minRows = this.getAttribute('data-min-rows') | 0,
-        rows;
-      this.rows = minRows;
-      console.log(this.scrollHeight, this.baseScrollHeight);
-      rows = Math.ceil((this.scrollHeight - this.baseScrollHeight) / 17);
-      this.rows = minRows + rows;
-    });
-</script>
 <ion-view  title='<img class="title-image" src="parent/icon.png"> Cap Mission </img>' cache-view="false">
   <ion-nav-buttons side="right">
     <a class="button button-icon ion-ios-more rotate-90 fs-s" ng-click="popover.show($event)"></a>
@@ -51,7 +33,8 @@
 
     </ion-tab>
 
-    <ion-tab title="Solde" icon-off="icon ion-ios-calculator-outline" icon-on="icon ion-ios-calculator" ng-click="onTabSelected()">
+    <ion-tab title="Solde" href="#/parent/ChoixEnfantSolde" icon-off="icon ion-ios-calculator-outline"
+             icon-on="icon ion-ios-calculator">
 
     </ion-tab>
 
@@ -63,13 +46,23 @@
 
   <ion-content>
     <br><br><br>
-    <div class="divEmploi"><i class="ion-calendar">&nbsp;Planning de : {{son.entity.name}}</i></div><br>
+
+    <div class="divEmploi"><i class="ion-calendar">&nbsp;Planning de : {{son.entity.name}}</i></div>
+    <center><h5><i class="fa fa-arrow-left"></i>Semaine du {{currentWeekStart()}} - {{currentWeekEnd()}}<i
+      class="fa fa-arrow-right"></i></h5></center>
+    <button class="button icon-left ion-chevron-left button-clear button-dark btnLeft" ng-click="prevWeek()">
+      Précédent
+    </button>
+    <button class="button icon-right ion-chevron-right button-clear button-dark btnRight" ng-click="nextWeek()">
+      Suivant
+    </button>
     <div  class="card divCard item-text-wrap"
-         ng-repeat="timetables in son.entity.timetables | orderBy:'start'"
-         ng-if="timetables.start >  now">
+          ng-repeat="timetables in son.entity.timetables | orderBy:'start' | filter:week">
 
       <div  class="item item-divider divItem item-icon-right">
-        <a href="#" ng-app="capMission" ng-controller="EmailController" ng-click="modal.show();get(timetables.id,son.entity.name,timetables.name,timetables.start)"><i class="icon ion-compose iMod"></i></a>
+        <div ng-if="timetables.start > now"><a href="#" ng-app="capMission" ng-controller="EmailController"
+                                               ng-click="modal.show();get(timetables.id,son.entity.name,timetables.name,timetables.start)"><i
+          class="icon ion-compose iMod"></i></a></div>
         <div class="TextS">
         {{timetables.start  | date: 'EEEE dd MMMM'}}&nbsp;&nbsp;{{timetables.start | date: 'HH:mm'}}&nbsp;-
         {{timetables.end  | date: 'HH:mm'}}&nbsp;&nbsp;<strong> {{timetables.name}} </strong></div>
