@@ -1,11 +1,10 @@
 <ion-view title="Accueil" hide-back-button="true" style="background: white" cache-view="false" hide-nav-bar="true">
-
   <ion-content has-header="true" padding="true">
-    <div style="border-style: hidden" class="item item-image" >
+    <p>
       <a href="" onclick="window.open('http://www.capmission.com', '_system');">
-        <img src="resources/img/logo.png">
-      </a>
-    </div>
+        <img class="halfsize" src="resources/img/logo.png" width="230" height="60" align="left>">
+      </a><a class="button button-icon ion-ios-more rotate-90 fs-s" ng-click="popover.show($event)"></a>
+    </p>
     <br><br><br>
     <div class="divRole">
       Se connecter en tant que :
@@ -13,7 +12,7 @@
 
     <div  ng-app="capMission.parent" ng-controller="ChoixCtrl">
       <center>
-        <button ng-click="get(idParent)" class="button icon-right ion-chevron-right buttonEmp">Parent</button>
+        <button ng-click="get(idParent)" class="button icon-right ion-chevron-right buttonEmp">Tuteur</button>
       </center>
       <br>
     </div>
@@ -34,5 +33,8 @@
     </div><br>
 
       </div>
+    <!--<a class="icon ios-walk-outline Quit" ng-app="capMission" ng-controller="LogoutCtrl" ng-click="logout()"></a>-->
   </ion-content>
+  <!--<div id="foo"><a href="#" ng-controller="LogoutCtrl" ng-click="logout()"><i class="ion-log-out"> Quitter</i></a></div>-->
+
 </ion-view>

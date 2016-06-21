@@ -222,6 +222,10 @@ ion-content{
   font-family: serif;
 }
 
+.cardD {
+  margin-bottom: 2px;
+}
+
 .item1 {
   border-style: hidden;
   font-size: small;
@@ -235,9 +239,21 @@ ion-content{
     font-size: small;
     font-family: sans-serif;
     font-size: small;
-    background-color: #acbca0;
+  background-color: #ccdaff;
     /*text-align: center;
     vertical-align: middle;*/
+}
+
+.divItemS {
+
+  width: 100%;
+  height: 100%;
+  font-size: small;
+  font-family: sans-serif;
+  font-size: small;
+  background-color: #afafaf;
+  /*text-align: center;
+  vertical-align: middle;*/
 }
 
 .divItem1 {
@@ -267,14 +283,19 @@ ion-content{
   /*font-size: 100%;*/
   color: #6d8fd1;
   /*position: relative;*/
-  white-space: nowrap;
 }
 
 .negativeSolde {
   /*font-size: 100%;*/
   color: #fa1a18;
   /*position: relative;*/
-  white-space: nowrap;
+}
+
+.Quit {
+
+  position: absolute;
+  bottom: 0;
+
 }
 
 .TextS1 {
@@ -307,8 +328,10 @@ ion-content{
 .buttonEmp {
   width: 100%;
   height: 100%;
-  background-color: #70b3ff;
+  background-color: #e7e7e7;
+  color: #ed7b19;
 }
+
 .profilLegend{
   font-weight: 800;
   font-family: serif;
@@ -666,7 +689,7 @@ input[type=checkbox].css-checkbox:checked + label.css-label {
 }
 
 .elegant {
-  background-image: url(http://csscheckbox.com/checkboxes/elegant.png);
+  background-image: url(elegant.png);
 }
 
 .depressed {
@@ -745,21 +768,179 @@ body {
 }
 
 .header .col {
-  border-top: solid 1px grey;
   background-color: lightgrey;
+  text-align: center;
 }
 
-.col:first-child {
-  border-left: solid 1px grey;
+.col {
+  border-bottom-style: none;
+  border-right-style: none;
+  text-align: center;
+  display: inline-block
 }
 
 .col:last-child {
-  border-right: solid 1px grey;
+  display: inline-block
 }
 
 .row:last-child .col {
-  border-bottom: solid 1px grey;
+  display: inline-block
 }
 
+.grise {
+  border: 1px solid black;
+  background-color: silver;
+}
 
+.blue {
+  border: 1px solid blue;
+}
+
+.none {
+  border-style: none;
+}
+
+#holder {
+  position: fixed;
+  width: 100%;
+}
+
+#holder1 {
+  position: fixed;
+  width: 100%;
+}
+
+#header {
+
+}
+
+.notify {
+  height: 300px;
+  overflow: hidden;
+}
+
+.card {
+  margin-bottom: -15px;
+}
+
+/*
+.fixed-header{
+  margin-top:43px;
+  /!*
+   The ionic header bar is 43px in height,
+   put your content below the header bar.
+  *!/
+}
+.platform-webview.platform-ios.platform-cordova .fixed-header{
+  margin-top:63px;
+  /!* On iOS, moving a div out of ion-content,
+  I think you need to compensation for the 20px system status bar.
+  so it's 43px+20px=63px. but I'm not so sure, it hasn't been tested.
+  Test it yourself and make modifications if needed.
+  *!/
+}
+
+.my-video
+{
+  height:200px;
+  width:100%;
+  position:absolute;
+}
+
+.ion-content-below-my-video{
+  margin-top:200px!important;
+}
+
+.platform-webview.platform-ios.platform-cordova .ion-content-below-my-video{
+  margin-top:220px;
+  /!*
+  Same as .fixed-header
+  *!/
+}
+*/
+.theroot {
+  height: 300px;
+}
+
+#foo {
+  font-size: medium;
+  color: #8B0000;
+  position: fixed;
+  bottom: 5px;
+  right: 12px;
+}
+
+.iconSize2 {
+  font-size: 20px;
+  display: inline-block;
+}
+
+.divText {
+  padding: 10px;
+  /*text-align: justify;*/
+}
+
+.h5Title {
+  text-align: center;
+  color: red;
+  text-decoration: underline;
+}
+
+ul.b {
+  list-style-type: square;
+  padding: 10px;
+}
+
+ul.a {
+  list-style-type: circle;
+  padding: 20px;
+}
+
+.decor {
+  text-decoration: underline;
+  font-weight: bold;
+}
+
+ion-popover-view.fit {
+  height: auto;
+  margin-top: 10px;
+}
+
+ion-popover-view.fit ion-content {
+  position: relative;
+}
+
+.pagText {
+  font-size: 10px;
+  text-align: center;
+}
+
+.customTrans {
+  -webkit-transition: all 1s ease-out;
+  -moz-transition: all 1s ease-out;
+  -ms-transition: all 1s ease-out;
+  -o-transition: all 1s ease-out;
+  transition: all 1s ease-out;
+}
+
+/*.cont {
+  padding-left: 6px;
+  float : left;
+  clear : left;
+}*/
+.textPop {
+  font-size: 15px;
+  color: #dd7118;
+  display: inline-block;
+  margin-top: -10px;
+  padding-left: 10px;
+  margin-bottom: -10px;
+}
+
+.iconSize {
+  font-size: 20px;
+  display: inline-block;
+  /*float : left;
+  clear : left;*/
+}
 

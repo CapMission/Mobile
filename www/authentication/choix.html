@@ -24,17 +24,15 @@
     </ion-tab>
 
 
-    <ion-tab title="Messages" icon-off="ion-ios-email-outline" icon-on="ion-ios-email"
-             badge="badgeMessages" badge-style="badge-assertive" ng-click="onTabSelected()">
-
-    </ion-tab>
     <ion-tab title="Solde" href="#/parent/ChoixEnfantSolde" icon-off="icon ion-ios-calculator-outline"
              icon-on="icon ion-ios-calculator">
 
     </ion-tab>
 
+    <ion-tab title="Contactez-nous" icon-off="ion-ios-chatboxes-outline" icon-on="ion-ios-chatboxes"
+             badge="badgeMessages" badge-style="badge-assertive" ng-click="onTabSelected()">
 
-
+    </ion-tab>
 
   </ion-tabs>
   <br>
@@ -42,7 +40,7 @@
 
   <ion-content>
     <br><br><br>
-    <!--taille :{{parent.entity.students.length}}-->
+    <!--taille:{{parent.entity.students.length}}-->
     <br>
     <div class="divChoix">
     <div ng-show="parent.entity.students.length > '1'">

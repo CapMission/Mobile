@@ -21,51 +21,139 @@
              badge-style="badge-assertive" ng-click="onTabSelected()">
 
     </ion-tab>
+    <!--
 
+        <ion-tab title="Messages" icon-off="ion-ios-email-outline" icon-on="ion-ios-email"
+                 badge="badgeMessages" badge-style="badge-assertive" ng-click="onTabSelected()">
 
-    <ion-tab title="Messages" icon-off="ion-ios-email-outline" icon-on="ion-ios-email"
+        </ion-tab>-->
+    <ion-tab title="Solde" href="#/parent/ChoixEnfantSolde" icon-off="icon ion-ios-calculator-outline"
+             icon-on="icon ion-ios-calculator" ng-controller="ChoixsoldeCtrl" ng-click="get()">
+
+    </ion-tab>
+    <ion-tab title="Contactez-nous" icon-off="ion-ios-chatboxes-outline" icon-on="ion-ios-chatboxes"
              badge="badgeMessages" badge-style="badge-assertive" ng-click="onTabSelected()">
 
     </ion-tab>
-    <ion-tab title="Solde" href="#/parent/ChoixEnfantSolde" icon-off="icon ion-ios-calculator-outline"
-             icon-on="icon ion-ios-calculator">
-
-    </ion-tab>
-
 
   </ion-tabs>
   <ion-content>
     <br><br><br><br>
 
-    <div ng-show="sonSolde.entity.solde <= 0" class="negativeSolde inline">
-      Solde actuel : <strong>{{sonSolde.entity.solde | number:2}}</strong> MAD
+    <div class="row header">
+      <div class="col">Payé</div>
+      <div class="col">Consommé</div>
+      <div class="col">Restant</div>
     </div>
-    <div ng-show="sonSolde.entity.solde > 0" class="positiveSolde inline">
-      Solde actuel : <strong>{{sonSolde.entity.solde | number:2}}</strong> MAD
+    <div class="row">
+      <div class="col"><strong>{{sonSolde.entity.soldePay | number:2}}</strong></div>
+      <div class="col"><strong>{{sonSolde.entity.soldeCons | number:2}}</strong></div>
+      <div class="col negativeSolde" ng-show="sonSolde.entity.solde <= 0"><strong>{{sonSolde.entity.solde |
+        number:2}}</strong></div>
+      <div class="col positiveSolde" ng-show="sonSolde.entity.solde > 0"><strong>{{sonSolde.entity.solde |
+        number:2}}</strong></div>
     </div>
-    <br><br>
-
+    <div class="negativeSolde" ng-show="sonSolde.entity.solde < 0"> Pensez à payer !</div>
+    <br>
     <div class="row header">
       <div class="col">Date</div>
       <div class="col">Matière</div>
       <div class="col">Solde</div>
-      <div class="col">Détails</div>
+      <div class="col">Plus</div>
     </div>
-    <div class="row" ng-repeat="recap in sonSolde.entity.recaps | orderBy:'date' |limitTo:-limit">
-      <div class="col">{{recap.date | date:'dd MMM à HH:mm'}}</div>
-      <div class="col">{{recap.periode.name}}</div>
-      <div class="col"><strong>{{recap.soldeRemain | number:2}}</strong> MAD</div>
-      <div class="col"><a ng-app="capMission.student" ng-controller="SsoldeCtrl" href="#"
+    <div class="row" ng-repeat="recap in sonSolde.entity.recaps | limitTo:-limit | orderBy:'-date'">
+      <div class="col">{{recap.date | date:'dd MMM'}}</div>
+      <div class="col">{{recap.periode.name.trunc(8)}}</div>
+      <div class="col"><strong>{{recap.soldeRemain | number:2}}</strong></div>
+      <div class="col iconSize2"><a class="ion-ios-information-outline iconSize2"
+                                    ng-click="popover2.show($event);getRecap(recap.periode.name,recap.date,recap.soldeRemain,recap.tarifHour,recap.tarifPeriod,recap.nbreHours,recap.absence,recap.date)">
+      </a></div>
+
+      <!--<div class="col"><a ng-app="capMission.student" ng-controller="SsoldeCtrl" href="#"
                           ng-click="showAlert(recap.id,recap.tarifHour,recap.tarifPeriod,recap.nbreHours,recap.absence)">Détails</a>
       </div>
+      <div class="col"><a ng-click="modal.show();getRecap(recap.periode.name,recap.date,recap.soldeRemain,recap.tarifHour,recap.tarifPeriod,recap.nbreHours,recap.absence)"><i class="ion-email iconSize"></i></a></div>-->
     </div>
     <br>
 
     <div>
-      <a class="aRight" href="" ng-click="showMore()">Plus</a>
-      <a class="aLeft" href="" ng-click="showLess()">Moins</a>
+      <a class="aRight" ng-show="sonSolde.entity.recaps.length > limit" href="" ng-click="showMore()">Plus détails <i
+        class="icon ion-ios-plus-empty"></i></a>
     </div>
 
+    <!---->
   </ion-content>
 
+  <script id="templates/popover.html" type="text/ng-template">
+    <ion-popover-view>
+      <ion-content>
+        <div class="list">
+          <a class="item" ng-click="popover.hide()" href="#/parent/profil">
+            Profil
+          </a>
+          <a class="item" href="#/parent/apropos" ng-click="popover.hide()">
+            A propos
+          </a>
+          <a class="item" href="#/parent/reglement" ng-click="popover.hide()">
+            Règlement intérieur
+          </a>
+          <a class="item" href="#" ng-controller="LogoutCtrl" ng-click="logout();popover.hide()">
+            Quitter l'application
+          </a>
+        </div>
+      </ion-content>
+    </ion-popover-view>
+  </script>
+
+  <script id="templates/popover2.html" type="text/ng-template">
+    <ion-popover-view class="fit customTrans">
+      <ion-content>
+        <div class="list cont">
+          <a class="textPop iconSize" ng-click="showAlert();popover2.hide()"><i
+            class="ion-information-circled iconSize"></i> Détails</a><br>
+          <a class="textPop iconSize" ng-click="modal.show();popover2.hide()"><i class="ion-email iconSize"></i>
+            Remarque </a>
+        </div>
+      </ion-content>
+    </ion-popover-view>
+  </script>
+
+  <script id="templates/modalSoldeEnfant.html" type="text/ng-template">
+    <div class="modal transparent modalSize">
+      <div class="card">
+        <i class="icon ion-ios-close close-modal" ng-click="modal.hide()"></i>
+
+        <p class="headerModal item-divider padding">Envoyez-nous un message ! </p>
+
+        <form name="myForm" novalidate>
+          <input ng-model="id" type="hidden">
+          <input ng-model="solde" type="hidden">
+          <input ng-model="nbreHeures" type="hidden">
+          <input ng-model="tarifHour" type="hidden">
+          <input ng-model="tarifPeriod" type="hidden">
+          <input ng-model="absence" type="hidden">
+          <input ng-model="name" type="hidden">
+          <input ng-model="date" type="hidden">
+          <input ng-model="mail.to" type="hidden">
+          <input ng-model="mail.from" type="hidden">
+          <input ng-model="mail.subject" type="hidden">
+          <label class="item item-input">
+            <center><textarea class='autoExpand' rows='3' col="30" data-min-rows='3' name="msg" ng-model="mail.body"
+                              placeholder="Votre message" required></textarea></center>
+          </label>
+          <br>
+          <center>
+            <button ng-disabled="myForm.$invalid" class="button button-small buttonEmail button-dark "
+                    ng-click="sendRecap(mail,solde,nbreHeures,tarifHour,tarifPeriod,absence,name,date);modal.hide()">
+              Envoyer
+            </button>
+          </center>
+        </form>
+        <div class="padding">
+          <p ng-show="myForm.msg.$error.required">* Message est obligatoire</p>
+        </div>
+
+      </div>
+    </div>
+  </script>
 </ion-view>

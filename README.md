@@ -1,4 +1,3 @@
-<<<<<<< HEAD
 # Cap Mission | Mobile 
 
 _Application mobile de Cap Mission_
@@ -32,7 +31,7 @@ $ git clone https://github.com/CapMission/Mobile.git
 **2.** Se placer dans le dossier nouvellement cloné/créé par la commande précédente
 
 ```bash
-$ cd CapMission-Mobile-v1
+$ cd Mobile
 ```
 
 **3.** Ajout des plugins et des platforms Cordova

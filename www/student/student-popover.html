@@ -1,4 +1,4 @@
-<body ng-app="capMission">
+<body ng-app="capMission.student">
 <ion-popover-view>
   <ion-content>
     <div class="list">
@@ -7,6 +7,9 @@
       </a>
       <a class="item" href="#/student/apropos" ng-click="popover.hide()">
         A propos
+      </a>
+      <a class="item" href="#/student/reglement" ng-click="popover.hide()">
+        Règlement intérieur
       </a>
       <a class="item" ng-controller="LogoutCtrl" ng-click="logout();popover.hide()">
         Quitter l'application

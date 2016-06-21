@@ -22,21 +22,17 @@
 
     </ion-tab>
 
-    <!--
-        <ion-tab title="Résultats" icon-off="ion-ios-pie-outline" icon-on="ion-ios-pie" ng-click="onTabSelected()">
+    <!-- <ion-tab title="Messages" icon-off="ion-ios-email-outline" icon-on="ion-ios-email"
+              badge="badgeMessages" badge-style="badge-assertive" ng-click="onTabSelected()">
 
-        </ion-tab>-->
+     </ion-tab>-->
+    <ion-tab title="Solde" href="#/student/solde" icon-off="icon ion-ios-calculator-outline"
+             icon-on="icon ion-ios-calculator"></ion-tab>
 
-
-    <ion-tab title="Messages" icon-off="ion-ios-email-outline" icon-on="ion-ios-email"
+    <ion-tab title="Contactez-nous" icon-off="ion-ios-chatboxes-outline" icon-on="ion-ios-chatboxes"
              badge="badgeMessages" badge-style="badge-assertive" ng-click="onTabSelected()">
 
     </ion-tab>
-    <ion-tab title="Solde" href="#/student/solde" icon-off="icon ion-ios-calculator-outline"
-             icon-on="icon ion-ios-calculator" href="#/student/solde"></ion-tab>
-
-
-
 
   </ion-tabs>
   <br>
@@ -44,27 +40,43 @@
   <ion-content>
     <br><br><br>
 
-    <div class="divEmploi"><i class="ion-calendar">&nbsp;Planning</i></div>
-    <center><h5><i class="fa fa-arrow-left"></i>Semaine du {{currentWeekStart()}} - {{currentWeekEnd()}}<i
-      class="fa fa-arrow-right"></i></h5></center>
-    <button class="button icon-left ion-chevron-left button-clear button-dark btnLeft" ng-click="prevWeek()">
-      Précédent
-    </button>
-    <button class="button icon-right ion-chevron-right button-clear button-dark btnRight" ng-click="nextWeek()">
-      Suivant
-    </button>
+
+    <!-- <div id="holder">-->
+    <div>
+      <div class="divEmploi"><i class="ion-calendar">&nbsp;Planning</i></div>
+      <br>
+
+      <div class="pagText">
+        <a class="button icon-left ion-chevron-left button-clear button-dark pagText"
+           ng-click="showLoading();prevWeek()">Semaine du <strong>{{currentWeekStart()}}</strong></a>
+        <a class="button icon-right ion-chevron-right button-clear button-dark pagText"
+           ng-click="showLoading();nextWeek()"><strong>{{currentWeekEnd()}}</strong></a>
+      </div>
+    </div>
+    <ion-scroll direction="y" class="theroot">
     <div  class="card divCard item-text-wrap"
           ng-repeat="timetables in student.entity.timetables | orderBy:'start' | filter:week">
 
-      <div  class="item item-divider divItem item-icon-right">
-        <div ng-if="timetables.start > now"><a href="#" ng-app="capMission.student" ng-controller="SEmailController"
+      <div ng-if="timetables.start > now" class="item item-divider divItem item-icon-right">
+        <div><a href="#" ng-app="capMission.student" ng-controller="SEmailController"
                                                ng-click="modal.show();getS(timetables.id,timetables.name,timetables.start)"><i
           class="icon ion-compose iMod"></i></a></div>
         <div class="TextS">
-          {{timetables.start  | date: 'EEEE dd MMMM'}}&nbsp;&nbsp;{{timetables.start | date: 'HH:mm'}}&nbsp;-
-          {{timetables.end  | date: 'HH:mm'}}&nbsp;&nbsp;<strong> {{timetables.name}} </strong></div>
+          <nobr>
+            {{timetables.start | date: 'EEE dd MMM'}} {{timetables.start | date: 'HH:mm'}}-
+            {{timetables.end | date: 'HH:mm'}} <strong>{{timetables.name.trunc(10)}}</strong></nobr>
+        </div>
+      </div>
+      <div ng-if="timetables.start < now" class="item item-divider divItemS item-icon-right">
+        <div class="TextS">
+          <nobr>
+            {{timetables.start | date: 'EEE dd MMM'}} {{timetables.start | date: 'HH:mm'}}-
+            {{timetables.end | date: 'HH:mm'}} <strong>{{timetables.name.trunc(10)}}</strong></nobr>
+        </div>
       </div>
     </div>
+    </ion-scroll>
+
     <!--pagination data-boundary-links="true" data-num-pages="noOfPages" data-current-page="currentPage" max-size="maxSize"
                 class="pagination-small"
                 data-previous-text="&laquo;" data-next-text="&raquo;"></pagination-->

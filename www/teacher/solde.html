@@ -22,32 +22,33 @@
 
     </ion-tab>
 
-
-    <!-- <ion-tab title="Résultats" icon-off="ion-ios-pie-outline" icon-on="ion-ios-pie" ng-click="onTabSelected()">
+    <!-- <ion-tab title="Messages" icon-off="ion-ios-email-outline" icon-on="ion-ios-email"
+              badge="badgeMessages" badge-style="badge-assertive" ng-click="onTabSelected()">
 
      </ion-tab>-->
 
-
-    <ion-tab title="Messages" icon-off="ion-ios-email-outline" icon-on="ion-ios-email"
-             badge="badgeMessages" badge-style="badge-assertive" ng-click="onTabSelected()">
-
-    </ion-tab>
-
-    <ion-tab title="Solde" href="#/teacher/solde" icon-off="icon ion-ios-calculator-outline"
+    <ion-tab title="Solde" href="#/teacher/ChoixSolde" icon-off="icon ion-ios-calculator-outline"
              icon-on="icon ion-ios-calculator">
 
     </ion-tab>
 
+    <ion-tab title="Contactez-nous" icon-off="ion-ios-chatboxes-outline" icon-on="ion-ios-chatboxes"
+             badge="badgeMessages" badge-style="badge-assertive" ng-click="onTabSelected()">
+
+    </ion-tab>
 
   </ion-tabs>
   <ion-content>
     <br><br><br><br>
 
     <div ng-show="teacher.entity.solde <= 0" class="negativeSolde">
-      Solde depuis le début des temps : <strong>{{teacher.entity.solde | number:2}}</strong> MAD
+      Depuis le début des temps : <strong>{{teacher.entity.solde | number:2}}</strong>
     </div>
     <div ng-show="teacher.entity.solde > 0" class="positiveSolde">
-      Solde depuis le début des temps: <strong>{{teacher.entity.solde | number:2}}</strong> MAD
+      Depuis le début des temps: <strong>{{teacher.entity.solde | number:2}}</strong>
+    </div>
+    <div class="positiveSolde">
+      A date d'aujourd'hui: <strong>{{dernier | number:2}}</strong>
     </div>
     <br>
 
@@ -55,22 +56,97 @@
       <div class="col">Date</div>
       <div class="col">Matière</div>
       <div class="col">Solde</div>
-      <div class="col">Détails</div>
+      <div class="col">Plus</div>
     </div>
-    <div class="row" ng-repeat="payment in teacher.entity.payments | orderBy:'date' |limitTo:-limit">
-      <div class="col">{{payment.date | date:'dd MMM à HH:mm'}}</div>
-      <div class="col">{{payment.course.name}}</div>
-      <div class="col"><strong>{{payment.cumul | number:2}}</strong> MAD</div>
-      <div class="col"><a ng-app="capMission.teacher" ng-controller="TsoldeCtrl" href="#"
+    <div class="row" ng-repeat="payment in teacher.entity.payments | limitTo:-limit | orderBy:'-date'">
+      <div class="col">{{payment.date | date:'dd MMM'}}</div>
+      <div class="col">{{payment.course.name.trunc(8)}}</div>
+      <div class="col"><strong>{{payment.cumul | number:2}}</strong></div>
+      <div class="col iconSize2"><a class="ion-ios-information-outline iconSize2"
+                                    ng-click="popover2.show($event);getPayment(payment.course.name,payment.date,payment.cumul,payment.solde,payment.nbreHeures,payment.nbreStudents,payment.coutHoraire)">
+      </a></div>
+
+      <!--<div class="col"><a ng-app="capMission.teacher" ng-controller="TsoldeCtrl" href="#"
                           ng-click="showAlert(payment.id,payment.solde,payment.nbreHeures,payment.nbreStudents,payment.coutHoraire,payment.date)">Détails</a>
       </div>
+      <div class="col"><a ng-click="modal.show();getPayment(payment.course.name,payment.date,payment.cumul,payment.solde,payment.nbreHeures,payment.nbreStudents,payment.coutHoraire)"><i class="ion-email iconSize"></i></a></div>-->
     </div>
     <br>
 
     <div>
-      <a class="aRight" href="" ng-click="showMore()">Plus</a>
-      <a class="aLeft" href="" ng-click="showLess()">Moins</a>
+      <a class="aRight" href="" ng-show="teacher.entity.payments.length > limit" ng-click="showMore()">Plus détails <i
+        class="icon ion-ios-plus-empty"></i></a>
     </div>
 
+
   </ion-content>
+  <script id="templates/popover.html" type="text/ng-template">
+    <ion-popover-view>
+      <ion-content>
+        <div class="list">
+          <a class="item" href="#/teacher/profil" ng-click="popover.hide()">
+            Profil
+          </a>
+          <a class="item" href="#/teacher/apropos" ng-click="popover.hide()">
+            A propos
+          </a>
+          <a class="item" href="#" ng-controller="LogoutCtrl" ng-click="logout();popover.hide()">
+            Quitter l'application
+          </a>
+        </div>
+      </ion-content>
+    </ion-popover-view>
+  </script>
+
+  <script id="templates/popover2.html" type="text/ng-template">
+    <ion-popover-view class="fit customTrans">
+      <ion-content>
+        <div class="list cont">
+          <a class="textPop iconSize" ng-click="showAlert();popover2.hide()"><i
+            class="ion-information-circled iconSize"></i> Détails</a><br>
+          <a class="textPop iconSize" ng-click="modal.show();popover2.hide()"><i class="ion-email iconSize"></i>
+            Remarque </a>
+        </div>
+      </ion-content>
+    </ion-popover-view>
+  </script>
+
+  <script id="templates/modalSolde.html" type="text/ng-template">
+    <div class="modal transparent modalSize">
+      <div class="card">
+        <i class="icon ion-ios-close close-modal" ng-click="modal.hide()"></i>
+
+        <p class="headerModal item-divider padding"> Envoyez-nous un message ! </p>
+
+        <form name="myForm" novalidate>
+          <input ng-model="id" type="hidden">
+          <input ng-model="solde" type="hidden">
+          <input ng-model="nbreHeures" type="hidden">
+          <input ng-model="nbreStudents" type="hidden">
+          <input ng-model="cout" type="hidden">
+          <input ng-model="cumul" type="hidden">
+          <input ng-model="name" type="hidden">
+          <input ng-model="date" type="hidden">
+          <input ng-model="mail.to" type="hidden">
+          <input ng-model="mail.from" type="hidden">
+          <input ng-model="mail.subject" type="hidden">
+          <label class="item item-input">
+            <center><textarea class='autoExpand' rows='3' col="30" data-min-rows='3' name="msg" ng-model="mail.body"
+                              placeholder="Votre message" required></textarea></center>
+          </label>
+          <br>
+          <center>
+            <button ng-disabled="myForm.$invalid" class="button button-small buttonEmail button-dark "
+                    ng-click="sendSolde(mail,id,solde,nbreHeures,nbreStudents,cout,cumul,name,date);modal.hide()">
+              Envoyer
+            </button>
+          </center>
+        </form>
+        <div class="padding">
+          <p ng-show="myForm.msg.$error.required">* Message est obligatoire</p>
+        </div>
+
+      </div>
+    </div>
+  </script>
 </ion-view>

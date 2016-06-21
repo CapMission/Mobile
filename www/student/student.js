@@ -265,17 +265,95 @@ student.controller('SprofileCtrl', ['$scope','$rootScope','$ionicPopover','$http
     $scope.popover = popover;
   });
 }]);
+
 student.controller('SsoldeCtrl', ['$scope', '$rootScope', '$ionicModal', '$http', '$ionicPopover', '$ionicHistory', '$ionicLoading', '$ionicPopup', '$filter', function ($scope, $rootScope, $ionicModal, $http, $ionicPopover, $ionicHistory, $ionicLoading, $ionicPopup, $filter) {
 
-  $scope.showAlert = function (id, tarif, period, hour, absence, date) {
-    console.log("id recap : " + id)
-    if (absence = "null") {
-      absence = "Présent"
+  $ionicModal.fromTemplateUrl('templates/modalSoldeEnfant.html', {
+    scope: $scope
+  }).then(function (modal) {
+    $scope.modal = modal;
+  });
+  $scope.getRecap = function (name, date, solde, tarifHour, tarifPeriod, nbreHeures, absence) {
+    $scope.name = name
+    $scope.solde = solde
+    $scope.nbreHeures = nbreHeures
+    $scope.tarifHour = tarifHour
+    $scope.tarifPeriod = tarifPeriod
+    $scope.absence = absence
+    $scope.date = date
+    debutDate = new Date(date).toLocaleDateString('fr-FR', {
+      day: 'numeric',
+      month: 'short',
+      year: 'numeric',
+      hour: 'numeric',
+      minute: 'numeric'
+    }).split(' ').join(' ');
+    console.log('nameN: ' + name)
+    console.log('tarif hour: ' + tarifHour)
+    console.log('solde: ' + solde)
+    console.log('nbreHeures: ' + nbreHeures)
+    console.log('tarif period: ' + tarifPeriod)
+    console.log('date: ' + debutDate)
+    console.log('absence: ' + absence)
+  }
+  $scope.sendRecap = function (mail, solde, nbreHeures, tarifHour, tarifPeriod, absence, name, date) {
+
+    mail.to = 'info@capmission.com'
+    mail.from = 'capmission.com@gmail.com'
+    name = $scope.name
+    solde = $scope.solde
+    nbreHeures = $scope.nbreHeures
+    tarifHour = $scope.tarifHour
+    tarifPeriod = $scope.tarifPeriod
+    absence = $scope.absence
+    date = $scope.date
+    debutDate = new Date(date).toLocaleDateString('fr-FR', {
+      day: 'numeric',
+      month: 'short',
+      year: 'numeric',
+      hour: 'numeric',
+      minute: 'numeric'
+    }).split(' ').join(' ');
+    mail.subject = ' Message de ' + $rootScope.student.entity.name + ' à propos de son solde  par rapport à la matière : ' + name + ' le : ' + debutDate
+
+    console.log('name: ' + name)
+    console.log('solde: ' + solde)
+    console.log('heures: ' + nbreHeures)
+    console.log('tarif hour: ' + tarifHour)
+    console.log('tarif period: ' + tarifPeriod)
+    console.log('absence : ' + absence)
+    console.log('date: ' + debutDate)
+    console.log('subject: ' + mail.subject)
+
+    $ionicLoading.show({
+      template: "En cours d'envoi !"
+    });
+    $http.post('http://81.192.194.109:8182/CapMissionApp/send-mail', mail, {timeout: 120000}).success(function (data, status, headers, config) {
+      $ionicLoading.hide();
+      toastr.success('Votre demande a été envoyée avec succès')
+      //$ionicHistory.goBack();
+    }).error(function (data, status) {
+      if (status == 0) {
+        toastr.error('Echec de connexion ! Veuillez réessayer dans quelques instants !', 'Désolés !', {displayDuration: 1000});
+        navigator.app.exitApp();
+      }
+      else {
+        $ionicLoading.hide();
+        toastr.error("Echec envoi de message ! Réessayez plus tart !")
+      }
+    });
+
+  }
+  $scope.showAlert = function () {
+    var tarif = $scope.tarifHour.toFixed(2)
+    var period = $scope.tarifPeriod.toFixed(2)
+    if ($scope.absence = "null") {
+      $scope.absence = "Présent"
     }
 
     var alertPopup = $ionicPopup.alert({
       title: 'Détails récapitulatif solde',
-      template: '<ul>Tarif horaire : ' + tarif + ' MAD</ul><br> <ul>Tarif de la séance : ' + period + ' MAD</ul><br> <ul>Nombre heures : ' + hour + '</ul><br>' + absence
+      template: '<ul>Tarif horaire : ' + tarif + ' MAD</ul><br> <ul>Tarif de la séance : ' + period + ' MAD</ul><br> <ul>Nombre heures : ' + $scope.nbreHeures + '</ul><br><ul> Date : ' + debutDate + '</ul><br>' + $scope.absence
     });
 
     alertPopup.then(function (res) {
@@ -286,12 +364,18 @@ student.controller('SsoldeCtrl', ['$scope', '$rootScope', '$ionicModal', '$http'
   $scope.goBack = function(){
     $ionicHistory.goBack();
   }
-  $ionicPopover.fromTemplateUrl('student/student-popover.html', {
-    scope: $scope
+  $ionicPopover.fromTemplateUrl('templates/popover.html', {
+    scope: $scope,
   }).then(function (popover) {
     $scope.popover = popover;
   });
+  $ionicPopover.fromTemplateUrl('templates/popover2.html', {
+    scope: $scope,
+  }).then(function (popover) {
+    $scope.popover2 = popover;
+  });
 }]);
+
 student.controller('SProposCtrl', ['$scope', '$rootScope', '$http', '$location', '$ionicPopover', '$ionicHistory', function ($scope, $rootScope, $http, $location, $ionicPopover, $ionicHistory) {
 
   $scope.goBack = function () {
@@ -303,6 +387,7 @@ student.controller('SProposCtrl', ['$scope', '$rootScope', '$http', '$location',
     $scope.popover = popover;
   });
 }]);
+
 student.controller('StimeCtrl', ['$scope','$ionicPopover','$http','$ionicHistory', function ($scope,$ionicPopover, $http,$ionicHistory) {
 
   $scope.goBack = function(){
@@ -314,6 +399,7 @@ student.controller('StimeCtrl', ['$scope','$ionicPopover','$http','$ionicHistory
     $scope.popover = popover;
   });
 }]);
+
 student.controller("SEmailController",function($scope,$ionicPopup,$rootScope,$ionicModal,$http,$ionicLoading,$ionicHistory){
   $ionicModal.fromTemplateUrl('templates/modalS.html', {
     scope: $scope
@@ -385,3 +471,26 @@ student.controller("SEmailController",function($scope,$ionicPopup,$rootScope,$io
 
 });
 
+student.controller('SContactCtrl', ['$scope', '$ionicPopover', '$http', '$ionicHistory', function ($scope, $ionicPopover, $http, $ionicHistory) {
+  $scope.contact = "contact student"
+  $scope.goBack = function () {
+    $ionicHistory.goBack();
+  }
+  $ionicPopover.fromTemplateUrl('student/student-popover.html', {
+    scope: $scope
+  }).then(function (popover) {
+    $scope.popover = popover;
+  });
+}]);
+
+student.controller('RegStudentCtrl', ['$scope', '$ionicPopover', '$ionicHistory', function ($scope, $ionicPopover, $ionicHistory) {
+  $scope.regl = "reglement"
+  $scope.goBack = function () {
+    $ionicHistory.goBack();
+  }
+  $ionicPopover.fromTemplateUrl('parent/parent-popover.html', {
+    scope: $scope
+  }).then(function (popover) {
+    $scope.popover = popover;
+  });
+}]);

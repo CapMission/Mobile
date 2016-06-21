@@ -41,7 +41,7 @@ teacher.controller("TEmailController",function($scope,$ionicPopup,$rootScope,$io
       year : 'numeric',
       hour : 'numeric',
       minute : 'numeric'
-    }).split(' ').join('-');
+    }).split(' ').join(' ');
     mail.subject='Modification de la séance ' + period  + ' de : '+ $rootScope.teacher.entity.name + ' le : ' + debutDate
 
     console.log('idHF: '+id)
@@ -74,8 +74,8 @@ teacher.controller("TEmailController",function($scope,$ionicPopup,$rootScope,$io
 
 
 });
-teacher.controller('TeacherCtrl', ['$scope','$location','$rootScope','$http','$ionicPopover','$ionicLoading', function ($scope,$location,$rootScope,$http,$ionicPopover,$ionicLoading) {
 
+teacher.controller('TeacherCtrl', ['$scope', '$location', '$rootScope', '$http', '$ionicPopover', '$ionicLoading', function ($scope, $location, $rootScope, $http, $ionicPopover, $ionicLoading) {
   $scope.idTeacher = window.localStorage.getItem('id')
   $scope.now = new Date()
   $scope.get = function (id) {
@@ -85,6 +85,7 @@ teacher.controller('TeacherCtrl', ['$scope','$location','$rootScope','$http','$i
     $http.get('http://81.192.194.109:8182/CapMissionApp/teachers/' + id, {timeout: 35000}).success(function (data, status, headers, config) {
 
       $rootScope.teacher = data
+
       $scope.limit = 10;
 
       $scope.showMore = function () {
@@ -101,6 +102,11 @@ teacher.controller('TeacherCtrl', ['$scope','$location','$rootScope','$http','$i
       }
       else{
         $location.path('/teacher');
+        for (index = 0; index < $rootScope.teacher.entity.payments.length; ++index) {
+          if (index + 1 == $rootScope.teacher.entity.payments.length) {
+            $rootScope.dernier = $rootScope.teacher.entity.payments[index].cumul
+          }
+        }
 
       }
     }).error(function (data) {
@@ -115,6 +121,7 @@ teacher.controller('TeacherCtrl', ['$scope','$location','$rootScope','$http','$i
     $scope.popover = popover;
   });
 }]);
+
 teacher.controller('TProposCtrl', ['$scope', '$rootScope', '$http', '$location', '$ionicPopover', '$ionicHistory', function ($scope, $rootScope, $http, $location, $ionicPopover, $ionicHistory) {
 
   $scope.goBack = function () {
@@ -126,6 +133,7 @@ teacher.controller('TProposCtrl', ['$scope', '$rootScope', '$http', '$location',
     $scope.popover = popover;
   });
 }]);
+
 teacher.controller('TprofileCtrl', ['$scope','$rootScope','$ionicPopover','$ionicHistory','$ionicModal','$http','$ionicLoading', function ($scope,$rootScope, $ionicPopover,$ionicHistory,$ionicModal,$http,$ionicLoading) {
 
   $ionicModal.fromTemplateUrl('templates/modal-1.html', {
@@ -277,14 +285,86 @@ teacher.controller('TprofileCtrl', ['$scope','$rootScope','$ionicPopover','$ioni
 
   }
 }]);
-teacher.controller('TsoldeCtrl', ['$scope', '$rootScope', '$http', '$ionicPopup', '$ionicLoading', '$ionicPopover', '$ionicHistory', function ($scope, $rootScope, $http, $ionicPopup, $ionicLoading, $ionicPopover, $ionicHistory) {
-  /*$scope.lastKey;
-   for($scope.key in $rootScope.teacher.entity.payments){
-   if($rootScope.teacher.entity.payments.hasOwnProperty($scope.key)){
-   $scope.lastKey = $scope.key;
-   }
-   }
-   alert($scope.lastKey + ': ' + $rootScope.teacher.entity.payments[$scope.lastKey]);*/
+
+teacher.controller('TsoldeCtrl', ['$scope', '$rootScope', '$ionicModal', '$http', '$ionicPopup', '$ionicLoading', '$ionicPopover', '$ionicHistory', function ($scope, $rootScope, $ionicModal, $http, $ionicPopup, $ionicLoading, $ionicPopover, $ionicHistory) {
+
+  $ionicModal.fromTemplateUrl('templates/modalSolde.html', {
+    scope: $scope
+  }).then(function (modal) {
+    $scope.modal = modal;
+  });
+  $scope.getPayment = function (name, date, cumul, solde, nbreHeures, nbreStudents, cout) {
+    $scope.name = name
+    $scope.cumul = cumul
+    $scope.solde = solde
+    $scope.nbreHeures = nbreHeures
+    $scope.nbreStudents = nbreStudents
+    $scope.cout = cout
+    $scope.date = date
+    debutDate = new Date(date).toLocaleDateString('fr-FR', {
+      day: 'numeric',
+      month: 'short',
+      year: 'numeric',
+      hour: 'numeric',
+      minute: 'numeric'
+    }).split(' ').join(' ');
+    console.log('nameN: ' + name)
+    console.log('cumul: ' + cumul)
+    console.log('solde: ' + solde)
+    console.log('nbreHeures: ' + nbreHeures)
+    console.log('nbreStudents: ' + nbreStudents)
+    console.log('date: ' + debutDate)
+    console.log('cout: ' + cout)
+  }
+  $scope.sendSolde = function (mail, id, solde, nbreHeures, nbreStudents, cout, cumul, name, date) {
+
+    //$test = $rootScope.parent.entity.mail
+
+    mail.to = 'info@capmission.com'
+    mail.from = 'capmission.com@gmail.com'
+    name = $scope.name
+    cumul = $scope.cumul
+    solde = $scope.solde
+    nbreHeures = $scope.nbreHeures
+    nbreStudents = $scope.nbreStudents
+    cout = $scope.cout
+    date = $scope.date
+    debutDate = new Date(date).toLocaleDateString('fr-FR', {
+      day: 'numeric',
+      month: 'short',
+      year: 'numeric',
+      hour: 'numeric',
+      minute: 'numeric'
+    }).split(' ').join(' ');
+    mail.subject = ' Message de ' + $rootScope.teacher.entity.name + ' à propos de son solde par rapport à la matière : ' + name + ' le : ' + debutDate
+
+    console.log('name: ' + name)
+    console.log('cumul: ' + cumul)
+    console.log('solde: ' + solde)
+    console.log('heures: ' + nbreHeures)
+    console.log('students: ' + nbreStudents)
+    console.log('cout: ' + cout)
+    console.log('date: ' + debutDate)
+
+    $ionicLoading.show({
+      template: "En cours d'envoi !"
+    });
+    $http.post('http://81.192.194.109:8182/CapMissionApp/send-mail', mail, {timeout: 120000}).success(function (data, status, headers, config) {
+      $ionicLoading.hide();
+      toastr.success('Votre demande a été envoyée avec succès')
+      //$ionicHistory.goBack();
+    }).error(function (data, status) {
+      if (status == 0) {
+        toastr.error('Echec de connexion ! Veuillez réessayer dans quelques instants !', 'Désolés !', {displayDuration: 1000});
+        navigator.app.exitApp();
+      }
+      else {
+        $ionicLoading.hide();
+        toastr.error("Echec envoi de message ! Réessayez plus tart !")
+      }
+    });
+
+  }
   $scope.limit = 10;
 
   $scope.showMore = function () {
@@ -293,33 +373,34 @@ teacher.controller('TsoldeCtrl', ['$scope', '$rootScope', '$http', '$ionicPopup'
   $scope.showLess = function () {
     $scope.limit -= 3;
   }
-  $scope.showAlert = function (id, solde, nbreHeures, nbreStudents, coutHoraire, date) {
-    console.log("id recap : " + id)
-    date = new Date(date).toLocaleDateString('fr-FR', {
-      day: 'numeric',
-      month: 'short',
-      hour: 'numeric',
-      minute: 'numeric'
-    }).split(' ').join(' ');
+  $scope.showAlert = function () {
+    var solde = $scope.solde.toFixed(2)
+    var coutHoraire = $scope.cout.toFixed(2)
     var alertPopup = $ionicPopup.alert({
       title: 'Détails récapitulatif solde',
-      template: '<ul>Solde : ' + solde + ' MAD</ul><br> <ul>Nombre heures : ' + nbreHeures + '</ul><br> <ul>Nombre étudiants : ' + nbreStudents + '</ul><br> <ul>Coût horaire : ' + coutHoraire + ' MAD</ul>'
+      template: '<ul>Solde : ' + solde + ' MAD</ul><br> <ul>Nombre heures : ' + $scope.nbreHeures + '</ul><br> <ul>Nombre étudiants : ' + $scope.nbreStudents + '</ul><br> <ul>Revenu horaire : ' + coutHoraire + ' MAD</ul><br><ul> Date : ' + debutDate
     });
 
     alertPopup.then(function (res) {
-      console.log('OK');
+      //console.log('OK');
     });
 
   };
   $scope.goBack = function(){
     $ionicHistory.goBack();
   }
-  $ionicPopover.fromTemplateUrl('teacher/teacher-popover.html', {
-    scope: $scope
+  $ionicPopover.fromTemplateUrl('templates/popover.html', {
+    scope: $scope,
   }).then(function (popover) {
     $scope.popover = popover;
   });
+  $ionicPopover.fromTemplateUrl('templates/popover2.html', {
+    scope: $scope,
+  }).then(function (popover) {
+    $scope.popover2 = popover;
+  });
 }]);
+
 teacher.controller('TtimeCtrl', ['$scope','$ionicPopover','$rootScope','$http','$location', function ($scope, $ionicPopover,$rootScope,$http,$location) {
   $id = resp.entity.id
   $http.get('http://81.192.194.109:8182/CapMissionApp/teachers/' + $id, {timeout: 35000}).success(function (data, status, headers, config) {
@@ -339,9 +420,166 @@ teacher.controller('TtimeCtrl', ['$scope','$ionicPopover','$rootScope','$http','
     $scope.popover = popover;
   });
 }]);
+
 teacher.filter('startFrom', function () {
   return function (input, start) {
     start = +start; //parse to int
     return input.slice(start);
   }
 });
+
+teacher.controller('TContactCtrl', ['$scope', '$rootScope', '$http', '$location', '$ionicPopover', '$ionicHistory', function ($scope, $rootScope, $http, $location, $ionicPopover, $ionicHistory) {
+
+  $scope.contact = "contact teacher"
+  $scope.goBack = function () {
+    $ionicHistory.goBack();
+  }
+  $ionicPopover.fromTemplateUrl('teacher/teacher-popover.html', {
+    scope: $scope
+  }).then(function (popover) {
+    $scope.popover = popover;
+  });
+}]);
+
+teacher.controller('ChoixSoldeCtrl', ['$scope', '$rootScope', '$http', '$location', '$ionicPopover', '$ionicHistory', function ($scope, $rootScope, $http, $location, $ionicPopover, $ionicHistory) {
+
+  $scope.goSolde = function () {
+    $location.path('/teacher/solde')
+  }
+  $scope.goAmont = function () {
+    $location.path('/teacher/amont')
+  }
+  $scope.goBack = function () {
+    $ionicHistory.goBack();
+  }
+  $ionicPopover.fromTemplateUrl('teacher/teacher-popover.html', {
+    scope: $scope
+  }).then(function (popover) {
+    $scope.popover = popover;
+  });
+}]);
+
+teacher.controller('AmontSoldeCtrl', ['$scope', '$rootScope', '$http', '$location', '$ionicPopover', '$ionicHistory', '$ionicPopup', '$ionicModal', '$ionicLoading', function ($scope, $rootScope, $http, $location, $ionicPopover, $ionicHistory, $ionicPopup, $ionicModal, $ionicLoading) {
+  /*
+   $scope.getTotal = function() {
+   var total = 0;
+   angular.forEach($rootScope.teacher.entity.amonts, function(amont) {
+   total += amont.cout;
+   })
+
+   return total;
+   }*/
+
+  $scope.limit = 10;
+
+  $scope.showMore = function () {
+    $scope.limit += 3;
+  }
+  $scope.showLess = function () {
+    $scope.limit -= 3;
+  }
+
+  $ionicModal.fromTemplateUrl('templates/modalSolde.html', {
+    scope: $scope
+  }).then(function (modal) {
+    $scope.modal = modal;
+  });
+  $scope.getAmont = function (name, date, cumul, solde, nbreHeures, nbreStudents, cout) {
+    $scope.name = name
+    $scope.cumul = cumul
+    $scope.solde = solde
+    $scope.nbreHeures = nbreHeures
+    $scope.nbreStudents = nbreStudents
+    $scope.cout = cout
+    $scope.date = date
+    debutDate = new Date(date).toLocaleDateString('fr-FR', {
+      day: 'numeric',
+      month: 'short',
+      year: 'numeric',
+      hour: 'numeric',
+      minute: 'numeric'
+    }).split(' ').join(' ');
+    console.log('nameN: ' + name)
+    console.log('cumul: ' + cumul)
+    console.log('solde: ' + solde)
+    console.log('nbreHeures: ' + nbreHeures)
+    console.log('nbreStudents: ' + nbreStudents)
+    console.log('date: ' + debutDate)
+    console.log('cout: ' + cout)
+  }
+  $scope.sendSolde = function (mail, id, solde, nbreHeures, nbreStudents, cout, cumul, name, date) {
+
+    //$test = $rootScope.parent.entity.mail
+
+    mail.to = 'info@capmission.com'
+    mail.from = 'capmission.com@gmail.com'
+    name = $scope.name
+    cumul = $scope.cumul
+    solde = $scope.solde
+    nbreHeures = $scope.nbreHeures
+    nbreStudents = $scope.nbreStudents
+    cout = $scope.cout
+    date = $scope.date
+    debutDate = new Date(date).toLocaleDateString('fr-FR', {
+      day: 'numeric',
+      month: 'short',
+      year: 'numeric',
+      hour: 'numeric',
+      minute: 'numeric'
+    }).split(' ').join(' ');
+    mail.subject = ' Message de ' + $rootScope.teacher.entity.name + ' à propos de son solde prévisionnel par rapport à la matière : ' + name + ' le : ' + debutDate
+
+    console.log('name: ' + name)
+    console.log('cumul: ' + cumul)
+    console.log('solde: ' + solde)
+    console.log('heures: ' + nbreHeures)
+    console.log('students: ' + nbreStudents)
+    console.log('cout: ' + cout)
+    console.log('date: ' + debutDate)
+
+    $ionicLoading.show({
+      template: "En cours d'envoi !"
+    });
+    $http.post('http://81.192.194.109:8182/CapMissionApp/send-mail', mail, {timeout: 120000}).success(function (data, status, headers, config) {
+      $ionicLoading.hide();
+      toastr.success('Votre demande a été envoyée avec succès')
+      //$ionicHistory.goBack();
+    }).error(function (data, status) {
+      if (status == 0) {
+        toastr.error('Echec de connexion ! Veuillez réessayer dans quelques instants !', 'Désolés !', {displayDuration: 1000});
+        navigator.app.exitApp();
+      }
+      else {
+        $ionicLoading.hide();
+        toastr.error("Echec envoi de message ! Réessayez plus tart !")
+      }
+    });
+
+  }
+  $scope.showAlert = function () {
+    var solde = $scope.solde.toFixed(2)
+    var coutHoraire = $scope.cout.toFixed(2)
+    var alertPopup = $ionicPopup.alert({
+      title: 'Détails récapitulatif solde',
+      template: '<ul>Solde : ' + solde + ' MAD</ul><br> <ul>Nombre heures : ' + $scope.nbreHeures + '</ul><br> <ul>Nombre étudiants : ' + $scope.nbreStudents + '</ul><br> <ul>Revenu horaire : ' + coutHoraire + ' MAD</ul><br><ul> Date : ' + debutDate
+    });
+
+    alertPopup.then(function (res) {
+      //console.log('OK');
+    });
+
+  };
+  $scope.goBack = function () {
+    $ionicHistory.goBack();
+  }
+  $ionicPopover.fromTemplateUrl('templates/popover.html', {
+    scope: $scope,
+  }).then(function (popover) {
+    $scope.popover = popover;
+  });
+  $ionicPopover.fromTemplateUrl('templates/popover2.html', {
+    scope: $scope,
+  }).then(function (popover) {
+    $scope.popover2 = popover;
+  });
+}]);

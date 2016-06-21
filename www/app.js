@@ -8,7 +8,6 @@
 var CapMission = angular.module('capMission', [
   'ionic',
   'ngCordova',
-  'ngCookies',
   'ngCordovaOauth',
   'ngCordovaOauth.canvas',
   'hmTouchEvents',
@@ -25,6 +24,7 @@ var CapMission = angular.module('capMission', [
   'ngStorage',
   'simplePagination'
 ]);
+
 
 CapMission.filter('singleDecimal', function ($filter) {
   return function (input) {
@@ -43,7 +43,21 @@ CapMission.filter('setDecimal', function ($filter) {
     return Math.round(input * factor) / factor;
   };
 });
-CapMission.controller('capController', function ($scope, $rootScope, $location, $auth, $http, $ionicLoading, $localStorage, $window) {
+
+
+CapMission.controller('capController', function ($scope, $rootScope, $location, $auth, $http, $ionicLoading, $localStorage) {
+
+  $scope.showLoading = function () {
+    $ionicLoading.show({
+      content: '<div class="icon ion-loading-c"></div>',
+      animation: 'fade-in',
+      duration: 1500
+    });
+  }
+  $scope.hideLoading = function () {
+    $ionicLoading.hide()
+  }
+
   var currentDate,
     weekStart,
     weekEnd,
@@ -54,9 +68,7 @@ CapMission.controller('capController', function ($scope, $rootScope, $location, 
       weekStart = currentDate.clone().startOf('week'),
       weekEnd = currentDate.clone().endOf('week')
   }
-
   setCurrentDate(moment());
-
   $scope.currentWeek = function () {
     return currentDate.format(shortWeekFormat);
   };
@@ -68,11 +80,12 @@ CapMission.controller('capController', function ($scope, $rootScope, $location, 
   };
   $scope.nextWeek = function () {
     setCurrentDate(currentDate.add(7, 'days'));
+
   };
   $scope.prevWeek = function () {
     setCurrentDate(currentDate.subtract(7, 'days'));
-  };
 
+  };
   $scope.week = function (item) {
     var eventTime = moment(item.start);
 
@@ -93,9 +106,6 @@ CapMission.controller('capController', function ($scope, $rootScope, $location, 
     console.log('true checkbox : ' + $scope.checkStatus)
   }
 
-  /*if (window.localStorage.getItem('status') !== undefined && window.localStorage.getItem('id') !== undefined && window.localStorage.getItem('login') !== undefined && window.localStorage.getItem('password') !== undefined) {
-    $location.path('/login')
-   }*/
   $rootScope.login = function (user) {
     console.log('status before : ' + $scope.checkStatus)
     window.localStorage.setItem('status', $scope.checkStatus);
@@ -137,9 +147,8 @@ CapMission.controller('capController', function ($scope, $rootScope, $location, 
 
   }
 
-
-  //console.log(data)
 })
+
 CapMission.controller("EmailController",function($scope,$ionicPopup,$rootScope,$ionicModal,$http,$ionicLoading,$ionicHistory){
   $ionicModal.fromTemplateUrl('templates/modal.html', {
     scope: $scope,
@@ -287,6 +296,7 @@ CapMission.constant("Constants", {
   "URL_API": "http://81.192.194.109:8182/CapMissionApp"
   //"URL_CANVAS": "http://192.168.1.9/"
 });
+
 /*CapMission.filter('offset', function() {
   return function(input, start) {
     if (!input || !input.length) { return; }
@@ -324,14 +334,24 @@ CapMission.run(['$ionicPlatform', '$rootScope','$state','authService','$ionicHis
     }
   })
 });*/
-CapMission.controller('LogoutCtrl', function ($location, $auth, $state, $ionicHistory, authService, $scope) {
+
+CapMission.controller('LogoutCtrl', function ($location, $auth, $state, $ionicHistory, authService, $scope, $ionicPopup) {
 
   $scope.logout = function () {
-    alert('A bientôt !');
-    navigator.app.exitApp();
-  }
+
+    var alertPopup = $ionicPopup.alert({
+      title: 'A bientôt',
+      template: null
+    });
+
+    alertPopup.then(function (res) {
+      navigator.app.exitApp();
+    });
+  };
 
 });
+
+
 CapMission.config(function($authProvider) {
   $authProvider.facebook({
     clientId: '561387454023937',
@@ -434,6 +454,36 @@ CapMission.config(['$stateProvider', '$urlRouterProvider', '$ionicConfigProvider
       controller: 'ParentCtrl'
 
     })
+    .state('parent_reglement', {
+      url: '/parent/reglement',
+      templateUrl: 'parent/reglement.html',
+      controller: 'RegParentCtrl'
+
+    })
+    .state('student_reglement', {
+      url: '/student/reglement',
+      templateUrl: 'student/reglement.html',
+      controller: 'RegStudentCtrl'
+
+    })
+    .state('contact', {
+      url: '/parent/contact',
+      templateUrl: 'parent/Contact.html',
+      controller: 'PContactCtrl'
+
+    })
+    .state('scontact', {
+      url: '/student/scontact',
+      templateUrl: 'student/SContact.html',
+      controller: 'SContactCtrl'
+
+    })
+    .state('tcontact', {
+      url: '/teacher/tcontact',
+      templateUrl: 'teacher/TContact.html',
+      controller: 'TContactCtrl'
+
+    })
     .state('apropos', {
       url: '/parent/apropos',
       templateUrl: 'parent/apropos.html',
@@ -458,6 +508,11 @@ CapMission.config(['$stateProvider', '$urlRouterProvider', '$ionicConfigProvider
       controller: 'BackCtrl'
 
     })
+    .state('emploiEnfant2', {
+      url: '/parent/emploiEnfant2',
+      controller: 'ChoixCtrl',
+      templateUrl: 'parent/empoiEnfant.html'
+    })
     .state('emploiEnfant', {
       url: '/parent/emploiEnfant',
       controller: 'EnfantCtrl',
@@ -465,7 +520,7 @@ CapMission.config(['$stateProvider', '$urlRouterProvider', '$ionicConfigProvider
     })
     .state('ChoixEnfantSolde', {
       url: '/parent/ChoixEnfantSolde',
-      controller: 'PsoldeCtrl',
+      controller: 'ChoixsoldeCtrl',
       templateUrl: 'parent/ChoixEnfantSolde.html'
     })
     .state('parent_profil', {
@@ -482,6 +537,11 @@ CapMission.config(['$stateProvider', '$urlRouterProvider', '$ionicConfigProvider
       controller: 'PsoldeCtrl'
 
     })
+    /*.state('parent_solde2', {
+     url: '/parent/solde2',
+     controller: 'PsoldeCtrl',
+     templateUrl: 'parent/solde.html'
+     })*/
     .state('student', {
       url: '/student',
       templateUrl: 'student/indexS.html',
@@ -506,6 +566,20 @@ CapMission.config(['$stateProvider', '$urlRouterProvider', '$ionicConfigProvider
       url: '/teacher',
       templateUrl: 'teacher/indexT.html',
       controller: 'TeacherCtrl'
+
+    })
+    .state('ChoixSolde', {
+      url: '/teacher/ChoixSolde',
+      templateUrl: 'teacher/ChoixSolde.html',
+      controller: 'ChoixSoldeCtrl'
+
+
+    })
+    .state('amont', {
+      url: '/teacher/amont',
+      templateUrl: 'teacher/amont.html',
+      controller: 'AmontSoldeCtrl'
+
 
     })
     .state('teacher_profil', {
@@ -736,6 +810,7 @@ CapMission.config(['$stateProvider', '$urlRouterProvider', '$ionicConfigProvider
 
 }]);
 
+
 CapMission.factory('Data', function () {
   var data =
   {
@@ -775,3 +850,17 @@ CapMission.directive('hideTabs', ['$rootScope', function ($rootScope) {
     }
   };
 }]);
+
+/**
+ * extends string prototype object to get a string with a number of characters from a string.
+ *
+ * @type {Function|*}
+ */
+String.prototype.trunc = String.prototype.trunc ||
+  function (n) {
+
+    // this will return a substring and
+    // if its larger than 'n' then truncate and append '...' to the string and return it.
+    // if its less than 'n' then return the 'string'
+    return this.length > n ? this.substr(0, n - 1) + '...' : this.toString();
+  };
