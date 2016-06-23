@@ -150,7 +150,7 @@ parent.controller('PprofileCtrl', ['$scope', '$ionicPopover', '$ionicHistory', '
       ": " + $rootScope.parent.entity.name + "\nNouvelle valeur : " + mail.body
     //mail.subject='Modification séance de : '+ enfant + 'le : ' + debutDate
 
-    mail.subject='Modification nom de ' + $rootScope.parent.entity.name
+    mail.subject = 'MOB - ' + $rootScope.parent.entity.name + ' - Modification Nom'
     mail.body = $scope.body
 
     console.log('to: '+mail.to)
@@ -160,7 +160,8 @@ parent.controller('PprofileCtrl', ['$scope', '$ionicPopover', '$ionicHistory', '
     console.log('body to send: '+ $scope.body)
 
     $ionicLoading.show({
-      template: "En cours d'envoi !"
+      template: "En cours d'envoi !",
+      duration: 1500
     });
     $http.post('http://81.192.194.109:8182/CapMissionApp/send-mail', mail, {timeout: 120000}).success(function (data, status, headers, config) {
       $ionicLoading.hide()
@@ -186,7 +187,7 @@ parent.controller('PprofileCtrl', ['$scope', '$ionicPopover', '$ionicHistory', '
       ": " + $rootScope.parent.entity.phone + "\nNouvelle valeur : " + mail.body
     //mail.subject='Modification séance de : '+ enfant + 'le : ' + debutDate
 
-    mail.subject='Modification téléphone de ' + $rootScope.parent.entity.name
+    mail.subject = 'MOB - ' + $rootScope.parent.entity.name + ' - Modification Téléphone'
     mail.body = $scope.body
 
     console.log('to: '+mail.to)
@@ -196,7 +197,8 @@ parent.controller('PprofileCtrl', ['$scope', '$ionicPopover', '$ionicHistory', '
     console.log('body to send: '+ $scope.body)
 
     $ionicLoading.show({
-      template: "En cours d'envoi !"
+      template: "En cours d'envoi !",
+      duration: 1500
     });
     $http.post('http://81.192.194.109:8182/CapMissionApp/send-mail', mail, {timeout: 120000}).success(function (data, status, headers, config) {
       $ionicLoading.hide();
@@ -222,7 +224,7 @@ parent.controller('PprofileCtrl', ['$scope', '$ionicPopover', '$ionicHistory', '
       ": " + $rootScope.parent.entity.mail + "\nNouvelle valeur : " + mail.body
     //mail.subject='Modification séance de : '+ enfant + 'le : ' + debutDate
 
-    mail.subject='Modification email de ' + $rootScope.parent.entity.name
+    mail.subject = 'MOB - ' + $rootScope.parent.entity.name + ' - Modification Email'
     mail.body = $scope.body
 
     console.log('to: '+mail.to)
@@ -232,7 +234,8 @@ parent.controller('PprofileCtrl', ['$scope', '$ionicPopover', '$ionicHistory', '
     console.log('body to send: '+ $scope.body)
 
     $ionicLoading.show({
-      template: "En cours d'envoi !"
+      template: "En cours d'envoi !",
+      duration: 1500
     });
     $http.post('http://81.192.194.109:8182/CapMissionApp/send-mail', mail, {timeout: 120000}).success(function (data, status, headers, config) {
       $ionicLoading.hide();
@@ -258,7 +261,7 @@ parent.controller('PprofileCtrl', ['$scope', '$ionicPopover', '$ionicHistory', '
       ": " + $rootScope.parent.entity.job + "\nNouvelle valeur : " + mail.body
     //mail.subject='Modification séance de : '+ enfant + 'le : ' + debutDate
 
-    mail.subject='Modification fonction de ' + $rootScope.parent.entity.name
+    mail.subject = 'MOB - ' + $rootScope.parent.entity.name + ' - Modification Fonction'
     mail.body = $scope.body
 
     console.log('to: '+mail.to)
@@ -268,7 +271,8 @@ parent.controller('PprofileCtrl', ['$scope', '$ionicPopover', '$ionicHistory', '
     console.log('body to send: '+ $scope.body)
 
     $ionicLoading.show({
-      template: "En cours d'envoi !"
+      template: "En cours d'envoi !",
+      duration: 1500
     });
     $http.post('http://81.192.194.109:8182/CapMissionApp/send-mail', mail, {timeout: 120000}).success(function (data, status, headers, config) {
       $ionicLoading.hide();
@@ -348,9 +352,12 @@ parent.controller('PsoldeCtrl', ['$scope', '$rootScope', '$ionicModal', '$http',
     name = $scope.name
     solde = $scope.solde
     nbreHeures = $scope.nbreHeures
-    tarifHour = $scope.tarifHour
-    tarifPeriod = $scope.tarifPeriod
+    tarifHour = $scope.tarifHour.toFixed(2)
+    tarifPeriod = $scope.tarifPeriod.toFixed(2)
     absence = $scope.absence
+    if (absence = "null") {
+      absence = "Présent"
+    }
     date = $scope.date
     debutDate = new Date(date).toLocaleDateString('fr-FR', {
       day: 'numeric',
@@ -359,8 +366,11 @@ parent.controller('PsoldeCtrl', ['$scope', '$rootScope', '$ionicModal', '$http',
       hour: 'numeric',
       minute: 'numeric'
     }).split(' ').join(' ');
-    mail.subject = ' Message de ' + $rootScope.parent.entity.name + ' à propos du solde de son enfant : ' + $rootScope.sonSolde.entity.name + ' par rapport à la matière : ' + name + ' le : ' + debutDate
-
+    mail.subject = 'MOB - ' + $rootScope.parent.entity.name + ' - Solde'
+    $scope.body = 'Message :' + mail.body + '\n Détails \n Etudiant : ' + $rootScope.sonSolde.entity.name +
+      '\n Tarif horaire : ' + tarifHour + '\n Tarif de la séance : ' + tarifPeriod +
+      '\n Nombre heures : ' + nbreHeures + '\n Matière : ' + name + '\n Date : ' + debutDate + '\n' + absence
+    mail.body = $scope.body
     console.log('name: ' + name)
     console.log('solde: ' + solde)
     console.log('heures: ' + nbreHeures)
@@ -369,12 +379,15 @@ parent.controller('PsoldeCtrl', ['$scope', '$rootScope', '$ionicModal', '$http',
     console.log('absence : ' + absence)
     console.log('date: ' + debutDate)
     console.log('subject: ' + mail.subject)
+    console.log('scope body: ' + $scope.body)
+    console.log('mail body: ' + mail.body)
 
     $ionicLoading.show({
-      template: "En cours d'envoi !"
+      template: "En cours d'envoi !",
+      duration: 1500
     });
     $http.post('http://81.192.194.109:8182/CapMissionApp/send-mail', mail, {timeout: 120000}).success(function (data, status, headers, config) {
-      $ionicLoading.hide();
+      //$ionicLoading.hide();
       toastr.success('Votre demande a été envoyée avec succès')
       //$ionicHistory.goBack();
     }).error(function (data, status) {
@@ -383,7 +396,7 @@ parent.controller('PsoldeCtrl', ['$scope', '$rootScope', '$ionicModal', '$http',
         navigator.app.exitApp();
       }
       else {
-        $ionicLoading.hide();
+        //$ionicLoading.hide();
         toastr.error("Echec envoi de message ! Réessayez plus tart !")
       }
     });
@@ -392,6 +405,10 @@ parent.controller('PsoldeCtrl', ['$scope', '$rootScope', '$ionicModal', '$http',
   $scope.limit = 10;
 
   $scope.showMore = function () {
+    $ionicLoading.show({
+      template: 'Chargement',
+      duration: 1500
+    })
     $scope.limit += 3;
   }
   $scope.showLess = function () {
@@ -495,7 +512,7 @@ parent.controller('ChoixsoldeCtrl', ['$scope', '$rootScope', '$http', '$location
 
       // Connexion au serveur pour récupérer les données Etudiant
       $ionicLoading.show({
-        template: "En cours d'envoi !"
+        template: "Chargement..."
       });
       $http.get('http://81.192.194.109:8182/CapMissionApp/students/' + id, {timeout: 35000}).success(function (data, status, headers, config) {
 
@@ -527,7 +544,7 @@ parent.controller('ChoixsoldeCtrl', ['$scope', '$rootScope', '$http', '$location
           console.log("id student " + id)
         }
         $ionicLoading.show({
-          template: "En cours d'envoi !"
+          template: "Chargement..."
         });
         $http.get('http://81.192.194.109:8182/CapMissionApp/students/' + id, {timeout: 35000}).success(function (data, status, headers, config) {
 
@@ -549,6 +566,197 @@ parent.controller('ChoixsoldeCtrl', ['$scope', '$rootScope', '$http', '$location
     else if ($rootScope.parent.entity.students.length >= "2") {
       $location.path('/parent/ChoixEnfantSolde');
     }
+  }
+
+  $scope.goBack = function () {
+    $ionicHistory.goBack();
+  }
+  $ionicPopover.fromTemplateUrl('parent/parent-popover.html', {
+    scope: $scope
+  }).then(function (popover) {
+    $scope.popover = popover;
+  });
+}]);
+
+// Controller pour Contact.html
+parent.controller('PContactCtrl', ['$scope', '$ionicPopover', '$location', '$ionicHistory', function ($scope, $ionicPopover, $location, $ionicHistory) {
+  $scope.goCritique = function () {
+    $location.path('/parent/remarque')
+  }
+  $scope.goDemandeInfo = function () {
+    $location.path('/parent/demandeInfo')
+  }
+  $scope.goAjout = function () {
+    $location.path('/parent/choixMatiere')
+  }
+  $scope.goModif = function () {
+    $location.path('/parent/modifCours')
+  }
+  $scope.goBack = function () {
+    $ionicHistory.goBack();
+  }
+  $ionicPopover.fromTemplateUrl('parent/parent-popover.html', {
+    scope: $scope
+  }).then(function (popover) {
+    $scope.popover = popover;
+  });
+}]);
+
+
+// Controller Remarque pour pouvoir accéder au popover et retourner à la page précédente
+parent.controller('PRemarqueCtrl', ['$scope', '$ionicPopover', function ($scope, $ionicPopover) {
+  $scope.goBack = function () {
+    $ionicHistory.goBack();
+  }
+  $ionicPopover.fromTemplateUrl('parent/parent-popover.html', {
+    scope: $scope
+  }).then(function (popover) {
+    $scope.popover = popover;
+  });
+}]);
+
+// Controller Remarque pour l'envoie de mail
+parent.controller("PEmailController", ['$scope', '$ionicPopup', '$rootScope', '$ionicModal', '$http', '$ionicLoading',
+  function ($scope, $ionicPopup, $rootScope, $ionicModal, $http, $ionicLoading) {
+
+    // Fonction qui envoie le mail
+    $rootScope.sendR = function (mail) {
+
+      // Email to and from
+      mail.to = 'info@capmission.com'
+      mail.from = 'capmission.com@gmail.com'
+
+      // Envoie de l'objet du mail et de son contenu
+      mail.subject = 'MOB - ' + $rootScope.parent.entity.name + ' - ' + mail.subject
+
+      console.log('to: ' + mail.to)
+      console.log('from: ' + mail.from)
+      console.log('subject: ' + mail.subject)
+      console.log('body: ' + mail.body)
+      console.log('body to send: ' + $scope.body)
+
+      $ionicLoading.show({
+        template: "En cours d'envoi !",
+        duration: 1500
+      });
+      $http.post('http://81.192.194.109:8182/CapMissionApp/send-mail', mail, {timeout: 120000}).success(function (data, status, headers, config) {
+        $ionicLoading.hide();
+        toastr.success('Votre remarque a été envoyée avec succès')
+        //$ionicHistory.goBack();
+      }).error(function (data, status) {
+        if (status == 0) {
+          toastr.error('Echec de connexion ! Veuillez réessayer dans quelques instants !', 'Veuillez nous excuser !', {displayDuration: 1000});
+          navigator.app.exitApp();
+        }
+        else {
+          $ionicLoading.hide();
+          toastr.error("Echec envoi de message ! Réessayez plus tart !")
+        }
+      });
+
+    }
+  }]);
+
+// Controller pour demande d'informations popover  et back
+parent.controller('PDemandeInfoController', ['$scope', '$ionicPopover', function ($scope, $ionicPopover) {
+  $scope.goBack = function () {
+    $ionicHistory.goBack();
+  }
+  $ionicPopover.fromTemplateUrl('parent/parent-popover.html', {
+    scope: $scope
+  }).then(function (popover) {
+    $scope.popover = popover;
+  });
+}]);
+
+// Controller pour demande d'informations envoie Email
+parent.controller("PDemandeInfoEmailController", ['$scope', '$ionicPopup', '$rootScope', '$ionicModal', '$http', '$ionicLoading', '$location', '$ionicPopover',
+  function ($scope, $ionicPopup, $rootScope, $ionicModal, $http, $ionicLoading, $location, $ionicPopover) {
+
+    // Fonction qui envoie le mail
+    $rootScope.sendI = function (mail) {
+
+      // Email to and from
+      mail.to = 'info@capmission.com'
+      mail.from = 'capmission.com@gmail.com'
+
+      // Envoie de l'objet du mail et de son contenu
+      mail.subject = 'MOB - ' + $rootScope.parent.entity.name + ' - ' + mail.subject
+
+      console.log('to: ' + mail.to)
+      console.log('from: ' + mail.from)
+      console.log('subject: ' + mail.subject)
+      console.log('body: ' + mail.body)
+
+      $ionicLoading.show({
+        template: "En cours d'envoi !",
+        duration: 1500
+      });
+      $http.post('http://81.192.194.109:8182/CapMissionApp/send-mail', mail, {timeout: 120000}).success(function (data, status, headers, config) {
+        $ionicLoading.hide();
+        toastr.success('Votre remarque a été envoyée avec succès')
+        //$ionicHistory.goBack();
+      }).error(function (data, status) {
+        if (status == 0) {
+          toastr.error('Echec de connexion ! Veuillez réessayer dans quelques instants !', 'Veuillez nous excuser !', {displayDuration: 1000});
+          navigator.app.exitApp();
+        }
+        else {
+          $ionicLoading.hide();
+          toastr.error("Echec envoi de message ! Réessayez plus tart !")
+        }
+      });
+
+    }
+    $ionicPopover.fromTemplateUrl('parent/parent-popover.html', {
+      scope: $scope
+    }).then(function (popover) {
+      $scope.popover = popover;
+    });
+  }]);
+
+// Controller Cours choix ajout/modif
+parent.controller('PChoixCoursController', ['$scope', '$ionicPopover', function ($scope, $ionicPopover) {
+
+
+  $scope.goBack = function () {
+    $ionicHistory.goBack();
+  }
+  $ionicPopover.fromTemplateUrl('parent/parent-popover.html', {
+    scope: $scope
+  }).then(function (popover) {
+    $scope.popover = popover;
+  });
+}]);
+
+// Controller choix matière
+parent.controller('PChoixMatiereCtrl', ['$scope', '$ionicPopover', function ($scope, $ionicPopover) {
+
+  console.log('On est dans le controller PChoixMatiereCtrl')
+
+  $scope.getd = function (matiere) {
+    $ionicLoading.show({
+      template: 'Chargement'
+    });
+
+
+    /* $http.get('http://localhost:8998/CapMissionApp/students/' + id, {timeout: 35000}).success(function (data, status, headers, config) {
+     //$scope.items = []
+     $rootScope.son = data
+
+     $ionicLoading.hide();
+     console.log('value : ' + window.localStorage.getItem('login'))
+
+     $scope.matieres = son.timetables.name
+     console.log('La matière est :' +son.timetables.name)
+     $location.path('/parent/remarque');
+     }).error(function (data) {
+     //alert("Désolés , échec de connexion ! Veuillez réessayer dans quelques instants !")
+     toastr.error('Echec de connexion ! Veuillez réessayer dans quelques instants !', 'Désolés !', {displayDuration: 1000});
+     navigator.app.exitApp();
+
+     })*/
+
   }
 
   $scope.goBack = function () {

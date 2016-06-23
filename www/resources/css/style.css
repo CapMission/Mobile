@@ -944,3 +944,84 @@ ion-popover-view.fit ion-content {
   clear : left;*/
 }
 
+/* css pour la page Contact.html*/
+.contact {
+  color: #FE9A2E;
+}
+
+#consigneContact {
+  margin-bottom: 20px;
+  margin-left: 4px;
+}
+
+#footer {
+  overflow: hidden;
+  border-top: none !important;
+  border-bottom-color: transparent !important;
+  border-color: transparent !important;
+  border: 0px !important;
+  background-image: none !important;
+  background-size: 100% 0px;
+}
+
+.info-image {
+  width: 35px;
+  height: 35px;
+}
+
+.rem-image {
+  width: 35px;
+  height: 35px;
+  left: 100px;
+}
+
+#ic1 {
+  overflow: hidden;
+  border-bottom-color: transparent !important;
+  border-top: none !important;;
+  border-color: transparent !important;
+  border: 0px !important;
+  background-size: 100% 0px;
+}
+
+#ic2 {
+  overflow: hidden;
+  border-bottom-color: transparent !important;
+  border-top: none !important;;
+  border-color: transparent !important;
+  border: 0px !important;
+  background-size: 100% 0px;
+}
+
+/* css pour la page remarque.html */
+#red {
+  color: red;
+}
+
+#blue {
+  color: darkblue;
+}
+
+#listeDeroulante {
+  margin-bottom: -5px;
+}
+
+ion-popover-view.fit1 {
+  height: auto !important;
+  line-height: 10%;
+}
+
+ion-popover-view.fit1 ion-content {
+  position: relative !important;
+}
+
+.platform-android ion-popover-view.fit1 {
+  margin-top: 10px !important;
+}
+
+.pText {
+  text-align: justify;
+  text-indent: 30px;
+
+}
+

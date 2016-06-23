@@ -116,7 +116,8 @@
       <div class="card">
         <i class="icon ion-ios-close close-modal" ng-click="modal.hide()"></i>
 
-        <p class="headerModal item-divider padding"> Envoyez-nous un message ! </p>
+        <p class="headerModal item-divider padding"> Détails <br> Matière : {{name}} <br> Date : {{date | date:'dd MMMM
+          à HH:mm' }} <br> Solde : {{cumul | number:2}} MAD </p>
 
         <form name="myForm" novalidate>
           <input ng-model="id" type="hidden">

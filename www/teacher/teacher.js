@@ -42,7 +42,9 @@ teacher.controller("TEmailController",function($scope,$ionicPopup,$rootScope,$io
       hour : 'numeric',
       minute : 'numeric'
     }).split(' ').join(' ');
-    mail.subject='Modification de la séance ' + period  + ' de : '+ $rootScope.teacher.entity.name + ' le : ' + debutDate
+    mail.subject = 'MOB - ' + $rootScope.teacher.entity.name + ' - Modification TimeTable'
+    $scope.body = 'Message :' + mail.body + '\n Détails \n Séance : ' + period + '\n Date : ' + debutDate
+    mail.body = $scope.body
 
     console.log('idHF: '+id)
     console.log('period: '+period)
@@ -53,7 +55,8 @@ teacher.controller("TEmailController",function($scope,$ionicPopup,$rootScope,$io
     console.log('body: '+mail.body)
 
     $ionicLoading.show({
-      template: "En cours d'envoi !"
+      template: "En cours d'envoi !",
+      duration: 1500
     });
     $http.post('http://81.192.194.109:8182/CapMissionApp/send-mail', mail, {timeout: 120000}).success(function (data, status, headers, config) {
       $ionicLoading.hide();
@@ -187,7 +190,7 @@ teacher.controller('TprofileCtrl', ['$scope','$rootScope','$ionicPopover','$ioni
       ": " + $rootScope.teacher.entity.name + "\nNouvelle valeur : " + mail.body
     //mail.subject='Modification séance de : '+ enfant + 'le : ' + debutDate
 
-    mail.subject='Modification nom de ' + $rootScope.teacher.entity.name
+    mail.subject = 'MOB - ' + $rootScope.teacher.entity.name + ' - Modification Nom'
     mail.body = $scope.body
 
     console.log('to: '+mail.to)
@@ -197,7 +200,8 @@ teacher.controller('TprofileCtrl', ['$scope','$rootScope','$ionicPopover','$ioni
     console.log('body to send: '+ $scope.body)
 
     $ionicLoading.show({
-      template: "En cours d'envoi !"
+      template: "En cours d'envoi !",
+      duration: 1500
     });
     $http.post('http://81.192.194.109:8182/CapMissionApp/send-mail', mail, {timeout: 120000}).success(function (data, status, headers, config) {
       $ionicLoading.hide();
@@ -222,7 +226,7 @@ teacher.controller('TprofileCtrl', ['$scope','$rootScope','$ionicPopover','$ioni
       ": " + $rootScope.teacher.entity.phone + "\nNouvelle valeur : " + mail.body
     //mail.subject='Modification séance de : '+ enfant + 'le : ' + debutDate
 
-    mail.subject='Modification téléphone de ' + $rootScope.teacher.entity.name
+    mail.subject = 'MOB - ' + $rootScope.teacher.entity.name + ' - Modification Téléphone'
     mail.body = $scope.body
 
     console.log('to: '+mail.to)
@@ -232,7 +236,8 @@ teacher.controller('TprofileCtrl', ['$scope','$rootScope','$ionicPopover','$ioni
     console.log('body to send: '+ $scope.body)
 
     $ionicLoading.show({
-      template: "En cours d'envoi !"
+      template: "En cours d'envoi !",
+      duration: 1500
     });
     $http.post('http://81.192.194.109:8182/CapMissionApp/send-mail', mail, {timeout: 120000}).success(function (data, status, headers, config) {
       $ionicLoading.hide();
@@ -257,7 +262,7 @@ teacher.controller('TprofileCtrl', ['$scope','$rootScope','$ionicPopover','$ioni
       ": " + $rootScope.teacher.entity.mail + "\nNouvelle valeur : " + mail.body
     //mail.subject='Modification séance de : '+ enfant + 'le : ' + debutDate
 
-    mail.subject='Modification email de ' + $rootScope.teacher.entity.name
+    mail.subject = 'MOB - ' + $rootScope.teacher.entity.name + ' - Modification Email'
     mail.body = $scope.body
 
     console.log('to: '+mail.to)
@@ -267,7 +272,8 @@ teacher.controller('TprofileCtrl', ['$scope','$rootScope','$ionicPopover','$ioni
     console.log('body to send: '+ $scope.body)
 
     $ionicLoading.show({
-      template: "En cours d'envoi !"
+      template: "En cours d'envoi !",
+      duration: 1500
     });
     $http.post('http://81.192.194.109:8182/CapMissionApp/send-mail', mail, {timeout: 120000}).success(function (data, status, headers, config) {
       $ionicLoading.hide();
@@ -323,11 +329,11 @@ teacher.controller('TsoldeCtrl', ['$scope', '$rootScope', '$ionicModal', '$http'
     mail.to = 'info@capmission.com'
     mail.from = 'capmission.com@gmail.com'
     name = $scope.name
-    cumul = $scope.cumul
-    solde = $scope.solde
+    cumul = $scope.cumul.toFixed(2)
+    solde = $scope.solde.toFixed(2)
     nbreHeures = $scope.nbreHeures
     nbreStudents = $scope.nbreStudents
-    cout = $scope.cout
+    cout = $scope.cout.toFixed(2)
     date = $scope.date
     debutDate = new Date(date).toLocaleDateString('fr-FR', {
       day: 'numeric',
@@ -336,8 +342,11 @@ teacher.controller('TsoldeCtrl', ['$scope', '$rootScope', '$ionicModal', '$http'
       hour: 'numeric',
       minute: 'numeric'
     }).split(' ').join(' ');
-    mail.subject = ' Message de ' + $rootScope.teacher.entity.name + ' à propos de son solde par rapport à la matière : ' + name + ' le : ' + debutDate
-
+    mail.subject = 'MOB - ' + $rootScope.teacher.entity.name + ' - Historique Solde'
+    $scope.body = 'Message :' + mail.body + '\n Détails \n Coût horaire : ' + cout + '\n Nombre étudiants : ' + nbreStudents +
+      '\n Nombre heures : ' + nbreHeures + '\n Matière : ' + name + '\n Date : ' + debutDate + '\n Cumul solde : ' + cumul +
+      '\n Solde : ' + solde
+    mail.body = $scope.body
     console.log('name: ' + name)
     console.log('cumul: ' + cumul)
     console.log('solde: ' + solde)
@@ -347,7 +356,8 @@ teacher.controller('TsoldeCtrl', ['$scope', '$rootScope', '$ionicModal', '$http'
     console.log('date: ' + debutDate)
 
     $ionicLoading.show({
-      template: "En cours d'envoi !"
+      template: "En cours d'envoi !",
+      duration: 1500
     });
     $http.post('http://81.192.194.109:8182/CapMissionApp/send-mail', mail, {timeout: 120000}).success(function (data, status, headers, config) {
       $ionicLoading.hide();
@@ -368,6 +378,10 @@ teacher.controller('TsoldeCtrl', ['$scope', '$rootScope', '$ionicModal', '$http'
   $scope.limit = 10;
 
   $scope.showMore = function () {
+    $ionicLoading.show({
+      template: 'Chargement',
+      duration: 1500
+    })
     $scope.limit += 3;
   }
   $scope.showLess = function () {
@@ -473,6 +487,10 @@ teacher.controller('AmontSoldeCtrl', ['$scope', '$rootScope', '$http', '$locatio
   $scope.limit = 10;
 
   $scope.showMore = function () {
+    $ionicLoading.show({
+      template: 'Chargement',
+      duration: 1500
+    })
     $scope.limit += 3;
   }
   $scope.showLess = function () {
@@ -514,11 +532,11 @@ teacher.controller('AmontSoldeCtrl', ['$scope', '$rootScope', '$http', '$locatio
     mail.to = 'info@capmission.com'
     mail.from = 'capmission.com@gmail.com'
     name = $scope.name
-    cumul = $scope.cumul
-    solde = $scope.solde
+    cumul = $scope.cumul.toFixed(2)
+    solde = $scope.solde.toFixed(2)
     nbreHeures = $scope.nbreHeures
     nbreStudents = $scope.nbreStudents
-    cout = $scope.cout
+    cout = $scope.cout.toFixed(2)
     date = $scope.date
     debutDate = new Date(date).toLocaleDateString('fr-FR', {
       day: 'numeric',
@@ -527,7 +545,11 @@ teacher.controller('AmontSoldeCtrl', ['$scope', '$rootScope', '$http', '$locatio
       hour: 'numeric',
       minute: 'numeric'
     }).split(' ').join(' ');
-    mail.subject = ' Message de ' + $rootScope.teacher.entity.name + ' à propos de son solde prévisionnel par rapport à la matière : ' + name + ' le : ' + debutDate
+    mail.subject = 'MOB - ' + $rootScope.teacher.entity.name + ' - Solde prévisionnel'
+    $scope.body = 'Message :' + mail.body + '\n Détails \n Coût horaire : ' + cout + '\n Nombre étudiants : ' + nbreStudents +
+      '\n Nombre heures : ' + nbreHeures + '\n Matière : ' + name + '\n Date : ' + debutDate + '\n Cumul solde : ' + cumul +
+      '\n Solde : ' + solde
+    mail.body = $scope.body
 
     console.log('name: ' + name)
     console.log('cumul: ' + cumul)
@@ -538,7 +560,8 @@ teacher.controller('AmontSoldeCtrl', ['$scope', '$rootScope', '$http', '$locatio
     console.log('date: ' + debutDate)
 
     $ionicLoading.show({
-      template: "En cours d'envoi !"
+      template: "En cours d'envoi !",
+      duration: 1500
     });
     $http.post('http://81.192.194.109:8182/CapMissionApp/send-mail', mail, {timeout: 120000}).success(function (data, status, headers, config) {
       $ionicLoading.hide();

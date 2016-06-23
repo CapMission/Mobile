@@ -32,7 +32,7 @@
 
     </ion-tab>
 
-    <ion-tab title="Contactez-nous" icon-off="ion-ios-chatboxes-outline" icon-on="ion-ios-chatboxes"
+    <ion-tab title="Ajoutez un cours" icon-off="ion-android-add-circle" icon-on="icon ion-android-add-circle"
              badge="badgeMessages" badge-style="badge-assertive" ng-click="onTabSelected()">
 
     </ion-tab>
@@ -51,8 +51,9 @@
       <br>
 
       <div class="pagText">
+        Semaine du <br>
         <a class="button icon-left ion-chevron-left button-clear button-dark pagText"
-           ng-click="showLoading();prevWeek()">Semaine du <strong>{{currentWeekStart()}}</strong></a>
+           ng-click="showLoading();prevWeek()"><strong>{{currentWeekStart()}}</strong></a>
         <a class="button icon-right ion-chevron-right button-clear button-dark pagText"
            ng-click="showLoading();nextWeek()"><strong>{{currentWeekEnd()}}</strong></a>
       </div>

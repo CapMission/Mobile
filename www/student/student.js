@@ -20,7 +20,12 @@ student.controller('StudentCtrl', ['$scope','$http','$rootScope','$location','$i
       $rootScope.limit = 10;
 
       $rootScope.showMore = function () {
+        $ionicLoading.show({
+          template: 'Chargement',
+          duration: 1500
+        })
         $rootScope.limit += 3;
+
       }
       $rootScope.showLess = function () {
         $rootScope.limit -= 3;
@@ -113,7 +118,7 @@ student.controller('SprofileCtrl', ['$scope','$rootScope','$ionicPopover','$http
       ": " + $rootScope.student.entity.name + "\nNouvelle valeur : " + mail.body
     //mail.subject='Modification séance de : '+ enfant + 'le : ' + debutDate
 
-    mail.subject='Modification nom de ' + $rootScope.student.entity.name
+    mail.subject = 'MOB - ' + $rootScope.student.entity.name + ' - Modification Nom'
     mail.body = $scope.body
 
     console.log('to: '+mail.to)
@@ -123,7 +128,8 @@ student.controller('SprofileCtrl', ['$scope','$rootScope','$ionicPopover','$http
     console.log('body to send: '+ $scope.body)
 
     $ionicLoading.show({
-      template: "En cours d'envoi !"
+      template: "En cours d'envoi !",
+      duration: 1500
     });
     $http.post('http://81.192.194.109:8182/CapMissionApp/send-mail', mail, {timeout: 120000}).success(function (data, status, headers, config) {
       $ionicLoading.hide();
@@ -150,7 +156,7 @@ student.controller('SprofileCtrl', ['$scope','$rootScope','$ionicPopover','$http
       ": " + $rootScope.student.entity.phone + "\nNouvelle valeur : " + mail.body
     //mail.subject='Modification séance de : '+ enfant + 'le : ' + debutDate
 
-    mail.subject='Modification téléphone de ' + $rootScope.student.entity.name
+    mail.subject = 'MOB - ' + $rootScope.student.entity.name + ' - Modification Téléphone'
     mail.body = $scope.body
 
     console.log('to: '+mail.to)
@@ -160,7 +166,8 @@ student.controller('SprofileCtrl', ['$scope','$rootScope','$ionicPopover','$http
     console.log('body to send: '+ $scope.body)
 
     $ionicLoading.show({
-      template: "En cours d'envoi !"
+      template: "En cours d'envoi !",
+      duration: 1500
     });
     $http.post('http://81.192.194.109:8182/CapMissionApp/send-mail', mail, {timeout: 120000}).success(function (data, status, headers, config) {
       $ionicLoading.hide();
@@ -188,7 +195,7 @@ student.controller('SprofileCtrl', ['$scope','$rootScope','$ionicPopover','$http
       ": " + $rootScope.student.entity.mail + "\nNouvelle valeur : " + mail.body
     //mail.subject='Modification séance de : '+ enfant + 'le : ' + debutDate
 
-    mail.subject='Modification email de ' + $rootScope.student.entity.name
+    mail.subject = 'MOB - ' + $rootScope.student.entity.name + ' - Modification Email'
     mail.body = $scope.body
 
     console.log('to: '+mail.to)
@@ -198,7 +205,8 @@ student.controller('SprofileCtrl', ['$scope','$rootScope','$ionicPopover','$http
     console.log('body to send: '+ $scope.body)
 
     $ionicLoading.show({
-      template: "En cours d'envoi !"
+      template: "En cours d'envoi !",
+      duration: 1500
     });
     $http.post('http://81.192.194.109:8182/CapMissionApp/send-mail', mail, {timeout: 120000}).success(function (data, status, headers, config) {
       $ionicLoading.hide();
@@ -231,7 +239,7 @@ student.controller('SprofileCtrl', ['$scope','$rootScope','$ionicPopover','$http
       ": " + $rootScope.student.entity.birthDateString + "\nNouvelle valeur : " + $date
     //mail.subject='Modification séance de : '+ enfant + 'le : ' + debutDate
 
-    mail.subject='Modification date de naissance de ' + $rootScope.student.entity.name
+    mail.subject = 'MOB - ' + $rootScope.student.entity.name + ' - Modification Date de naissance'
     mail.body = $scope.body
 
     console.log('to: '+mail.to)
@@ -241,7 +249,8 @@ student.controller('SprofileCtrl', ['$scope','$rootScope','$ionicPopover','$http
     console.log('body to send: '+ $scope.body)
 
     $ionicLoading.show({
-      template: "En cours d'envoi !"
+      template: "En cours d'envoi !",
+      duration: 1500
     });
     $http.post('http://81.192.194.109:8182/CapMissionApp/send-mail', mail, {timeout: 120000}).success(function (data, status, headers, config) {
       $ionicLoading.hide();
@@ -303,9 +312,12 @@ student.controller('SsoldeCtrl', ['$scope', '$rootScope', '$ionicModal', '$http'
     name = $scope.name
     solde = $scope.solde
     nbreHeures = $scope.nbreHeures
-    tarifHour = $scope.tarifHour
-    tarifPeriod = $scope.tarifPeriod
+    tarifHour = $scope.tarifHour.toFixed(2)
+    tarifPeriod = $scope.tarifPeriod.toFixed(2)
     absence = $scope.absence
+    if (absence = "null") {
+      absence = "Présent"
+    }
     date = $scope.date
     debutDate = new Date(date).toLocaleDateString('fr-FR', {
       day: 'numeric',
@@ -314,7 +326,10 @@ student.controller('SsoldeCtrl', ['$scope', '$rootScope', '$ionicModal', '$http'
       hour: 'numeric',
       minute: 'numeric'
     }).split(' ').join(' ');
-    mail.subject = ' Message de ' + $rootScope.student.entity.name + ' à propos de son solde  par rapport à la matière : ' + name + ' le : ' + debutDate
+    mail.subject = 'MOB - ' + $rootScope.student.entity.name + ' - Solde'
+    $scope.body = 'Message :' + mail.body + '\n Détails \n Tarif horaire : ' + tarifHour + '\n Tarif de la séance : ' + tarifPeriod +
+      '\n Nombre heures : ' + nbreHeures + '\n Matière : ' + name + '\n Date : ' + debutDate + '\n' + absence
+    mail.body = $scope.body
 
     console.log('name: ' + name)
     console.log('solde: ' + solde)
@@ -326,7 +341,8 @@ student.controller('SsoldeCtrl', ['$scope', '$rootScope', '$ionicModal', '$http'
     console.log('subject: ' + mail.subject)
 
     $ionicLoading.show({
-      template: "En cours d'envoi !"
+      template: "En cours d'envoi !",
+      duration: 1500
     });
     $http.post('http://81.192.194.109:8182/CapMissionApp/send-mail', mail, {timeout: 120000}).success(function (data, status, headers, config) {
       $ionicLoading.hide();
@@ -439,7 +455,11 @@ student.controller("SEmailController",function($scope,$ionicPopup,$rootScope,$io
       minute : 'numeric'
     }).split(' ').join('-');
     mail.subject='Modification de la séance ' + period  + ' de : '+ $rootScope.student.entity.name + ' le : ' + debutDate
-
+    'MOB - ' + $rootScope.student.entity.name + ' - Modification TimeTable'
+    $scope.body = 'Message :' + mail.body + '\n Détails \n Séance : ' + cout + '\n Nombre étudiants : ' + nbreStudents +
+      '\n Nombre heures : ' + nbreHeures + '\n Matière : ' + name + '\n Date : ' + debutDate + '\n Cumul solde : ' + cumul +
+      '\n Solde : ' + solde
+    mail.body = $scope.body
     console.log('idHF: '+id)
     console.log('period: '+period)
     console.log('debut: '+debutDate)
@@ -449,7 +469,8 @@ student.controller("SEmailController",function($scope,$ionicPopup,$rootScope,$io
     console.log('body: '+mail.body)
 
     $ionicLoading.show({
-      template: "En cours d'envoi !"
+      template: "En cours d'envoi !",
+      duration: 1500
     });
     $http.post('http://81.192.194.109:8182/CapMissionApp/send-mail', mail, {timeout: 120000}).success(function (data, status, headers, config) {
       $ionicLoading.hide();

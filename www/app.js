@@ -168,7 +168,7 @@ CapMission.controller("EmailController",function($scope,$ionicPopup,$rootScope,$
       year : 'numeric',
       hour : 'numeric',
       minute : 'numeric'
-    }).split(' ').join('-');
+    }).split(' ').join(' ');
     console.log('idF: '+id)
     console.log('enfant: '+enfant)
     console.log('period: '+period)
@@ -184,27 +184,25 @@ CapMission.controller("EmailController",function($scope,$ionicPopup,$rootScope,$
     id = $rootScope.idF
     enfant = $rootScope.child
     period = $rootScope.period
-    debut = $rootScope.debut
+    /*debut = $rootScope.debut*/
     debutDate = new Date(debut).toLocaleDateString('fr', {
-      weekday : 'long',
+      day: 'numeric',
       month : 'short',
       year : 'numeric',
       hour : 'numeric',
       minute : 'numeric'
-    }).split(' ').join('-');
-    mail.subject='Modification de la séance ' + period  + ' de : '+ enfant + ' le : ' + debutDate
+    }).split(' ').join(' ');
+    console.log('avant : ' + debutDate)
+    mail.subject = 'MOB - ' + $rootScope.parent.entity.name + ' - Modification TimeTable'
+    $scope.body = 'Message :' + mail.body + '\n Détails \n Etudiant :' + enfant + '\n Séance : ' + period + '\n Date : ' + debutDate
+    mail.body = $scope.body
 
-    console.log('idHF: '+id)
-    console.log('child: '+enfant)
-    console.log('period: '+period)
-    console.log('debut: '+debutDate)
-    console.log('to: '+mail.to)
-    console.log('from: '+mail.from)
     console.log('subject: '+mail.subject)
-    console.log('body: '+mail.body)
-
+    console.log('body: ' + $scope.body)
+    console.log('mail: ' + mail.body)
     $ionicLoading.show({
-      template: "En cours d'envoi !"
+      template: "En cours d'envoi !",
+      duration: 1500
     });
     $http.post('http://81.192.194.109:8182/CapMissionApp/send-mail', mail, {timeout: 120000}).success(function (data, status, headers, config) {
       $ionicLoading.hide();
@@ -507,6 +505,44 @@ CapMission.config(['$stateProvider', '$urlRouterProvider', '$ionicConfigProvider
       templateUrl: 'parent/feedback.html',
       controller: 'BackCtrl'
 
+    })
+    //state pour remarque
+    .state('remarque', {
+      url: '/parent/remarque',
+      templateUrl: 'parent/remarque.html',
+      controller: 'PRemarqueCtrl'
+    })
+    //state pour l'envoi d'Email
+    .state('remarqueE', {
+      url: '/parent/remarque',
+      templateUrl: 'parent/remarque.html',
+      controller: 'PEmailController'
+    })
+    //state pour demande d'info
+    .state('information', {
+      url: '/parent/demandeInfo',
+      templateUrl: 'parent/demandeInfo.html',
+      controller: 'PDemandeInfoController'
+    })
+    //state pour demande d'info envoi Email
+    .state('informationE', {
+      url: '/parent/demandeInfoE',
+      templateUrl: 'parent/demandeInfo.html',
+      controller: 'PDemandeInfoEmailController'
+    })
+
+    //state pour ajout cours
+    .state('ajoutCours', {
+      url: '/parent/ajoutCours',
+      controller: 'PContactCtrl',
+      templateUrl: 'parent/emploiEnfantModif.html'
+    })
+
+    //state pour choix matière
+    .state('choixMatiere', {
+      url: '/parent/choixMatiere',
+      controller: 'PChoixMatiereCtrl',
+      templateUrl: 'parent/choixMatiere.html'
     })
     .state('emploiEnfant2', {
       url: '/parent/emploiEnfant2',
