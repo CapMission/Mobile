@@ -1,0 +1,23 @@
+<script id="templates/sendMail.html" type="text/ng-template">
+  <ion-modal-view>
+    <ion-header-bar class="bar bar-header bar-positive">
+      <h1 class="title">Message</h1>
+      <button class="button button-clear button-primary" ng-click="modal.hide()">Annuler</button>
+    </ion-header-bar>
+    <ion-content class="padding">
+      <div class="list">
+          <input ng-model="mail.to" type="hidden" value="safaam@capmission.com"/>
+          <input ng-model="mail.from" type="hidden" value="safaa.msika@gmail.com"/>
+          <input ng-model="mail.subject" type="text" placeholder="Object"/>
+
+        <label class="item item-input">
+          <span class="input-label">Votre message :</span>
+          <textarea ng-model="mail.text" placeholder="Que voulez-vous?"></textarea>
+        </label>
+        <button class="button button-full button-positive" ng-click="send(mail)">Envoyer</button>
+      </div>
+    </ion-content>
+  </ion-modal-view>
+</script>
+
+

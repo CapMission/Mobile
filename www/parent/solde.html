@@ -27,12 +27,12 @@
                  badge="badgeMessages" badge-style="badge-assertive" ng-click="onTabSelected()">
 
         </ion-tab>-->
-    <ion-tab title="Solde" href="#/parent/ChoixEnfantSolde" icon-off="icon ion-ios-calculator-outline"
-             icon-on="icon ion-ios-calculator" ng-controller="ChoixsoldeCtrl" ng-click="get()">
+    <ion-tab title="Solde" href="#/parent/solde" icon-off="icon ion-ios-calculator-outline"
+             icon-on="icon ion-ios-calculator" ng-controller="PsoldeCtrl" ng-click="getd(sonSolde.entity.id)">
 
     </ion-tab>
     <ion-tab title="Ajoutez un cours" icon-off="ion-android-add-circle" icon-on="icon ion-android-add-circle"
-             badge="badgeMessages" badge-style="badge-assertive" ng-click="onTabSelected()">
+             badge="badgeMessages" badge-style="badge-assertive" ng-controller="ChoixAjoutCoursCtrl" ng-click="get(sonSolde.entity.id)">
 
     </ion-tab>
   </ion-tabs>
@@ -52,7 +52,7 @@
       <div class="col positiveSolde" ng-show="sonSolde.entity.solde > 0"><strong>{{sonSolde.entity.solde |
         number:2}}</strong></div>
     </div>
-    <div class="negativeSolde" ng-show="sonSolde.entity.solde | number:2 <= 0"> Pensez à payer !</div>
+    <div class="negativeSolde" ng-show="sonSolde.entity.solde  <= 0"> Pensez à payer !</div>
     <!--<div class="negativeSolde" ng-show="sonSolde.entity.solde | number:2 === 0"> Votre solde est épuisé. Pensez à le recharger !</div>-->
     <br>
     <div class="row header">

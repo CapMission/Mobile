@@ -1,0 +1,99 @@
+<!-- En tête de l'application -->
+
+<ion-view title='<img class="title-image" src="parent/icon.png"> Remarque </img>' cache-view="false"
+          xmlns="http://www.w3.org/1999/html">
+  <ion-nav-buttons side="right">
+    <a class="button button-icon ion-ios-more rotate-90 fs-s" ng-click="popover.show($event)"></a>
+  </ion-nav-buttons>
+
+  <ion-tabs class="tabs-icon-top tabs-color-active-positive" ng-class="{'tabs-item-hide': $root.hideTabs}">
+
+
+    <ion-tab  hidden="true" >
+
+    </ion-tab>
+
+
+    <ion-tab title="quiz" icon-off="ion-ios-timer-outline" icon-on="ion-ios-timer" badge="badgequiz"
+             badge-style="badge-assertive" ng-click="onTabSelected()">
+
+    </ion-tab>
+
+
+    <ion-tab title="Suivi" icon-off="ion-ios-pulse" icon-on="ion-ios-pulse-strong"  badge="badgeFollow"
+             badge-style="badge-assertive" ng-click="onTabSelected()">
+
+    </ion-tab>
+
+    <ion-tab title="Solde" href="#/parent/solde" icon-off="icon ion-ios-calculator-outline" icon-on="icon ion-ios-calculator"
+             badge="badgeSolde" badge-style="badge-assertive" ng-controller="ChoixsoldeCtrl" ng-click="get(idE)">
+
+    </ion-tab>
+    <ion-tab title="Ajoutez un cours" icon-off="ion-android-add-circle" icon-on="icon ion-android-add-circle"
+             badge="badgeMessages" badge-style="badge-assertive" ng-controller="ChoixAjoutCoursCtrl" ng-click="get(son.entity.id)">
+
+    </ion-tab>
+  </ion-tabs>
+
+  <br><br><br><br>
+  <!-- Contenu -->
+  <ion-content>
+    <br><br>
+
+
+      <div class="card" ng-controller="PEmailController">
+        <i class="icon ion-ios-close close-modal" ng-click="modal.hide()"></i>
+
+        <p class="headerModal item-divider padding">Bonjour {{parent.entity.name}}, vous avez une remarque et vous souhaitez nous aidez à nous perfectionner ? Sélectionner l'objet de votre remarque dans la liste déroulante et envoyez-nous un
+          message !</p>
+
+        <form name="myForm" novalidate>
+          <input ng-model="id" type="hidden">
+          <input ng-model="parent" type="hidden">
+          <div id="listeDeroulante">
+            <div class="list">
+
+              <label class="item item-input item-select">
+                <div class="input-label">
+                  Objet :
+                </div>
+                <select ng-model="mail.subject" name="msg1" required>
+                  <option id="red">Report de cours</option>
+                  <option id="red">Retard de mon enfant</option>
+                  <option id="red">Annulation du cours</option>
+                  <option id="red">Demande d'ajout d'un cours</option>
+                  <option id="red">Solde restant</option>
+                  <option id="red">Demande de rendez-vous</option>
+                  <option id="red">Suivi de mon enfant - Appréciations professeurs</option>
+                  <option id="red">Absence de cours dans l'emploi du temps</option>
+                  <option id="red">Demande de cours particulier sans réponse</option>
+                  <option id="red">Demande de cours en groupe annulée</option>
+                  <option id="red">Satisfaction</option>
+                  <option id="red">Autre</option>
+                </select>
+              </label>
+
+            </div>
+          </div>
+          <input ng-model="mail.to" type="hidden">
+          <input ng-model="mail.from" type="hidden">
+          <input ng-model="mail.subject" type="hidden"><br>
+          <label class="item item-input">
+         <textarea class='autoExpand' rows='3' col="20" data-min-rows='3' ng-model="mail.body"
+                   placeholder="Votre remarque" name="msg"required></textarea>
+          </label>
+          <br>
+          <center>
+            <button ng-disabled="myForm.$invalid" class="button button-small buttonEmail button-dark "
+                    ng-click="sendR(mail)">Envoyer       <!--modal.hide()-->
+            </button>
+          </center>
+        </form>
+        <div class="padding">
+          <p ng-show="myForm.msg1.$error.required">* Objet est obligatoire</p>
+          <p ng-show="myForm.msg.$error.required">* Message est obligatoire</p>
+        </div>
+      </div>
+  </ion-content>
+
+

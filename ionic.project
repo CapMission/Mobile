@@ -1,10 +1,10 @@
 {
   "name": "Cap Mission",
-  "app_id": "",
+  "app_id": "b2f70a91",
   "proxies": [
-      {
-        "path": "/CapMissionApp",
-        "proxyUrl": "http://81.192.194.109:8182/CapMissionApp"
-      }
-    ]
+    {
+      "path": "/CapMissionApp",
+      "proxyUrl": "http://81.192.194.109:8182/CapMissionApp"
+    }
+  ]
 }

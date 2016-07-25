@@ -1,0 +1,81 @@
+<ion-view  title='<img class="title-image" src="parent/icon.png"> A propos de nous </img>'>
+  <ion-nav-buttons side="right">
+    <a class="button button-icon ion-ios-more rotate-90 fs-s" ng-click="popover.show($event)"></a>
+  </ion-nav-buttons>
+  </ion-nav-buttons>
+  <ion-tabs class="tabs-icon-top tabs-color-active-positive" ng-class="{'tabs-item-hide': $root.hideTabs}">
+
+
+    <ion-tab  hidden="true" >
+
+    </ion-tab>
+
+
+    <ion-tab title="quiz" icon-off="ion-ios-timer-outline" icon-on="ion-ios-timer" badge="badgequiz"
+             badge-style="badge-assertive" ng-click="onTabSelected()">
+
+    </ion-tab>
+
+
+    <ion-tab title="Suivi" icon-off="ion-ios-pulse" icon-on="ion-ios-pulse-strong"  badge="badgeFollow"
+             badge-style="badge-assertive" ng-click="onTabSelected()">
+
+    </ion-tab>
+<!--
+    <ion-tab title="Messages" icon-off="ion-ios-email-outline" icon-on="ion-ios-email"
+             badge="badgeMessages" badge-style="badge-assertive" ng-click="onTabSelected()">
+
+    </ion-tab>-->
+
+    <ion-tab title="Solde" href="#/student/solde" icon-off="icon ion-ios-calculator-outline" icon-on="icon ion-ios-calculator">
+
+    </ion-tab>
+    <ion-tab title="Contactez-nous" icon-off="ion-ios-chatboxes-outline" icon-on="ion-ios-chatboxes"
+             badge="badgeMessages" badge-style="badge-assertive" ng-click="onTabSelected()">
+
+    </ion-tab>
+
+  </ion-tabs>
+
+  <br>
+  <ion-content>
+    <br><br>
+    <div class="list card">
+
+      <div class="item item-avatar">
+        <img src="parent/icon.png">
+        <h2><strong>Cap Mission,</strong> </h2>
+        <p style="font-size: small">L'apprentissage nouvelle génération.</p>
+      </div>
+
+      <div class="item item-body">
+
+        <p class="pText">
+          Cap Mission est une structure de plus de 3 ans fournissant
+          des services clés dans l’industrie de l’éducation et du soutien scolaire.
+          Nous sommes une structure d’enseignement nouvelle génération locale à Casablanca avec une ambition globale.
+          Nous apportons la science des données et de l’ingénierie analytique au secteur éducatif.
+          Nous servons comme une plateforme de lancement de services éducatifs à forte différenciation.
+        </p>
+        <p class="pText">
+          Dès la création, nous avons servi des particuliers, des petites entreprises tout comme des multinationales
+          au Maroc et à travers le globe. Nous croyons sincèrement que notre succès dépend de la satisfaction de nos clients.
+          Notre compétence cœur est liée à la mise en pratique de nouveaux outils et technologies dans un cadre pédagogique.
+          Loin d’être de simples fournisseurs, notre souhait est d’être des partenaires dans la croissance de nos clients.
+          Nous fournissons des services de haute qualité à un coût abordable.
+        </p>
+        <p class="pText">
+          Nous nous spécialisons dans le lancement de produits phares,
+          différenciés et qualitatifs qui ont un impact direct sur nos clients :
+          cours d’anglais pour entreprise, soutien scolaire
+          pour les étudiants des différents systèmes scolaires
+          incluant le système espagnol, français, américain et bilingue, des cours de français pour les anglosaxons (FLE),
+          des cours d’accompagnement pour l’intégration à la mission française, des camps de vacances technologiques pour enfants.
+
+        </p>
+
+      </div>
+
+    </div>
+    </ion-content>
+  </ion-view>

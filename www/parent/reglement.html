@@ -1,0 +1,123 @@
+<ion-view title='<img class="title-image" src="parent/icon.png"> Cap Mission </img>' cache-view="false">
+  <ion-nav-buttons side="right">
+    <a class="button button-icon ion-ios-more rotate-90 fs-s" ng-click="popover.show($event)"></a>
+  </ion-nav-buttons>
+
+  <ion-tabs class="tabs-icon-top tabs-color-active-positive" ng-class="{'tabs-item-hide': $root.hideTabs}">
+
+
+    <ion-tab hidden="true">
+
+    </ion-tab>
+
+
+    <ion-tab title="quiz" icon-off="ion-ios-timer-outline" icon-on="ion-ios-timer" badge="badgequiz"
+             badge-style="badge-assertive" ng-click="onTabSelected()">
+
+    </ion-tab>
+
+
+    <ion-tab title="Suivi" icon-off="ion-ios-pulse" icon-on="ion-ios-pulse-strong" badge="badgeFollow"
+             badge-style="badge-assertive" ng-click="onTabSelected()">
+
+    </ion-tab>
+    <!--
+
+        <ion-tab title="Messages" icon-off="ion-ios-email-outline" icon-on="ion-ios-email"
+                 badge="badgeMessages" badge-style="badge-assertive" ng-click="onTabSelected()">
+
+        </ion-tab>-->
+    <ion-tab title="Solde" href="#/parent/solde" icon-off="icon ion-ios-calculator-outline" icon-on="icon ion-ios-calculator"
+             badge="badgeSolde" badge-style="badge-assertive" ng-controller="ChoixsoldeCtrl" ng-click="get(idE)">
+
+    </ion-tab>
+    <ion-tab title="Ajoutez un cours" icon-off="ion-android-add-circle" icon-on="icon ion-android-add-circle"
+             badge="badgeMessages" badge-style="badge-assertive" ng-controller="ChoixAjoutCoursCtrl" ng-click="get(son.entity.id)">
+
+    </ion-tab>
+
+  </ion-tabs>
+
+  <ion-content>
+    <br><br><br>
+    <h5 class="h5Title">Réglementation Cap Mission</h5>
+    <div class="divText">
+    Toute collaboration avec CAP MISSION SARL dont le nom commercial est CAP MISSION entraîne l’application des conditions générales suivantes relativement
+    aux prestations de CAP MISSION :
+<br><br>
+      <ul class="b">
+    <li><div class="decor">Inscription :</div> Toute inscription à l’une de nos formules de
+      cours suppose l’inscription des informations clients d ans notre base de données.</li>
+    <li><div class="decor">Modalités de paiement :</div> Le souscripteur s’engage à payer la totalité des frais
+      de la formule qu’il s’est engagé à suivre, ainsi que les frais afféren ts à
+      l’assurance obligatoire (100 MAD) <strong>avant le début des cours</strong>. Tout élève dont
+      la situation n’est pas régularisée ne sera pas autorisé à entrer en cours et
+      ce jusqu’à l’acquittement des frais dus. Les modes de paiement proposés sont :
+      le chèque en MAD tiré sur une banque domiciliée au Maroc, les Espèces en MAD.</li>
+    <li><div class="decor">Rétractation :</div> Tout abonnement à l’une de nos formules longue
+      durée (forfaits, packs de cours,..) est un engagement ferme sur une période donnée.
+    Elle débutera par une séance d’essai (payante et non remboursée), à l’issue de laquelle,
+      le souscripteur pourra choisir de continu er ou de se rétracter.
+      Dans ce dernier cas, la somme acquittée sera remboursée. Sauf cas de force majeur justifié,
+      les prestations non utilisées sur la période d’engagement validée
+      lors de la commande ne seront pas reportables, ni remboursables.</li>
+    <li><div class="decor">Annulation d’un cours :</div> Dans le cas d’une incapacité à assister à l’un des cours prévus,
+      le souscripteur dispose d’un délai de 24 heures avant la date concernée
+      pour prévenir Cap Mission qu’il ne pourra pas être présent à ce moment -là.
+      L’appel téléphonique ou l’envoi d’un e-mail est alors nécessaire pour assurer la prise en compte de l’annulation.
+      Si  l’élève  a  souscrit à une formule individuelle,  le  report sera
+      possible selon les disponibilités proposées par Cap Mission.
+      Si l’élève a souscrit à une formule groupe, le cours sera considéré comme consommé.</li>
+    <li><div class="decor">Tarifs :</div> CAP MISSION se réserve le droit de modifier ses prix à tout moment.
+      Les brochures ne sont donc pas contractuelles. Les prix i ndiqués sont des
+    prix TTC en MAD tenant compte de la TVA applicable au jour de la commande ;
+      tout changement de taux pourra être répercuté sur le prix des services.
+      Ces changements de prix ne sont pas rétroactifs. Ils s’appliqueront uniquement pour
+      les prochaines souscriptions aux services de Cap Mission.</li>
+    <li><div class="decor">Matériels :</div>Tout matériel (livres, logiciels, ordinateurs, etc.) mis à disposition
+      des élèves dans le cadre des prestations dispensées par CAP MISSION reste la propriété de CAP MISSION.
+      Toute détérioration abusive du matériel pourrait faire l’objet d’une demande  de remboursement auprès du souscripteur.</li>
+    <li><div class="decor">Propriété intellectuelle :</div> Tous les éléments relatifs au contenu des prestations et relatifs au site
+      internet www.capmission.com sont et restent la propriété intellectuelle
+      exclusive de CAP MISSION. Il est strictement interdit de repro duire,
+      d’exploiter, de rediffuser, ou d’utiliser à quelque titre que ce soit, même partiellement,
+      ces éléments, quel que soit le support (version papier, informatique, etc.)
+      sans l’accord préalable et explicite de CAP MSSION, sous peine de se voir
+      exclu définitivement des cours (les éventuels frais avancés ne pourront être récupérés).</li>
+    <li><div class="decor">Assiduité :</div> Tout élève se rendant régulièrement coupable d’absentéisme non prévu,
+      ainsi que de manque de volonté et de sérieux durant les cours,
+    et ayant déjà eu un rappel à l’ordre, pourra se voir refuser l’accès au cours.</li>
+    <li><div class="decor">Comportement :</div> Toute personne reconnue coupable d’actes irrespectueux, de dégradation, de violence, se verra exclue définitivement des cours. Les éventuels frais avancés ne pourront être récupérés.</li>
+<br>
+    Engagement Cap Mission :
+<br><br>
+    <li><div class="decor">Qualité de service :</div></li>
+        <ul class="a">
+    <li>Nous nous engageons à garantir un respect du droit des familles client
+      es ainsi que des enseignants, une application homogène des engagements que
+      nous prenons quant à la qualité de nos prestations et de rester dans
+      une dynamique positive d’amélioration co ntinue de la satisfaction clients et enseignants.</li>
+    <li>Nous nous engageons à assurer l’ensemble du service éducatif prévu lors de la signature de la commande avec le client.</li>
+    <li>Nous nous engageons à mettre à disposition
+      de nos apprenants les locaux appartenant à CAP MISSION,
+      aussi bien pour des cours déjà prévus avec notre équipe, que pour proposer
+      un milieu propice à l’étude pour notre clientèle.</li>
+    <li>En cas de problèmes quelconques ou en cas d’absence de l’un de nos enseignants,
+      CAP MISSION s’engage  à prendre les dispositions nécessaires (prévenir clientèle et remboursement ou report des cours, …).</li>
+        </ul>
+    <li><div class="decor">Suivi du client :</div></li>
+        <ul class="a">
+    <li>Nous nous engageons à fournir un suivi complet de l’élève inscrit.
+      Un bilan initial, un suivi mensuel (sous forme de tests) ainsi qu’un bilan final seront effectués
+      pour la totalité de nos apprenants pour assurer une qualité optimale de leur  apprentissage.
+      L’ensemble des informations concernant l’avancée des apprenants (notes, moyennes, commentaires, statistiques, …)
+      seront accessibles à la tot alité de notre clientèle via une application et via notre interface web.</li>
+    <li><strong>Droit à l’image </strong>: Cap Mission se réserve le droit de prendre des photographies et/ou des vidéos  de ses élèves, dans un but uniquement
+    pédagogique.
+      Toutes autres utilisations (promotionnelles, …) seront soumises à l’autorisation du responsable légal.</li>
+        </ul>
+      </ul>
+    </div>
+  </ion-content>
+
+</ion-view>

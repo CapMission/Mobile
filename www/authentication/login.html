@@ -37,21 +37,25 @@
                 <input type="checkbox" id="checkbox65" class="css-checkbox med" ng-checked="checkStatus"
                        ng-model='checkStatus'
                        ng-init="checkStatus">
-                <label for="checkbox65" class="css-label med elegant">Remember Me</label>
+                <label for="checkbox65" class="css-label med elegant">Se souvenir de moi</label>
                 </nobr>
               </div>
-              <!-- <div class="item item-checkbox  checkbox-positive">
-                 Remember Me
-                 <label class="checkbox">
-                   &lt;!&ndash; <div ng-if="checkbox == 'undefined'">&ndash;&gt;
-                   <input type="checkbox" ng-checked="checkStatus" id="rememberMe" ng-model='checkStatus'
-                          ng-init="checkStatus">
-                   &lt;!&ndash;  </div>&ndash;&gt;
-                   &lt;!&ndash;<div ng-if="checkbox == 'true'">&ndash;&gt;
-                   &lt;!&ndash; <input type="checkbox" ng-checked="true" ng-model='checkStatus' ng-init="checkStatus == checkbox">
-                    </div>&ndash;&gt;
-                 </label>
-               </div>-->
+              <br>
+
+              <a ng-controller="LoginCtrl" ng-click="goMdpPage()">Identifiant oublié</a><br>
+              <a href="">Mot de passe oublié</a>
+                        <!-- <div class="item item-checkbox  checkbox-positive">
+                           Remember Me
+                           <label class="checkbox">
+                             &lt;!&ndash; <div ng-if="checkbox == 'undefined'">&ndash;&gt;
+                             <input type="checkbox" ng-checked="checkStatus" id="rememberMe" ng-model='checkStatus'
+                                    ng-init="checkStatus">
+                             &lt;!&ndash;  </div>&ndash;&gt;
+                             &lt;!&ndash;<div ng-if="checkbox == 'true'">&ndash;&gt;
+                             &lt;!&ndash; <input type="checkbox" ng-checked="true" ng-model='checkStatus' ng-init="checkStatus == checkbox">
+                              </div>&ndash;&gt;
+                           </label>
+                         </div>-->
 
 
               <!-- <div class="slideThree">
@@ -66,7 +70,11 @@
               <p ng-show="myForm.password.$error.minlength">* Mot de passe doit être sup à 6 caractères</p>
             </div>
             <div class="error" ng-if="errorMessage">{{ errorMessage }}</div>
-            <div class="error" ng-if="errorMessageChang">{{errorMessageChang}}</div>
+            <br><br><br>
+
+            <!--<div class="bar bar-footer" ng-controller="LoginCtrl">-->
+              <!--<button class="button button-small buttonEmp" ng-model="insc" ng-click="goInscription()">S'incrire à CapMission</button>-->
+            <!--</div>-->
             <!-- <div class="padding">
              <button style="background-color:#3b5998 " ng-click="authenticate('facebook')" class="button button-block icon-left ion-social-facebook" >
                    &nbsp;Login avec Facebook
@@ -78,5 +86,11 @@
              </div>-->
 
       </div></ion-content>
+<ion-footer-bar>
+  <div class="bar bar-footer" ng-controller="LoginCtrl">
+    <button class="button button-small buttonEmp" ng-model="insc" ng-click="goInscription()">S'incrire à CapMission</button>
+  </div>
+</ion-footer-bar>
+
 
   </ion-view>

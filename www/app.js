@@ -44,9 +44,31 @@ CapMission.filter('setDecimal', function ($filter) {
   };
 });
 
+CapMission.controller('NotifController', function($scope, $cordovaLocalNotification, $ionicPlatform) {
+  $scope.testFunction = function(){ alert('hello')}
+
+  $ionicPlatform.ready(function () {
+   if (ionic.Platform.isWebView()) {
+    }
+    $scope.scheduleInstantNotification = function () {
+      $cordovaLocalNotification.schedule({
+        id: 1,
+        text: 'login : ' + window.localStorage.getItem('login') ,
+        title: 'Rappel Cap Mission',
+        icon : 'parent/icon.png',
+        checkstatement : $scope.testFunction()
+      }).then(function () {
+        //alert("Instant Notification set");
+      });
+    };
+  })
+});
 
 CapMission.controller('capController', function ($scope, $rootScope, $location, $auth, $http, $ionicLoading, $localStorage) {
 
+  /*if(window.localStorage.getItem('login') == null){
+  console.log(window.localStorage.getItem('login'))}
+*/
   $scope.showLoading = function () {
     $ionicLoading.show({
       content: '<div class="icon ion-loading-c"></div>',
@@ -134,9 +156,9 @@ CapMission.controller('capController', function ($scope, $rootScope, $location, 
         toastr.error('Echec de connexion ! Veuillez réessayer dans quelques instants !', 'Désolés !', {displayDuration: 1000});
         navigator.app.exitApp();
       }
-      else if (data.login != window.localStorage.getItem('login') || data.password != window.localStorage.getItem('password')) {
+      /*else if (data.login != window.localStorage.getItem('login') || data.password != window.localStorage.getItem('password')) {
         $rootScope.errorMessageChang = "Votre login ou mot de passe a été changé ! Veuillez contacter Cap Mission pour plus d'informations";
-      }
+      }*/
       else if (data.login != user.login || data.password != user.password) {
         $rootScope.errorMessage = 'Login/Mot de passe incorrect';
       }
@@ -194,18 +216,16 @@ CapMission.controller("EmailController",function($scope,$ionicPopup,$rootScope,$
     }).split(' ').join(' ');
     console.log('avant : ' + debutDate)
     mail.subject = 'MOB - ' + $rootScope.parent.entity.name + ' - Modification TimeTable'
-    $scope.body = 'Message :' + mail.body + '\n Détails \n Etudiant :' + enfant + '\n Séance : ' + period + '\n Date : ' + debutDate
-    mail.body = $scope.body
+    mail.body = 'Message :' + mail.body + '\n Détails \n Etudiant :' + enfant + '\n Séance : ' + period + '\n Date : ' + debutDate
 
     console.log('subject: '+mail.subject)
-    console.log('body: ' + $scope.body)
+    //console.log('body: ' + body)
     console.log('mail: ' + mail.body)
     $ionicLoading.show({
       template: "En cours d'envoi !",
       duration: 1500
     });
     $http.post('http://81.192.194.109:8182/CapMissionApp/send-mail', mail, {timeout: 120000}).success(function (data, status, headers, config) {
-      $ionicLoading.hide();
       toastr.success('Votre demande a été envoyée avec succès')
       //$ionicHistory.goBack();
     }).error(function (data, status) {
@@ -303,8 +323,57 @@ CapMission.constant("Constants", {
   }
 });*/
 
-CapMission.run(['$ionicPlatform', '$rootScope','$state','authService','$ionicHistory', function ($ionicPlatform, $rootScope,$state,authService,$ionicHistory) {
+CapMission.run(['$ionicPlatform', '$ionicPopup', function ($ionicPlatform, $ionicPopup) {
   $ionicPlatform.ready(function () {
+    if(window.Connection) {
+      if(navigator.connection.type == Connection.NONE) {
+        $ionicPopup.confirm({
+          title: 'Pas de connexion Internet',
+          content: "Désolés, afin d'accéder à l'application, veuillez vous connecter à Internet"
+        })
+          .then(function(result) {
+            if(!result) {
+              ionic.Platform.exitApp();
+            }
+          });
+      }
+    }
+    /*if(window.localStorage.getItem('login') != null) {
+      document.addEventListener('deviceready', function () {
+        // Schedule notification for tomorrow to remember about the meeting
+        cordova.plugins.notification.local.schedule({
+          id: 1,
+          text: 'login : ' + window.localStorage.getItem('login'),
+          title: 'Rappel Cap Mission',
+          icon: 'parent/icon.png',
+          firstAt: new Date(),
+          every: "day" // "minute", "hour", "week", "month", "year"
+        });
+
+      }, false);
+    }
+    else {
+      document.addEventListener('deviceready', function () {
+        // Schedule notification for tomorrow to remember about the meeting
+        cordova.plugins.notification.local.schedule({
+          id: 1,
+          text: 'Pensez à vous connecter !',
+          title: 'Rappel Cap Mission',
+          icon: 'parent/icon.png',
+          firstAt: new Date(),
+          every: "day" // "minute", "hour", "week", "month", "year"
+        });
+
+      }, false);
+    }*/
+    /*cordova.plugins.notification.local.schedule({
+      id: 1,
+      text: 'login : ' + window.localStorage.getItem('login') ,
+      title: 'Rappel Cap Mission',
+      icon : 'parent/icon.png',
+      firstAt: tomorrow_at_8_am,
+      every: "day" // "minute", "hour", "week", "month", "year"
+    });*/
     // Hide the accessory bar by default (remove this to show the accessory bar above the keyboard
     // for form inputs)
     if (window.cordova && window.cordova.plugins && window.cordova.plugins.Keyboard) {
@@ -343,6 +412,7 @@ CapMission.controller('LogoutCtrl', function ($location, $auth, $state, $ionicHi
     });
 
     alertPopup.then(function (res) {
+      //$location.path("/login")
       navigator.app.exitApp();
     });
   };
@@ -531,18 +601,132 @@ CapMission.config(['$stateProvider', '$urlRouterProvider', '$ionicConfigProvider
       controller: 'PDemandeInfoEmailController'
     })
 
-    //state pour ajout cours
-    .state('ajoutCours', {
-      url: '/parent/ajoutCours',
-      controller: 'PContactCtrl',
-      templateUrl: 'parent/emploiEnfantModif.html'
-    })
-
     //state pour choix matière
     .state('choixMatiere', {
       url: '/parent/choixMatiere',
+      controller: 'PAjoutCoursChoixCtrl',
+      templateUrl: 'parent/choixMatiere.html'
+    })
+    //state pour choix enfant ajout cours
+    .state('choixAjoutCours', {
+      url: '/parent/choixAjoutCours',
+      controller: 'ChoixAjoutCoursCtrl',
+      templateUrl: 'parent/choixEnfantAjoutCours.html'
+    })
+    //state pour choix matiere
+    .state('choixM', {
+      url: '/parent/choixM',
       controller: 'PChoixMatiereCtrl',
       templateUrl: 'parent/choixMatiere.html'
+    })
+    //state pour choix type de cours
+    .state('choixTypeCours', {
+      url: '/parent/choixTypeCours',
+      controller: 'PChoixTypeCours',
+      templateUrl: 'parent/choixTypeCours.html'
+    })
+    //state pour email cours particulier
+    .state('coursParticulier', {
+      url: '/parent/coursParticulier',
+      controller: 'PCoursParticulierCtrl',
+      templateUrl: 'parent/coursParticulier.html'
+    })
+    //state pour choix cours de groupe
+    .state('coursGroup', {
+      url: '/parent/coursGroup',
+      controller: 'PCoursGroupCtrl',
+      templateUrl: 'parent/coursGroup.html'
+    })
+    //state pour envoie mail groupe Autre
+    .state('coursGroupAutre', {
+      url: '/parent/coursGroupAutre',
+      controller: 'PCoursGroupAutreCtrl',
+      templateUrl: 'parent/groupeAutre.html'
+    })
+    //state pour la créer ton groupe nb étudiants
+    .state('nbEtudiantsGroupe', {
+      url: '/parent/nbEtudiantsGroupe',
+      controller: 'PNbEtudiantsGroupeCtrl',
+      templateUrl: 'parent/nbEtudiantsGroupe.html'
+    })
+    //state pour les cours en groupe horaire et date
+    .state('dateHoraireGroupe', {
+      url: '/parent/dateHoraireGroupe',
+      controller: 'PDateHoraireGroupeCtrl',
+      templateUrl: 'parent/dateHoraireGroupe.html'
+    })
+    //state pour le recap de cours groupe
+    .state('recapCoursGroupe', {
+      url: '/parent/recapCoursGroupe',
+      controller: 'PRecapCoursGroupeCtrl',
+      templateUrl: 'parent/recapCoursGroupe.html'
+    })
+    //state pour choix cours occ ou multiple
+    .state('coursChoix', {
+      url: '/parent/coursChoix',
+      controller: 'PCoursChoixCtrl',
+      templateUrl: 'parent/coursChoix.html'
+    })
+    //state pour date/h occasionnel
+    .state('dateHoraireOcc', {
+      url: '/parent/dateHoraireOcc',
+      controller: 'PDateHoraireOccCtrl',
+      templateUrl: 'parent/dateHoraireOcc.html'
+    })
+    //state pour test
+    .state('test', {
+      url: '/parent/test',
+      controller: 'PTestCtrl',
+      templateUrl: 'parent/test.html'
+    })
+    //state pour identifiant oublié
+    .state('identifiantOublie', {
+      url: '/identifiantOublie',
+      controller: 'IdentifiantOublieCtrl',
+      templateUrl: 'authentication/identifiantOublie.html'
+    })
+    //state pour inscription
+    .state('inscription', {
+      url: '/inscription',
+      controller: 'InscriptionCtrl',
+      templateUrl: 'authentication/inscriptionCapMission.html'
+    })
+    //state pour infos élève (inscription)
+    .state('infoEleve', {
+      url: '/infoEleve',
+      controller: 'InfoEleveCtrl',
+      templateUrl: 'authentication/infoEleve.html'
+    })
+    // state pour le catalogue
+    .state('catalogue', {
+      url: '/catalogue',
+      controller: 'CatalogueCtrl',
+      templateUrl: 'authentication/catalogue.html'
+    })
+    //state pour choix matiere non inscrit
+    .state('choixMatiereNonInscrit', {
+      url: '/choixMatiereNonInscrit',
+      controller: 'ChoixMatiereNonInscritCtrl',
+      templateUrl: 'authentication/choixMatiereNonInscrit.html'
+    })
+
+    //state pour nombre de jours pour non inscrit
+    .state('nbJoursNnInscrit', {
+      url: '/nbJoursNnInscrit',
+      controller: 'NbJoursNnInscritCtrl',
+      templateUrl: 'authentication/nbJoursNnInscrit.html'
+    })
+    //state pour récapitulatif de la commande de cours pour non inscrit
+    .state('recapitulatifNonInscrit', {
+      url: '/recapitulatifNonInscrit',
+      controller: 'RecapitulatifNonInscritCtrl',
+      templateUrl: 'authentication/recapitulatifNonInscrit.html'
+    })
+    //state pour disponibilite pour les non inscrits
+    .state('disponibilite', {
+      url: '/disponibilite',
+      controller: 'DisponibiliteCtrl',
+      templateUrl: 'authentication/disponibilite.html'
     })
     .state('emploiEnfant2', {
       url: '/parent/emploiEnfant2',
@@ -630,6 +814,12 @@ CapMission.config(['$stateProvider', '$urlRouterProvider', '$ionicConfigProvider
       url: '/teacher/solde',
       templateUrl: 'teacher/solde.html',
       controller: 'TsoldeCtrl'
+
+    })
+    .state('choixEtudiant', {                             //state pour le choix des étudiants pour un prof
+      url: '/teacher/choixEtudiant',
+      templateUrl: 'teacher/choixEtudiant.html',
+      controller: 'ChoixEtudiantCtrl'
 
     })
 

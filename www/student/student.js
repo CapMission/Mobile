@@ -132,16 +132,13 @@ student.controller('SprofileCtrl', ['$scope','$rootScope','$ionicPopover','$http
       duration: 1500
     });
     $http.post('http://81.192.194.109:8182/CapMissionApp/send-mail', mail, {timeout: 120000}).success(function (data, status, headers, config) {
-      $ionicLoading.hide();
       toastr.success('Votre demande a été envoyée avec succès')
-      $ionicLoading.hide();
     }).error(function (data, status) {
       if (status == 0) {
         toastr.error('Echec de connexion ! Veuillez réessayer dans quelques instants !', 'Désolés !', {displayDuration: 1000});
         navigator.app.exitApp();
       }
       else {
-        $ionicLoading.hide();
         toastr.error("Echec envoi de message ! Réessayez plus tart !")
       }
     });
@@ -170,16 +167,16 @@ student.controller('SprofileCtrl', ['$scope','$rootScope','$ionicPopover','$http
       duration: 1500
     });
     $http.post('http://81.192.194.109:8182/CapMissionApp/send-mail', mail, {timeout: 120000}).success(function (data, status, headers, config) {
-      $ionicLoading.hide();
+
       toastr.success('Votre demande a été envoyée avec succès')
-      $ionicLoading.hide();
+
     }).error(function (data, status) {
       if (status == 0) {
         toastr.error('Echec de connexion ! Veuillez réessayer dans quelques instants !', 'Désolés !', {displayDuration: 1000});
         navigator.app.exitApp();
       }
       else {
-        $ionicLoading.hide();
+
         toastr.error("Echec envoi de message ! Réessayez plus tart !")
       }
     });
@@ -209,16 +206,14 @@ student.controller('SprofileCtrl', ['$scope','$rootScope','$ionicPopover','$http
       duration: 1500
     });
     $http.post('http://81.192.194.109:8182/CapMissionApp/send-mail', mail, {timeout: 120000}).success(function (data, status, headers, config) {
-      $ionicLoading.hide();
       toastr.success('Votre demande a été envoyée avec succès')
-      $ionicLoading.hide();
+
     }).error(function (data, status) {
       if (status == 0) {
         toastr.error('Echec de connexion ! Veuillez réessayer dans quelques instants !', 'Désolés !', {displayDuration: 1000});
         navigator.app.exitApp();
       }
       else {
-        $ionicLoading.hide();
         toastr.error("Echec envoi de message ! Réessayez plus tart !")
       }
     });
@@ -253,16 +248,16 @@ student.controller('SprofileCtrl', ['$scope','$rootScope','$ionicPopover','$http
       duration: 1500
     });
     $http.post('http://81.192.194.109:8182/CapMissionApp/send-mail', mail, {timeout: 120000}).success(function (data, status, headers, config) {
-      $ionicLoading.hide();
+
       toastr.success('Votre demande a été envoyée avec succès')
-      $ionicLoading.hide();
+
     }).error(function (data, status) {
       if (status == 0) {
         toastr.error('Echec de connexion ! Veuillez réessayer dans quelques instants !', 'Désolés !', {displayDuration: 1000});
         navigator.app.exitApp();
       }
       else {
-        $ionicLoading.hide();
+
         toastr.error("Echec envoi de message ! Réessayez plus tart !")
       }
     });
@@ -345,7 +340,6 @@ student.controller('SsoldeCtrl', ['$scope', '$rootScope', '$ionicModal', '$http'
       duration: 1500
     });
     $http.post('http://81.192.194.109:8182/CapMissionApp/send-mail', mail, {timeout: 120000}).success(function (data, status, headers, config) {
-      $ionicLoading.hide();
       toastr.success('Votre demande a été envoyée avec succès')
       //$ionicHistory.goBack();
     }).error(function (data, status) {
@@ -354,7 +348,6 @@ student.controller('SsoldeCtrl', ['$scope', '$rootScope', '$ionicModal', '$http'
         navigator.app.exitApp();
       }
       else {
-        $ionicLoading.hide();
         toastr.error("Echec envoi de message ! Réessayez plus tart !")
       }
     });
@@ -473,7 +466,6 @@ student.controller("SEmailController",function($scope,$ionicPopup,$rootScope,$io
       duration: 1500
     });
     $http.post('http://81.192.194.109:8182/CapMissionApp/send-mail', mail, {timeout: 120000}).success(function (data, status, headers, config) {
-      $ionicLoading.hide();
       toastr.success('Votre demande a été envoyée avec succès')
       //$ionicHistory.goBack();
     }).error(function (data, status) {
@@ -482,7 +474,6 @@ student.controller("SEmailController",function($scope,$ionicPopup,$rootScope,$io
         navigator.app.exitApp();
       }
       else {
-        $ionicLoading.hide();
         toastr.error("Echec envoi de message ! Réessayez plus tart !")
       }
     });

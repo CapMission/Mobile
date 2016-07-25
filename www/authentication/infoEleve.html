@@ -1,0 +1,40 @@
+<ion-view  title='<img class="title-image" src="parent/icon.png"> Information élève </img>' cache-view="false">
+  <ion-nav-buttons side="right">
+    <a class="button button-icon ion-ios-more rotate-90 fs-s" ng-click="popover.show($event)"></a>
+  </ion-nav-buttons>
+
+
+  <ion-content>
+    <div ng-controller="InfoEleveCtrl">
+      <div>
+        <br><br>
+        Veuillez renseignez les informations concernants l'élève :
+        <br><br>
+        <form name="myForm">
+          <div id="instruc2">Nom et Prénom :<input id="formBlanc" type="text" ng-model="nomPrenomE" required></div>
+          <div id="instruc2">Date de Naissance :<input id="formBlanc" type="date" ng-model="dateNaissanceE" required></div>
+          <div id="instruc2">Adresse :<input id="formBlanc" type="text" ng-model="adresseE" required></div>
+          <div id="instruc2">Téléphone :<input id="formBlanc" ng-model="telE" pattern="^((\+\d{1,3}(-| )?\(?\d\)?(-| )?\d{1,5})|(\(?\d{2,6}\)?))(-| )?(\d{3,4})(-| )?(\d{4})(( x| ext)\d{1,5}){0,1}$" required></div>
+          <div id="instruc2">E-mail :<input id="formBlanc" type="emailE" ng-model="emailE" required></div>
+          <div id="instruc2">Ecole :<input id="formBlanc" type="text" ng-model="ecoleE"></div>
+          <br><br>
+          Quel type de cours souhaitez-vous ?
+          <br><br>
+          <center><div>
+            <input ng-model="coursParticulier" type="radio" value="Cours Particulier" id="squared1" name="check" selected/>
+            <label id="instruc" for="squared1">Cours Particulier</label>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+            <input ng-model="coursParticulier" type="radio" value="Cours en Groupe" id="squared2" name="check"/>
+            <label id="instruc" for="squared2">Cours en groupe</label>
+          </div></center>
+          <br><br>
+        </form>
+        <br>
+        <div>
+          <button class="button button-small icon-right ion-chevron-right buttonEmp" ng-disabled="myForm.$invalid" ng-model="cours" ng-click="goMatiere(nomPrenomParent, telParent, emailParent, choixP, raisonAutre, nomPrenomE, dateNaissanceE, telE,
+          emailE, ecoleE, coursParticulier, coursEnGroupe)">Suivant</button>
+        </div>
+        <br><br>
+      </div>
+    </div>
+  </ion-content>
+</ion-view>

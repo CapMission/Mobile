@@ -1,0 +1,25 @@
+<ion-view  title='<img class="title-image" src="parent/icon.png"> Mot de passe oublié </img>' cache-view="false">
+  <ion-nav-buttons side="right">
+    <a class="button button-icon ion-ios-more rotate-90 fs-s" ng-click="popover.show($event)"></a>
+  </ion-nav-buttons>
+
+
+  <ion-content>
+    <div ng-controller="IdentifiantOublieCtrl">
+      <div>
+        <br><br>
+        Veuillez écrire votre e-mail afin que nous puissions vous envoyer votre mot de passe :
+        <br><br>
+        <form name="myForm">
+          <div id="instruc2">E-mail :<input id="formBlanc" type="text" ng-model="emailMdpOublie" required></div>
+          <br><br>
+        </form>
+        <br>
+        <div>
+          <button class="button button-small buttonEmp" ng-disabled="myForm.$invalid" ng-model="mdp" ng-click="sendMdp(mail, emailMdpOublie)">Valider</button>
+        </div>
+        <br><br>
+      </div>
+    </div>
+  </ion-content>
+</ion-view>

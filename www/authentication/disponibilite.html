@@ -1,0 +1,129 @@
+<ion-view  title='<img class="title-image" src="parent/icon.png"> Vos Disponibilités </img>' cache-view="false">
+  <ion-nav-buttons side="right">
+    <a class="button button-icon ion-ios-more rotate-90 fs-s" ng-click="popover.show($event)"></a>
+  </ion-nav-buttons>
+
+
+  <ion-content>
+    <div ng-controller="DisponibiliteCtrl">
+      <div>
+        <br><br>
+        Vous avez choisi de prendre un cours de <strong>{{choixMatiere}}</strong>, nous pouvons vous proposer les disponibilités suivantes :<br><br>
+
+
+
+
+          <!--<div>-->
+            <!--<dropdown-multiselect dropdown-title="Select Something" pre-selected="member.states" model="selected_items" options="states"></dropdown-multiselect> <pre>selected roles = {{selected_items | json}}</pre>-->
+          <!--</div>-->
+
+
+
+          <center>
+            <table id="tableau">
+              <tr id="jour">
+                <td></td>
+                <td>Lun</td>
+                <td>Mar</td>
+                <td>Mer</td>
+                <td>Jeu</td>
+                <td>Ven</td>
+                <td>Sam</td>
+                <td>Dim</td>
+              </tr>
+
+              <tr>
+                <td>8h</td>
+                <td id="disp"><center><input type="checkbox" id="squared0" value="8h-10h" name="lun8h" ng-model="boutonRadio8h0"/><label id="instruc" ng-model="boutonRadio8h01" for="squared0" hidden>8h-10h</label></center></td>
+                <td id="disp"><center><input type="checkbox" id="squared1" value="8h-10h" name="mar8h" ng-model="boutonRadio8h1"/><label id="instruc" ng-model="boutonRadio8h11" for="squared1" hidden>8h-10h</label></center></td>
+                <td id="disp"><center><input type="checkbox" id="squared2" value="8h-10h" name="mer8h" ng-model="boutonRadio8h2"/><label id="instruc" ng-model="boutonRadio8h21" for="squared2" hidden>8h-10h</label></center></td>
+                <td id="disp"><center><input type="checkbox" value="8h-10h" name="jeu8h" ng-model="boutonRadio8h3"/></center></td>
+                <td id="disp"><center><input type="checkbox" value="8h-10h" name="ven8h" ng-model="boutonRadio8h4"/></center></td>
+                <td id="disp"><center><input type="checkbox" value="8h-10h" name="sam8h" ng-model="boutonRadio8h5"/></center></td>
+                <td id="disp"><center><input type="checkbox" value="8h-10h" name="sam8h" ng-model="boutonRadio8h5"/></center></td>
+              </tr>
+
+              <tr>
+                <td>10h</td>
+                <td id="indisp"></td>
+                <td id="indisp"></td>
+                <td id="disp"><center><input type="checkbox" value="10h-12h" name="mer10h" ng-model="boutonRadio10h1"/></center></td>
+                <td id="disp"><center><input type="checkbox" value="10h-12h" name="jeu10h" ng-model="boutonRadio10h2"/></center></td>
+                <td id="disp"><center><input type="checkbox" value="10h-12h" name="ven10h" ng-model="boutonRadio10h3"/></center></td>
+                <td id="disp"><center><input type="checkbox" value="10h-12h" name="sam10h" ng-model="boutonRadio10h4"/></center></td>
+              </tr>
+
+              <tr>
+                <td>12h</td>
+                <td id="indisp"></td>
+                <td id="disp"><center><input type="checkbox" value="12h-14h" name="mar12h" ng-model="boutonRadio12h1"/></center></td>
+                <td id="disp"><center><input type="checkbox" value="12h-14h" name="mer12h" ng-model="boutonRadio12h2"/></center></td>
+                <td id="disp"><center><input type="checkbox" value="12h-14h" name="jeu12h" ng-model="boutonRadio12h3"/></center></td>
+                <td id="indisp"></td>
+                <td id="indisp"></td>
+              </tr>
+
+              <tr>
+                <td>14h</td>
+                <td id="indisp"></td>
+                <td id="disp"><center><input type="checkbox" value="14h-16h" name="mar14h" ng-model="boutonRadio14h1"/></center></td>
+                <td id="disp"><center><input type="checkbox" value="14h-16h" name="mer14h" ng-model="boutonRadio14h2"/></center></td>
+                <td id="disp"><center><input type="checkbox" value="14h-16h" name="jeu14h" ng-model="boutonRadio14h3"/></center></td>
+                <td id="indisp"></td>
+                <td id="indisp"></td>
+              </tr>
+
+              <tr>
+                <td>16h</td>
+                <td id="indisp"></td>
+                <td id="indisp"></td>
+                <td id="indisp"></td>
+                <td id="disp"><center><input type="checkbox" value="16h-18h" name="jeu16h" ng-model="boutonRadio16h1"/></center></td>
+                <td id="disp"><center><input type="checkbox" value="16h-18h" name="ven16h" ng-model="boutonRadio16h2"/></center></td>
+                <td id="disp"><center><input type="checkbox" value="16h-18h" name="sam16h" ng-model="boutonRadio16h3"/></center></td>
+              </tr>
+
+              <tr>
+                <td>18h</td>
+                <td id="indisp"></td>
+                <td id="indisp"></td>
+                <td id="indisp"></td>
+                <td id="disp"><center><input type="checkbox" value="18h-20h" name="jeu18h" ng-model="boutonRadio18h1"/></center></td>
+                <td id="disp"><center><input type="checkbox" value="18h-20h" name="ven18h" ng-model="boutonRadio18h2"/></center></td>
+                <td id="disp"><center><input type="checkbox" value="18h-20h" name="sam18h" ng-model="boutonRadio18h3"/></center></td>
+              </tr>
+
+              <tr>
+                <td>20h</td>
+                <td id="indisp"></td>
+                <td id="indisp"></td>
+                <td id="indisp"></td>
+                <td id="disp"><center><input type="checkbox" value="20h-22h" name="jeu20h" ng-model="boutonRadio20h1"/></center></td>
+                <td id="disp"><center><input type="checkbox" value="20h-22h" name="ven20h" ng-model="boutonRadio20h2"/></center></td>
+                <td id="disp"><center><input type="checkbox" value="20h-22h" name="sam20h" ng-model="boutonRadio20h3"/></center></td>
+              </tr>
+
+              <tr>
+                <td>22h</td>
+                <td id="indisp"></td>
+                <td id="indisp"></td>
+                <td id="indisp"></td>
+                <td id="disp"><center><input type="checkbox" value="12h-13h" name="jeu12h" ng-model="boutonRadio12h1"/></center></td>
+                <td id="disp"><center><input type="checkbox" value="12h-13h" name="ven12h" ng-model="boutonRadio12h2"/></center></td>
+                <td id="disp"><center><input type="checkbox" value="12h-13h" name="sam12h" ng-model="boutonRadio12h3"/></center></td>
+              </tr>
+            </table>
+          </center><br>
+
+
+        <div>
+          <button class="button button-small icon-right ion-chevron-right buttonEmp" ng-disabled="myForm.$invalid" ng-model="cours" ng-click="goRecapitulatif(nomPrenomP, telP, emailP, choixParent, autreRaison, nomPrenomEnfant,
+           telEnfant, emailEnfant, dateNaissanceEnfant, ecoleEnfant, coursParti, coursEnGpe, choixMission, choixSection, choixNiveau, choixMatiere, dateDebutCours, plusieursCours, nbJoursCours, boutonRadio8h0, boutonRadio8h01, boutonRadio8h1, boutonRadio8h2, boutonRadio8h3, boutonRadio8h4,
+           boutonRadio8h5, boutonRadio9h1, boutonRadio9h2, boutonRadio9h3, boutonRadio9h4, boutonRadio10h1, boutonRadio10h2, boutonRadio10h3, boutonRadio11h1, boutonRadio11h2, boutonRadio11h3, boutonRadio12h1, boutonRadio12h2,
+           boutonRadio12h3)">Suivant</button>
+        </div>
+        <br><br>
+      </div>
+    </div>
+  </ion-content>
+</ion-view>

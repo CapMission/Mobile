@@ -1,0 +1,281 @@
+<!-- En tête de l'application -->
+
+<ion-view  title='<img class="title-image" src="parent/icon.png">Cours Groupe</img>' cache-view="false">
+  <ion-nav-buttons side="right">
+    <a class="button button-icon ion-ios-more rotate-90 fs-s" ng-click="popover.show($event)"></a>
+  </ion-nav-buttons>
+
+  <ion-tabs class="tabs-icon-top tabs-color-active-positive" ng-class="{'tabs-item-hide': $root.hideTabs}">
+
+
+    <ion-tab  hidden="true" >
+
+    </ion-tab>
+
+
+    <ion-tab title="quiz" icon-off="ion-ios-timer-outline" icon-on="ion-ios-timer" badge="badgequiz"
+             badge-style="badge-assertive" ng-click="onTabSelected()">
+
+    </ion-tab>
+
+
+    <ion-tab title="Suivi" icon-off="ion-ios-pulse" icon-on="ion-ios-pulse-strong"  badge="badgeFollow"
+             badge-style="badge-assertive" ng-click="onTabSelected()">
+
+    </ion-tab>
+
+    <ion-tab title="Solde" href="#/parent/solde" icon-off="icon ion-ios-calculator-outline" icon-on="icon ion-ios-calculator"
+             badge="badgeSolde" badge-style="badge-assertive" ng-controller="ChoixsoldeCtrl" ng-click="get(idE)">
+    </ion-tab>
+    <ion-tab title="Ajoutez un cours" icon-off="ion-android-add-circle" icon-on="icon ion-android-add-circle"
+             badge="badgeMessages" badge-style="badge-assertive" ng-controller="ChoixAjoutCoursCtrl" ng-click="get(eleve.entity.id)">
+
+    </ion-tab>
+  </ion-tabs>
+  <br><br><br><br>
+  <!-- Contenu -->
+  <ion-content>
+    <br><br><br>
+
+    <div class="card" ng-controller="PTestCtrl">
+      <i class="icon ion-ios-close close-modal" ng-click="modal.hide()"></i>
+
+      <div class="item item-divider">
+        Récapitulatif de votre demande :
+      </div>
+
+
+      <!--essaie-->
+      <div id="listRecap" class="list">
+
+        <!-- Matiere -->
+        <div id="instruc1" class="item item-icon-left">
+          <i id="iconC" class="icon ion-edit"></i>
+          Matière
+          <span class="item-note">
+            {{mat}}
+          </span>
+        </div>
+
+        <!--&lt;!&ndash; Nombre d'élèves &ndash;&gt;-->
+        <!--<div id="instruc1" class="item item-icon-left">-->
+          <!--<i id="iconC" class="icon ion-person-stalker"></i>-->
+          <!--Nombre d'élève-->
+          <!--<span class="badge badge-assertive">-->
+            <!--{{nbEt}}-->
+          <!--</span>-->
+        <!--</div>-->
+
+        <div class="item item-divider">
+          Nom et Prénom des élèves :
+        </div>
+
+        <!-- Si 3 élèves-->
+        <div ng-if="nbEt == 3">
+          <div id="instruc1" class="item item-icon-left">
+            <i id="iconC" class="icon ion-person"></i>
+            Elève 1
+          <span class="item-note">
+            {{nom1}}
+          </span>
+          </div>
+
+          <div id="instruc1" class="item item-icon-left">
+            <i id="iconC" class="icon ion-person"></i>
+            Elève 2
+          <span class="item-note">
+            {{nom2}}
+          </span>
+          </div>
+
+          <div id="instruc1" class="item item-icon-left">
+            <i id="iconC" class="icon ion-person"></i>
+            Elève 3
+          <span class="item-note">
+            {{nom3}}
+          </span>
+          </div>
+        </div>
+
+        <!-- Si 4 élèves-->
+        <div ng-if="nbEt == 4">
+          <div id="instruc1" class="item item-icon-left">
+            <i id="iconC" class="icon ion-person"></i>
+            Elève 1
+          <span class="item-note">
+            {{nom1}}
+          </span>
+          </div>
+
+          <div id="instruc1" class="item item-icon-left">
+            <i id="iconC" class="icon ion-person"></i>
+            Elève 2
+          <span class="item-note">
+            {{nom2}}
+          </span>
+          </div>
+
+          <div id="instruc1" class="item item-icon-left">
+            <i id="iconC" class="icon ion-person"></i>
+            Elève 3
+          <span class="item-note">
+            {{nom3}}
+          </span>
+          </div>
+
+          <div id="instruc1" class="item item-icon-left">
+            <i id="iconC" class="icon ion-person"></i>
+            Elève 4
+          <span class="item-note">
+            {{nom4}}
+          </span>
+          </div>
+        </div>
+
+        <!-- Si 5 élèves-->
+        <div ng-if="nbEt == 5">
+          <div id="instruc1" class="item item-icon-left">
+            <i id="iconC" class="icon ion-person"></i>
+            Elève 1
+          <span class="item-note">
+            {{nom1}}
+          </span>
+          </div>
+
+          <div id="instruc1" class="item item-icon-left">
+            <i id="iconC" class="icon ion-person"></i>
+            Elève 2
+          <span class="item-note">
+            {{nom2}}
+          </span>
+          </div>
+
+          <div id="instruc1" class="item item-icon-left">
+            <i id="iconC" class="icon ion-person"></i>
+            Elève 3
+          <span class="item-note">
+            {{nom3}}
+          </span>
+          </div>
+
+          <div id="instruc1" class="item item-icon-left">
+            <i id="iconC" class="icon ion-person"></i>
+            Elève 4
+          <span class="item-note">
+            {{nom4}}
+          </span>
+          </div>
+
+          <div id="instruc1" class="item item-icon-left">
+            <i id="iconC" class="icon ion-person"></i>
+            Elève 5
+          <span class="item-note">
+            {{nom5}}
+          </span>
+          </div>
+        </div>
+
+        <!-- Si 6 élèves-->
+        <div ng-if="nbEt == 6">
+          <div id="instruc1" class="item item-icon-left">
+            <i id="iconC" class="icon ion-person"></i>
+            Elève 1
+          <span class="item-note">
+            {{nom1}}
+          </span>
+          </div>
+
+          <div id="instruc1" class="item item-icon-left">
+            <i id="iconC" class="icon ion-person"></i>
+            Elève 2
+          <span class="item-note">
+            {{nom2}}
+          </span>
+          </div>
+
+          <div id="instruc1" class="item item-icon-left">
+            <i id="iconC" class="icon ion-person"></i>
+            Elève 3
+          <span class="item-note">
+            {{nom3}}
+          </span>
+          </div>
+
+          <div id="instruc1" class="item item-icon-left">
+            <i id="iconC" class="icon ion-person"></i>
+            Elève 4
+          <span class="item-note">
+            {{nom4}}
+          </span>
+          </div>
+
+          <div id="instruc1" class="item item-icon-left">
+            <i id="iconC" class="icon ion-person"></i>
+            Elève 5
+          <span class="item-note">
+            {{nom5}}
+          </span>
+          </div>
+
+          <div id="instruc1" class="item item-icon-left">
+            <i id="iconC" class="icon ion-person"></i>
+            Elève 6
+          <span class="item-note">
+            {{nom6}}
+          </span>
+          </div>
+        </div>
+
+        <div class="item item-divider">
+          Heure et Date du cours :
+        </div>
+
+        <!-- Si cours occasionnel heure -->
+        <div ng-if="frequence != null">
+          <div id="instruc1" class="item item-icon-left">
+            <i id="iconC" class="icon ion-clock"></i>
+            Heure
+          <span class="item-note">
+            {{heureDeb | date: 'HH:mm'}}
+          </span>
+          </div>
+        </div>
+
+        <!-- Si cours occasionnel date -->
+        <div ng-if="dateDeb != null">
+          <div id="instruc1" class="item item-icon-left">
+            <i id="iconC" class="icon ion-calendar"></i>
+            Date
+          <span class="item-note">
+            {{dateDeb}}
+          </span>
+          </div>
+        </div>
+
+      </div>
+      <!--fin essaie-->
+
+      <form name="myForm" novalidate>
+        <input ng-model="id" type="hidden">
+        <input ng-model="parent" type="hidden">
+        <input ng-model="mail.to" type="hidden">
+        <input ng-model="mail.from" type="hidden">
+        <input ng-model="mail.subject" type="hidden"><br>
+        <label class="item item-input">
+         <textarea class='autoExpand' rows='3' col="15" data-min-rows='3' ng-model="mail.body"
+                   placeholder="Votre remarque" name="msg" required></textarea>
+        </label>
+
+        <center>
+          <button ng-disabled="myForm.$invalid" class="button button-small buttonEmail button-dark "
+                  ng-click="sendR(mail, mat, coursGpe, creerGroup, nbEt, nom1, nom2, nom3, nom4, nom5, nom6, heureDeb, dateDeb, heureDeb1, heureDeb2, heureDeb3, heureDeb4, heureDeb5, heureDeb6,
+                     nbJours, jours1, jours2, jours3, jours4, jours5, jours6, frequence)">Envoyer       <!--modal.hide()-->
+          </button>
+        </center>
+      </form>
+      <div class="padding">
+        <p ng-show="myForm.msg.$error.required">* Message est obligatoire</p>
+      </div>
+    </div>
+    </div>
+  </ion-content>

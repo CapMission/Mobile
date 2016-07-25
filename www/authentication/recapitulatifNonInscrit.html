@@ -1,0 +1,302 @@
+<ion-view  title='<img class="title-image" src="parent/icon.png"> Récapitulatif de votre Commande </img>' cache-view="false">
+  <ion-nav-buttons side="right">
+    <a class="button button-icon ion-ios-more rotate-90 fs-s" ng-click="popover.show($event)"></a>
+  </ion-nav-buttons>
+
+  <br><br>
+  <div>
+    <div class="card" ng-controller="RecapitulatifNonInscritCtrl">
+      <i class="icon ion-ios-close close-modal" ng-click="modal.hide()"></i>
+      <div>
+        <div class="item item-divider">
+          Récapitulatif de votre demande : <br>
+        </div>
+        <div id="listRecap" class="list">
+
+          <!-- Nom tuteur -->
+          <div id="instruc1" class="item item-icon-left">
+            <i id="iconC" class="icon ion-person"></i>
+            Tuteur
+            <span class="item-note">
+              {{nomPrenomParent}}
+            </span>
+          </div>
+
+          <!-- Nom de l'étudiant -->
+          <div id="instruc1" class="item item-icon-left">
+            <i id="iconC" class="icon ion-person"></i>
+            Etudiant
+            <span class="item-note">
+              {{nomPrenomE}}
+            </span>
+          </div>
+
+          <!-- Matiere -->
+          <div id="instruc1" class="item item-icon-left">
+            <i id="iconC" class="icon ion-edit"></i>
+            Matière
+          <span class="item-note">
+            {{choixMat}}
+          </span>
+          </div>
+
+          <!-- Nombre de cours si 1 cours-->
+          <div ng-if="plusCours == 'non'">
+            <div id="instruc1" class="item item-icon-left">
+              <i id="iconC" class="icon ion-calculator"></i>
+              Nombre de cours
+          <span class="item-note">
+            1
+          </span>
+            </div>
+            </div>
+
+          <!-- Nombre de cours si plusieurs cours-->
+          <div ng-if="plusCours == 'oui'">
+            <div id="instruc1" class="item item-icon-left">
+              <i id="iconC" class="icon ion-calculator"></i>
+              Nombre de cours
+          <span class="item-note">
+            {{nbJoursC}}
+          </span>
+            </div>
+          </div>
+
+          <div class="item item-divider">
+            Date du début du cours :
+          </div>
+
+          <!-- Date du début du cours souhaité -->
+          <div id="instruc1" class="item item-icon-left">
+            <i id="iconC" class="icon ion-calendar"></i>
+            Date
+          <span class="item-note">
+            {{dateDebutCours | date:'MM/dd/yyyy'}}
+          </span>
+          </div>
+
+          <div class="item item-divider">
+            Vos Disponibilités :
+          </div>
+
+          <div ng-if="crenaux8h0">
+            <div id="instruc1" class="item item-icon-left">
+              <i id="iconC" class="icon ion-clock"></i></i>
+              Lundi
+          <span class="item-note">
+            8h-10h
+          </span>
+            </div>
+          </div>
+
+          <div ng-if="crenaux8h1">
+            <div id="instruc1" class="item item-icon-left">
+              <i id="iconC" class="icon ion-clock"></i></i>
+              Mardi
+          <span class="item-note">
+            8h-10h
+          </span>
+            </div>
+          </div>
+
+          <div ng-if="crenaux8h2">
+            <div id="instruc1" class="item item-icon-left">
+              <i id="iconC" class="icon ion-clock"></i></i>
+              Mercredi
+          <span class="item-note">
+            8h-10h
+          </span>
+            </div>
+          </div>
+
+          <div ng-if="crenaux8h3 == '8h-9h'">
+            <div id="instruc1" class="item item-icon-left">
+              <i id="iconC" class="icon ion-clock"></i></i>
+              Jeudi
+          <span class="item-note">
+            {{crenaux8h3}}
+          </span>
+            </div>
+          </div>
+
+          <div ng-if="crenaux8h4">
+            <div id="instruc1" class="item item-icon-left">
+              <i id="iconC" class="icon ion-clock"></i></i>
+              Vendredi
+          <span class="item-note">
+            8h-10h
+          </span>
+            </div>
+          </div>
+
+          <div ng-if="crenaux8h5">
+            <div id="instruc1" class="item item-icon-left">
+              <i id="iconC" class="icon ion-clock"></i></i>
+              Samedi
+          <span class="item-note">
+            8h-10h
+          </span>
+            </div>
+          </div>
+
+          <div ng-if="crenaux8h6">
+            <div id="instruc1" class="item item-icon-left">
+              <i id="iconC" class="icon ion-clock"></i></i>
+              Dimanche
+          <span class="item-note">
+            8h-10h
+          </span>
+            </div>
+          </div>
+
+          <div ng-if="crenaux9h1">
+            <div id="instruc1" class="item item-icon-left">
+              <i id="iconC" class="icon ion-clock"></i></i>
+              Mercredi
+          <span class="item-note">
+            8h-10h
+          </span>
+            </div>
+          </div>
+
+          <div ng-if="crenaux9h2 == '9h-10h'">
+            <div id="instruc1" class="item item-icon-left">
+              <i id="iconC" class="icon ion-clock"></i></i>
+              Jeudi
+          <span class="item-note">
+            {{crenaux9h2}}
+          </span>
+            </div>
+          </div>
+
+          <div ng-if="crenaux9h3 == '9h-10h'">
+            <div id="instruc1" class="item item-icon-left">
+              <i id="iconC" class="icon ion-clock"></i></i>
+              Jeudi
+          <span class="item-note">
+            {{crenaux9h3}}
+          </span>
+            </div>
+          </div>
+
+          <div ng-if="crenaux10h1 == '10h-11h'">
+            <div id="instruc1" class="item item-icon-left">
+              <i id="iconC" class="icon ion-clock"></i></i>
+              Mardi
+          <span class="item-note">
+            {{crenaux10h1}}
+          </span>
+            </div>
+          </div>
+
+          <div ng-if="crenaux10h2 == '10h-11h'">
+            <div id="instruc1" class="item item-icon-left">
+              <i id="iconC" class="icon ion-clock"></i></i>
+              Mercredi
+          <span class="item-note">
+            {{crenaux10h2}}
+          </span>
+            </div>
+          </div>
+
+          <div ng-if="crenaux10h3 == '10h-11h'">
+            <div id="instruc1" class="item item-icon-left">
+              <i id="iconC" class="icon ion-clock"></i></i>
+              Jeudi
+          <span class="item-note">
+            {{crenaux10h3}}
+          </span>
+            </div>
+          </div>
+
+          <div ng-if="crenaux11h1 == '11h-12h'">
+            <div id="instruc1" class="item item-icon-left">
+              <i id="iconC" class="icon ion-clock"></i></i>
+              Mardi
+          <span class="item-note">
+            {{crenaux11h1}}
+          </span>
+            </div>
+          </div>
+
+          <div ng-if="crenaux11h2 == '11h-12h'">
+            <div id="instruc1" class="item item-icon-left">
+              <i id="iconC" class="icon ion-clock"></i></i>
+              Mercredi
+          <span class="item-note">
+            {{crenaux11h2}}
+          </span>
+            </div>
+          </div>
+
+          <div ng-if="crenaux11h3 == '11h-12h'">
+            <div id="instruc1" class="item item-icon-left">
+              <i id="iconC" class="icon ion-clock"></i></i>
+              Jeudi
+          <span class="item-note">
+            {{crenaux11h3}}
+          </span>
+            </div>
+          </div>
+
+          <div ng-if="crenaux12h1 == '12h-11h'">
+            <div id="instruc1" class="item item-icon-left">
+              <i id="iconC" class="icon ion-clock"></i></i>
+              Jeudi
+          <span class="item-note">
+            {{crenaux12h1}}
+          </span>
+            </div>
+          </div>
+
+          <div ng-if="crenaux12h2 == '11h-12h'">
+            <div id="instruc1" class="item item-icon-left">
+              <i id="iconC" class="icon ion-clock"></i></i>
+              Vendredi
+          <span class="item-note">
+            {{crenaux12h2}}
+          </span>
+            </div>
+          </div>
+
+          <div ng-if="crenaux12h3 == '11h-12h'">
+            <div id="instruc1" class="item item-icon-left">
+              <i id="iconC" class="icon ion-clock"></i></i>
+              Samedi
+          <span class="item-note">
+            {{crenaux12h3}}
+          </span>
+            </div>
+          </div>
+
+
+
+        </div>
+        <!--fin essaie-->
+
+
+        <form name="myForm" novalidate>
+          <input ng-model="mail.to" type="hidden">
+          <input ng-model="mail.from" type="hidden">
+          <input ng-model="mail.subject" type="hidden"><br>
+          <label class="item item-input">
+         <textarea class='autoExpand' rows='3' col="15" data-min-rows='3' ng-model="mail.body"
+                   placeholder="Dites nous si vous souhaitez des cours dans d'autres matières !" name="msg" required></textarea>
+          </label>
+          <br>
+          <center>
+            <button ng-disabled="myForm.$invalid" class="button button-small buttonEmail button-dark "
+                    ng-click="sendRecaptitulatif(mail, nomPrenomP, telP, emailP, choixParent, autreRaison, nomPrenomEnfant, telEnfant, emailEnfant, dateNaissanceEnfant, ecoleEnfant, coursParti, coursEnGpe, choixMission, choixSection,
+                                             choixNiveau, choixMatiere, nbJoursCours, heureDebutCours, heureDebutCours1, heureDebutCours2, heureDebutCours3, heureDebutCours4, heureDebutCours5, heureDebutCours6, dateDebutCours, jCours1, jCours2, jCours3, jCours4,
+                                             jCours5, jCours6)">Envoyer
+            </button>
+          </center>
+        </form>
+        <div class="padding">
+          <p ng-show="myForm.msg.$error.required">* Message est obligatoire</p>
+        </div>
+      </div>
+    </div>
+    </div>
+  </ion-content>
+</ion-view>

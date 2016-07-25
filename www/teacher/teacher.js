@@ -606,3 +606,15 @@ teacher.controller('AmontSoldeCtrl', ['$scope', '$rootScope', '$http', '$locatio
     $scope.popover2 = popover;
   });
 }]);
+
+teacher.controller('ChoixEtudiantCtrl', ['$scope', '$rootScope', '$http', '$location', '$ionicPopover', '$ionicHistory', function ($scope, $rootScope, $http, $location, $ionicPopover, $ionicHistory) {
+  $scope.choixEtudiant = "Choix étudiant !"
+  $scope.goBack = function () {
+    $ionicHistory.goBack();
+  }
+  $ionicPopover.fromTemplateUrl('teacher/teacher-popover.html', {
+    scope: $scope
+  }).then(function (popover) {
+    $scope.popover = popover;
+  });
+}]);

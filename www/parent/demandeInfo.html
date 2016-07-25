@@ -1,0 +1,107 @@
+<ion-view title='<img class="title-image" src="parent/icon.png"> Demande d'informations </img>' cache-view="false"
+          xmlns="http://www.w3.org/1999/html">
+  <ion-nav-buttons side="right">
+    <a class="button button-icon ion-ios-more rotate-90 fs-s" ng-click="popover.show($event)"></a>
+  </ion-nav-buttons>
+
+  <ion-tabs class="tabs-icon-top tabs-color-active-positive" ng-class="{'tabs-item-hide': $root.hideTabs}">
+
+
+    <ion-tab  hidden="true" >
+
+    </ion-tab>
+
+
+    <ion-tab title="quiz" icon-off="ion-ios-timer-outline" icon-on="ion-ios-timer" badge="badgequiz"
+             badge-style="badge-assertive" ng-click="onTabSelected()">
+
+    </ion-tab>
+
+
+    <ion-tab title="Suivi" icon-off="ion-ios-pulse" icon-on="ion-ios-pulse-strong"  badge="badgeFollow"
+             badge-style="badge-assertive" ng-click="onTabSelected()">
+
+    </ion-tab>
+
+    <ion-tab title="Solde" href="#/parent/solde" icon-off="icon ion-ios-calculator-outline" icon-on="icon ion-ios-calculator"
+             badge="badgeSolde" badge-style="badge-assertive" ng-controller="ChoixsoldeCtrl" ng-click="get(idE)">
+
+    </ion-tab>
+    <ion-tab title="Ajoutez un cours" icon-off="ion-android-add-circle" icon-on="icon ion-android-add-circle"
+             badge="badgeMessages" badge-style="badge-assertive" ng-controller="ChoixAjoutCoursCtrl" ng-click="get(son.entity.id)">
+
+    </ion-tab>
+  </ion-tabs>
+
+  <br><br><br><br>
+  <!-- Contenu -->
+  <ion-content>
+    <br><br>
+
+
+    <div class="card" ng-controller="PDemandeInfoEmailController">
+      <i class="icon ion-ios-close close-modal" ng-click="modal.hide()"></i>
+
+      <p class="headerModal item-divider padding">Bonjour {{parent.entity.name}}, vous souhaitez avoir plus d'informations sur CapMission, sélectionnez un sujet dans la liste déroulante et envoyez-nous un
+        message !</p>
+
+      <form name="myForm" novalidate>
+        <input ng-model="id" type="hidden">
+        <input ng-model="parent" type="hidden">
+        <div id="listeDeroulante">
+          <div class="list">
+
+            <label class="item item-input item-select">
+              <div class="input-label">
+                Objet :
+              </div>
+              <select ng-model="mail.subject" name="msg1" required>
+                <option id="red">Report de cours</option>
+                <option id="red">Information sur l'horaire du cours</option>
+                <option id="red">Annulation du cours</option>
+                <option id="red">L'horaire de fin du cours</option>
+                <option id="red">Retard de récupération</option>
+                <option id="red">Demande d'ajout d'un cours</option>
+                <option id="red">Demande de cours restants</option>
+                <option id="red">Demande de solde restant</option>
+                <option id="red">Demande de rendez vous</option>
+               <!-- <option id="blue">Mon enfant à oublié son identifiant</option>
+                <option id="blue">Mon enfant à oublié son mot de passe</option>-->
+                <option id="red">Résultats d'un Quiz / Test</option>
+                <option id="red">Stages intensifs / Camp de vacances</option>
+                <option id="red">Mission française</option>
+                <option id="red">Mission U.S.</option>
+                <option id="red">Mission Espagnol</option>
+                <option id="red">Test Mission</option>
+                <option id="red">Bac libre</option>
+                <option id="red">Aide aux devoirs</option>
+                <option id="red">Cours à domicile</option>
+                <option id="red">Besoin de cours pour moi-même</option>
+                <option id="red">Après le baccalauréat</option>
+                <option id="red">Autre</option>
+              </select>
+            </label>
+
+          </div>
+        </div>
+        <input ng-model="mail.to" type="hidden">
+        <input ng-model="mail.from" type="hidden">
+        <input ng-model="mail.subject" type="hidden"><br>
+        <label class="item item-input">
+         <textarea class='autoExpand' rows='3' col="15" data-min-rows='3' ng-model="mail.body"
+                   placeholder="Votre remarque" name="msg" required></textarea>
+        </label>
+        <br>
+        <center>
+          <button ng-disabled="myForm.$invalid" class="button button-small buttonEmail button-dark "
+                  ng-click="sendI(mail)">Envoyer       <!--modal.hide()-->
+          </button>
+        </center>
+      </form>
+      <div class="padding">
+        <p ng-show="myForm.msg1.$error.required">* Objet est obligatoire</p>
+        <p ng-show="myForm.msg.$error.required">* Message est obligatoire</p>
+
+      </div>
+    </div>
+  </ion-content>
