@@ -14,36 +14,38 @@
           </div-->
             <form name="myForm" id="myForm" novalidate ng-controller="capController">
           <div class="list list-inset">
-            <br><br>
+            <br>
             <label class="item item-input">
-              <input type="text" name="login" ng-model="user.login" placeholder="Login" ng-init="user.login = username"
+              <input id="instruc" type="text" name="login" ng-model="user.login" placeholder="Login" ng-init="user.login = username"
                      required>
             </label>
             <label class="item item-input">
-              <input type="password" name="password" ng-model="user.password" placeholder="Password"
+              <input id="instruc" type="password" name="password" ng-model="user.password" placeholder="Password"
                      ng-init="user.password = password" ng-minlength="6" required>
-            </label>
+            </label><br>
             <div class="padding">
-              <button class="button button-full button-positive buttonEmp" ng-disabled="myForm.$invalid"
+              <button class="button button-small buttonEmp2" ng-disabled="myForm.$invalid"
                       ng-click="login(user)">Se connecter
               <!--<span ng-show="!myForm.loading">Se connecter</span>
               <span class="overlord-loading-spinner fa fa-spinner" ng-show="myForm.loading" ></span>
               <span ng-show="myForm.loading">En cours de préparation...</span>-->
             </button>
-              <br>
+              <br><br>
 
               <div padding="true">
                 <nobr>
                 <input type="checkbox" id="checkbox65" class="css-checkbox med" ng-checked="checkStatus"
                        ng-model='checkStatus'
                        ng-init="checkStatus">
-                <label for="checkbox65" class="css-label med elegant">Se souvenir de moi</label>
+                <label for="checkbox65" id="checkbox65" class="css-label med elegant" id="instruc">Se souvenir de moi</label>
                 </nobr>
               </div>
+
+
               <br>
 
-              <a ng-controller="LoginCtrl" ng-click="goMdpPage()">Identifiant oublié</a><br>
-              <a href="">Mot de passe oublié</a>
+              <div id="instruc" class="idOublie" ng-controller="LoginCtrl" ng-click="goMdpPage()"><i class="icon ion-locked">&nbsp;&nbsp;Identifiants oubliés</i></div><br>
+
                         <!-- <div class="item item-checkbox  checkbox-positive">
                            Remember Me
                            <label class="checkbox">
@@ -88,6 +90,7 @@
       </div></ion-content>
 <ion-footer-bar>
   <div class="bar bar-footer" ng-controller="LoginCtrl">
+
     <button class="button button-small buttonEmp" ng-model="insc" ng-click="goInscription()">S'incrire à CapMission</button>
   </div>
 </ion-footer-bar>

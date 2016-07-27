@@ -1,4 +1,4 @@
-var authentication = angular.module('capMission.authentication', ['ionic','ionicProcessSpinner']);
+var authentication = angular.module('capMission.authentication', ['ionic','ionicProcessSpinner','ngAnimate']);
 authentication.controller('RoleCtrl',['$scope','$ionicPopover','$ionicHistory',  function ($scope,$ionicPopover,$ionicHistory) {
 
   $ionicPopover.fromTemplateUrl('teacher/popover.html', {
@@ -12,12 +12,82 @@ authentication.controller('RoleCtrl',['$scope','$ionicPopover','$ionicHistory', 
 authentication.controller('IdentifiantOublieCtrl', ['$scope','$rootScope','$http','$location','$ionicPopover','$ionicHistory','$ionicLoading',
   function ($scope,$rootScope,$http,$location,$ionicPopover,$ionicHistory,$ionicLoading) {
 
-    $scope.sendMdp = function(mail, emailMdpOublie){
-
+    String.prototype.capitalizeFirstLetter = function() {
+      return this.charAt(0).toUpperCase() + this.slice(1);
     }
 
-    $scope.goBack = function(){
-      $ionicHistory.goBack();
+    $scope.sendMdp = function(mail, nomMdpOublie, prenomMdpOublie, emailMdpOublie){
+      $rootScope.nomMdpOub = nomMdpOublie.capitalizeFirstLetter()
+      $rootScope.prenomMdpOub = prenomMdpOublie.capitalizeFirstLetter()
+      $rootScope.emailMdpOub = emailMdpOublie
+      console.log('le nom est : ' + $rootScope.nomMdpOub )
+      console.log('le prenom est : ' +$rootScope.prenomMdpOub)
+      console.log('email est : '  +$rootScope.emailMdpOub)
+      $scope.name = $rootScope.nomMdpOub+ ' ' +$rootScope.prenomMdpOub
+      console.log('le nom entier est : ' +$scope.name)
+
+
+
+      // $scope.name
+
+     $ionicLoading.show({
+         content: '<div class="icon ion-loading-c"></div>',
+         duration: 30000
+     }
+
+     )
+
+      $http.get('http://localhost:8998/CapMissionApp/users/get/' + $scope.name, {timeout: 120000}).success(function (data, status, headers, config) {
+        $ionicLoading.hide()
+        $scope.identifiant = data
+        console.log('Vous y etes !')
+        console.log('la data est : ' +data)
+
+
+        mail.to = emailMdpOublie
+        mail.from = 'info@capmission.com'
+
+        // Envoie de l'objet du mail et de son contenu
+        mail.subject = 'Vos identifiants'
+        mail.body = 'Suite à votre demande de récupération de vos identifiants, nous vous transmettons votre login et votre mot de passe :' +
+          '\nLogin : ' +$scope.identifiant.entity.login+ '\nMot de Passe : ' +$scope.identifiant.entity.password
+
+        console.log('to: ' + mail.to)
+        console.log('from: ' + mail.from)
+        console.log('subject: ' + mail.subject)
+        console.log('body: ' + mail.body)
+        toastr.success("Nous avons pu récupérer vos données. Un email vous sera envoyé contenant vos identifiants", {closeButton: true });
+
+        $http.post('http://81.192.194.109:8182/CapMissionApp/send-mail', mail, {timeout: 120000}).success(function (data, status, headers, config) {
+          toastr.success("Un email vous a été envoyé. Vérifiez votre boîte email", {closeButton: true });
+          $location.path('/login')
+
+          //$ionicHistory.goBack();
+        }).error(function (data, status) {
+          if (status == 0) {
+            toastr.error('Echec de connexion ! Veuillez réessayer dans quelques instants !', 'Veuillez nous excuser !', {displayDuration: 1000});
+            navigator.app.exitApp();
+          }
+          else {
+            toastr.error("Echec envoi de message ! Réessayez plus tart !")
+            $location.path('/login')
+          }
+        });
+
+      }).error(function (data, status) {
+        if (status == 0) {
+          toastr.error('Echec de connexion ! Veuillez réessayer dans quelques instants !', 'Veuillez nous excuser !', {displayDuration: 1000});
+          $ionicLoading.hide()
+          navigator.app.exitApp();
+        }
+        else {
+          toastr.error("Veuillez nous excuser, nous n'avons pas pu retrouver vos identifiants, contactez-nous au plus vite !")
+          $ionicLoading.hide()
+        }
+      });
+
+
+
     }
 
   }]);

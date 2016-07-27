@@ -11,13 +11,20 @@
         Veuillez écrire votre e-mail afin que nous puissions vous envoyer votre mot de passe :
         <br><br>
         <form name="myForm">
-          <div id="instruc2">E-mail :<input id="formBlanc" type="text" ng-model="emailMdpOublie" required></div>
+          <div id="instruc2">Nom :<input id="formBlanc" class="capitalize" type="text" ng-pattern="/^[a-zA-Z\s]*$/" ng-model="nomMdpOublie" required></div>
+          <div id="instruc2">Prénom :<input id="formBlanc" class="capitalize" type="text" ng-pattern="/^[a-zA-Z\s]*$/" ng-model="prenomMdpOublie" required></div>
+          <div id="instruc2">E-mail :<input id="formBlanc" type="email" ng-model="emailMdpOublie" required></div>
+
+          <input ng-model="mail.to" name="emailMdpOublie" ng-init="mail.to=emailMdpOublie;" ng-value="emailMdpOublie" type="hidden">
+          <input ng-model="mail.from" name="emailFrom" ng-init="mail.from='info@capmission.com';" ng-value="'info@capmission.com'" type="hidden">
+          <input ng-model="mail.subject" type="hidden">
+          <input ng-model="mail.body" type="hidden"><br>
           <br><br>
-        </form>
+
         <br>
         <div>
-          <button class="button button-small buttonEmp" ng-disabled="myForm.$invalid" ng-model="mdp" ng-click="sendMdp(mail, emailMdpOublie)">Valider</button>
-        </div>
+          <button class="button button-small buttonEmp" ng-disabled="myForm.$invalid" ng-model="mdp" ng-click="sendMdp(mail, nomMdpOublie, prenomMdpOublie, emailMdpOublie)">Obtenir mes Identifiants</button>
+        </div></form>
         <br><br>
       </div>
     </div>

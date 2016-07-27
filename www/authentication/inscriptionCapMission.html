@@ -11,9 +11,9 @@
         Veuillez remplir ce formuliaire afin que nous puissions vous proposez un service à la hauteur de vos attentes :
         <br><br>
         <form name="myForm">
-          <div id="instruc2">Nom et Prénom :<input id="formBlanc" type="text" data-ng-model="nomPrenomP" data-ng-blur="getNomPrenomP()" required></div>
+          <div id="instruc2">Nom et Prénom :<input id="formBlanc" type="text"  ng-pattern="/^[a-zA-Z\s]*$/" ng-model="nomPrenomP" data-ng-blur="getNomPrenomP()" required></div>
           <div id="instruc2">Téléphone :<input id="formBlanc" ng-model="telP" pattern="^((\+\d{1,3}(-| )?\(?\d\)?(-| )?\d{1,5})|(\(?\d{2,6}\)?))(-| )?(\d{3,4})(-| )?(\d{4})(( x| ext)\d{1,5}){0,1}$" required></div>
-          <div id="instruc2">E-mail :<input id="formBlanc" type="emailP" ng-model="emailP" required></div><br><br>
+          <div id="instruc2">E-mail :<input id="formBlanc" type="email" ng-model="emailP" required></div><br><br>
           Comment avez-vous connu CapMission ?
           <br><br>
           <div id="inputC">

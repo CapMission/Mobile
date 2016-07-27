@@ -22,9 +22,17 @@ var CapMission = angular.module('capMission', [
   'ionicProcessSpinner',
   'services',
   'ngStorage',
-  'simplePagination'
+  'simplePagination',
+  'ngAnimate'
 ]);
 
+CapMission.filter('capitalize', function() {
+  return function(input, scope) {
+    if (input!=null)
+      input = input.toLowerCase();
+    return input.substring(0,1).toUpperCase()+input.substring(1);
+  }
+});
 
 CapMission.filter('singleDecimal', function ($filter) {
   return function (input) {
@@ -62,6 +70,11 @@ CapMission.controller('NotifController', function($scope, $cordovaLocalNotificat
       });
     };
   })
+});
+
+CapMission.controller('HomeController', function($scope) {
+
+
 });
 
 CapMission.controller('capController', function ($scope, $rootScope, $location, $auth, $http, $ionicLoading, $localStorage) {
@@ -479,7 +492,12 @@ CapMission.config(['$stateProvider', '$urlRouterProvider', '$ionicConfigProvider
   // Each state's controller can be found in 'nom de la partie'.js par exemple: authentication.js, follow.js, home.js etc etc
   $stateProvider
 
+    .state('home', {
+      url: '/home',
+      controller: 'HomeController',
+      templateUrl: 'authentication/home.html',
 
+    })
     .state('login', {
       url: '/login',
       controller: 'capController',
