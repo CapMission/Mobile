@@ -2,7 +2,7 @@
 
 <ion-view  title='<img class="title-image" src="parent/icon.png">Cours Groupe</img>' cache-view="false">
   <ion-nav-buttons side="right">
-    <a class="button button-icon ion-ios-more rotate-90 fs-s" ng-app="capMission.parent" ng-controller="ProposCtrl" ng-click="popover.show($event)"></a>
+    <a class="button button-icon ion-ios-more rotate-90 fs-s" ng-app="capMission.student" ng-controller="SProposCtrl" ng-click="popover.show($event)"></a>
   </ion-nav-buttons>
 
   <ion-tabs class="tabs-icon-top tabs-color-active-positive" ng-class="{'tabs-item-hide': $root.hideTabs}">
@@ -24,12 +24,10 @@
 
     </ion-tab>
 
-    <ion-tab title="Solde" href="#/parent/solde" icon-off="icon ion-ios-calculator-outline" icon-on="icon ion-ios-calculator"
-             badge="badgeSolde" badge-style="badge-assertive" ng-controller="ChoixsoldeCtrl" ng-click="get(idE)">
+    <ion-tab title="Solde" href="#/student/solde" icon-off="icon ion-ios-calculator-outline" icon-on="icon ion-ios-calculator"></ion-tab>
 
-    </ion-tab>
     <ion-tab title="Ajoutez un cours" icon-off="ion-android-add-circle" icon-on="icon ion-android-add-circle"
-             badge="badgeMessages" badge-style="badge-assertive" ng-controller="ChoixAjoutCoursCtrl" ng-click="get(eleve.entity.id)">
+             badge="badgeMessages" badge-style="badge-assertive" ng-controller="SAjoutCoursCtrl" ng-click="choixMatiere(eleve.entity.id)">
 
     </ion-tab>
   </ion-tabs>
@@ -70,44 +68,44 @@
               <form name="myForm" method="POST">
                 <div id="instruc">Heure:<input id="formBlanc" type="time" ng-model="heureDebut1" required></div>
 
-              <div id="inputC">
-                <label class="item item-input item-select">
-                  <div id="instruc" class="input-label">
-                    Jour:
-                  </div>
-                  <select id="jour" ng-model="jour1" required>
-                    <option>Lundi</option>
-                    <option>Mardi</option>
-                    <option>Mercredi</option>
-                    <option>Jeudi</option>
-                    <option>Vendredi</option>
-                    <option>Samedi</option>
-                  </select>
-                </label>
-              </div>
+                <div id="inputC">
+                  <label class="item item-input item-select">
+                    <div id="instruc" class="input-label">
+                      Jour:
+                    </div>
+                    <select id="jour" ng-model="jour1" required>
+                      <option>Lundi</option>
+                      <option>Mardi</option>
+                      <option>Mercredi</option>
+                      <option>Jeudi</option>
+                      <option>Vendredi</option>
+                      <option>Samedi</option>
+                    </select>
+                  </label>
+                </div>
 
                 <div id="instruc">Heure:<input id="formBlanc" type="time" ng-model="heureDebut2" required></div>
 
-              <div id="inputC">
-                <label class="item item-input item-select">
-                  <div id="instruc" class="input-label">
-                    Jour:
-                  </div>
-                  <select id="jour" ng-model="jour2" required>
-                    <option>Lundi</option>
-                    <option>Mardi</option>
-                    <option>Mercredi</option>
-                    <option>Jeudi</option>
-                    <option>Vendredi</option>
-                    <option>Samedi</option>
-                  </select>
-                </label>
-              </div><br>
-              <center><button class="button button-small buttonEmp" type="submit" ng-model="nbJours2" ng-disabled="myForm.$invalid" value="2" ng-click="goRecap3(matiere, coursG, creerTonGroupe, nb, nomE1, nomE2, nomE3, nomE4, nomE5, nomE6, heureDebut1,
+                <div id="inputC">
+                  <label class="item item-input item-select">
+                    <div id="instruc" class="input-label">
+                      Jour:
+                    </div>
+                    <select id="jour" ng-model="jour2" required>
+                      <option>Lundi</option>
+                      <option>Mardi</option>
+                      <option>Mercredi</option>
+                      <option>Jeudi</option>
+                      <option>Vendredi</option>
+                      <option>Samedi</option>
+                    </select>
+                  </label>
+                </div><br>
+                <center><button class="button button-small buttonEmp" type="submit" ng-model="nbJours2" ng-disabled="myForm.$invalid" value="2" ng-click="goRecap3(matiere, coursG, creerTonGroupe, nb, nomE1, nomE2, nomE3, nomE4, nomE5, nomE6, heureDebut1,
               heureDebut2, boutonRadio, jour1, jour2)">
-                VALIDER
-              </button>
-              </center>
+                  VALIDER
+                </button>
+                </center>
               </form>
             </div>
           </div>
@@ -499,6 +497,6 @@
           </div>
         </div>
 
-       </div>
+      </div>
     </div>
   </ion-content>

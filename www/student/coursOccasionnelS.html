@@ -2,7 +2,7 @@
 
 <ion-view  title='<img class="title-image" src="parent/icon.png">Créer ton Groupe !</img>' cache-view="false">
   <ion-nav-buttons side="right">
-    <a class="button button-icon ion-ios-more rotate-90 fs-s" ng-app="capMission.parent" ng-controller="ProposCtrl" ng-click="popover.show($event)"></a>
+    <a class="button button-icon ion-ios-more rotate-90 fs-s" ng-app="capMission.student" ng-controller="SProposCtrl" ng-click="popover.show($event)"></a>
   </ion-nav-buttons>
 
   <ion-tabs class="tabs-icon-top tabs-color-active-positive" ng-class="{'tabs-item-hide': $root.hideTabs}">
@@ -24,12 +24,10 @@
 
     </ion-tab>
 
-    <ion-tab title="Solde" href="#/parent/solde" icon-off="icon ion-ios-calculator-outline" icon-on="icon ion-ios-calculator"
-             badge="badgeSolde" badge-style="badge-assertive" ng-controller="ChoixsoldeCtrl" ng-click="get(idE)">
+    <ion-tab title="Solde" href="#/student/solde" icon-off="icon ion-ios-calculator-outline" icon-on="icon ion-ios-calculator"></ion-tab>
 
-    </ion-tab>
     <ion-tab title="Ajoutez un cours" icon-off="ion-android-add-circle" icon-on="icon ion-android-add-circle"
-             badge="badgeMessages" badge-style="badge-assertive" ng-controller="ChoixAjoutCoursCtrl" ng-click="get(eleve.entity.id)">
+             badge="badgeMessages" badge-style="badge-assertive" ng-controller="SAjoutCoursCtrl" ng-click="choixMatiere(eleve.entity.id)">
 
     </ion-tab>
   </ion-tabs>
@@ -41,22 +39,21 @@
       <div class="item item-text-wrap">
         <br><br>
         <form name="myForm" ng-submit="submitTable()">
-
           <div id="instruc">Heure :<input id="formBlanc" type="time" name="timeD" ng-model="heureDebut" required></div>
           <br>
           <div id="instruc">Date :<input id="formBlanc" min="{{dateNow}}" name="dateD" type="date" ng-model="dateDebut" required></div>
 
-        <br><br>
-        <center><button ng-disabled="myForm.$invalid" class="button button-small buttonEmp" ng-model="occ" ng-click="goRecap(mat, coursGpe, creerGroup, nbEt, nom1, nom2, nom3, nom4, nom5, nom6, freq, heureDebut, dateDebut)">
+          <br><br>
+          <center><button ng-disabled="myForm.$invalid" class="button button-small buttonEmp" ng-model="occ" ng-click="goRecap(mat, coursGpe, creerGroup, nbEt, nom1, nom2, nom3, nom4, nom5, nom6, freq, heureDebut, dateDebut)">
             VALIDER
-            </button></center>
+          </button></center>
         </form>
       </div>
       <div class="padding">
         <p ng-show="myForm.dateD.$error.min">* Date erronée</p>
         <p ng-show="myForm.dateD.$error.required"></p>
         <p ng-show="myForm.timeD.$error.required"></p>
-        </div>
+      </div>
     </div>
   </ion-content>
 

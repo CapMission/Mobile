@@ -1,0 +1,53 @@
+<!-- En tête de l'application -->
+<ion-view  title='<img class="title-image" src="parent/icon.png"> Paramètres </img>' cache-view="false">
+  <ion-nav-buttons side="right">
+    <a class="button button-icon ion-ios-more rotate-90 fs-s" ng-app="capMission.student" ng-controller="SProposCtrl" ng-click="popover.show($event)"></a>
+  </ion-nav-buttons>
+
+  <ion-tabs class="tabs-icon-top tabs-color-active-positive" ng-class="{'tabs-item-hide': $root.hideTabs}">
+
+
+    <ion-tab  hidden="true" >
+
+    </ion-tab>
+
+
+    <ion-tab title="quiz" icon-off="ion-ios-timer-outline" icon-on="ion-ios-timer" badge="badgequiz"
+             badge-style="badge-assertive" ng-click="onTabSelected()">
+
+    </ion-tab>
+
+
+    <ion-tab title="Suivi" icon-off="ion-ios-pulse" icon-on="ion-ios-pulse-strong"  badge="badgeFollow"
+             badge-style="badge-assertive" ng-click="onTabSelected()">
+
+    </ion-tab>
+
+    <ion-tab title="Solde" href="#/student/solde" icon-off="icon ion-ios-calculator-outline" icon-on="icon ion-ios-calculator">
+
+    </ion-tab>
+    <ion-tab title="Ajoutez un cours" icon-off="ion-android-add-circle" icon-on="icon ion-android-add-circle"
+             badge="badgeMessages" badge-style="badge-assertive" ng-controller="SAjoutCoursCtrl" ng-click="choixMatiere(student.entity.id)">
+    </ion-tab>
+  </ion-tabs>
+  <br><br><br><br>
+  <!-- Contenu -->
+  <ion-content>
+    <br><br><br><br><br><br>
+    <div ng-view></div>
+    <div ng-controller="ParametresCtrl">
+      <div>
+        <button class="button button-small icon-right ion-chevron-right buttonEmp2" ng-disabled="myForm.$invalid" ng-model="cours" ng-click="modifLogin()">
+          Modifier votre Login
+        </button>
+      </div><br>
+
+      <div>
+        <button class="button button-small icon-right ion-chevron-right buttonEmp2" ng-disabled="myForm.$invalid" ng-model="cours" ng-click="modifMdp()">
+          Modifier votre Mot de Passe
+        </button>
+      </div>
+
+    </div>
+  </ion-content>
+</ion-view>

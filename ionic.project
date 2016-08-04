@@ -4,7 +4,7 @@
   "proxies": [
     {
       "path": "/CapMissionApp",
-      "proxyUrl": "http://81.192.194.109:8182/CapMissionApp"
+      "proxyUrl": "http://51.255.195.19:8182/CapMissionApp"
     }
   ]
 }

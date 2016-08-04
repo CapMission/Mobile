@@ -2,27 +2,30 @@
 <ion-popover-view class="fit1 platform-android">
   <ion-content>
     <div class="list">
-      <a class="item" href="#/parent/profil" ng-click="popover.hide()">
+      <a class="item" ng-click="popover.hide()" href="#/parent/profil" ><i class="icon ion-person">
         Profil
-      </a>
+      </i></a>
       <hr>
-      <a class="item" href="#/parent/demandeInfoE" ng-click="popover.hide()">
+      <a class="item" href="#/parent/demandeInfoE" ng-click="popover.hide()"><i class="icon ion-information-circled">
         Demande d'informations
-      </a>
-      <a class="item" href="#/parent/remarque" ng-click="popover.hide()">
+      </i></a>
+      <a class="item" href="#/parent/remarque" ng-click="popover.hide()"><i class="icon ion-help-circled">
         Remarques
-      </a>
+      </i></a>
       <hr>
-      <a class="item" href="#/parent/apropos"  ng-click="popover.hide()">
+      <a class="item" href="#/parent/apropos"  ng-click="popover.hide()"><i class="icon ion-android-textsms">
         A propos
-      </a>
-      <a class="item" href="#/parent/reglement" ng-click="popover.hide()">
+      </i></a>
+      <!--<a class="item" href="#/parent/reglement" ng-click="popover.hide()"><i class="icon ion-document-text">
         Règlement intérieur
-      </a>
+      </i></a>-->
       <hr>
-      <a class="item" href="#" ng-controller="LogoutCtrl" ng-click="logout();popover.hide()">
+      <a class="item" href="#/parent/parametres" ng-click="popover.hide()"><i class="icon ion-gear-b">
+        Paramètres
+      </i></a>
+      <a class="item" href="#" ng-controller="LogoutCtrl" ng-click="logout();popover.hide()"><i class="icon ion-android-exit">
         Quitter l'application
-      </a>
+      </i></a>
 
     </div>
   </ion-content>

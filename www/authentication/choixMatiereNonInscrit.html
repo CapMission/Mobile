@@ -80,6 +80,20 @@
             </div>
           </div>
 
+          <!-- si choix est maternelle -->
+          <div ng-show="(choixMission == 'Mission Française' || choixMission == 'Mission Belge') && choixSection == 'Maternelle'" required>
+            <div id="inputC">
+              Choisissez le niveau de l'élève :
+              <label class="item item-input item-select">
+                <div id="instruc" class="input-label">
+                  Niveau:
+                </div>
+                <select ng-model="choixNiveau" required>
+                  <option ng-repeat="niveauMaternelle in niveauxMaternelle">{{niveauMaternelle}}</option>
+                </select>
+              </label>
+            </div>
+          </div>
 
           <!-- si choix est primaire -->
           <div ng-show="(choixMission == 'Mission Française' || choixMission == 'Mission Belge') && choixSection == 'Primaire'" required>
@@ -779,7 +793,7 @@
 
 
           <!-- si choix est mission Informatique -->
-          <div ng-show="choixMission == 'Adulte'" required>
+          <div ng-show="choixMission == 'Adulte English'" required>
             <div id="inputC">
               Choisissez la matière du cours que vous souhaitez prendre :
               <label class="item item-input item-select">

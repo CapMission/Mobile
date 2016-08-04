@@ -11,7 +11,7 @@ student.controller('StudentCtrl', ['$scope','$http','$rootScope','$location','$i
     $ionicLoading.show({
       template: 'Chargement'
     });
-    $http.get('http://81.192.194.109:8182/CapMissionApp/students/auth/' + id, {timeout: 35000}).success(function (data, status, headers, config) {
+    $http.get('http://51.255.195.19:8182/CapMissionApp/students/auth/' + id, {timeout: 35000}).success(function (data, status, headers, config) {
       //$scope.test="safaa"
 
       $rootScope.student = data
@@ -53,6 +53,11 @@ student.controller('StudentCtrl', ['$scope','$http','$rootScope','$location','$i
 
     });
   }
+
+  // $scope.choixMatiere = function (student.entity.id) {
+  //
+  // }
+
   $ionicPopover.fromTemplateUrl('student/student-popover.html', {
     scope: $scope
   }).then(function (popover) {
@@ -131,7 +136,7 @@ student.controller('SprofileCtrl', ['$scope','$rootScope','$ionicPopover','$http
       template: "En cours d'envoi !",
       duration: 1500
     });
-    $http.post('http://81.192.194.109:8182/CapMissionApp/send-mail', mail, {timeout: 120000}).success(function (data, status, headers, config) {
+    $http.post('http://51.255.195.19:8182/CapMissionApp/send-mail', mail, {timeout: 120000}).success(function (data, status, headers, config) {
       toastr.success('Votre demande a été envoyée avec succès')
     }).error(function (data, status) {
       if (status == 0) {
@@ -166,7 +171,7 @@ student.controller('SprofileCtrl', ['$scope','$rootScope','$ionicPopover','$http
       template: "En cours d'envoi !",
       duration: 1500
     });
-    $http.post('http://81.192.194.109:8182/CapMissionApp/send-mail', mail, {timeout: 120000}).success(function (data, status, headers, config) {
+    $http.post('http://51.255.195.19:8182/CapMissionApp/send-mail', mail, {timeout: 120000}).success(function (data, status, headers, config) {
 
       toastr.success('Votre demande a été envoyée avec succès')
 
@@ -205,7 +210,7 @@ student.controller('SprofileCtrl', ['$scope','$rootScope','$ionicPopover','$http
       template: "En cours d'envoi !",
       duration: 1500
     });
-    $http.post('http://81.192.194.109:8182/CapMissionApp/send-mail', mail, {timeout: 120000}).success(function (data, status, headers, config) {
+    $http.post('http://51.255.195.19:8182/CapMissionApp/send-mail', mail, {timeout: 120000}).success(function (data, status, headers, config) {
       toastr.success('Votre demande a été envoyée avec succès')
 
     }).error(function (data, status) {
@@ -247,7 +252,7 @@ student.controller('SprofileCtrl', ['$scope','$rootScope','$ionicPopover','$http
       template: "En cours d'envoi !",
       duration: 1500
     });
-    $http.post('http://81.192.194.109:8182/CapMissionApp/send-mail', mail, {timeout: 120000}).success(function (data, status, headers, config) {
+    $http.post('http://51.255.195.19:8182/CapMissionApp/send-mail', mail, {timeout: 120000}).success(function (data, status, headers, config) {
 
       toastr.success('Votre demande a été envoyée avec succès')
 
@@ -339,7 +344,7 @@ student.controller('SsoldeCtrl', ['$scope', '$rootScope', '$ionicModal', '$http'
       template: "En cours d'envoi !",
       duration: 1500
     });
-    $http.post('http://81.192.194.109:8182/CapMissionApp/send-mail', mail, {timeout: 120000}).success(function (data, status, headers, config) {
+    $http.post('http://51.255.195.19:8182/CapMissionApp/send-mail', mail, {timeout: 120000}).success(function (data, status, headers, config) {
       toastr.success('Votre demande a été envoyée avec succès')
       //$ionicHistory.goBack();
     }).error(function (data, status) {
@@ -465,7 +470,7 @@ student.controller("SEmailController",function($scope,$ionicPopup,$rootScope,$io
       template: "En cours d'envoi !",
       duration: 1500
     });
-    $http.post('http://81.192.194.109:8182/CapMissionApp/send-mail', mail, {timeout: 120000}).success(function (data, status, headers, config) {
+    $http.post('http://51.255.195.19:8182/CapMissionApp/send-mail', mail, {timeout: 120000}).success(function (data, status, headers, config) {
       toastr.success('Votre demande a été envoyée avec succès')
       //$ionicHistory.goBack();
     }).error(function (data, status) {
@@ -506,3 +511,977 @@ student.controller('RegStudentCtrl', ['$scope', '$ionicPopover', '$ionicHistory'
     $scope.popover = popover;
   });
 }]);
+
+
+student.controller('SAjoutCoursCtrl', ['$scope', '$rootScope', '$ionicPopover', '$location', '$ionicHistory', '$ionicLoading', '$http', function ($scope, $rootScope, $ionicPopover, $location, $ionicHistory, $ionicLoading, $http) {
+  console.log('On est dans le controller SAjoutCoursCtrl')
+  $scope.choixMatiere = function(id){
+    $rootScope.test = id
+    $ionicLoading.show({
+      template: "Chargement !",
+    });
+    $http.get('http://51.255.195.19:8182/CapMissionApp/students/' + id, {timeout: 35000}).success(function (data) {
+      $rootScope.eleve = data
+      $rootScope.idE = $rootScope.eleve.entity.id
+      $rootScope.nomEnfant = $rootScope.eleve.entity.name
+      $rootScope.niveauE = $rootScope.eleve.entity.niveau.id
+      $rootScope.niveauN = $rootScope.eleve.entity.niveau.name
+      $rootScope.niveauList = $rootScope.eleve.entity.niveau.listCourse
+      console.log('nom eleve : '+$rootScope.nomEnfant)
+      console.log('id eleve : '+$rootScope.idE)
+      console.log('id niveau : '+ $rootScope.niveauE )
+      console.log('nom niveau : '+ $rootScope.niveauN)
+      console.log('liste niveau : '+ $rootScope.niveauList)
+      $ionicLoading.hide()
+      // Redirige vers la page de l'emploi directement
+      $location.path('/student/choixMatiereS');
+    })
+    // $location.path('/parent/choixMatiere')
+  }
+  $scope.goBack = function () {
+    $ionicHistory.goBack();
+  }
+  $ionicPopover.fromTemplateUrl('student/student-popover.html', {
+    scope: $scope
+  }).then(function (popover) {
+    $scope.popover = popover;
+  });
+}]);
+
+student.controller('SChoixMatiereCtrl', ['$scope', '$rootScope', '$ionicPopover', '$location', '$ionicHistory', '$ionicLoading', '$http', function ($scope, $rootScope, $ionicPopover, $location, $ionicHistory, $ionicLoading, $http) {
+
+  $scope.goPage= function(matiere){
+    $rootScope.mat = matiere
+    $location.path('/student/choixTypeCoursS')
+  }
+
+  $scope.goBack = function () {
+    $ionicHistory.goBack();
+  }
+  $ionicPopover.fromTemplateUrl('student/student-popover.html', {
+    scope: $scope
+  }).then(function (popover) {
+    $scope.popover = popover;
+  });
+}]);
+
+// Controller pour choisir cours part ou cours en groupe
+student.controller('SChoixTypeCoursCtrl', ['$scope', '$ionicPopover', '$location', '$rootScope', function ($scope, $ionicPopover, $location, $rootScope) {
+
+
+  // $rootScope.matiere = $rootSope.mat
+  // console.log('matiere :' +$rootScope.matiere)
+
+  $scope.coursPart = function(mat, coursParti){
+    $rootScope.matiere = mat
+    $rootScope.coursPar = coursParti
+    $location.path('/student/coursParticulierS')
+  }
+
+  $scope.coursGroupe = function(mat, coursGpe){
+    $rootScope.matiere = mat
+    $rootScope.coursG = coursGpe
+    $location.path('/student/nbPersonneS')
+  }
+
+  $scope.goBack = function(){
+    $ionicHistory.goBack();
+  }
+  $ionicPopover.fromTemplateUrl('student/student-popover.html', {
+    scope: $scope
+  }).then(function (popover) {
+    $scope.popover = popover;
+  });
+}]);
+
+// Controller pour envoyer un mail pour ajout cours part
+student.controller('SCoursParticulierCtrl', ['$scope', '$ionicPopup', '$rootScope', '$ionicModal', '$http', '$ionicLoading','$location','$ionicPopover',
+  function($scope,$ionicPopup,$rootScope,$ionicModal,$http,$ionicLoading,$location,$ionicPopover){
+
+    // Fonction qui envoie le mail
+    $rootScope.sendC = function(mail, coursPar, matiere) {
+
+      // Email to and from
+      mail.to='info@capmission.com'
+      mail.from='capmission.com@gmail.com'
+
+      // Envoie de l'objet du mail et de son contenu
+      mail.subject= 'MOB - ' + $rootScope.student.entity.name + ' - AJOUT COURS PART. '
+      mail.body= coursPar + matiere+  '\n' +mail.body
+
+      console.log('to: '+mail.to)
+      console.log('from: '+mail.from)
+      console.log('subject: '+mail.subject)
+      console.log('body: '+mail.body)
+
+      $ionicLoading.show({
+        template: "En cours d'envoi !",
+        duration: 1500
+      });
+      $http.post('http://51.255.195.19:8182/CapMissionApp/send-mail', mail, {timeout: 120000}).success(function (data, status, headers, config) {
+        toastr.success('Votre demande de cours particulier a été envoyée avec succès')
+        //$ionicHistory.goBack();
+        $location.path('/role')
+      }).error(function (data, status) {
+        if (status == 0) {
+          toastr.error('Echec de connexion ! Veuillez réessayer dans quelques instants !', 'Veuillez nous excuser !', {displayDuration: 1000});
+          navigator.app.exitApp();
+        }
+        else {
+          toastr.error("Echec envoi de message ! Réessayez plus tart !")
+        }
+      });
+
+    }
+
+    $scope.goBack = function(){
+      $ionicHistory.goBack();
+    }
+    $ionicPopover.fromTemplateUrl('student/student-popover.html', {
+      scope: $scope
+    }).then(function (popover) {
+      $scope.popover = popover;
+    });
+  }]);
+
+// Controller pour creer ton groupe nb étudiants
+student.controller('SNbPersonneCtrl', ['$scope', '$ionicPopup', '$rootScope', '$http', '$ionicLoading','$location','$ionicPopover',
+  function($scope,$ionicPopup,$rootScope,$http,$ionicLoading,$location,$ionicPopover){
+
+    // Fonction qui transfère les variables - pour 3 etudiants
+    $scope.goDate3 = function(mat, coursGpe, creerGroup, boutonRadio, nom1, nom2, nom3){
+      $rootScope.matiere = mat
+      $rootScope.coursG = coursGpe
+      $rootScope.creerTonGroupe = creerGroup
+      $rootScope.nb = boutonRadio
+      $rootScope.nomE1 = nom1
+      $rootScope.nomE2 = nom2
+      $rootScope.nomE3 = nom3
+      $location.path('/student/choixFrequenceCours')
+    }
+
+    // Fonction qui transfère les variables - pour 4 etudiants
+    $scope.goDate4 = function(mat, coursGpe, creerGroup, boutonRadio, nom1, nom2, nom3, nom4){
+      $rootScope.matiere = mat
+      $rootScope.coursG = coursGpe
+      $rootScope.creerTonGroupe = creerGroup
+      $rootScope.nb = boutonRadio
+      $rootScope.nomE1 = nom1
+      $rootScope.nomE2 = nom2
+      $rootScope.nomE3 = nom3
+      $rootScope.nomE4 = nom4
+      $location.path('/student/choixFrequenceCours')
+    }
+
+    // Fonction qui transfère les variables - pour 5 etudiants
+    $scope.goDate5 = function(mat, coursGpe, creerGroup, boutonRadio, nom1, nom2, nom3, nom4, nom5){
+      $rootScope.matiere = mat
+      $rootScope.coursG = coursGpe
+      $rootScope.creerTonGroupe = creerGroup
+      $rootScope.nb = boutonRadio
+      $rootScope.nomE1 = nom1
+      $rootScope.nomE2 = nom2
+      $rootScope.nomE3 = nom3
+      $rootScope.nomE4 = nom4
+      $rootScope.nomE5 = nom5
+      $location.path('/student/choixFrequenceCours')
+    }
+
+    // Fonction qui transfère les variables - pour 6 etudiants
+    $scope.goDate6 = function(mat, coursGpe, creerGroup, boutonRadio, nom1, nom2, nom3, nom4, nom5, nom6){
+      $rootScope.matiere = mat
+      $rootScope.coursG = coursGpe
+      $rootScope.creerTonGroupe = creerGroup
+      $rootScope.nb = boutonRadio
+      $rootScope.nomE1 = nom1
+      $rootScope.nomE2 = nom2
+      $rootScope.nomE3 = nom3
+      $rootScope.nomE4 = nom4
+      $rootScope.nomE5 = nom5
+      $rootScope.nomE6 = nom6
+      $location.path('/student/choixFrequenceCours')
+    }
+
+
+    $scope.goBack = function(){
+      $ionicHistory.goBack();
+    }
+    $ionicPopover.fromTemplateUrl('student/student-popover.html', {
+      scope: $scope
+    }).then(function (popover) {
+      $scope.popover = popover;
+    });
+  }]);
+
+// Controller pour choisir cours occasionnel ou cours en groupe
+student.controller('SFrequenceCoursCtrl', ['$scope', '$ionicPopup', '$rootScope', '$http', '$ionicLoading','$location','$ionicPopover',
+  function($scope,$ionicPopup,$rootScope,$http,$ionicLoading,$location,$ionicPopover){
+
+    $scope.goOcc = function(matiere, coursG, creerTonGroupe, nb, nomE1, nomE2, nomE3, nomE4, nomE5, nomE6, frequence){
+      $rootScope.mat = matiere
+      $rootScope.coursGpe = coursG
+      $rootScope.creerGroup = creerTonGroupe
+      $rootScope.nbEt = nb
+      $rootScope.nom1 = nomE1
+      $rootScope.nom2 = nomE2
+      $rootScope.nom3 = nomE3
+      $rootScope.nom4 = nomE4
+      $rootScope.nom5 = nomE5
+      $rootScope.nom6 = nomE6
+      $rootScope.freq = frequence
+      $location.path('/student/coursOccasionnelS')
+    }
+
+    $scope.goMultiple = function(matiere, coursG, creerTonGroupe, nb, nomE1, nomE2, nomE3, nomE4, nomE5, nomE6, frequence){
+      $rootScope.mat = matiere
+      $rootScope.coursGpe = coursG
+      $rootScope.creerGroup = creerTonGroupe
+      $rootScope.nbEt = nb
+      $rootScope.nom1 = nomE1
+      $rootScope.nom2 = nomE2
+      $rootScope.nom3 = nomE3
+      $rootScope.nom4 = nomE4
+      $rootScope.nom5 = nomE5
+      $rootScope.nom6 = nomE6
+      $rootScope.freq = frequence
+      $location.path('/student/coursMultiple')
+    }
+
+    $scope.goBack = function(){
+      $ionicHistory.goBack();
+    }
+    $ionicPopover.fromTemplateUrl('student/student-popover.html', {
+      scope: $scope
+    }).then(function (popover) {
+      $scope.popover = popover;
+    });
+  }]);
+
+// Controller pour date/h occasionnel
+student.controller('SCoursOccasionnelCtrl', ['$scope', '$ionicPopup', '$rootScope', '$http', '$ionicLoading','$location','$ionicPopover',
+  function($scope,$ionicPopup,$rootScope,$http,$ionicLoading,$location,$ionicPopover){
+
+    $scope.goRecap = function(mat, coursGpe, creerGroup, nbEt, nom1, nom2, nom3, nom4, nom5, nom6, freq, heureDebut, dateDebut){
+
+      debutHeure = new Date(heureDebut).toLocaleDateString('fr-FR', {
+        hour: 'numeric',
+        minute: 'numeric'
+      }).split(' ').join(' ');
+
+      debutDate = new Date(dateDebut).toLocaleDateString('fr-FR', {
+        day: 'numeric',
+        month: 'short',
+        year: 'numeric',
+
+      }).split(' ').join(' ');
+
+      $rootScope.matiere = mat
+      $rootScope.coursG = coursGpe
+      $rootScope.creerTonGroupe = creerGroup
+      $rootScope.nb = nbEt
+      $rootScope.nomE1 = nom1
+      $rootScope.nomE2 = nom2
+      $rootScope.nomE3 = nom3
+      $rootScope.nomE4 = nom4
+      $rootScope.nomE5 = nom5
+      $rootScope.nomE6 = nom6
+      $rootScope.frequence = freq
+      $rootScope.heureDeb = heureDebut
+      console.log('debut heure'+ heureDebut)
+      $rootScope.dateDeb = debutDate
+      console.log('debut date'+ debutDate)
+      $location.path('/student/recapOcc')
+    }
+
+    $scope.goBack = function(){
+      $ionicHistory.goBack();
+    }
+    $ionicPopover.fromTemplateUrl('student/student-popover.html', {
+      scope: $scope
+    }).then(function (popover) {
+      $scope.popover = popover;
+    });
+  }]);
+
+// Controller pour cours en groupe date et heure pour cours multiple
+student.controller('SCoursMultipleCtrl', ['$scope', '$ionicPopup', '$rootScope', '$http', '$ionicLoading','$location','$ionicPopover',
+  function($scope,$ionicPopup,$rootScope,$http,$ionicLoading,$location,$ionicPopover){
+
+    $scope.goRecap3 = function(mat, coursGpe, creerGroup, nbEt, nom1, nom2, nom3, nom4, nom5, nom6, heureDebut1, heureDebut2, boutonRadio, jour1, jour2, jour3){
+
+      // debutHeure = new Date(heureDebut1).toLocaleDateString('fr-FR', {
+      //   hour: 'numeric',
+      //   minute: 'numeric'
+      // }).split(' ').join(' ');
+
+      $rootScope.matiere = mat
+      $rootScope.coursG = coursGpe
+      $rootScope.creerTonGroupe = creerGroup
+      $rootScope.nb = nbEt
+      $rootScope.nomE1 = nom1
+      $rootScope.nomE2 = nom2
+      $rootScope.nomE3 = nom3
+      $rootScope.nomE4 = nom4
+      $rootScope.nomE5 = nom5
+      $rootScope.nomE6 = nom6
+      $rootScope.heureDeb1 = heureDebut1
+      $rootScope.heureDeb2 = heureDebut2
+      $rootScope.nbJours = boutonRadio
+      $rootScope.jours1 = jour1
+      $rootScope.jours2 = jour2
+      $rootScope.jours3 = jour3
+      $location.path('/student/recapOcc')
+    }
+
+    // Fonction qui transfère les variables - de 1 à 6 etudiants - pour 4 jours de cours  en groupe
+    $scope.goRecap4 = function(mat, coursGpe, creerGroup, nbEt, nom1, nom2, nom3, nom4, nom5, nom6, heureDebut1,
+                               heureDebut2, heureDebut3, boutonRadio, jour1, jour2, jour3, jour4){
+
+      $rootScope.matiere = mat
+      $rootScope.coursG = coursGpe
+      $rootScope.creerTonGroupe = creerGroup
+      $rootScope.nb = nbEt
+      $rootScope.nomE1 = nom1
+      $rootScope.nomE2 = nom2
+      $rootScope.nomE3 = nom3
+      $rootScope.nomE4 = nom4
+      $rootScope.nomE5 = nom5
+      $rootScope.nomE6 = nom6
+      $rootScope.heureDeb1 = heureDebut1
+      $rootScope.heureDeb2 = heureDebut2
+      $rootScope.heureDeb3 = heureDebut3
+      $rootScope.nbJours = boutonRadio
+      $rootScope.jours1 = jour1
+      $rootScope.jours2 = jour2
+      $rootScope.jours3 = jour3
+      $rootScope.jours4 = jour4
+      $location.path('/student/recapOcc')
+    }
+
+    // Fonction qui transfère les variables - de 1 à 6 etudiants - pour 5 jours de cours  en groupe
+    $scope.goRecap5 = function(mat, coursGpe, creerGroup, nbEt, nom1, nom2, nom3, nom4, nom5, nom6, heureDebut1, heureDebut2, heureDebut3, heureDebut4, boutonRadio, jour1, jour2, jour3, jour4, jour5){
+
+      $rootScope.matiere = mat
+      $rootScope.coursG = coursGpe
+      $rootScope.creerTonGroupe = creerGroup
+      $rootScope.nb = nbEt
+      $rootScope.nomE1 = nom1
+      $rootScope.nomE2 = nom2
+      $rootScope.nomE3 = nom3
+      $rootScope.nomE4 = nom4
+      $rootScope.nomE5 = nom5
+      $rootScope.nomE6 = nom6
+      $rootScope.heureDeb1 = heureDebut1
+      $rootScope.heureDeb2 = heureDebut2
+      $rootScope.heureDeb3 = heureDebut3
+      $rootScope.heureDeb4 = heureDebut4
+      $rootScope.nbJours = boutonRadio
+      $rootScope.jours1 = jour1
+      $rootScope.jours2 = jour2
+      $rootScope.jours3 = jour3
+      $rootScope.jours4 = jour4
+      $rootScope.jours5 = jour5
+      $location.path('/student/recapOcc')
+    }
+
+    // Fonction qui transfère les variables - de 1 à 6 etudiants - pour 6 jours de cours  en groupe
+    $scope.goRecap6 = function(mat, coursGpe, creerGroup, nbEt, nom1, nom2, nom3, nom4, nom5, nom6, heureDebut1, heureDebut2, heureDebut3, heureDebut4, heureDebut5,
+                               boutonRadio, jour1, jour2, jour3, jour4, jour5, jour6){
+
+      $rootScope.matiere = mat
+      $rootScope.coursG = coursGpe
+      $rootScope.creerTonGroupe = creerGroup
+      $rootScope.nb = nbEt
+      $rootScope.nomE1 = nom1
+      $rootScope.nomE2 = nom2
+      $rootScope.nomE3 = nom3
+      $rootScope.nomE4 = nom4
+      $rootScope.nomE5 = nom5
+      $rootScope.nomE6 = nom6
+      $rootScope.heureDeb1 = heureDebut1
+      $rootScope.heureDeb2 = heureDebut2
+      $rootScope.heureDeb3 = heureDebut3
+      $rootScope.heureDeb4 = heureDebut4
+      $rootScope.heureDeb5 = heureDebut5
+      $rootScope.nbJours = boutonRadio
+      $rootScope.jours1 = jour1
+      $rootScope.jours2 = jour2
+      $rootScope.jours3 = jour3
+      $rootScope.jours4 = jour4
+      $rootScope.jours5 = jour5
+      $rootScope.jours6 = jour6
+      $location.path('/student/recapOcc')
+    }
+
+    // Fonction qui transfère les variables - de 1 à 6 etudiants - pour 6 jours de cours  en groupe
+    $scope.goRecap7 = function(mat, coursGpe, creerGroup, nbEt, nom1, nom2, nom3, nom4, nom5, nom6, heureDebut1, heureDebut2, heureDebut3, heureDebut4, heureDebut5, heureDebut6,
+                               boutonRadio, jour1, jour2, jour3, jour4, jour5, jour6, jour7){
+
+      $rootScope.matiere = mat
+      $rootScope.coursG = coursGpe
+      $rootScope.creerTonGroupe = creerGroup
+      $rootScope.nb = nbEt
+      $rootScope.nomE1 = nom1
+      $rootScope.nomE2 = nom2
+      $rootScope.nomE3 = nom3
+      $rootScope.nomE4 = nom4
+      $rootScope.nomE5 = nom5
+      $rootScope.nomE6 = nom6
+      $rootScope.heureDeb1 = heureDebut1
+      $rootScope.heureDeb2 = heureDebut2
+      $rootScope.heureDeb3 = heureDebut3
+      $rootScope.heureDeb4 = heureDebut4
+      $rootScope.heureDeb5 = heureDebut5
+      $rootScope.heureDeb6 = heureDebut6
+      $rootScope.nbJours = boutonRadio
+      $rootScope.jours1 = jour1
+      $rootScope.jours2 = jour2
+      $rootScope.jours3 = jour3
+      $rootScope.jours4 = jour4
+      $rootScope.jours5 = jour5
+      $rootScope.jours6 = jour6
+      $rootScope.jours7 = jour7
+      $location.path('/student/recapOcc')
+    }
+
+    $scope.goBack = function(){
+      $ionicHistory.goBack();
+    }
+    $ionicPopover.fromTemplateUrl('student/student-popover.html', {
+      scope: $scope
+    }).then(function (popover) {
+      $scope.popover = popover;
+    });
+  }]);
+
+// Controller pour recap cours en groupe occasionnel
+student.controller('SRecapOccCtrl', ['$scope', '$ionicPopup', '$rootScope', '$http', '$ionicLoading','$location','$ionicPopover',
+  function($scope,$ionicPopup,$rootScope,$http,$ionicLoading,$location,$ionicPopover){
+
+    // Fonction qui envoie le mail
+    $rootScope.sendR = function(mail, mat, coursGpe, creerGroup, nbEt, nom1, nom2, nom3, nom4, nom5, nom6, heureDeb, dateDeb, heureDeb1, heureDeb2, heureDeb3, heureDeb4, heureDeb5, heureDeb6,
+                                nbJours, jours1, jours2, jours3, jours4, jours5, jours6, frequence) {
+
+      $rootScope.matiere = mat
+      $rootScope.coursG = coursGpe
+      $rootScope.creerTonGroupe = creerGroup
+      $rootScope.nb = nbEt
+      $rootScope.nomE1 = nom1
+      $rootScope.nomE2 = nom2
+      $rootScope.nomE3 = nom3
+      $rootScope.nomE4 = nom4
+      $rootScope.nomE5 = nom5
+      $rootScope.nomE6 = nom6
+      $rootScope.debutH = heureDeb
+      $rootScope.debutD = dateDeb
+      $rootScope.debutH1 = heureDeb1
+      $rootScope.debutH2 = heureDeb2
+      $rootScope.debutH3 = heureDeb3
+      $rootScope.debutH4 = heureDeb4
+      $rootScope.debutH5 = heureDeb5
+      $rootScope.debutH6 = heureDeb6
+      $rootScope.nbJ = nbJours
+      $rootScope.jour1 = jours1
+      $rootScope.jour2 = jours2
+      $rootScope.jour3 = jours3
+      $rootScope.jour4 = jours4
+      $rootScope.jour5 = jours5
+      $rootScope.jour6 = jours6
+
+      debutHeure = new Date(heureDeb).toLocaleDateString('fr-FR', {
+        hour: 'numeric',
+        minute: 'numeric'
+      }).split(' ').join(' ');
+
+      // Email to and from
+      mail.to='info@capmission.com'
+      mail.from='capmission.com@gmail.com'
+
+      // Envoie de l'objet du mail et de son contenu
+      mail.subject= 'MOB - ' + $rootScope.student.entity.name + ' - CREATION GROUPE. '
+
+      // mail.body = 'Le parent :' + $rootScope.parent.entity.name + 'souhaite créer un groupe.\n Le nombre de personnes pour ce groupe est de :' + $rootScope.nb + '. \n' +
+      //   'Les étudiants sont :\n' + $rootScope.nomE1 + '\n' + $rootScope.nomE2 + '\n' + $rootScope.nomE3 + '\n' + $rootScope.nomE4 + '\n' + $rootScope.nomE5 + '\n' + $rootScope.nomE6 + '\n' +
+      //   'Heure de début du cours :' + $rootScope.debutH + '\nSi cours occasionnel, date souhaitée :' + $rootScope.debutD + '\n' +
+      //   'Si plusieurs jours par semaines sont souhaités, nombre de jours :' + $rootScope.boutonRadio + '\n' +
+      //   'Jour :' + $rootScope.jour1 + '\n' + $rootScope.jour2 + '\n' + $rootScope.jour3 + '\n' + $rootScope.jour4 + '\n' + $rootScope.jour5 + '\n' + $rootScope.jour6 + '\n' +
+      //   'Une remarque éventuelle de la part du parent :' + mail.body
+
+      //cas 3 noms et occ
+      if($rootScope.nomE4 == null && $rootScope.nomE5 == null && $rootScope.nomE6 == null && $rootScope.jour1 == null && $rootScope.jour2 == null && $rootScope.jour3 ==null
+        && $rootScope.jour4 == null && $rootScope.jour5 == null && $rootScope.jour6 == null && $rootScope.boutonRadio == null) {
+        mail.body = 'Etudiant : ' + $rootScope.student.entity.name + ' souhaite créer un groupe pour un cours de ' +$rootScope.matiere+ '\nLe nombre de personnes pour ce groupe est de :' + $rootScope.nb + '. \n' +
+          'Les étudiants sont :\n' + $rootScope.nomE1 + '\n' + $rootScope.nomE2 + '\n' + $rootScope.nomE3 + '\n' +
+          'Heure de début du cours :' + moment(heureDeb).format('HH:mm') + '\nSi cours occasionnel, date souhaitée :' + $rootScope.debutD + '\n' +
+          'Une remarque éventuelle de la part du parent :' + mail.body
+      }else{
+        //cas 4 noms et occ
+        if($rootScope.nomE5 == null && $rootScope.nomE6 == null && $rootScope.jour1 == null && $rootScope.jour2 == null && $rootScope.jour3 ==null
+          && $rootScope.jour4 == null && $rootScope.jour5 == null && $rootScope.jour6 == null && $rootScope.boutonRadio == null) {
+          mail.body = 'Etudiant : ' + $rootScope.student.entity.name + ' souhaite créer un groupe pour un cours de ' +$rootScope.matiere+ '\nLe nombre de personnes pour ce groupe est de :' + $rootScope.nb + '. \n' +
+            'Les étudiants sont :\n' + $rootScope.nomE1 + '\n' + $rootScope.nomE2 + '\n' + $rootScope.nomE3 + '\n' + $rootScope.nomE4 + '\n' +
+            'Heure de début du cours :' + moment(heureDeb).format('HH:mm') + '\nSi cours occasionnel, date souhaitée :' + $rootScope.debutD + '\n' +
+            'Une remarque éventuelle de la part du parent :' + mail.body
+        }else{
+          //cas 5 noms et occ
+          if($rootScope.nomE6 == null && $rootScope.jour1 == null && $rootScope.jour2 == null && $rootScope.jour3 ==null
+            && $rootScope.jour4 == null && $rootScope.jour5 == null && $rootScope.jour6 == null && $rootScope.boutonRadio == null) {
+            mail.body = 'Etudiant : ' + $rootScope.student.entity.name + ' souhaite créer un groupe pour un cours de ' +$rootScope.matiere+ '\nLe nombre de personnes pour ce groupe est de :' + $rootScope.nb + '. \n' +
+              'Les étudiants sont :\n' + $rootScope.nomE1 + '\n' + $rootScope.nomE2 + '\n' + $rootScope.nomE3 + '\n' + $rootScope.nomE4 + '\n' + $rootScope.nomE5 + '\n' +
+              'Heure de début du cours :' + moment(heureDeb).format('HH:mm') + '\nSi cours occasionnel, date souhaitée :' + $rootScope.debutD + '\n' +
+              'Une remarque éventuelle de la part du parent :' + mail.body
+          }else{
+            //cas 6 noms et occ
+            if($rootScope.jour1 == null && $rootScope.jour2 == null && $rootScope.jour3 ==null
+              && $rootScope.jour4 == null && $rootScope.jour5 == null && $rootScope.jour6 == null && $rootScope.boutonRadio == null) {
+              mail.body = 'Etudiant : ' + $rootScope.student.entity.name + ' souhaite créer un groupe pour un cours de ' +$rootScope.matiere+ '\n Le nombre de personnes pour ce groupe est de :' + $rootScope.nb + '. \n' +
+                'Les étudiants sont :\n' + $rootScope.nomE1 + '\n' + $rootScope.nomE2 + '\n' + $rootScope.nomE3 + '\n' + $rootScope.nomE4 + '\n' + $rootScope.nomE5 + '\n' + $rootScope.nomE6 + '\n' +
+                'Heure de début du cours :' + moment(heureDeb).format('HH:mm') + '\nSi cours occasionnel, date souhaitée :' + $rootScope.debutD + '\n' +
+                'Une remarque éventuelle de la part du parent :' + mail.body
+            }else{
+              //cas 3 noms et 2 jours
+              if($rootScope.jour3 == null && $rootScope.jour4 == null && $rootScope.jour5 == null && $rootScope.jour6 == null && $rootScope.debutH == null && $rootScope.debutD == null
+                && $rootScope.nomE4 == null && $rootScope.nomE5 == null && $rootScope.nomE6 == null) {
+                mail.body = 'Etudiant : ' + $rootScope.student.entity.name + ' souhaite créer un groupe pour un cours de ' +$rootScope.matiere+ '\nLe nombre de personnes pour ce groupe est de :' + $rootScope.nb + '. \n' +
+                  'Les étudiants sont :\n' + $rootScope.nomE1 + ' - ' + $rootScope.nomE2 + ' - ' + $rootScope.nomE3 + '\n' +
+                  'Le nombre de jours par semaine : ' +$rootScope.nbJ+ '\nHeure du 1er cours : ' +moment(heureDeb1).format('HH:mm')+ '\nJours du 1er cours : ' +$rootScope.jour1+ '\nHeure du 2ème cours : ' +moment(heureDeb2).format('HH:mm')+
+                  '\nJours du 1er cours : ' +$rootScope.jour2+ '\n' +
+                  'Une remarque éventuelle de la part du parent :' + mail.body
+
+              }else{
+                //cas 4 noms et 2 jours
+                if($rootScope.nomE5 == null && $rootScope.nomE6 == null && $rootScope.jour3 ==null
+                  && $rootScope.jour4 == null && $rootScope.jour5 == null && $rootScope.jour6 == null && $rootScope.debutH == null && $rootScope.debutD == null) {
+                  mail.body = 'Etudiant : ' + $rootScope.student.entity.name + ' souhaite créer un groupe pour un cours de ' +$rootScope.matiere+ '\nLe nombre de personnes pour ce groupe est de :' + $rootScope.nb + '. \n' +
+                    'Les étudiants sont :\n' + $rootScope.nomE1 + ' - ' + $rootScope.nomE2 + ' - ' + $rootScope.nomE3 + ' - ' + $rootScope.nomE4 + '\n' +
+                    'Le nombre de jours par semaine : ' +$rootScope.nbJ+ '\nHeure du 1er cours : ' +moment($rootScope.debutH1).format('HH:mm')+ '\nJours du 1er cours : ' +$rootScope.jour1+ '\nHeure du 2ème cours : ' + moment($rootScope.debutH1).format('HH:mm')+
+                    '\nJours du 1er cours : ' +$rootScope.jour2+ '\n' +
+                    'Une remarque éventuelle de la part du parent :' + mail.body
+                }else{
+                  //cas 4 noms et 2 jours
+                  if($rootScope.nomE5 == null && $rootScope.nomE6 == null && $rootScope.jour3 ==null
+                    && $rootScope.jour4 == null && $rootScope.jour5 == null && $rootScope.jour6 == null && $rootScope.debutH == null && $rootScope.debutD == null) {
+                    mail.body = 'Etudiant : ' + $rootScope.student.entity.name + ' souhaite créer un groupe pour un cours de ' +$rootScope.matiere+ '\nLe nombre de personnes pour ce groupe est de :' + $rootScope.nb + '. \n' +
+                      'Les étudiants sont :\n' + $rootScope.nomE1 + ' - ' + $rootScope.nomE2 + ' - ' + $rootScope.nomE3 + ' - ' + $rootScope.nomE4 + '\n' +
+                      'Le nombre de jours par semaine : ' +$rootScope.nbJ+ '\nHeure du 1er cours : ' +moment($rootScope.debutH1).format('HH:mm')+ '\nJours du 1er cours : ' +$rootScope.jour1+ '\nHeure du 2ème cours : ' + moment($rootScope.debutH2).format('HH:mm')+
+                      '\nJours du 1er cours : ' +$rootScope.jour2+ '\n' +
+                      'Une remarque éventuelle de la part du parent :' + mail.body
+                  }else{
+                    //cas 5 noms et 2 jours
+                    if($rootScope.nomE6 == null && $rootScope.jour3 ==null
+                      && $rootScope.jour4 == null && $rootScope.jour5 == null && $rootScope.jour6 == null && $rootScope.debutH == null && $rootScope.debutD == null) {
+                      mail.body = 'Etudiant : ' + $rootScope.student.entity.name + ' souhaite créer un groupe pour un cours de ' +$rootScope.matiere+ '\nLe nombre de personnes pour ce groupe est de :' + $rootScope.nb + '. \n' +
+                        'Les étudiants sont :\n' + $rootScope.nomE1 + '\n' + $rootScope.nomE2 + '\n' + $rootScope.nomE3 + '\n' + $rootScope.nomE4 + '\n' + $rootScope.nomE5 + '\n' +
+                        'Le nombre de jours par semaine : ' +$rootScope.nbJ+ '\nHeure du 1er cours : ' +moment($rootScope.debutH1).format('HH:mm')+ '\nJours du 1er cours : ' +$rootScope.jour1+ '\nHeure du 2ème cours : ' + moment($rootScope.debutH2).format('HH:mm')+
+                        '\nJours du 2ème cours : ' +$rootScope.jour2+ '\n' +
+                        'Une remarque éventuelle de la part du parent :' + mail.body
+                    }else{
+                      //cas 6 noms et 2 jours
+                      if($rootScope.jour3 ==null
+                        && $rootScope.jour4 == null && $rootScope.jour5 == null && $rootScope.jour6 == null && $rootScope.debutH == null && $rootScope.debutD == null) {
+                        mail.body = 'Etudiant : ' + $rootScope.student.entity.name + ' souhaite créer un groupe pour un cours de ' +$rootScope.matiere+ '\n Le nombre de personnes pour ce groupe est de :' + $rootScope.nb + '. \n' +
+                          'Les étudiants sont :\n' + $rootScope.nomE1 + '\n' + $rootScope.nomE2 + '\n' + $rootScope.nomE3 + '\n' + $rootScope.nomE4 + '\n' + $rootScope.nomE5 + '\n' + $rootScope.nomE6 + '\n' +
+                          'Le nombre de jours par semaine : ' +$rootScope.nbJ+ '\nHeure du 1er cours : ' +moment($rootScope.debutH1).format('HH:mm')+ '\nJours du 1er cours : ' +$rootScope.jour1+ '\nHeure du 2ème cours : ' + moment($rootScope.debutH2).format('HH:mm')+
+                          '\nJours du 2ème cours : ' +$rootScope.jour2+ '\n' +
+                          'Une remarque éventuelle de la part du parent :' + mail.body
+                      }else{
+                        //cas 3 noms et 3 jours
+                        if($rootScope.nomE4 == null && $rootScope.nomE5 == null && $rootScope.nomE6 == null
+                          && $rootScope.jour4 == null && $rootScope.jour5 == null && $rootScope.jour6 == null && $rootScope.debutH == null && $rootScope.debutD == null) {
+                          mail.body = 'Etudiant : ' + $rootScope.student.entity.name + ' souhaite créer un groupe pour un cours de ' +$rootScope.matiere+ '\nLe nombre de personnes pour ce groupe est de :' + $rootScope.nb + '. \n' +
+                            'Les étudiants sont :\n' + $rootScope.nomE1 + '\n' + $rootScope.nomE2 + '\n' + $rootScope.nomE3 + '\n' +
+                            'Le nombre de jours par semaine : ' +$rootScope.nbJ+ '\nHeure du 1er cours : ' +moment($rootScope.debutH1).format('HH:mm')+ '\nJours du 1er cours : ' +$rootScope.jour1+ '\nHeure du 2ème cours : ' + moment($rootScope.debutH2).format('HH:mm')+
+                            '\nJours du 2ème cours : ' +$rootScope.jour2+ '\nHeure du 3ème cours : ' +moment($rootScope.debutH3).format('HH:mm')+ '\nJours du 3ème cours : ' +$rootScope.jour3+ '\n' +
+                            'Une remarque éventuelle de la part du parent :' + mail.body
+                        }else{
+                          //cas 4 noms et 3 jours
+                          if($rootScope.nomE5 == null && $rootScope.nomE6 == null
+                            && $rootScope.jour4 == null && $rootScope.jour5 == null && $rootScope.jour6 == null && $rootScope.debutH == null && $rootScope.debutD == null) {
+                            mail.body = 'Etudiant : ' + $rootScope.student.entity.name + ' souhaite créer un groupe pour un cours de ' +$rootScope.matiere+ '\nLe nombre de personnes pour ce groupe est de :' + $rootScope.nb + '. \n' +
+                              'Les étudiants sont :\n' + $rootScope.nomE1 + '\n' + $rootScope.nomE2 + '\n' + $rootScope.nomE3 + '\n' + $rootScope.nomE4 + '\n' +
+                              'Le nombre de jours par semaine : ' +$rootScope.nbJ+ '\nHeure du 1er cours : ' +moment($rootScope.debutH1).format('HH:mm')+ '\nJours du 1er cours : ' +$rootScope.jour1+ '\nHeure du 2ème cours : ' + moment($rootScope.debutH2).format('HH:mm')+
+                              '\nJours du 2ème cours : ' +$rootScope.jour2+ '\nHeure du 3ème cours : ' +moment($rootScope.debutH3).format('HH:mm')+ '\nJours du 3ème cours : ' +$rootScope.jour3+ '\n' +
+                              'Une remarque éventuelle de la part du parent :' + mail.body
+                          }else{
+                            //cas 5 noms et 3 jours
+                            if($rootScope.nomE6 == null
+                              && $rootScope.jour4 == null && $rootScope.jour5 == null && $rootScope.jour6 == null && $rootScope.debutH == null && $rootScope.debutD == null) {
+                              mail.body = 'Etudiant : ' + $rootScope.student.entity.name + ' souhaite créer un groupe pour un cours de ' +$rootScope.matiere+ '\nLe nombre de personnes pour ce groupe est de :' + $rootScope.nb + '. \n' +
+                                'Les étudiants sont :\n' + $rootScope.nomE1 + '\n' + $rootScope.nomE2 + '\n' + $rootScope.nomE3 + '\n' + $rootScope.nomE4 + '\n' + $rootScope.nomE5 + '\n' +
+                                'Le nombre de jours par semaine : ' +$rootScope.nbJ+ '\nHeure du 1er cours : ' +moment($rootScope.debutH1).format('HH:mm')+ '\nJours du 1er cours : ' +$rootScope.jour1+ '\nHeure du 2ème cours : ' + moment($rootScope.debutH2).format('HH:mm')+
+                                '\nJours du 2ème cours : ' +$rootScope.jour2+ '\nHeure du 3ème cours : ' +moment($rootScope.debutH3).format('HH:mm')+ '\nJours du 3ème cours : ' +$rootScope.jour3+ '\n' +
+                                'Une remarque éventuelle de la part du parent :' + mail.body
+                            }else{
+                              //cas 6 noms et 3 jours
+                              if($rootScope.jour4 == null && $rootScope.jour5 == null && $rootScope.jour6 == null && $rootScope.debutH == null && $rootScope.debutD == null) {
+                                mail.body = 'Etudiant : ' + $rootScope.student.entity.name + ' souhaite créer un groupe pour un cours de ' +$rootScope.matiere+ '\nLe nombre de personnes pour ce groupe est de :' + $rootScope.nb + '. \n' +
+                                  'Les étudiants sont :\n' + $rootScope.nomE1 + '\n' + $rootScope.nomE2 + '\n' + $rootScope.nomE3 + '\n' + $rootScope.nomE4 + '\n' + $rootScope.nomE5 + '\n' + $rootScope.nomE6 + '\n' +
+                                  'Le nombre de jours par semaine : ' +$rootScope.nbJ+ '\nHeure du 1er cours : ' +moment($rootScope.debutH1).format('HH:mm')+ '\nJours du 1er cours : ' +$rootScope.jour1+ '\nHeure du 2ème cours : ' + moment($rootScope.debutH2).format('HH:mm')+
+                                  '\nJours du 2ème cours : ' +$rootScope.jour2+ '\nHeure du 3ème cours : ' +moment($rootScope.debutH3).format('HH:mm')+ '\nJours du 3ème cours : ' +$rootScope.jour3+ '\n' +
+                                  'Une remarque éventuelle de la part du parent :' + mail.body
+                              }else{
+                                //cas 3 noms et 4 jours
+                                if($rootScope.nomE4 == null && $rootScope.nomE5 == null && $rootScope.nomE6 == null &&
+                                  $rootScope.jour5 == null && $rootScope.jour6 == null && $rootScope.debutH == null && $rootScope.debutD == null) {
+                                  mail.body = 'Etudiant : ' + $rootScope.student.entity.name + ' souhaite créer un groupe pour un cours de ' +$rootScope.matiere+ '\nLe nombre de personnes pour ce groupe est de :' + $rootScope.nb + '. \n' +
+                                    'Les étudiants sont :\n' + $rootScope.nomE1 + '\n' + $rootScope.nomE2 + '\n' + $rootScope.nomE3 + '\n' +
+                                    'Le nombre de jours par semaine : ' +$rootScope.nbJ+ '\nHeure du 1er cours : ' +moment($rootScope.debutH1).format('HH:mm')+ '\nJours du 1er cours : ' +$rootScope.jour1+ '\nHeure du 2ème cours : ' + moment($rootScope.debutH1).format('HH:mm')+
+                                    '\nJours du 2ème cours : ' +$rootScope.jour2+ '\nHeure du 3ème cours : ' +moment($rootScope.debutH3).format('HH:mm')+ '\nJours du 3ème cours : ' +$rootScope.jour3+ '\n' +
+                                    '\nJours du 4ème cours : ' +$rootScope.jour4+  '\nHeure du 4ème cours : ' +moment($rootScope.debutH4).format('HH:mm') + '\n'
+                                  'Une remarque éventuelle de la part du parent :' + mail.body
+
+                                }else{
+                                  //cas 4 noms et 4 jours
+                                  if($rootScope.nomE5 == null && $rootScope.nomE6 == null &&
+                                    $rootScope.jour5 == null && $rootScope.jour6 == null && $rootScope.debutH == null && $rootScope.debutD == null) {
+                                    mail.body = 'Etudiant : ' + $rootScope.student.entity.name + ' souhaite créer un groupe pour un cours de ' +$rootScope.matiere+ '\nLe nombre de personnes pour ce groupe est de :' + $rootScope.nb + '. \n' +
+                                      'Les étudiants sont :\n' + $rootScope.nomE1 + '\n' + $rootScope.nomE2 + '\n' + $rootScope.nomE3 + '\n' + $rootScope.nomE4 + '\n' +
+                                      'Le nombre de jours par semaine : ' +$rootScope.nbJ+ '\nHeure du 1er cours : ' +moment($rootScope.debutH1).format('HH:mm')+ '\nJours du 1er cours : ' +$rootScope.jour1+ '\nHeure du 2ème cours : ' + moment($rootScope.debutH2).format('HH:mm')+
+                                      '\nJours du 2ème cours : ' +$rootScope.jour2+ '\nHeure du 3ème cours : ' +moment($rootScope.debutH3).format('HH:mm')+ '\nJours du 3ème cours : ' +$rootScope.jour3+ '\n' +
+                                      '\nJours du 4ème cours : ' +$rootScope.jour4 + '\nHeure du 4ème cours : ' +moment($rootScope.debutH4).format('HH:mm') + '\n'
+                                    'Une remarque éventuelle de la part du parent :' + mail.body
+                                  }else{
+                                    //cas 5 noms et 4 jours
+                                    if($rootScope.nomE6 == null &&
+                                      $rootScope.jour5 == null && $rootScope.jour6 == null && $rootScope.debutH == null && $rootScope.debutD == null) {
+                                      mail.body = 'Etudiant : ' + $rootScope.student.entity.name + ' souhaite créer un groupe pour un cours de ' +$rootScope.matiere+ '\nLe nombre de personnes pour ce groupe est de :' + $rootScope.nb + '. \n' +
+                                        'Les étudiants sont :\n' + $rootScope.nomE1 + '\n' + $rootScope.nomE2 + '\n' + $rootScope.nomE3 + '\n' + $rootScope.nomE4 + '\n' + $rootScope.nomE5 + '\n' +
+                                        'Le nombre de jours par semaine : ' +$rootScope.nbJ+ '\nHeure du 1er cours : ' +moment($rootScope.debutH1).format('HH:mm')+ '\nJours du 1er cours : ' +$rootScope.jour1+ '\nHeure du 2ème cours : ' + moment($rootScope.debutH2).format('HH:mm')+
+                                        '\nJours du 2ème cours : ' +$rootScope.jour2+ '\nHeure du 3ème cours : ' +moment($rootScope.debutH3).format('HH:mm')+ '\nJours du 3ème cours : ' +$rootScope.jour3+ '\n' +
+                                        '\nJours du 4ème cours : ' +$rootScope.jour4 + '\nHeure du 4ème cours : ' +moment($rootScope.debutH4).format('HH:mm') + '\n'
+                                      'Une remarque éventuelle de la part du parent :' + mail.body
+                                    }else{
+                                      //cas 6 noms et 4 jours
+                                      if($rootScope.jour5 == null && $rootScope.jour6 == null && $rootScope.debutH == null && $rootScope.debutD == null) {
+                                        mail.body = 'Etudiant : ' + $rootScope.student.entity.name + ' souhaite créer un groupe pour un cours de ' +$rootScope.matiere+ '\nLe nombre de personnes pour ce groupe est de :' + $rootScope.nb + '. \n' +
+                                          'Les étudiants sont :\n' + $rootScope.nomE1 + '\n' + $rootScope.nomE2 + '\n' + $rootScope.nomE3 + '\n' + $rootScope.nomE4 + '\n' + $rootScope.nomE5 + '\n' + $rootScope.nomE6 + '\n' +
+                                          'Le nombre de jours par semaine : ' +$rootScope.nbJ+ '\nHeure du 1er cours : ' +moment($rootScope.debutH1).format('HH:mm')+ '\nJours du 1er cours : ' +$rootScope.jour1+ '\nHeure du 2ème cours : ' + moment($rootScope.debutH2).format('HH:mm')+
+                                          '\nJours du 2ème cours : ' +$rootScope.jour2+ '\nHeure du 3ème cours : ' +moment($rootScope.debutH3).format('HH:mm')+ '\nJours du 3ème cours : ' +$rootScope.jour3+
+                                          '\nJours du 4ème cours : ' +$rootScope.jour4+ '\nHeure du 4ème cours : ' +moment($rootScope.debutH4).format('HH:mm') + '\n'
+                                        'Une remarque éventuelle de la part du parent :' + mail.body
+                                      }else{
+                                        //cas 3 noms et 5 jours
+                                        if($rootScope.nomE4 == null && $rootScope.nomE5 == null && $rootScope.nomE6 == null &&
+                                          $rootScope.jour6 == null && $rootScope.debutH == null && $rootScope.debutD == null) {
+                                          mail.body = 'Etudiant : ' + $rootScope.student.entity.name + ' souhaite créer un groupe pour un cours de ' +$rootScope.matiere+ '\nLe nombre de personnes pour ce groupe est de :' + $rootScope.nb + '. \n' +
+                                            'Les étudiants sont :\n' + $rootScope.nomE1 + '\n' + $rootScope.nomE2 + '\n' + $rootScope.nomE3 + '\n' +
+                                            'Le nombre de jours par semaine : ' +$rootScope.nbJ+ '\nHeure du 1er cours : ' +moment($rootScope.debutH1).format('HH:mm')+ '\nJours du 1er cours : ' +$rootScope.jour1+ '\nHeure du 2ème cours : ' + moment($rootScope.debutH2).format('HH:mm')+
+                                            '\nJours du 2ème cours : ' +$rootScope.jour2+ '\nHeure du 3ème cours : ' +moment($rootScope.debutH3).format('HH:mm')+ '\nJours du 3ème cours : ' +$rootScope.jour3+
+                                            '\nJours du 4ème cours : ' +$rootScope.jour4 + '\nHeure du 4ème cours : ' +moment($rootScope.debutH4).format('HH:mm') +
+                                            '\nJours du 5ème cours : ' +$rootScope.jour5 + '\nHeure du 5ème cours : ' +moment($rootScope.debutH5).format('HH:mm') + '\n'
+                                          'Une remarque éventuelle de la part du parent :' + mail.body
+                                        }else{
+                                          //cas 4 noms et 5 jours
+                                          if($rootScope.nomE5 == null && $rootScope.nomE6 == null &&
+                                            $rootScope.jour6 == null && $rootScope.debutH == null && $rootScope.debutD == null) {
+                                            mail.body = 'Etudiant : ' + $rootScope.student.entity.name + ' souhaite créer un groupe pour un cours de ' +$rootScope.matiere+ '\nLe nombre de personnes pour ce groupe est de :' + $rootScope.nb + '. \n' +
+                                              'Les étudiants sont :\n' + $rootScope.nomE1 + '\n' + $rootScope.nomE2 + '\n' + $rootScope.nomE3 + '\n' + $rootScope.nomE4 + '\n' +
+                                              'Le nombre de jours par semaine : ' +$rootScope.nbJ+ '\nHeure du 1er cours : ' +moment($rootScope.debutH1).format('HH:mm')+ '\nJours du 1er cours : ' +$rootScope.jour1+ '\nHeure du 2ème cours : ' + moment($rootScope.debutH2).format('HH:mm')+
+                                              '\nJours du 2ème cours : ' +$rootScope.jour2+ '\nHeure du 3ème cours : ' +moment($rootScope.debutH3).format('HH:mm')+ '\nJours du 3ème cours : ' +$rootScope.jour3+
+                                              '\nJours du 4ème cours : ' +$rootScope.jour4 + '\nHeure du 4ème cours : ' +moment($rootScope.debutH4).format('HH:mm') +
+                                              '\nJours du 5ème cours : ' +$rootScope.jour5 + '\nHeure du 5ème cours : ' +moment($rootScope.debutH5).format('HH:mm') + '\n'
+                                            'Une remarque éventuelle de la part du parent :' + mail.body
+                                          }else{
+                                            //cas 5 noms et 5 jours
+                                            if($rootScope.jour6 == null && $rootScope.debutH == null && $rootScope.debutD == null) {
+                                              mail.body = 'Etdudiant : ' + $rootScope.student.entity.name + ' souhaite créer un groupe pour un cours de ' +$rootScope.matiere+ '\nLe nombre de personnes pour ce groupe est de :' + $rootScope.nb + '. \n' +
+                                                'Les étudiants sont :\n' + $rootScope.nomE1 + '\n' + $rootScope.nomE2 + '\n' + $rootScope.nomE3 + '\n' + $rootScope.nomE4 + '\n' + $rootScope.nomE5 + '\n'
+                                              'Le nombre de jours par semaine : ' +$rootScope.nbJ+ '\nHeure du 1er cours : ' +moment($rootScope.debutH1).format('HH:mm')+ '\nJours du 1er cours : ' +$rootScope.jour1+ '\nHeure du 2ème cours : ' + moment($rootScope.debutH2).format('HH:mm')+
+                                              '\nJours du 2ème cours : ' +$rootScope.jour2+ '\nHeure du 3ème cours : ' +moment($rootScope.debutH3).format('HH:mm')+ '\nJours du 3ème cours : ' +$rootScope.jour3+
+                                              '\nJours du 4ème cours : ' +$rootScope.jour4 + '\nHeure du 4ème cours : ' +moment($rootScope.debutH4).format('HH:mm') +
+                                              '\nJours du 5ème cours : ' +$rootScope.jour5 + '\nHeure du 5ème cours : ' +moment($rootScope.debutH5).format('HH:mm') + '\n'
+                                              'Une remarque éventuelle de la part du parent :' + mail.body
+                                            }else{
+                                              //cas 6 noms et 5 jours
+                                              if($rootScope.jour6 == null && $rootScope.debutH == null && $rootScope.debutD == null) {
+                                                mail.body = 'Etudiant: ' + $rootScope.student.entity.name + ' souhaite créer un groupe pour un cours de ' +$rootScope.matiere+ '\nLe nombre de personnes pour ce groupe est de :' + $rootScope.nb + '. \n' +
+                                                  'Les étudiants sont :\n' + $rootScope.nomE1 + '\n' + $rootScope.nomE2 + '\n' + $rootScope.nomE3 + '\n' + $rootScope.nomE4 + '\n' + $rootScope.nomE5 + '\n' + $rootScope.nomE6 + '\n'
+                                                'Le nombre de jours par semaine : ' +$rootScope.nbJ+ '\nHeure du 1er cours : ' +moment($rootScope.debutH1).format('HH:mm')+ '\nJours du 1er cours : ' +$rootScope.jour1+ '\nHeure du 2ème cours : ' + moment($rootScope.debutH2).format('HH:mm')+
+                                                '\nJours du 2ème cours : ' +$rootScope.jour2+ '\nHeure du 3ème cours : ' +moment($rootScope.debutH3).format('HH:mm')+ '\nJours du 3ème cours : ' +$rootScope.jour3+
+                                                '\nJours du 4ème cours : ' +$rootScope.jour4 + '\nHeure du 4ème cours : ' +moment($rootScope.debutH4).format('HH:mm') +
+                                                '\nJours du 5ème cours : ' +$rootScope.jour5 + '\nHeure du 5ème cours : ' +moment($rootScope.debutH5).format('HH:mm') + '\n'
+                                                'Une remarque éventuelle de la part du parent :' + mail.body
+                                              }else{
+                                                //cas 3 noms et 6 jours
+                                                if($rootScope.nomE4 == null && $rootScope.nomE5 == null && $rootScope.nomE6 == null && $rootScope.debutH == null && $rootScope.debutD == null) {
+                                                  mail.body = 'Etudiant : ' + $rootScope.student.entity.name + ' souhaite créer un groupe pour un cours de ' +$rootScope.matiere+ '\nLe nombre de personnes pour ce groupe est de :' + $rootScope.nb + '. \n' +
+                                                    'Les étudiants sont :\n' + $rootScope.nomE1 + '\n' + $rootScope.nomE2 + '\n' + $rootScope.nomE3 + '\n' +
+                                                    'Le nombre de jours par semaine : ' +$rootScope.nbJ+ '\nHeure du 1er cours : ' +moment($rootScope.debutH1).format('HH:mm')+ '\nJours du 1er cours : ' +$rootScope.jour1+ '\nHeure du 2ème cours : ' + moment($rootScope.debutH2).format('HH:mm')+
+                                                    '\nJours du 2ème cours : ' +$rootScope.jour2+ '\nHeure du 3ème cours : ' +moment($rootScope.debutH3).format('HH:mm')+ '\nJours du 3ème cours : ' +$rootScope.jour3+
+                                                    '\nJours du 4ème cours : ' +$rootScope.jour4 + '\nHeure du 4ème cours : ' +moment($rootScope.debutH4).format('HH:mm') +
+                                                    '\nJours du 5ème cours : ' +$rootScope.jour5 + '\nHeure du 5ème cours : ' +moment($rootScope.debutH5).format('HH:mm') +
+                                                    '\nJours du 6ème cours : ' +$rootScope.jour6 + '\nHeure du 6ème cours : ' +moment($rootScope.debutH6).format('HH:mm') + '\n'
+                                                  'Une remarque éventuelle de la part du parent :' + mail.body
+                                                }else{
+                                                  //cas 4 noms et 6 jours
+                                                  if($rootScope.nomE5 == null && $rootScope.nomE6 == null && $rootScope.debutH == null && $rootScope.debutD == null) {
+                                                    mail.body = 'Etudiant : ' + $rootScope.student.entity.name + ' souhaite créer un groupe pour un cours de ' +$rootScope.matiere+ '\nLe nombre de personnes pour ce groupe est de :' + $rootScope.nb + '. \n' +
+                                                      'Les étudiants sont :\n' + $rootScope.nomE1 + '\n' + $rootScope.nomE2 + '\n' + $rootScope.nomE3 + '\n' + $rootScope.nomE4 + '\n' +
+                                                      'Le nombre de jours par semaine : ' +$rootScope.nbJ+ '\nHeure du 1er cours : ' +moment($rootScope.debutH1).format('HH:mm')+ '\nJours du 1er cours : ' +$rootScope.jour1+ '\nHeure du 2ème cours : ' + moment($rootScope.debutH2).format('HH:mm')+
+                                                      '\nJours du 2ème cours : ' +$rootScope.jour2+ '\nHeure du 3ème cours : ' +moment($rootScope.debutH3).format('HH:mm')+ '\nJours du 3ème cours : ' +$rootScope.jour3+
+                                                      '\nJours du 4ème cours : ' +$rootScope.jour4 + '\nHeure du 4ème cours : ' +moment($rootScope.debutH4).format('HH:mm') +
+                                                      '\nJours du 5ème cours : ' +$rootScope.jour5 + '\nHeure du 5ème cours : ' +moment($rootScope.debutH5).format('HH:mm') +
+                                                      '\nJours du 6ème cours : ' +$rootScope.jour6 + '\nHeure du 6ème cours : ' +moment($rootScope.debutH6).format('HH:mm') + '\n'
+                                                    'Une remarque éventuelle de la part du parent :' + mail.body
+                                                  }else{
+                                                    //cas 5 noms et 6 jours
+                                                    if($rootScope.nomE6 == null && $rootScope.debutH == null && $rootScope.debutD == null) {
+                                                      mail.body = 'Etudiant : ' + $rootScope.student.entity.name + ' souhaite créer un groupe pour un cours de ' +$rootScope.matiere+ '\nLe nombre de personnes pour ce groupe est de :' + $rootScope.nb + '. \n' +
+                                                        'Les étudiants sont :\n' + $rootScope.nomE1 + '\n' + $rootScope.nomE2 + '\n' + $rootScope.nomE3 + '\n' + $rootScope.nomE4 + '\n' + $rootScope.nomE5 + '\n' +
+                                                        'Le nombre de jours par semaine : ' +$rootScope.nbJ+ '\nHeure du 1er cours : ' +moment($rootScope.debutH1).format('HH:mm')+ '\nJours du 1er cours : ' +$rootScope.jour1+ '\nHeure du 2ème cours : ' + moment($rootScope.debutH2).format('HH:mm')+
+                                                        '\nJours du 2ème cours : ' +$rootScope.jour2+ '\nHeure du 3ème cours : ' +moment($rootScope.debutH3).format('HH:mm')+ '\nJours du 3ème cours : ' +$rootScope.jour3+
+                                                        '\nJours du 4ème cours : ' +$rootScope.jour4 + '\nHeure du 4ème cours : ' +moment($rootScope.debutH4).format('HH:mm') +
+                                                        '\nJours du 5ème cours : ' +$rootScope.jour5 + '\nHeure du 5ème cours : ' +moment($rootScope.debutH5).format('HH:mm') +
+                                                        '\nJours du 6ème cours : ' +$rootScope.jour6 + '\nHeure du 6ème cours : ' +moment($rootScope.debutH6).format('HH:mm') + '\n'
+                                                      'Une remarque éventuelle de la part du parent :' + mail.body
+                                                    }else{
+                                                      //cas 6 noms et 6 jours
+                                                      if($rootScope.debutH == null && $rootScope.debutD == null) {
+                                                        mail.body = 'Etudiant : ' + $rootScope.student.entity.name + ' souhaite créer un groupe pour un cours de ' +$rootScope.matiere+ '\nLe nombre de personnes pour ce groupe est de :' + $rootScope.nb + '. \n' +
+                                                          'Les étudiants sont :\n' + $rootScope.nomE1 + '\n' + $rootScope.nomE2 + '\n' + $rootScope.nomE3 + '\n' + $rootScope.nomE4 + '\n' + $rootScope.nomE5 + '\n' + $rootScope.nomE6 + '\n' +
+                                                          'Le nombre de jours par semaine : ' +$rootScope.nbJ+ '\nHeure du 1er cours : ' +moment($rootScope.debutH1).format('HH:mm')+ '\nJours du 1er cours : ' +$rootScope.jour1+ '\nHeure du 2ème cours : ' + moment($rootScope.debutH2).format('HH:mm')+
+                                                          '\nJours du 2ème cours : ' +$rootScope.jour2+ '\nHeure du 3ème cours : ' +moment($rootScope.debutH3).format('HH:mm')+ '\nJours du 3ème cours : ' +$rootScope.jour3+
+                                                          '\nJours du 4ème cours : ' +$rootScope.jour4 + '\nHeure du 4ème cours : ' +moment($rootScope.debutH4).format('HH:mm') +
+                                                          '\nJours du 5ème cours : ' +$rootScope.jour5 + '\nHeure du 5ème cours : ' +moment($rootScope.debutH5).format('HH:mm') +
+                                                          '\nJours du 6ème cours : ' +$rootScope.jour6 + '\nHeure du 6ème cours : ' +moment($rootScope.debutH6).format('HH:mm') + '\n'
+                                                        'Une remarque éventuelle de la part du parent :' + mail.body
+                                                      }else{
+
+                                                      }
+                                                    }
+                                                  }
+                                                }
+                                              }
+                                            }
+                                          }
+                                        }
+                                      }
+                                    }
+                                  }
+                                }
+                              }
+                            }
+                          }
+                        }
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+
+      console.log('matiere :' +$rootScope.matiere)
+      console.log('eleve1 :' +$rootScope.nomE1)
+      console.log('eleve2 :' +$rootScope.nomE2)
+      console.log('eleve3 :' +$rootScope.nomE3)
+      console.log('eleve4 :' +$rootScope.nomE4)
+      console.log('eleve5 :' +$rootScope.nomE5)
+      console.log('eleve6 :' +$rootScope.nomE6)
+      console.log('nb jours :' +nbJours)
+      console.log('jour1 :' +$rootScope.jour1)
+      console.log('jour2 :' +$rootScope.jour2)
+      console.log('jour3 :' +$rootScope.jour3)
+      console.log('jour4 :' +$rootScope.jour4)
+      console.log('jour5 :' +$rootScope.jour5)
+      console.log('jour6 :' +$rootScope.jour6)
+      console.log('heure1 :' +$rootScope.debutH1)
+      console.log('heure2 :' +$rootScope.debutH2)
+      console.log('heure3 :' +$rootScope.debutH3)
+      console.log('heure4 :' +$rootScope.debutH4)
+      console.log('heure5 :' +$rootScope.debutH5)
+      console.log('heure6 :' +$rootScope.debutH6)
+      console.log('to: '+mail.to)
+      console.log('from: '+mail.from)
+      console.log('subject: '+mail.subject)
+      console.log('body: '+mail.body)
+
+      $ionicLoading.show({
+        template: "En cours d'envoi !",
+      });
+      $http.post('http://51.255.195.19:8182/CapMissionApp/send-mail', mail, {timeout: 120000}).success(function (data, status, headers, config) {
+        toastr.success('Votre message a été envoyée avec succès')
+        $ionicLoading.hide()
+        $location.path('/role')
+        //$ionicHistory.goBack();
+      }).error(function (data, status) {
+        if (status == 0) {
+          $ionicLoading.hide()
+          toastr.error('Echec de connexion ! Veuillez réessayer dans quelques instants !', 'Veuillez nous excuser !', {displayDuration: 1000});
+          navigator.app.exitApp();
+        }
+        else {
+          toastr.error("Echec envoi de message ! Réessayez plus tart !")
+          $ionicLoading.hide()
+        }
+      });
+
+    }
+
+
+    $scope.goBack = function(){
+      $ionicHistory.goBack();
+    }
+    $ionicPopover.fromTemplateUrl('student/student-popover.html', {
+      scope: $scope
+    }).then(function (popover) {
+      $scope.popover = popover;
+    });
+  }]);
+
+student.controller('SParametresCtrl', ['$scope', '$ionicPopup', '$rootScope', '$http', '$ionicLoading','$location','$ionicPopover','$ionicHistory',
+  function($scope,$ionicPopup,$rootScope,$http,$ionicLoading,$location,$ionicPopover,$ionicHistory){
+
+    //Méthode pour le popup modifier son login
+    $scope.modifLogin = function () {
+      $scope.data = {};
+      $scope.user = {}
+
+      // An elaborate, custom popup
+      var myPopup = $ionicPopup.show({
+        template: '<form name="MyForm" ><input type="hidden" name = "oldLogin" ng-model="data.oldLogin" ng-init="data.oldLogin = resp.entity.login">' +
+        '<input type="hidden" ng-model="user.id" ng-init="user.id = resp.entity.id">'+
+        '<input type="hidden" ng-model="user.password" ng-init="user.password = resp.entity.password">'+
+        '<input type="text" name = "oldLogin2" placeholder="Ancien Login" ng-model="data.oldLogin2" ng-pattern="data.oldLogin" ><br>' +
+        '<input type="text" placeholder="Nouveau Login" name="newLogin" ng-model="user.newLogin"><br>' +
+        '<input type="text" placeholder="Confirmer votre Login" name="confLogin" ng-model="data.confLogin" ng-pattern="user.newLogin">'+
+        '<div ng-show="MyForm.oldLogin2.$error.pattern" style="color: red">*Ancien login incorrect !</div>'+
+        '<div ng-show="MyForm.confLogin.$error.pattern" style="color: red">*Logins non correspondants ! </div>',
+        title: 'Modifier votre Login',
+        subTitle: 'Pensez à utilisez un Login simple à retenir',
+        scope: $scope,
+        buttons: [
+          { text: '<b>Annuler</b>',
+            type: 'buttonEmp3',},
+          {
+            text: '<b>Modifier</b>',
+            type: 'buttonEmp2',
+            onTap: function(e) {
+              if (((!$scope.data.oldLogin2) && (!$scope.user.newLogin) && (!$scope.data.confLogin)) && ($scope.user.newLogin != $scope.data.confLogin) ) {
+                //don't allow the user to close unless he enters wifi password
+                e.preventDefault();
+                /*toastr.erro r('Inscrire un Login dans le premier champ.', {displayDuration: 1000});*/
+              } else{
+                console.log('id : '+$scope.user.id)
+                console.log('login : '+$scope.user.newLogin)
+                console.log('password : '+$scope.user.password)
+                var user = {
+                  id: $scope.user.id,
+                  login: $scope.user.newLogin,
+                  password: $scope.user.password
+                };
+                $ionicLoading.show({
+                  template: "En cours !",
+                  duration: 1500
+                });
+                $http.put('http://51.255.195.19:8182/CapMissionApp/users/update/' + $scope.user.id, JSON.stringify(user), {timeout: 30000}).success(function (data, status, headers, config) {
+                  $scope.updateData = data
+                  toastr.success('Votre login a été changé avec succès !', {displayDuration: 1000});
+                  console.log('new login : ' + $scope.updateData.entity.login)
+                  localStorage.removeItem("id")
+                  localStorage.removeItem("login")
+                  localStorage.removeItem("password")
+                  localStorage.removeItem("status")
+                  $location.path('/login')
+
+                }).error(function (data, status) {
+
+                  toastr.error('Echec de connexion ! Veuillez réessayer dans quelques instants !', 'Désolés !', {displayDuration: 1000});
+                  navigator.app.exitApp();
+
+
+                });
+
+              }
+            }
+          }
+        ]
+      });
+
+      myPopup.then(function(res) {
+        console.log('Tapped!', res);
+      });
+    };
+
+    //Méthode pour modifier le mot de passe
+    $scope.modifMdp = function () {
+      $scope.data = {};
+      $scope.user = {}
+
+      // An elaborate, custom popup
+      var myPopup = $ionicPopup.show({
+        template: '<form name="MyForm" ><input type="hidden" name = "oldPwd" placeholder="Ancien mot de passe" ng-model="data.oldPwd" ng-init="data.oldPwd = resp.entity.password">' +
+        '<input type="password" name = "oldPwd2" placeholder="Ancien mot de passe" ng-model="data.oldPwd2" ng-pattern="data.oldPwd" required="required"><br>' +
+        '<input type="hidden" ng-model="user.id" ng-init="user.id = resp.entity.id">'+
+        '<input type="hidden" ng-model="user.login" ng-init="user.login = resp.entity.login">'+
+        '<input type="password" name="oldLogin" placeholder="Nouveau mot de passe" ng-model="user.oldLogin"><br>' +
+        '<input type="password" name="confLogin" placeholder="Confirmer votre Mot de Passe" ng-model="data.confLogin" ng-pattern="user.oldLogin"></form>' +
+        '<div ng-show="MyForm.oldPwd2.$error.pattern" style="color: red">*Ancien mot de passe incorrect !</div>'+
+        '<div ng-show="MyForm.confLogin.$error.pattern" style="color: red">*Mots de passe non correspondants ! </div>',
+        title: 'Modifier votre Mot de Passe',
+        scope: $scope,
+        buttons: [
+          { text: '<b>Annuler</b>',
+            type: 'buttonEmp3',},
+          {
+            text: '<b>Modifier</b>',
+            type: 'buttonEmp2',
+            onTap: function(e) {
+              if (((!$scope.data.oldPwd2) && (!$scope.user.oldLogin) && (!$scope.data.confLogin)) && ($scope.user.oldLogin != $scope.data.confLogin) ) {
+                //don't allow the user to close unless he enters wifi password
+                e.preventDefault();
+
+              } else {
+                console.log('id : '+$scope.user.id)
+                console.log('password : '+$scope.user.oldLogin)
+                console.log('login : '+$scope.user.login)
+                var user = {
+                  id: $scope.user.id,
+                  login: $scope.user.login,
+                  password: $scope.user.oldLogin
+                };
+                $ionicLoading.show({
+                  template: "En cours !",
+                  duration: 1500
+                });
+                $http.put('http://51.255.195.19:8182/CapMissionApp/users/update/' + $scope.user.id, JSON.stringify(user), {timeout: 30000}).success(function (data, status, headers, config) {
+                  $scope.updateData = data
+                  toastr.success('Votre mot de passe a été changé avec succès !', {displayDuration: 1000});
+                  console.log('new password : ' + $scope.updateData.entity.password)
+                  localStorage.removeItem("id")
+                  localStorage.removeItem("login")
+                  localStorage.removeItem("password")
+                  localStorage.removeItem("status")
+                  $location.path('/login')
+
+                }).error(function (data, status) {
+
+                  toastr.error('Echec de connexion ! Veuillez réessayer dans quelques instants !', 'Désolés !', {displayDuration: 1000});
+                  navigator.app.exitApp();
+
+
+                });
+
+              }
+            }
+          }
+        ]
+      });
+
+      myPopup.then(function(res) {
+        console.log('Tapped!', res);
+      });
+    };
+
+
+    $scope.goBack = function(){
+      $ionicHistory.goBack();
+    }
+    $ionicPopover.fromTemplateUrl('student/student-popover.html', {
+      scope: $scope
+    }).then(function (popover) {
+      $scope.popover = popover;
+    });
+  }]);

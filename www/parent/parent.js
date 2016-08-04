@@ -17,10 +17,6 @@ parent.filter('startFrom', function () {
 
 parent.controller('ParentCtrl', ['$scope', '$rootScope', '$http', '$location', '$ionicPopover', function ($scope, $rootScope, $http, $location, $ionicPopover) {
 
-
-  $scope.goBack = function () {
-    $ionicHistory.goBack();
-  }
   $ionicPopover.fromTemplateUrl('parent/parent-popover.html', {
     scope: $scope
   }).then(function (popover) {
@@ -30,37 +26,41 @@ parent.controller('ParentCtrl', ['$scope', '$rootScope', '$http', '$location', '
 }]);
 
 parent.controller('ProposCtrl', ['$scope', '$rootScope', '$http', '$location', '$ionicPopover', '$ionicHistory', function ($scope, $rootScope, $http, $location, $ionicPopover, $ionicHistory) {
-
-  $scope.goBack = function () {
-    $ionicHistory.goBack();
-  }
   $ionicPopover.fromTemplateUrl('parent/parent-popover.html', {
     scope: $scope
   }).then(function (popover) {
     $scope.popover = popover;
   });
+  $scope.goBack = function () {
+    $ionicHistory.goBack();
+  }
+
 }]);
 
 parent.controller('BackCtrl', ['$scope', '$rootScope', '$http', '$location', '$ionicPopover', '$ionicHistory', function ($scope, $rootScope, $http, $location, $ionicPopover, $ionicHistory) {
-
-  $scope.goBack = function () {
-    $ionicHistory.goBack();
-  }
   $ionicPopover.fromTemplateUrl('parent/parent-popover.html', {
     scope: $scope
   }).then(function (popover) {
     $scope.popover = popover;
   });
+  $scope.goBack = function () {
+    $ionicHistory.goBack();
+  }
+
 }]);
 
 parent.controller('EnfantCtrl', ['$scope', '$rootScope', '$http', '$location', '$ionicPopover', '$ionicHistory', '$ionicLoading', '$ionicPopup', '$q', function ($scope, $rootScope, $http, $location, $ionicPopover, $ionicHistory, $ionicLoading, $ionicPopup, $q) {
-
+  $ionicPopover.fromTemplateUrl('parent/parent-popover.html', {
+    scope: $scope
+  }).then(function (popover) {
+    $scope.popover = popover;
+  });
   $scope.now = new Date()
   $scope.getd = function (id) {
     $ionicLoading.show({
       template: 'Chargement'
     });
-    $http.get('http://81.192.194.109:8182/CapMissionApp/students/' + id, {timeout: 35000}).success(function (data, status, headers, config) {
+    $http.get('http://51.255.195.19:8182/CapMissionApp/students/' + id, {timeout: 35000}).success(function (data, status, headers, config) {
       //$scope.items = []
       $rootScope.son = data
 
@@ -86,14 +86,15 @@ parent.controller('EnfantCtrl', ['$scope', '$rootScope', '$http', '$location', '
   $scope.goBack = function () {
     $ionicHistory.goBack();
   }
+
+}]);
+
+parent.controller('PprofileCtrl', ['$scope', '$ionicPopover', '$ionicHistory', '$rootScope', '$http','$ionicModal','$ionicLoading', function ($scope, $ionicPopover, $ionicHistory, $rootScope, $http,$ionicModal,$ionicLoading) {
   $ionicPopover.fromTemplateUrl('parent/parent-popover.html', {
     scope: $scope
   }).then(function (popover) {
     $scope.popover = popover;
   });
-}]);
-
-parent.controller('PprofileCtrl', ['$scope', '$ionicPopover', '$ionicHistory', '$rootScope', '$http','$ionicModal','$ionicLoading', function ($scope, $ionicPopover, $ionicHistory, $rootScope, $http,$ionicModal,$ionicLoading) {
   $ionicModal.fromTemplateUrl('templates/modal-1.html', {
     id: '1', // We need to use and ID to identify the modal that is firing the event!
     scope: $scope,
@@ -163,7 +164,7 @@ parent.controller('PprofileCtrl', ['$scope', '$ionicPopover', '$ionicHistory', '
       template: "En cours d'envoi !",
       duration: 1500
     });
-    $http.post('http://81.192.194.109:8182/CapMissionApp/send-mail', mail, {timeout: 120000}).success(function (data, status, headers, config) {
+    $http.post('http://51.255.195.19:8182/CapMissionApp/send-mail', mail, {timeout: 120000}).success(function (data, status, headers, config) {
       toastr.success('Votre demande a été envoyée avec succès')
     }).error(function (data, status) {
       if (status == 0) {
@@ -197,7 +198,7 @@ parent.controller('PprofileCtrl', ['$scope', '$ionicPopover', '$ionicHistory', '
       template: "En cours d'envoi !",
       duration: 1500
     });
-    $http.post('http://81.192.194.109:8182/CapMissionApp/send-mail', mail, {timeout: 120000}).success(function (data, status, headers, config) {
+    $http.post('http://51.255.195.19:8182/CapMissionApp/send-mail', mail, {timeout: 120000}).success(function (data, status, headers, config) {
       toastr.success('Votre demande a été envoyée avec succès')
     }).error(function (data, status) {
       if (status == 0) {
@@ -231,7 +232,7 @@ parent.controller('PprofileCtrl', ['$scope', '$ionicPopover', '$ionicHistory', '
       template: "En cours d'envoi !",
       duration: 1500
     });
-    $http.post('http://81.192.194.109:8182/CapMissionApp/send-mail', mail, {timeout: 120000}).success(function (data, status, headers, config) {
+    $http.post('http://51.255.195.19:8182/CapMissionApp/send-mail', mail, {timeout: 120000}).success(function (data, status, headers, config) {
       toastr.success('Votre demande a été envoyée avec succès')
       //$ionicLoading.hide();
     }).error(function (data, status) {
@@ -266,7 +267,7 @@ parent.controller('PprofileCtrl', ['$scope', '$ionicPopover', '$ionicHistory', '
       template: "En cours d'envoi !",
       duration: 1500
     });
-    $http.post('http://81.192.194.109:8182/CapMissionApp/send-mail', mail, {timeout: 120000}).success(function (data, status, headers, config) {
+    $http.post('http://51.255.195.19:8182/CapMissionApp/send-mail', mail, {timeout: 120000}).success(function (data, status, headers, config) {
       toastr.success('Votre demande a été envoyée avec succès')
     }).error(function (data, status) {
       if (status == 0) {
@@ -280,20 +281,25 @@ parent.controller('PprofileCtrl', ['$scope', '$ionicPopover', '$ionicHistory', '
 
   }
 
-  $ionicPopover.fromTemplateUrl('parent/parent-popover.html', {
-    scope: $scope
-  }).then(function (popover) {
-    $scope.popover = popover;
-  });
 }]);
 
 parent.controller('PsoldeCtrl', ['$scope', '$rootScope', '$ionicModal', '$http', '$ionicPopover', '$ionicHistory', '$location', '$ionicLoading', '$ionicPopup', function ($scope, $rootScope, $ionicModal, $http, $ionicPopover, $ionicHistory, $location, $ionicLoading, $ionicPopup) {
+  $ionicPopover.fromTemplateUrl('templates/popover.html', {
+    scope: $scope,
+  }).then(function (popover) {
+    $scope.popover = popover;
+  });
+  $ionicPopover.fromTemplateUrl('templates/popover2.html', {
+    scope: $scope,
+  }).then(function (popover) {
+    $scope.popover2 = popover;
+  });
   $scope.getd = function (id) {
     console.log("id function getd : " + id)
     $ionicLoading.show({
       template: 'Chargement'
     });
-    $http.get('http://81.192.194.109:8182/CapMissionApp/students/' + id, {timeout: 35000}).success(function (data, status, headers, config) {
+    $http.get('http://51.255.195.19:8182/CapMissionApp/students/' + id, {timeout: 35000}).success(function (data, status, headers, config) {
       //$scope.items = []
       $rootScope.sonSolde = data
       $ionicLoading.hide();
@@ -375,7 +381,7 @@ parent.controller('PsoldeCtrl', ['$scope', '$rootScope', '$ionicModal', '$http',
       template: "En cours d'envoi !",
       duration: 1500
     });
-    $http.post('http://81.192.194.109:8182/CapMissionApp/send-mail', mail, {timeout: 120000}).success(function (data, status, headers, config) {
+    $http.post('http://51.255.195.19:8182/CapMissionApp/send-mail', mail, {timeout: 120000}).success(function (data, status, headers, config) {
       //$ionicLoading.hide();
       toastr.success('Votre demande a été envoyée avec succès')
       //$ionicHistory.goBack();
@@ -435,47 +441,44 @@ parent.controller('PsoldeCtrl', ['$scope', '$rootScope', '$ionicModal', '$http',
     $ionicHistory.goBack();
   }
 
-  $ionicPopover.fromTemplateUrl('templates/popover.html', {
-    scope: $scope,
-  }).then(function (popover) {
-    $scope.popover = popover;
-  });
-  $ionicPopover.fromTemplateUrl('templates/popover2.html', {
-    scope: $scope,
-  }).then(function (popover) {
-    $scope.popover2 = popover;
-  });
+
 
 }]);
 
 parent.controller('PtimeCtrl', ['$scope', '$ionicPopover', '$ionicHistory', function ($scope, $ionicPopover, $ionicHistory) {
-  $scope.test = "emploi"
-  $scope.goBack = function () {
-    $ionicHistory.goBack();
-  }
   $ionicPopover.fromTemplateUrl('parent/parent-popover.html', {
     scope: $scope
   }).then(function (popover) {
     $scope.popover = popover;
   });
+  $scope.test = "emploi"
+  $scope.goBack = function () {
+    $ionicHistory.goBack();
+  }
+
 }]);
 
 
 
 parent.controller('RegParentCtrl', ['$scope', '$ionicPopover', '$ionicHistory', function ($scope, $ionicPopover, $ionicHistory) {
-  $scope.regl = "reglement"
-  $scope.goBack = function () {
-    $ionicHistory.goBack();
-  }
   $ionicPopover.fromTemplateUrl('parent/parent-popover.html', {
     scope: $scope
   }).then(function (popover) {
     $scope.popover = popover;
   });
+  $scope.regl = "reglement"
+  $scope.goBack = function () {
+    $ionicHistory.goBack();
+  }
+
 }]);
 
 parent.controller('ChoixsoldeCtrl', ['$scope', '$rootScope', '$http', '$location', '$ionicPopover', '$ionicHistory', '$ionicLoading', function ($scope, $rootScope, $http, $location, $ionicPopover, $ionicHistory, $ionicLoading) {
-
+  $ionicPopover.fromTemplateUrl('parent/parent-popover.html', {
+    scope: $scope
+  }).then(function (popover) {
+    $scope.popover = popover;
+  });
   $scope.get = function () {
     if ($rootScope.parent.entity.students.length == '1') {
 
@@ -493,7 +496,7 @@ parent.controller('ChoixsoldeCtrl', ['$scope', '$rootScope', '$http', '$location
       $ionicLoading.show({
         template: "Chargement..."
       });
-      $http.get('http://81.192.194.109:8182/CapMissionApp/students/' + id, {timeout: 35000}).success(function (data, status, headers, config) {
+      $http.get('http://51.255.195.19:8182/CapMissionApp/students/' + id, {timeout: 35000}).success(function (data, status, headers, config) {
 
         $rootScope.sonSolde = data
         $ionicLoading.hide()
@@ -525,7 +528,7 @@ parent.controller('ChoixsoldeCtrl', ['$scope', '$rootScope', '$http', '$location
         $ionicLoading.show({
           template: "Chargement..."
         });
-        $http.get('http://81.192.194.109:8182/CapMissionApp/students/' + id, {timeout: 35000}).success(function (data, status, headers, config) {
+        $http.get('http://51.255.195.19:8182/CapMissionApp/students/' + id, {timeout: 35000}).success(function (data, status, headers, config) {
 
           $rootScope.sonSolde = data
           $ionicLoading.hide()
@@ -550,15 +553,16 @@ parent.controller('ChoixsoldeCtrl', ['$scope', '$rootScope', '$http', '$location
   $scope.goBack = function () {
     $ionicHistory.goBack();
   }
+
+}]);
+
+// Controller pour Contact.html
+parent.controller('PContactCtrl', ['$scope', '$ionicPopover', '$location', '$ionicHistory', function ($scope, $ionicPopover, $location, $ionicHistory) {
   $ionicPopover.fromTemplateUrl('parent/parent-popover.html', {
     scope: $scope
   }).then(function (popover) {
     $scope.popover = popover;
   });
-}]);
-
-// Controller pour Contact.html
-parent.controller('PContactCtrl', ['$scope', '$ionicPopover', '$location', '$ionicHistory', function ($scope, $ionicPopover, $location, $ionicHistory) {
   $scope.goCritique = function () {
     $location.path('/parent/remarque')
   }
@@ -574,30 +578,25 @@ parent.controller('PContactCtrl', ['$scope', '$ionicPopover', '$location', '$ion
   $scope.goBack = function () {
     $ionicHistory.goBack();
   }
-  $ionicPopover.fromTemplateUrl('parent/parent-popover.html', {
-    scope: $scope
-  }).then(function (popover) {
-    $scope.popover = popover;
-  });
+
 }]);
 
 
 // Controller Remarque pour pouvoir accéder au popover et retourner à la page précédente
 parent.controller('PRemarqueCtrl', ['$scope', '$ionicPopover', function ($scope, $ionicPopover) {
-  $scope.goBack = function () {
-    $ionicHistory.goBack();
-  }
   $ionicPopover.fromTemplateUrl('parent/parent-popover.html', {
     scope: $scope
   }).then(function (popover) {
     $scope.popover = popover;
   });
+  $scope.goBack = function () {
+    $ionicHistory.goBack();
+  }
 }]);
 
 // Controller Remarque pour l'envoie de mail
 parent.controller("PEmailController", ['$scope', '$ionicPopup', '$rootScope', '$ionicModal', '$http', '$ionicLoading',
   function ($scope, $ionicPopup, $rootScope, $ionicModal, $http, $ionicLoading) {
-
     // Fonction qui envoie le mail
     $rootScope.sendR = function (mail) {
 
@@ -618,7 +617,7 @@ parent.controller("PEmailController", ['$scope', '$ionicPopup', '$rootScope', '$
         template: "En cours d'envoi !",
         duration: 1500
       });
-      $http.post('http://81.192.194.109:8182/CapMissionApp/send-mail', mail, {timeout: 120000}).success(function (data, status, headers, config) {
+      $http.post('http://51.255.195.19:8182/CapMissionApp/send-mail', mail, {timeout: 120000}).success(function (data, status, headers, config) {
 
         toastr.success('Votre remarque a été envoyée avec succès')
         //$ionicHistory.goBack();
@@ -638,20 +637,25 @@ parent.controller("PEmailController", ['$scope', '$ionicPopup', '$rootScope', '$
 
 // Controller pour demande d'informations popover  et back
 parent.controller('PDemandeInfoController', ['$scope', '$ionicPopover', function ($scope, $ionicPopover) {
-  $scope.goBack = function () {
-    $ionicHistory.goBack();
-  }
   $ionicPopover.fromTemplateUrl('parent/parent-popover.html', {
     scope: $scope
   }).then(function (popover) {
     $scope.popover = popover;
   });
+  $scope.goBack = function () {
+    $ionicHistory.goBack();
+  }
+
 }]);
 
 // Controller pour demande d'informations envoie Email
 parent.controller("PDemandeInfoEmailController", ['$scope', '$ionicPopup', '$rootScope', '$ionicModal', '$http', '$ionicLoading', '$location', '$ionicPopover',
   function ($scope, $ionicPopup, $rootScope, $ionicModal, $http, $ionicLoading, $location, $ionicPopover) {
-
+    $ionicPopover.fromTemplateUrl('parent/parent-popover.html', {
+      scope: $scope
+    }).then(function (popover) {
+      $scope.popover = popover;
+    });
     // Fonction qui envoie le mail
     $rootScope.sendI = function (mail) {
 
@@ -671,7 +675,7 @@ parent.controller("PDemandeInfoEmailController", ['$scope', '$ionicPopup', '$roo
         template: "En cours d'envoi !",
         duration: 1500
       });
-      $http.post('http://81.192.194.109:8182/CapMissionApp/send-mail', mail, {timeout: 120000}).success(function (data, status, headers, config) {
+      $http.post('http://51.255.195.19:8182/CapMissionApp/send-mail', mail, {timeout: 120000}).success(function (data, status, headers, config) {
         toastr.success('Votre remarque a été envoyée avec succès')
         //$ionicHistory.goBack();
       }).error(function (data, status) {
@@ -685,25 +689,21 @@ parent.controller("PDemandeInfoEmailController", ['$scope', '$ionicPopup', '$roo
       });
 
     }
-    $ionicPopover.fromTemplateUrl('parent/parent-popover.html', {
-      scope: $scope
-    }).then(function (popover) {
-      $scope.popover = popover;
-    });
+
   }]);
 
 // Controller Cours choix ajout/modif
 parent.controller('PChoixCoursController', ['$scope', '$ionicPopover', function ($scope, $ionicPopover) {
-
-
-  $scope.goBack = function () {
-    $ionicHistory.goBack();
-  }
   $ionicPopover.fromTemplateUrl('parent/parent-popover.html', {
     scope: $scope
   }).then(function (popover) {
     $scope.popover = popover;
   });
+
+  $scope.goBack = function () {
+    $ionicHistory.goBack();
+  }
+
 }]);
 
 // Controller choix matière
@@ -791,7 +791,7 @@ parent.controller('PAjoutCoursChoixCtrl', ['$scope', '$rootScope', '$ionicPopove
     $ionicLoading.show({
       template: "Chargement !",
     });
-    $http.get('http://81.192.194.109:8182/CapMissionApp/students/' + id, {timeout: 35000}).success(function (data) {
+    $http.get('http://51.255.195.19:8182/CapMissionApp/students/' + id, {timeout: 35000}).success(function (data) {
       $rootScope.eleve = data
       $rootScope.idE = $rootScope.eleve.entity.id
       $rootScope.nomEnfant = $rootScope.eleve.entity.name
@@ -836,7 +836,7 @@ parent.controller('ChoixAjoutCoursCtrl', ['$scope', '$rootScope', '$http', '$loc
       // $ionicLoading.show({
       //   template: "Chargement !"
       // });
-      $http.get('http://81.192.194.109:8182/CapMissionApp/students/' + id, {timeout: 35000}).success(function (data) {
+      $http.get('http://51.255.195.19:8182/CapMissionApp/students/' + id, {timeout: 35000}).success(function (data) {
         $rootScope.eleve = data
         $rootScope.idE = $rootScope.eleve.entity.id
         $rootScope.nomEnfant = $rootScope.eleve.entity.name
@@ -871,7 +871,7 @@ parent.controller('ChoixAjoutCoursCtrl', ['$scope', '$rootScope', '$http', '$loc
         $ionicLoading.show({
           template: "Chargement !"
         });
-        $http.get('http://81.192.194.109:8182/CapMissionApp/students/' + id, {timeout: 35000}).success(function (data) {
+        $http.get('http://51.255.195.19:8182/CapMissionApp/students/' + id, {timeout: 35000}).success(function (data) {
           $rootScope.eleve = data
           $rootScope.idE = $rootScope.eleve.entity.id
           $rootScope.nomEnfant = $rootScope.eleve.entity.name
@@ -894,7 +894,7 @@ parent.controller('ChoixAjoutCoursCtrl', ['$scope', '$rootScope', '$http', '$loc
       else if (name != $rootScope.parent.entity.name) {
         $rootScope.test = id
         console.log('id enfant :' +$rootScope.test)
-        $http.get('http://81.192.194.109:8182/CapMissionApp/students/' + id, {timeout: 35000}).success(function (data) {
+        $http.get('http://51.255.195.19:8182/CapMissionApp/students/' + id, {timeout: 35000}).success(function (data) {
           $rootScope.eleve = data
           $rootScope.idE = $rootScope.eleve.entity.id
           $rootScope.nomEnfant = $rootScope.eleve.entity.name
@@ -912,7 +912,7 @@ parent.controller('ChoixAjoutCoursCtrl', ['$scope', '$rootScope', '$http', '$loc
       }
     }
     else if ($rootScope.parent.entity.students.length >= "2") {
-      $http.get('http://81.192.194.109:8182/CapMissionApp/students/' + id, {timeout: 35000}).success(function (data) {
+      $http.get('http://51.255.195.19:8182/CapMissionApp/students/' + id, {timeout: 35000}).success(function (data) {
         console.log('id enfant :' +id)
         $rootScope.eleve = data
         $rootScope.idE = $rootScope.eleve.entity.id
@@ -993,7 +993,7 @@ parent.controller('PCoursParticulierCtrl', ['$scope', '$ionicPopup', '$rootScope
         template: "En cours d'envoi !",
         duration: 1500
       });
-      $http.post('http://81.192.194.109:8182/CapMissionApp/send-mail', mail, {timeout: 120000}).success(function (data, status, headers, config) {
+      $http.post('http://51.255.195.19:8182/CapMissionApp/send-mail', mail, {timeout: 120000}).success(function (data, status, headers, config) {
         toastr.success('Votre demande de cours particulier a été envoyée avec succès')
         //$ionicHistory.goBack();
       }).error(function (data, status) {
@@ -1069,7 +1069,7 @@ parent.controller('PCoursGroupAutreCtrl', ['$scope', '$ionicPopup', '$rootScope'
         template: "En cours d'envoi !",
         duration: 1500
       });
-      $http.post('http://81.192.194.109:8182/CapMissionApp/send-mail', mail, {timeout: 120000}).success(function (data, status, headers, config) {
+      $http.post('http://51.255.195.19:8182/CapMissionApp/send-mail', mail, {timeout: 120000}).success(function (data, status, headers, config) {
         toastr.success('Votre message a été envoyée avec succès')
         //$ionicHistory.goBack();
       }).error(function (data, status) {
@@ -1377,7 +1377,7 @@ parent.controller('PRecapCoursGroupeCtrl', ['$scope', '$ionicPopup', '$rootScope
         template: "En cours d'envoi !",
         duration: 1500
       });
-      $http.post('http://81.192.194.109:8182/CapMissionApp/send-mail', mail, {timeout: 120000}).success(function (data, status, headers, config) {
+      $http.post('http://51.255.195.19:8182/CapMissionApp/send-mail', mail, {timeout: 120000}).success(function (data, status, headers, config) {
         $location.path('/parent/emploiEnfant2')
         toastr.success('Votre demande a été envoyée avec succès')
 
@@ -1732,7 +1732,7 @@ parent.controller('PTestCtrl', ['$scope', '$ionicPopup', '$rootScope', '$http', 
                                               'Une remarque éventuelle de la part du parent :' + mail.body
                                             }else{
                                               //cas 6 noms et 5 jours
-                                              if($rootScope.debutH == null && $rootScope.debutD == null) {
+                                              if($rootScope.jour6 == null && $rootScope.debutH == null && $rootScope.debutD == null) {
                                                 mail.body = 'Le parent : ' + $rootScope.parent.entity.name + ' souhaite créer un groupe pour un cours de ' +$rootScope.matiere+ '\nLe nombre de personnes pour ce groupe est de :' + $rootScope.nb + '. \n' +
                                                   'Les étudiants sont :\n' + $rootScope.nomE1 + '\n' + $rootScope.nomE2 + '\n' + $rootScope.nomE3 + '\n' + $rootScope.nomE4 + '\n' + $rootScope.nomE5 + '\n' + $rootScope.nomE6 + '\n'
                                                 'Le nombre de jours par semaine : ' +$rootScope.nbJ+ '\nHeure du 1er cours : ' +moment($rootScope.debutH1).format('HH:mm')+ '\nJours du 1er cours : ' +$rootScope.jour1+ '\nHeure du 2ème cours : ' + moment($rootScope.debutH2).format('HH:mm')+
@@ -1840,7 +1840,7 @@ parent.controller('PTestCtrl', ['$scope', '$ionicPopup', '$rootScope', '$http', 
       $ionicLoading.show({
         template: "En cours d'envoi !",
       });
-      $http.post('http://81.192.194.109:8182/CapMissionApp/send-mail', mail, {timeout: 120000}).success(function (data, status, headers, config) {
+      $http.post('http://51.255.195.19:8182/CapMissionApp/send-mail', mail, {timeout: 120000}).success(function (data, status, headers, config) {
         toastr.success('Votre message a été envoyée avec succès')
         $ionicLoading.hide()
         $location.path('/choix')
@@ -1858,6 +1858,197 @@ parent.controller('PTestCtrl', ['$scope', '$ionicPopup', '$rootScope', '$http', 
       });
 
     }
+
+
+    $scope.goBack = function(){
+      $ionicHistory.goBack();
+    }
+    $ionicPopover.fromTemplateUrl('parent/parent-popover.html', {
+      scope: $scope
+    }).then(function (popover) {
+      $scope.popover = popover;
+    });
+  }]);
+
+// Controller pour changer le mot de passe
+parent.controller('ChangerMdpCtrl', ['$scope', '$ionicPopup', '$rootScope', '$http', '$ionicLoading','$location','$ionicPopover',
+  function($scope,$ionicPopup,$rootScope,$http,$ionicLoading,$location,$ionicPopover){
+
+
+
+    $scope.goBack = function(){
+      $ionicHistory.goBack();
+    }
+    $ionicPopover.fromTemplateUrl('parent/parent-popover.html', {
+      scope: $scope
+    }).then(function (popover) {
+      $scope.popover = popover;
+    });
+  }]);
+
+
+
+
+// Controller pour changer le mot de passe
+parent.controller('ChangerMdpCtrl', ['$scope', '$ionicPopup', '$rootScope', '$http', '$ionicLoading','$location','$ionicPopover','$ionicHistory',
+  function($scope,$ionicPopup,$rootScope,$http,$ionicLoading,$location,$ionicPopover,$ionicHistory){
+
+
+
+    $scope.goBack = function(){
+      $ionicHistory.goBack();
+    }
+    $ionicPopover.fromTemplateUrl('parent/parent-popover.html', {
+      scope: $scope
+    }).then(function (popover) {
+      $scope.popover = popover;
+    });
+  }]);
+
+// Controller pour les parametres
+parent.controller('ParametresCtrl', ['$scope', '$ionicPopup', '$rootScope', '$http', '$ionicLoading','$location','$ionicPopover','$ionicHistory',
+  function($scope,$ionicPopup,$rootScope,$http,$ionicLoading,$location,$ionicPopover,$ionicHistory){
+
+    //Méthode pour le popup modifier son login
+    $scope.modifLogin = function () {
+      $scope.data = {};
+      $scope.user = {}
+
+      // An elaborate, custom popup
+      var myPopup = $ionicPopup.show({
+        template: '<form name="MyForm" ><input type="hidden" name = "oldLogin" ng-model="data.oldLogin" ng-init="data.oldLogin = resp.entity.login">' +
+          '<input type="hidden" ng-model="user.id" ng-init="user.id = resp.entity.id">'+
+        '<input type="hidden" ng-model="user.password" ng-init="user.password = resp.entity.password">'+
+        '<input type="text" name = "oldLogin2" placeholder="Ancien Login" ng-model="data.oldLogin2" ng-pattern="data.oldLogin" ><br>' +
+        '<input type="text" placeholder="Nouveau Login" name="newLogin" ng-model="user.newLogin"><br>' +
+        '<input type="text" placeholder="Confirmer votre Login" name="confLogin" ng-model="data.confLogin" ng-pattern="user.newLogin">'+
+        '<div ng-show="MyForm.oldLogin2.$error.pattern" style="color: red">*Ancien login incorrect !</div>'+
+        '<div ng-show="MyForm.confLogin.$error.pattern" style="color: red">*Logins non correspondants ! </div>',
+        title: 'Modifier votre Login',
+        subTitle: 'Pensez à utilisez un Login simple à retenir',
+        scope: $scope,
+        buttons: [
+          { text: '<b>Annuler</b>',
+            type: 'buttonEmp3',},
+          {
+            text: '<b>Modifier</b>',
+            type: 'buttonEmp2',
+            onTap: function(e) {
+              if (((!$scope.data.oldLogin2) && (!$scope.user.newLogin) && (!$scope.data.confLogin)) && ($scope.user.newLogin != $scope.data.confLogin) ) {
+                //don't allow the user to close unless he enters wifi password
+                e.preventDefault();
+               /*toastr.erro r('Inscrire un Login dans le premier champ.', {displayDuration: 1000});*/
+              } else{
+                console.log('id : '+$scope.user.id)
+                console.log('login : '+$scope.user.newLogin)
+                console.log('password : '+$scope.user.password)
+                var user = {
+                  id: $scope.user.id,
+                  login: $scope.user.newLogin,
+                  password: $scope.user.password
+                };
+                $ionicLoading.show({
+                  template: "En cours !",
+                  duration: 1500
+                });
+                $http.put('http://51.255.195.19:8182/CapMissionApp/users/update/' + $scope.user.id, JSON.stringify(user), {timeout: 30000}).success(function (data, status, headers, config) {
+                  $scope.updateData = data
+                  toastr.success('Votre login a été changé avec succès !', {displayDuration: 1000});
+                  console.log('new login : ' + $scope.updateData.entity.login)
+                  localStorage.removeItem("id")
+                  localStorage.removeItem("login")
+                  localStorage.removeItem("password")
+                  localStorage.removeItem("status")
+                  $location.path('/login')
+
+                }).error(function (data, status) {
+
+                    toastr.error('Echec de connexion ! Veuillez réessayer dans quelques instants !', 'Désolés !', {displayDuration: 1000});
+                    navigator.app.exitApp();
+
+
+                });
+
+              }
+            }
+          }
+        ]
+      });
+
+      myPopup.then(function(res) {
+        console.log('Tapped!', res);
+      });
+    };
+
+    //Méthode pour modifier le mot de passe
+    $scope.modifMdp = function () {
+      $scope.data = {};
+      $scope.user = {}
+
+      // An elaborate, custom popup
+      var myPopup = $ionicPopup.show({
+        template: '<form name="MyForm" ><input type="hidden" name = "oldPwd" placeholder="Ancien mot de passe" ng-model="data.oldPwd" ng-init="data.oldPwd = resp.entity.password">' +
+        '<input type="password" name = "oldPwd2" placeholder="Ancien mot de passe" ng-model="data.oldPwd2" ng-pattern="data.oldPwd" required="required"><br>' +
+        '<input type="hidden" ng-model="user.id" ng-init="user.id = resp.entity.id">'+
+        '<input type="hidden" ng-model="user.login" ng-init="user.login = resp.entity.login">'+
+        '<input type="password" name="oldLogin" placeholder="Nouveau mot de passe" ng-model="user.oldLogin"><br>' +
+        '<input type="password" name="confLogin" placeholder="Confirmer votre Mot de Passe" ng-model="data.confLogin" ng-pattern="user.oldLogin"></form>' +
+        '<div ng-show="MyForm.oldPwd2.$error.pattern" style="color: red">*Ancien mot de passe incorrect !</div>'+
+        '<div ng-show="MyForm.confLogin.$error.pattern" style="color: red">*Mots de passe non correspondants ! </div>',
+        title: 'Modifier votre Mot de Passe',
+        scope: $scope,
+        buttons: [
+          { text: '<b>Annuler</b>',
+            type: 'buttonEmp3',},
+          {
+            text: '<b>Modifier</b>',
+            type: 'buttonEmp2',
+            onTap: function(e) {
+              if (((!$scope.data.oldPwd2) && (!$scope.user.oldLogin) && (!$scope.data.confLogin)) && ($scope.user.oldLogin != $scope.data.confLogin) ) {
+                //don't allow the user to close unless he enters wifi password
+                e.preventDefault();
+
+              } else {
+                console.log('id : '+$scope.user.id)
+                console.log('password : '+$scope.user.oldLogin)
+                console.log('login : '+$scope.user.login)
+                var user = {
+                  id: $scope.user.id,
+                  login: $scope.user.login,
+                  password: $scope.user.oldLogin
+                };
+                $ionicLoading.show({
+                  template: "En cours !",
+                  duration: 1500
+                });
+                $http.put('http://51.255.195.19:8182/CapMissionApp/users/update/' + $scope.user.id, JSON.stringify(user), {timeout: 30000}).success(function (data, status, headers, config) {
+                  $scope.updateData = data
+                  toastr.success('Votre mot de passe a été changé avec succès !', {displayDuration: 1000});
+                  console.log('new password : ' + $scope.updateData.entity.password)
+                  localStorage.removeItem("id")
+                  localStorage.removeItem("login")
+                  localStorage.removeItem("password")
+                  localStorage.removeItem("status")
+                  $location.path('/login')
+
+                }).error(function (data, status) {
+
+                  toastr.error('Echec de connexion ! Veuillez réessayer dans quelques instants !', 'Désolés !', {displayDuration: 1000});
+                  navigator.app.exitApp();
+
+
+                });
+
+              }
+            }
+          }
+        ]
+      });
+
+      myPopup.then(function(res) {
+        console.log('Tapped!', res);
+      });
+    };
 
 
     $scope.goBack = function(){

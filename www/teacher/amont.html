@@ -1,6 +1,6 @@
 <ion-view title='<img class="title-image" src="parent/icon.png"> Cap Mission </img>' cache-view="false">
   <ion-nav-buttons side="right">
-    <a class="button button-icon ion-ios-more rotate-90 fs-s" ng-click="popover.show($event)"></a>
+    <a class="button button-icon ion-ios-more rotate-90 fs-s" ng-app="capMission.teacher" ng-controller="TProposCtrl" ng-click="popover.show($event)"></a>
   </ion-nav-buttons>
 
   <ion-tabs class="tabs-icon-top tabs-color-active-positive" ng-class="{'tabs-item-hide': $root.hideTabs}">
@@ -32,10 +32,10 @@
 
     </ion-tab>
 
-    <ion-tab title="Contactez-nous" icon-off="ion-ios-chatboxes-outline" icon-on="ion-ios-chatboxes"
+   <!-- <ion-tab title="Contactez-nous" icon-off="ion-ios-chatboxes-outline" icon-on="ion-ios-chatboxes"
              badge="badgeMessages" badge-style="badge-assertive" ng-click="onTabSelected()">
 
-    </ion-tab>
+    </ion-tab>-->
 
   </ion-tabs>
   <ion-content>
@@ -74,15 +74,20 @@
     <ion-popover-view>
       <ion-content>
         <div class="list">
-          <a class="item" href="#/teacher/profil" ng-click="popover.hide()">
+          <a class="item" href="#/teacher/profil" ng-click="popover.hide()"><i class="icon ion-person">
             Profil
-          </a>
-          <a class="item" href="#/teacher/apropos"  ng-click="popover.hide()">
+          </i></a>
+          <hr>
+          <a class="item" href="#/teacher/apropos" ng-click="popover.hide()"><i class="icon ion-android-textsms">
             A propos
-          </a>
-          <a class="item" href="#" ng-controller="LogoutCtrl" ng-click="logout();popover.hide()">
+          </i></a>
+          <hr>
+          <a class="item" href="#/teacher/parametres" ng-click="popover.hide()"><i class="icon ion-gear-b">
+            Paramètres
+          </i></a>
+          <a class="item" href="#" ng-controller="LogoutCtrl" ng-click="logout();popover.hide()"><i class="icon ion-android-exit">
             Quitter l'application
-          </a>
+          </i></a>
         </div>
       </ion-content>
     </ion-popover-view>

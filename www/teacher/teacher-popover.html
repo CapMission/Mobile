@@ -2,15 +2,20 @@
 <ion-popover-view>
   <ion-content>
     <div class="list">
-      <a class="item" href="#/teacher/profil" ng-click="popover.hide()">
+      <a class="item" href="#/teacher/profil" ng-click="popover.hide()"><i class="icon ion-person">
         Profil
-      </a>
-      <a class="item" href="#/teacher/apropos" ng-click="popover.hide()">
+      </i></a>
+      <hr>
+      <a class="item" href="#/teacher/apropos" ng-click="popover.hide()"><i class="icon ion-android-textsms">
         A propos
-      </a>
-      <a class="item" ng-controller="LogoutCtrl" ng-click="logout();popover.hide()">
+      </i></a>
+      <hr>
+      <a class="item" href="#/teacher/parametres" ng-click="popover.hide()"><i class="icon ion-gear-b">
+        Paramètres
+      </i></a>
+      <a class="item" href="#" ng-controller="LogoutCtrl" ng-click="logout();popover.hide()"><i class="icon ion-android-exit">
         Quitter l'application
-      </a>
+      </i></a>
     </div>
   </ion-content>
 </ion-popover-view>

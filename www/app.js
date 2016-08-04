@@ -23,7 +23,8 @@ var CapMission = angular.module('capMission', [
   'services',
   'ngStorage',
   'simplePagination',
-  'ngAnimate'
+  'ngAnimate',
+  'toaster'
 ]);
 
 CapMission.filter('capitalize', function() {
@@ -72,13 +73,8 @@ CapMission.controller('NotifController', function($scope, $cordovaLocalNotificat
   })
 });
 
-CapMission.controller('HomeController', function($scope) {
-
-
-});
-
 CapMission.controller('capController', function ($scope, $rootScope, $location, $auth, $http, $ionicLoading, $localStorage) {
-
+$rootScope.dateNow = new Date()
   /*if(window.localStorage.getItem('login') == null){
   console.log(window.localStorage.getItem('login'))}
 */
@@ -148,8 +144,9 @@ CapMission.controller('capController', function ($scope, $rootScope, $location, 
     $ionicLoading.show({
       template: 'Chargement'
     });
-    $http.post('http://81.192.194.109:8182/CapMissionApp/auth/login', user, {timeout: 30000}).success(function (data, status, headers, config) {
+    $http.post('http://51.255.195.19:8182/CapMissionApp/auth/login', user, {timeout: 30000}).success(function (data, status, headers, config) {
       $rootScope.resp = data
+      console.log('idresp'+$rootScope.resp.entity.id)
       $scope.test = data
       console.log('login before : ' + $scope.test.entity.login)
 
@@ -173,7 +170,8 @@ CapMission.controller('capController', function ($scope, $rootScope, $location, 
         $rootScope.errorMessageChang = "Votre login ou mot de passe a été changé ! Veuillez contacter Cap Mission pour plus d'informations";
       }*/
       else if (data.login != user.login || data.password != user.password) {
-        $rootScope.errorMessage = 'Login/Mot de passe incorrect';
+        toastr.error('Identifiants incorrects ! ', {displayDuration: 1000});
+        //$rootScope.errorMessage = 'Login/Mot de passe incorrect';
       }
       $ionicLoading.hide();
       $location.path('/login');
@@ -238,7 +236,7 @@ CapMission.controller("EmailController",function($scope,$ionicPopup,$rootScope,$
       template: "En cours d'envoi !",
       duration: 1500
     });
-    $http.post('http://81.192.194.109:8182/CapMissionApp/send-mail', mail, {timeout: 120000}).success(function (data, status, headers, config) {
+    $http.post('http://51.255.195.19:8182/CapMissionApp/send-mail', mail, {timeout: 120000}).success(function (data, status, headers, config) {
       toastr.success('Votre demande a été envoyée avec succès')
       //$ionicHistory.goBack();
     }).error(function (data, status) {
@@ -324,7 +322,7 @@ CapMission.directive('uiShowPassword', [
 */
 
 CapMission.constant("Constants", {
-  "URL_API": "http://81.192.194.109:8182/CapMissionApp"
+  "URL_API": "http://51.255.195.19:8182/CapMissionApp"
   //"URL_CANVAS": "http://192.168.1.9/"
 });
 
@@ -492,12 +490,7 @@ CapMission.config(['$stateProvider', '$urlRouterProvider', '$ionicConfigProvider
   // Each state's controller can be found in 'nom de la partie'.js par exemple: authentication.js, follow.js, home.js etc etc
   $stateProvider
 
-    .state('home', {
-      url: '/home',
-      controller: 'HomeController',
-      templateUrl: 'authentication/home.html',
 
-    })
     .state('login', {
       url: '/login',
       controller: 'capController',
@@ -745,6 +738,76 @@ CapMission.config(['$stateProvider', '$urlRouterProvider', '$ionicConfigProvider
       url: '/disponibilite',
       controller: 'DisponibiliteCtrl',
       templateUrl: 'authentication/disponibilite.html'
+    })
+                                                                //state pour les parametres
+    .state('parametres', {
+      url: '/parent/parametres',
+      controller: 'ParametresCtrl',
+      templateUrl: 'parent/parametres.html'
+    })
+    .state('Sparametres', {
+      url: '/student/parametres',
+      controller: 'SParametresCtrl',
+      templateUrl: 'student/parametres.html'
+    })
+    .state('Tparametres', {
+      url: '/teacher/parametres',
+      controller: 'TParametresCtrl',
+      templateUrl: 'teacher/parametres.html'
+    })
+    //state pour student tag ajout cours
+    .state('ajoutCours', {
+      url: '/student/ajoutCours',
+      templateUrl: 'student/choixMatiere.html',
+      controller: 'SAjoutCoursCtrl'
+    })
+    //state pour choix matiere ajout cours student
+    .state('choixMatiereS', {
+      url: '/student/choixMatiereS',
+      templateUrl: 'student/choixMatiere.html',
+      controller: 'SChoixMatiereCtrl'
+    })
+    //state pour choix type cours student
+    .state('choixTypeCoursS', {
+      url: '/student/choixTypeCoursS',
+      templateUrl: 'student/choixTypeCoursS.html',
+      controller: 'SChoixTypeCoursCtrl'
+    })
+    //state pour cours particulier student
+    .state('coursParticulierS', {
+      url: '/student/coursParticulierS',
+      templateUrl: 'student/coursParticulierS.html',
+      controller: 'SCoursParticulierCtrl'
+    })
+    //state pour nb de personne student
+    .state('nbPersonneS', {
+      url: '/student/nbPersonneS',
+      templateUrl: 'student/nbPersonneS.html',
+      controller: 'SNbPersonneCtrl'
+    })
+    //state choix d'un cours multiple ou occasionnel student
+    .state('choixFrequenceCours', {
+      url: '/student/choixFrequenceCours',
+      templateUrl: 'student/choixFrequenceCours.html',
+      controller: 'SFrequenceCoursCtrl'
+    })
+    //state pour cours occasionnel student
+    .state('coursOccasionnelS', {
+      url: '/student/coursOccasionnelS',
+      templateUrl: 'student/coursOccasionnelS.html',
+      controller: 'SCoursOccasionnelCtrl'
+    })
+    //state pour recap cours occasionnel student
+    .state('recapOcc', {
+      url: '/student/recapOcc',
+      templateUrl: 'student/recapOcc.html',
+      controller: 'SRecapOccCtrl'
+    })
+    //state cours Multiple student
+    .state('coursMultiple', {
+      url: '/student/coursMultiple',
+      templateUrl: 'student/coursMultiple.html',
+      controller: 'SCoursMultipleCtrl'
     })
     .state('emploiEnfant2', {
       url: '/parent/emploiEnfant2',

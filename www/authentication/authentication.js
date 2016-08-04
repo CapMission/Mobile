@@ -1,4 +1,4 @@
-var authentication = angular.module('capMission.authentication', ['ionic','ionicProcessSpinner','ngAnimate']);
+var authentication = angular.module('capMission.authentication', ['ionic','ionicProcessSpinner','ngAnimate','toaster']);
 authentication.controller('RoleCtrl',['$scope','$ionicPopover','$ionicHistory',  function ($scope,$ionicPopover,$ionicHistory) {
 
   $ionicPopover.fromTemplateUrl('teacher/popover.html', {
@@ -9,8 +9,8 @@ authentication.controller('RoleCtrl',['$scope','$ionicPopover','$ionicHistory', 
 }]);
 
 // Controller pour identifiant oublié
-authentication.controller('IdentifiantOublieCtrl', ['$scope','$rootScope','$http','$location','$ionicPopover','$ionicHistory','$ionicLoading',
-  function ($scope,$rootScope,$http,$location,$ionicPopover,$ionicHistory,$ionicLoading) {
+authentication.controller('IdentifiantOublieCtrl', ['$scope','$rootScope','$http','$location','$ionicPopover','$ionicHistory','$ionicLoading','toaster',
+  function ($scope,$rootScope,$http,$location,$ionicPopover,$ionicHistory,$ionicLoading,toaster) {
 
     String.prototype.capitalizeFirstLetter = function() {
       return this.charAt(0).toUpperCase() + this.slice(1);
@@ -37,7 +37,7 @@ authentication.controller('IdentifiantOublieCtrl', ['$scope','$rootScope','$http
 
      )
 
-      $http.get('http://localhost:8998/CapMissionApp/users/get/' + $scope.name, {timeout: 120000}).success(function (data, status, headers, config) {
+      $http.get('http://51.255.195.19:8182/CapMissionApp/users/get/' + $scope.name, {timeout: 120000}).success(function (data, status, headers, config) {
         $ionicLoading.hide()
         $scope.identifiant = data
         console.log('Vous y etes !')
@@ -48,7 +48,7 @@ authentication.controller('IdentifiantOublieCtrl', ['$scope','$rootScope','$http
         mail.from = 'info@capmission.com'
 
         // Envoie de l'objet du mail et de son contenu
-        mail.subject = 'Vos identifiants'
+        mail.subject = 'Vos identifiants Cap Mission'
         mail.body = 'Suite à votre demande de récupération de vos identifiants, nous vous transmettons votre login et votre mot de passe :' +
           '\nLogin : ' +$scope.identifiant.entity.login+ '\nMot de Passe : ' +$scope.identifiant.entity.password
 
@@ -58,7 +58,7 @@ authentication.controller('IdentifiantOublieCtrl', ['$scope','$rootScope','$http
         console.log('body: ' + mail.body)
         toastr.success("Nous avons pu récupérer vos données. Un email vous sera envoyé contenant vos identifiants", {closeButton: true });
 
-        $http.post('http://81.192.194.109:8182/CapMissionApp/send-mail', mail, {timeout: 120000}).success(function (data, status, headers, config) {
+        $http.post('http://51.255.195.19:8182/CapMissionApp/send-mail', mail, {timeout: 120000}).success(function (data, status, headers, config) {
           toastr.success("Un email vous a été envoyé. Vérifiez votre boîte email", {closeButton: true });
           $location.path('/login')
 
@@ -92,7 +92,8 @@ authentication.controller('IdentifiantOublieCtrl', ['$scope','$rootScope','$http
 
   }]);
 
-authentication.controller('InscriptionCtrl', ['$scope','$rootScope','$http','$location','$ionicPopover','$ionicHistory','$ionicLoading', function ($scope,$rootScope,$http,$location,$ionicPopover,$ionicHistory,$ionicLoading) {
+authentication.controller('InscriptionCtrl', ['$scope','$rootScope','$http','$location','$ionicPopover','$ionicHistory','$ionicLoading',
+  function ($scope,$rootScope,$http,$location,$ionicPopover,$ionicHistory,$ionicLoading) {
 
   $scope.nomPrenomP = ''
   $scope.bodyAutre = ''
@@ -174,6 +175,11 @@ authentication.controller('InscriptionCtrl', ['$scope','$rootScope','$http','$lo
 }]);
 
 authentication.controller('ChoixCtrl', ['$scope','$rootScope','$http','$location','$ionicPopover','$ionicHistory','$ionicLoading', function ($scope,$rootScope,$http,$location,$ionicPopover,$ionicHistory,$ionicLoading) {
+  $ionicPopover.fromTemplateUrl('parent/parent-popover.html', {
+    scope: $scope
+  }).then(function (popover) {
+    $scope.popover = popover;
+  });
   $scope.now = new Date();
   $rootScope.onTabSelected = function(){
     <!-- ionicToast.show(message, position, stick, time); -->
@@ -188,7 +194,7 @@ authentication.controller('ChoixCtrl', ['$scope','$rootScope','$http','$location
   // $id = $rootScope.resp.entity.id
   $scope.get = function (id) {
 
-    $http.get('http://81.192.194.109:8182/CapMissionApp/parents/' + id).success(function (data, status, headers, config) {
+    $http.get('http://51.255.195.19:8182/CapMissionApp/parents/' + id).success(function (data, status, headers, config) {
       //$scope.test="safaa"
       $rootScope.parent = data
       console.log(data)
@@ -211,7 +217,7 @@ authentication.controller('ChoixCtrl', ['$scope','$rootScope','$http','$location
           }
 
           // Connexion au serveur pour récupérer les données Etudiant
-          $http.get('http://81.192.194.109:8182/CapMissionApp/students/' + id, {timeout: 35000}).success(function (data, status, headers, config) {
+          $http.get('http://51.255.195.19:8182/CapMissionApp/students/' + id, {timeout: 35000}).success(function (data, status, headers, config) {
 
             $rootScope.son = data
             $ionicLoading.hide();
@@ -244,7 +250,7 @@ authentication.controller('ChoixCtrl', ['$scope','$rootScope','$http','$location
                 console.log(id)
               }
 
-              $http.get('http://81.192.194.109:8182/CapMissionApp/students/' + id, {timeout: 35000}).success(function (data, status, headers, config) {
+              $http.get('http://51.255.195.19:8182/CapMissionApp/students/' + id, {timeout: 35000}).success(function (data, status, headers, config) {
 
                 $rootScope.son = data
                 $ionicLoading.hide();
@@ -276,11 +282,7 @@ authentication.controller('ChoixCtrl', ['$scope','$rootScope','$http','$location
   $scope.goBack = function(){
     $ionicHistory.goBack();
   }
-  $ionicPopover.fromTemplateUrl('parent/parent-popover.html', {
-    scope: $scope
-  }).then(function (popover) {
-    $scope.popover = popover;
-  });
+
 
 }]);
 
@@ -402,8 +404,8 @@ authentication.controller('CatalogueCtrl', ['$scope','$rootScope','$http','$loca
 authentication.controller('ChoixMatiereNonInscritCtrl', ['$scope','$rootScope','$http','$location','$ionicPopover','$ionicHistory','$ionicLoading',
   function ($scope,$rootScope,$http,$location,$ionicPopover,$ionicHistory,$ionicLoading) {
 
-    $scope.missions = ["Bilingue", "Mission Française", "Mission Belge", "Mission U.S.", "Mission Espagnole", "Enseignement Universitaire", "Adulte", "Informatique"]
-    $scope.sections = ["Primaire", "Collège", "Lycée"]
+    $scope.missions = ["Bilingue", "Mission Française", "Mission Belge", "Mission U.S.", "Mission Espagnole", "Enseignement Universitaire", "Adulte English", "Informatique"]
+    $scope.sections = ["Maternelle", "Primaire", "Collège", "Lycée"]
     $scope.sectionsUS = ["Elementary/Grade School", "Middle/Junio School", "High School"]
     $scope.sectionsEsp = ["Primaria", "ESO", "Bachillerato"]
     $scope.filieres = ["S", "ES", "L", "STMG", "S-OIB", "ES-OIB", "L-OIB", "STMG-OIB"]
@@ -419,9 +421,10 @@ authentication.controller('ChoixMatiereNonInscritCtrl', ['$scope','$rootScope','
     $scope.niveauxB1 = ["CP", "CE2", "CE3", "CE4", "CE5", "CE6"]
     $scope.niveauxB2 = ["CE7", "CE8", "CE9"]
     $scope.niveauxB3 = ["Tronc Commun", "1ère Année Baccaloréat", "2ème Année Baccaloréat"]
-    $scope.niveauxAdultes = ["Débutant", "A1", "A2", "B1", "B2", "C1", "C2"]
+    $scope.niveauxAdultes = ["Débutant", "A1", "A2", "B1", "B2", "C1", "C2", "Business English", "IELTS", "SAT", "TOEFL"]
     $scope.niveauxUniv = ["1ère année"]
     $scope.nveauxInfo = ["Initiation"]
+    $scope.niveauxMaternelle = ["Test Mission G.S."]
 
     //Matière pour la mission frnacaise et Belge
     $scope.matieresTS = ["Mathématiques", "Physique/Chimie", "SVT", "Histoire/Géographie", "Espagnol LV", "Anglais LV", "Philosophie",
@@ -709,7 +712,7 @@ authentication.controller('RecapitulatifNonInscritCtrl', ['$scope','$rootScope',
       $ionicLoading.show({
         template: "En cours d'envoi !"
       });
-      $http.post('http://81.192.194.109:8182/CapMissionApp/send-mail', mail, {timeout: 120000}).success(function (data, status, headers, config) {
+      $http.post('http://51.255.195.19:8182/CapMissionApp/send-mail', mail, {timeout: 120000}).success(function (data, status, headers, config) {
         $ionicLoading.hide();
         toastr.success('Votre commande a été envoyé avec succès')
         //$ionicHistory.goBack();
@@ -737,14 +740,123 @@ authentication.controller('RecapitulatifNonInscritCtrl', ['$scope','$rootScope',
     });
   }]);
 
-authentication.controller('DisponibiliteCtrl', ['$scope','$rootScope','$http','$location','$ionicPopover','$ionicHistory','$ionicLoading',
-  function ($scope,$rootScope,$http,$location,$ionicPopover,$ionicHistory,$ionicLoading) {
+authentication.controller('DisponibiliteCtrl', ['$scope','$rootScope','$http','$location','$ionicPopover','$ionicHistory','$ionicLoading', '$ionicPopup',
+  function ($scope,$rootScope,$http,$location,$ionicPopover,$ionicHistory,$ionicLoading, $ionicPopup) {
 
+    $scope.voirDispo = function (field) {
+      $scope.data = {};
+
+      $scope.disponibilities = [
+        {indexD: 'id1', cb: 'Lundi 9h-10h30'},
+        {indexD: 'id2', cb: 'Lundi 10h30-12h'}
+      ];
+
+      var tab = []
+
+      // An elaborate, custom popup
+      var myPopup = $ionicPopup.show({
+        template: '<ion-scroll style="height: 150px;" direction="y" ><div ng-repeat="disponibility in disponibilities">' +
+        '<ion-checkbox  ng-model="disponibility.indexD"  ng-checked="buttonChecked">{{disponibility.cb}}</ion-checkbox>' +
+        // '<span ng-repeat="disponibility in disponibilities">' +
+        // '<label class="checkbox" for="{{$index}}"><input type="checkbox" ng-model="disponibility.index" name="group"/>{{disponibility.cb}}</label></span>' +
+        // '<ion-checkbox ng-model="courELE.cb2"  ng-checked="courELE.cb2">{{courELE.cb2}}</ion-checkbox>' +
+        '</div></ion-scroll>',
+        title: 'Sélectionner le ou les créneau(x) qui vous conviennent :',
+        // subTitle: 'Pensez à utilisez un Login simple à retenir',
+        scope: $scope,
+        buttons: [
+          { text: '<b>Annuler</b>',
+            type: 'buttonEmp3',},
+          {
+            text: '<b>Valider</b>',
+            type: 'buttonEmp2',
+            onTap: function(e) {
+              console.log('la longueur de la liste est : ' +$scope.disponibilities.length)
+              for(i = 0; i < $scope.disponibilities.length; i++){
+                console.log($scope.disponibilities[i].indexD)
+                // var parseFun = $parse($scope.disponibilities[i].indexD)
+                // setter(parseFun, '$scope.disponibilities[i].indexD');
+
+                // $scope.creneauELE[i] = $scope.disponibilities[i].indexD
+                // console.log('Le model est : ' +$scope.creneauELE[i])
+
+                // if ($scope.disponibilities[i].indexD == 'id1') {
+                //   id = $scope.disponibilities[i].indexD
+                //   //don't allow the user to close unless he enters wifi password
+                //   e.preventDefault();
+                //   console.log('le model est : ' +$scope.disponibilities.length)
+                //   tab = push(id)
+                //   return $scope.tab
+                  // toastr.error('Veuillez choisir un créneau minimum !', {displayDuration: 1000});
+
+                // }
+              }
+
+              }
+            }
+          ]
+        });
+
+      myPopup.then(function(res) {
+        console.log('Tapped!', res);
+      });
+    };
+
+    //Méthode pour modifier le mot de passe
+    $scope.modifMdp = function () {
+      $scope.data = {};
+
+      myPopup.then(function(res) {
+        console.log('Tapped!', res);
+      })
+//       $scope.data = { hasWorkEntry: true };
+//
+//       $ionicPopup.show({
+//         title: 'Are you sure you want to open the garage?',
+//         content: '<ion-checkbox ng-model="data.hasWorkEntry" ng-checked="data.hasWorkEntry">Mark as Work Entry?</ion-checkbox>',
+//         scope: $scope,
+//         buttons: [
+//           {text: 'Cancel'},
+//           {
+//             text: '<b>OK</b>',
+//             type: 'button-positive',
+//             onTap: function(e) { return e; }
+//           }
+//         ]
+//       })
+//         .then(function(res) {
+//           if (res)
+//           {
+//             console.log('You asked to open it!');
+//             if($scope.data.hasWorkEntry) {
+//               console.log('and also to mark this as a work log (entry or leave)!');
+//             }
+//           }
+//         });
+//     };
+//
+// // using Confirm()
+// // Ps.: In the Cordova Docs, the Confirm() doesn't have a scope param, but it works if you pass it
+//     $scope.pedestrianToggle = function() {
+//       $scope.data = { hasWorkEntry: true };
+//       $ionicPopup.confirm({
+//         title: 'Tem certeza que deseja abrir o Portão de Pedestres?',
+//         content: '<ion-checkbox ng-model="data.hasWorkEntry" ng-checked="data.hasWorkEntry">Marcar como ponto?</ion-checkbox>',
+//         scope: $scope
+//       })
+//         .then(function(res) {
+//           if(res) {
+//             console.log('You are sure');
+//             if($scope.data.hasWorkEntry) {
+//               console.log('ponto!');
+//             }
+//           }
+//         });
+    }
 
 
     $scope.goRecapitulatif = function (nomPrenomP, telP, emailP, choixParent, autreRaison, nomPrenomEnfant, telEnfant, emailEnfant, dateNaissanceEnfant, ecoleEnfant, coursParti, coursEnGpe, choixMission, choixSection,
-                                       choixNiveau, choixMatiere, dateDebutCours, plusieursCours, nbJoursCours, boutonRadio8h0, boutonRadio8h01, boutonRadio8h1, boutonRadio8h2, boutonRadio8h3, boutonRadio8h4, boutonRadio8h5, boutonRadio9h1, boutonRadio9h2, boutonRadio9h3,
-                                       boutonRadio9h4, boutonRadio10h1, boutonRadio10h2, boutonRadio10h3, boutonRadio11h1, boutonRadio11h2, boutonRadio11h3, boutonRadio12h1, boutonRadio12h2, boutonRadio12h3) {
+                                       choixNiveau, choixMatiere, dateDebutCours, plusieursCours, nbJoursCours) {
 
       $rootScope.nomPrenomParent = nomPrenomP
       $rootScope.telParent = telP
@@ -765,26 +877,6 @@ authentication.controller('DisponibiliteCtrl', ['$scope','$rootScope','$http','$
       $rootScope.dateDebCours = dateDebutCours
       $rootScope.plusCours = plusieursCours
       $rootScope.nbJoursC = nbJoursCours
-      $rootScope.crenaux8h0 = boutonRadio8h0
-      $rootScope.crenaux8h01 = boutonRadio8h01
-      $rootScope.crenaux8h1 = boutonRadio8h1
-      $rootScope.crenaux8h2 = boutonRadio8h2
-      $rootScope.crenaux8h3 = boutonRadio8h3
-      $rootScope.crenaux8h4 = boutonRadio8h4
-      $rootScope.crenaux8h5 = boutonRadio8h5
-      $rootScope.crenaux9h1 = boutonRadio9h1
-      $rootScope.crenaux9h2 = boutonRadio9h2
-      $rootScope.crenaux9h3 = boutonRadio9h3
-      $rootScope.crenaux9h4 = boutonRadio9h4
-      $rootScope.crenaux10h1 = boutonRadio10h1
-      $rootScope.crenaux10h2 = boutonRadio10h2
-      $rootScope.crenaux10h3 = boutonRadio10h3
-      $rootScope.crenaux11h1 = boutonRadio11h1
-      $rootScope.crenaux11h2 = boutonRadio11h2
-      $rootScope.crenaux11h3 = boutonRadio11h3
-      $rootScope.crenaux12h1 = boutonRadio12h1
-      $rootScope.crenaux12h2 = boutonRadio12h2
-      $rootScope.crenaux12h3 = boutonRadio12h3
       $location.path('/recapitulatifNonInscrit')
     }
 

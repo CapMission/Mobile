@@ -58,7 +58,7 @@ teacher.controller("TEmailController",function($scope,$ionicPopup,$rootScope,$io
       template: "En cours d'envoi !",
       duration: 1500
     });
-    $http.post('http://81.192.194.109:8182/CapMissionApp/send-mail', mail, {timeout: 120000}).success(function (data, status, headers, config) {
+    $http.post('http://51.255.195.19:8182/CapMissionApp/send-mail', mail, {timeout: 120000}).success(function (data, status, headers, config) {
       $ionicLoading.hide();
       toastr.success('Votre demande a été envoyée avec succès')
       //$ionicHistory.goBack();
@@ -85,7 +85,7 @@ teacher.controller('TeacherCtrl', ['$scope', '$location', '$rootScope', '$http',
     $ionicLoading.show({
       template: 'Chargement'
     });
-    $http.get('http://81.192.194.109:8182/CapMissionApp/teachers/' + id, {timeout: 35000}).success(function (data, status, headers, config) {
+    $http.get('http://51.255.195.19:8182/CapMissionApp/teachers/' + id, {timeout: 35000}).success(function (data, status, headers, config) {
 
       $rootScope.teacher = data
 
@@ -203,7 +203,7 @@ teacher.controller('TprofileCtrl', ['$scope','$rootScope','$ionicPopover','$ioni
       template: "En cours d'envoi !",
       duration: 1500
     });
-    $http.post('http://81.192.194.109:8182/CapMissionApp/send-mail', mail, {timeout: 120000}).success(function (data, status, headers, config) {
+    $http.post('http://51.255.195.19:8182/CapMissionApp/send-mail', mail, {timeout: 120000}).success(function (data, status, headers, config) {
       $ionicLoading.hide();
       toastr.success('Votre demande a été envoyée avec succès')
     }).error(function (data, status) {
@@ -239,7 +239,7 @@ teacher.controller('TprofileCtrl', ['$scope','$rootScope','$ionicPopover','$ioni
       template: "En cours d'envoi !",
       duration: 1500
     });
-    $http.post('http://81.192.194.109:8182/CapMissionApp/send-mail', mail, {timeout: 120000}).success(function (data, status, headers, config) {
+    $http.post('http://51.255.195.19:8182/CapMissionApp/send-mail', mail, {timeout: 120000}).success(function (data, status, headers, config) {
       $ionicLoading.hide();
       toastr.success('Votre demande a été envoyée avec succès')
     }).error(function (data, status) {
@@ -275,7 +275,7 @@ teacher.controller('TprofileCtrl', ['$scope','$rootScope','$ionicPopover','$ioni
       template: "En cours d'envoi !",
       duration: 1500
     });
-    $http.post('http://81.192.194.109:8182/CapMissionApp/send-mail', mail, {timeout: 120000}).success(function (data, status, headers, config) {
+    $http.post('http://51.255.195.19:8182/CapMissionApp/send-mail', mail, {timeout: 120000}).success(function (data, status, headers, config) {
       $ionicLoading.hide();
       toastr.success('Votre demande a été envoyée avec succès')
     }).error(function (data, status) {
@@ -359,7 +359,7 @@ teacher.controller('TsoldeCtrl', ['$scope', '$rootScope', '$ionicModal', '$http'
       template: "En cours d'envoi !",
       duration: 1500
     });
-    $http.post('http://81.192.194.109:8182/CapMissionApp/send-mail', mail, {timeout: 120000}).success(function (data, status, headers, config) {
+    $http.post('http://51.255.195.19:8182/CapMissionApp/send-mail', mail, {timeout: 120000}).success(function (data, status, headers, config) {
       $ionicLoading.hide();
       toastr.success('Votre demande a été envoyée avec succès')
       //$ionicHistory.goBack();
@@ -417,7 +417,7 @@ teacher.controller('TsoldeCtrl', ['$scope', '$rootScope', '$ionicModal', '$http'
 
 teacher.controller('TtimeCtrl', ['$scope','$ionicPopover','$rootScope','$http','$location', function ($scope, $ionicPopover,$rootScope,$http,$location) {
   $id = resp.entity.id
-  $http.get('http://81.192.194.109:8182/CapMissionApp/teachers/' + $id, {timeout: 35000}).success(function (data, status, headers, config) {
+  $http.get('http://51.255.195.19:8182/CapMissionApp/teachers/' + $id, {timeout: 35000}).success(function (data, status, headers, config) {
     //$scope.test="safaa"
 
     $rootScope.teach = data
@@ -563,7 +563,7 @@ teacher.controller('AmontSoldeCtrl', ['$scope', '$rootScope', '$http', '$locatio
       template: "En cours d'envoi !",
       duration: 1500
     });
-    $http.post('http://81.192.194.109:8182/CapMissionApp/send-mail', mail, {timeout: 120000}).success(function (data, status, headers, config) {
+    $http.post('http://51.255.195.19:8182/CapMissionApp/send-mail', mail, {timeout: 120000}).success(function (data, status, headers, config) {
       $ionicLoading.hide();
       toastr.success('Votre demande a été envoyée avec succès')
       //$ionicHistory.goBack();
@@ -618,3 +618,158 @@ teacher.controller('ChoixEtudiantCtrl', ['$scope', '$rootScope', '$http', '$loca
     $scope.popover = popover;
   });
 }]);
+
+teacher.controller('TParametresCtrl', ['$scope', '$ionicPopup', '$rootScope', '$http', '$ionicLoading','$location','$ionicPopover','$ionicHistory',
+  function($scope,$ionicPopup,$rootScope,$http,$ionicLoading,$location,$ionicPopover,$ionicHistory){
+
+    //Méthode pour le popup modifier son login
+    $scope.modifLogin = function () {
+      $scope.data = {};
+      $scope.user = {}
+
+      // An elaborate, custom popup
+      var myPopup = $ionicPopup.show({
+        template: '<form name="MyForm" ><input type="hidden" name = "oldLogin" ng-model="data.oldLogin" ng-init="data.oldLogin = resp.entity.login">' +
+        '<input type="hidden" ng-model="user.id" ng-init="user.id = resp.entity.id">'+
+        '<input type="hidden" ng-model="user.password" ng-init="user.password = resp.entity.password">'+
+        '<input type="text" name = "oldLogin2" placeholder="Ancien Login" ng-model="data.oldLogin2" ng-pattern="data.oldLogin" ><br>' +
+        '<input type="text" placeholder="Nouveau Login" name="newLogin" ng-model="user.newLogin"><br>' +
+        '<input type="text" placeholder="Confirmer votre Login" name="confLogin" ng-model="data.confLogin" ng-pattern="user.newLogin">'+
+        '<div ng-show="MyForm.oldLogin2.$error.pattern" style="color: red">*Ancien login incorrect !</div>'+
+        '<div ng-show="MyForm.confLogin.$error.pattern" style="color: red">*Logins non correspondants ! </div>',
+        title: 'Modifier votre Login',
+        subTitle: 'Pensez à utilisez un Login simple à retenir',
+        scope: $scope,
+        buttons: [
+          { text: '<b>Annuler</b>',
+            type: 'buttonEmp3',},
+          {
+            text: '<b>Modifier</b>',
+            type: 'buttonEmp2',
+            onTap: function(e) {
+              if (((!$scope.data.oldLogin2) && (!$scope.user.newLogin) && (!$scope.data.confLogin)) && ($scope.user.newLogin != $scope.data.confLogin) ) {
+                //don't allow the user to close unless he enters wifi password
+                e.preventDefault();
+                /*toastr.erro r('Inscrire un Login dans le premier champ.', {displayDuration: 1000});*/
+              } else{
+                console.log('id : '+$scope.user.id)
+                console.log('login : '+$scope.user.newLogin)
+                console.log('password : '+$scope.user.password)
+                var user = {
+                  id: $scope.user.id,
+                  login: $scope.user.newLogin,
+                  password: $scope.user.password
+                };
+                $ionicLoading.show({
+                  template: "En cours !",
+                  duration: 1500
+                });
+                $http.put('http://51.255.195.19:8182/CapMissionApp/users/update/' + $scope.user.id, JSON.stringify(user), {timeout: 30000}).success(function (data, status, headers, config) {
+                  $scope.updateData = data
+                  toastr.success('Votre login a été changé avec succès !', {displayDuration: 1000});
+                  console.log('new login : ' + $scope.updateData.entity.login)
+                  localStorage.removeItem("id")
+                  localStorage.removeItem("login")
+                  localStorage.removeItem("password")
+                  localStorage.removeItem("status")
+                  $location.path('/login')
+
+                }).error(function (data, status) {
+
+                  toastr.error('Echec de connexion ! Veuillez réessayer dans quelques instants !', 'Désolés !', {displayDuration: 1000});
+                  navigator.app.exitApp();
+
+
+                });
+
+              }
+            }
+          }
+        ]
+      });
+
+      myPopup.then(function(res) {
+        console.log('Tapped!', res);
+      });
+    };
+
+    //Méthode pour modifier le mot de passe
+    $scope.modifMdp = function () {
+      $scope.data = {};
+      $scope.user = {}
+
+      // An elaborate, custom popup
+      var myPopup = $ionicPopup.show({
+        template: '<form name="MyForm" ><input type="hidden" name = "oldPwd" placeholder="Ancien mot de passe" ng-model="data.oldPwd" ng-init="data.oldPwd = resp.entity.password">' +
+        '<input type="password" name = "oldPwd2" placeholder="Ancien mot de passe" ng-model="data.oldPwd2" ng-pattern="data.oldPwd" required="required"><br>' +
+        '<input type="hidden" ng-model="user.id" ng-init="user.id = resp.entity.id">'+
+        '<input type="hidden" ng-model="user.login" ng-init="user.login = resp.entity.login">'+
+        '<input type="password" name="oldLogin" placeholder="Nouveau mot de passe" ng-model="user.oldLogin"><br>' +
+        '<input type="password" name="confLogin" placeholder="Confirmer votre Mot de Passe" ng-model="data.confLogin" ng-pattern="user.oldLogin"></form>' +
+        '<div ng-show="MyForm.oldPwd2.$error.pattern" style="color: red">*Ancien mot de passe incorrect !</div>'+
+        '<div ng-show="MyForm.confLogin.$error.pattern" style="color: red">*Mots de passe non correspondants ! </div>',
+        title: 'Modifier votre Mot de Passe',
+        scope: $scope,
+        buttons: [
+          { text: '<b>Annuler</b>',
+            type: 'buttonEmp3',},
+          {
+            text: '<b>Modifier</b>',
+            type: 'buttonEmp2',
+            onTap: function(e) {
+              if (((!$scope.data.oldPwd2) && (!$scope.user.oldLogin) && (!$scope.data.confLogin)) && ($scope.user.oldLogin != $scope.data.confLogin) ) {
+                //don't allow the user to close unless he enters wifi password
+                e.preventDefault();
+
+              } else {
+                console.log('id : '+$scope.user.id)
+                console.log('password : '+$scope.user.oldLogin)
+                console.log('login : '+$scope.user.login)
+                var user = {
+                  id: $scope.user.id,
+                  login: $scope.user.login,
+                  password: $scope.user.oldLogin
+                };
+                $ionicLoading.show({
+                  template: "En cours !",
+                  duration: 1500
+                });
+                $http.put('http://51.255.195.19:8182/CapMissionApp/users/update/' + $scope.user.id, JSON.stringify(user), {timeout: 30000}).success(function (data, status, headers, config) {
+                  $scope.updateData = data
+                  toastr.success('Votre mot de passe a été changé avec succès !', {displayDuration: 1000});
+                  console.log('new password : ' + $scope.updateData.entity.password)
+                  localStorage.removeItem("id")
+                  localStorage.removeItem("login")
+                  localStorage.removeItem("password")
+                  localStorage.removeItem("status")
+                  $location.path('/login')
+
+                }).error(function (data, status) {
+
+                  toastr.error('Echec de connexion ! Veuillez réessayer dans quelques instants !', 'Désolés !', {displayDuration: 1000});
+                  navigator.app.exitApp();
+
+
+                });
+
+              }
+            }
+          }
+        ]
+      });
+
+      myPopup.then(function(res) {
+        console.log('Tapped!', res);
+      });
+    };
+
+
+    $scope.goBack = function(){
+      $ionicHistory.goBack();
+    }
+    $ionicPopover.fromTemplateUrl('teacher/teacher-popover.html', {
+      scope: $scope
+    }).then(function (popover) {
+      $scope.popover = popover;
+    });
+  }]);

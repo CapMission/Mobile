@@ -2,7 +2,7 @@
 
 <ion-view  title='<img class="title-image" src="parent/icon.png">Créer ton Groupe !</img>' cache-view="false">
   <ion-nav-buttons side="right">
-    <a class="button button-icon ion-ios-more rotate-90 fs-s" ng-app="capMission.parent" ng-controller="ProposCtrl" ng-click="popover.show($event)"></a>
+    <a class="button button-icon ion-ios-more rotate-90 fs-s" ng-app="capMission.student" ng-controller="SProposCtrl" ng-click="popover.show($event)"></a>
   </ion-nav-buttons>
 
   <ion-tabs class="tabs-icon-top tabs-color-active-positive" ng-class="{'tabs-item-hide': $root.hideTabs}">
@@ -24,12 +24,10 @@
 
     </ion-tab>
 
-    <ion-tab title="Solde" href="#/parent/solde" icon-off="icon ion-ios-calculator-outline" icon-on="icon ion-ios-calculator"
-             badge="badgeSolde" badge-style="badge-assertive" ng-controller="ChoixsoldeCtrl" ng-click="get(idE)">
+    <ion-tab title="Solde" href="#/student/solde" icon-off="icon ion-ios-calculator-outline" icon-on="icon ion-ios-calculator"></ion-tab>
 
-    </ion-tab>
     <ion-tab title="Ajoutez un cours" icon-off="ion-android-add-circle" icon-on="icon ion-android-add-circle"
-             badge="badgeMessages" badge-style="badge-assertive" ng-controller="ChoixAjoutCoursCtrl" ng-click="get(eleve.entity.id)">
+             badge="badgeMessages" badge-style="badge-assertive" ng-controller="SAjoutCoursCtrl" ng-click="choixMatiere(eleve.entity.id)">
 
     </ion-tab>
   </ion-tabs>
@@ -64,15 +62,15 @@
         <!-- Pour un groupe de 3 -->
         <div ng-switch on="boutonRadio">
           <div ng-switch-when="3">
-          <form name="myForm" ng-submit="submitTable()">
-            <div id="lab">Nom et Prénom :<input id="formBlanc" ng-pattern="/^[a-zA-Z\s]*$/"  type="text" ng-model="nom1" required></div>
-            <div id="lab">Nom et Prénom :<input id="formBlanc" ng-pattern="/^[a-zA-Z\s]*$/"  type="text" ng-model="nom2" required></div>
-            <div id="lab">Nom et Prénom :<input id="formBlanc" ng-pattern="/^[a-zA-Z\s]*$/"  type="text" ng-model="nom3" required></div>
-            <br><br>
-            <center><button ng-disabled="myForm.$invalid" class="button button-small buttonEmp" ng-model="etudiant3" value="3" ng-click="goDate3(mat, coursGpe, creerGroup, boutonRadio, nom1, nom2, nom3)">
-              VALIDER
-            </button></center>
-          </form>
+            <form name="myForm" ng-submit="submitTable()">
+              <div id="lab">Nom et Prénom :<input id="formBlanc" ng-pattern="/^[a-zA-Z\s]*$/"  type="text" ng-model="nom1" required></div>
+              <div id="lab">Nom et Prénom :<input id="formBlanc" ng-pattern="/^[a-zA-Z\s]*$/"  type="text" ng-model="nom2" required></div>
+              <div id="lab">Nom et Prénom :<input id="formBlanc" ng-pattern="/^[a-zA-Z\s]*$/"  type="text" ng-model="nom3" required></div>
+              <br><br>
+              <center><button ng-disabled="myForm.$invalid" class="button button-small buttonEmp" ng-model="etudiant3" value="3" ng-click="goDate3(mat, coursGpe, creerGroup, boutonRadio, nom1, nom2, nom3)">
+                VALIDER
+              </button></center>
+            </form>
           </div>
         </div>
 

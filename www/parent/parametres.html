@@ -1,6 +1,5 @@
 <!-- En tête de l'application -->
-
-<ion-view  title='<img class="title-image" src="parent/icon.png">Créer ton Groupe !</img>' cache-view="false">
+<ion-view  title='<img class="title-image" src="parent/icon.png"> Paramètres </img>' cache-view="false">
   <ion-nav-buttons side="right">
     <a class="button button-icon ion-ios-more rotate-90 fs-s" ng-app="capMission.parent" ng-controller="ProposCtrl" ng-click="popover.show($event)"></a>
   </ion-nav-buttons>
@@ -25,7 +24,7 @@
     </ion-tab>
 
     <ion-tab title="Solde" href="#/parent/solde" icon-off="icon ion-ios-calculator-outline" icon-on="icon ion-ios-calculator"
-             badge="badgeSolde" badge-style="badge-assertive" ng-controller="ChoixsoldeCtrl" ng-click="get(idE)">
+             badge="badgeSolde" badge-style="badge-assertive" ng-controller="ChoixsoldeCtrl" ng-click="get(eleve.entity.id)">
 
     </ion-tab>
     <ion-tab title="Ajoutez un cours" icon-off="ion-android-add-circle" icon-on="icon ion-android-add-circle"
@@ -37,16 +36,20 @@
   <!-- Contenu -->
   <ion-content>
     <br><br><br><br><br><br>
-    <div class="card">
-      <div class="item item-text-wrap">
-        <br><br>
-        <form>
-          <input type="radio" value="Cours occasionel" id="squared1" name="coursOcc" ng-model="frequence" ng-change="goOcc(matiere, coursG, creerTonGroupe, nb, nomE1, nomE2, nomE3,nomE4, nomE5, nomE6, frequence)" required />
-          <label for="squared1">Cours Occasionnel</label>&nbsp;
-          <input type="radio" value="Plusieurs cours" id="squared2" name="coursMultiple" ng-model="frequence" ng-change="goMultiple(matiere, coursG, creerTonGroupe, nb, nomE1, nomE2, nomE3, nomE4, nomE5, nomE6, frequence)" required />
-          <label for="squared2">Cours Multiple</label>
-        </form>
-        <br><br>
+    <div ng-view></div>
+    <div ng-controller="ParametresCtrl">
+      <div>
+        <button class="button button-small icon-right ion-chevron-right buttonEmp2" ng-disabled="myForm.$invalid" ng-model="cours" ng-click="modifLogin()">
+          Modifier votre Login
+        </button>
+      </div><br>
+
+      <div>
+        <button class="button button-small icon-right ion-chevron-right buttonEmp2" ng-disabled="myForm.$invalid" ng-model="cours" ng-click="modifMdp()">
+          Modifier votre Mot de Passe
+        </button>
       </div>
+
     </div>
   </ion-content>
+</ion-view>
