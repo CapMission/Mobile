@@ -635,6 +635,8 @@ teacher.controller('TParametresCtrl', ['$scope', '$ionicPopup', '$rootScope', '$
         '<input type="text" name = "oldLogin2" placeholder="Ancien Login" ng-model="data.oldLogin2" ng-pattern="data.oldLogin" ><br>' +
         '<input type="text" placeholder="Nouveau Login" name="newLogin" ng-model="user.newLogin"><br>' +
         '<input type="text" placeholder="Confirmer votre Login" name="confLogin" ng-model="data.confLogin" ng-pattern="user.newLogin">'+
+        '<p ng-if="showError" class="errror">Champs obligatoires</p>'+
+        '<p ng-if="showError1" class="errror"></p>'+
         '<div ng-show="MyForm.oldLogin2.$error.pattern" style="color: red">*Ancien login incorrect !</div>'+
         '<div ng-show="MyForm.confLogin.$error.pattern" style="color: red">*Logins non correspondants ! </div>',
         title: 'Modifier votre Login',
@@ -647,11 +649,16 @@ teacher.controller('TParametresCtrl', ['$scope', '$ionicPopup', '$rootScope', '$
             text: '<b>Modifier</b>',
             type: 'buttonEmp2',
             onTap: function(e) {
-              if (((!$scope.data.oldLogin2) && (!$scope.user.newLogin) && (!$scope.data.confLogin)) && ($scope.user.newLogin != $scope.data.confLogin) ) {
-                //don't allow the user to close unless he enters wifi password
+              if (!$scope.data.oldLogin2 || !$scope.user.newLogin || !$scope.data.confLogin) {
                 e.preventDefault();
-                /*toastr.erro r('Inscrire un Login dans le premier champ.', {displayDuration: 1000});*/
-              } else{
+                $scope.showError = true;
+                if($scope.user.newLogin != $scope.data.confLogin) {
+                  e.preventDefault();
+                  $scope.showError1 = true;
+                }
+              }
+              else{
+
                 console.log('id : '+$scope.user.id)
                 console.log('login : '+$scope.user.newLogin)
                 console.log('password : '+$scope.user.password)
@@ -690,6 +697,8 @@ teacher.controller('TParametresCtrl', ['$scope', '$ionicPopup', '$rootScope', '$
 
       myPopup.then(function(res) {
         console.log('Tapped!', res);
+        $scope.showError = false;
+        $scope.showError1 = false;
       });
     };
 
@@ -706,6 +715,8 @@ teacher.controller('TParametresCtrl', ['$scope', '$ionicPopup', '$rootScope', '$
         '<input type="hidden" ng-model="user.login" ng-init="user.login = resp.entity.login">'+
         '<input type="password" name="oldLogin" placeholder="Nouveau mot de passe" ng-model="user.oldLogin"><br>' +
         '<input type="password" name="confLogin" placeholder="Confirmer votre Mot de Passe" ng-model="data.confLogin" ng-pattern="user.oldLogin"></form>' +
+        '<p ng-if="showError" class="errror">Champs obligatoires</p>'+
+        '<p ng-if="showError1" class="errror"></p>'+
         '<div ng-show="MyForm.oldPwd2.$error.pattern" style="color: red">*Ancien mot de passe incorrect !</div>'+
         '<div ng-show="MyForm.confLogin.$error.pattern" style="color: red">*Mots de passe non correspondants ! </div>',
         title: 'Modifier votre Mot de Passe',
@@ -717,9 +728,14 @@ teacher.controller('TParametresCtrl', ['$scope', '$ionicPopup', '$rootScope', '$
             text: '<b>Modifier</b>',
             type: 'buttonEmp2',
             onTap: function(e) {
-              if (((!$scope.data.oldPwd2) && (!$scope.user.oldLogin) && (!$scope.data.confLogin)) && ($scope.user.oldLogin != $scope.data.confLogin) ) {
+              if (!$scope.data.oldPwd2 || !$scope.user.oldLogin || !$scope.data.confLogin) {
                 //don't allow the user to close unless he enters wifi password
                 e.preventDefault();
+                $scope.showError = true;
+                if($scope.user.oldLogin != $scope.data.confLogin){
+                  e.preventDefault();
+                  $scope.showError1 = true;
+                }
 
               } else {
                 console.log('id : '+$scope.user.id)
@@ -760,6 +776,8 @@ teacher.controller('TParametresCtrl', ['$scope', '$ionicPopup', '$rootScope', '$
 
       myPopup.then(function(res) {
         console.log('Tapped!', res);
+        $scope.showError = false;
+        $scope.showError1 = false;
       });
     };
 
@@ -767,7 +785,7 @@ teacher.controller('TParametresCtrl', ['$scope', '$ionicPopup', '$rootScope', '$
     $scope.goBack = function(){
       $ionicHistory.goBack();
     }
-    $ionicPopover.fromTemplateUrl('teacher/teacher-popover.html', {
+    $ionicPopover.fromTemplateUrl('parent/parent-popover.html', {
       scope: $scope
     }).then(function (popover) {
       $scope.popover = popover;

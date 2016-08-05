@@ -787,7 +787,7 @@ body {
 }
 
 .iconSize2 {
-  font-size: 20px;
+  font-size: 15px;
   display: inline-block;
 }
 
@@ -825,10 +825,20 @@ ion-popover-view.fit {
 ion-popover-view.fit ion-content {
   position: relative;
 }
-
-.pagText {
-  font-size: 10px;
+.errror{
+  color:red !important;
   text-align: center;
+  margin-top: 5px;
+}
+.pagText {
+  font-size: smaller;
+  text-align:center;
+}
+#idLeft{
+  float: left;
+}
+#idRight{
+  float: right;
 }
 
 .customTrans {
@@ -845,7 +855,7 @@ ion-popover-view.fit ion-content {
   clear : left;
 }*/
 .textPop {
-  font-size: 15px;
+  font-size: 10px;
   color: #E74F11;
   display: inline-block;
   margin-top: -10px;

@@ -26,7 +26,31 @@ var CapMission = angular.module('capMission', [
   'ngAnimate',
   'toaster'
 ]);
-
+CapMission.run(function($ionicPopup) {
+  var deploy = new Ionic.Deploy();
+  deploy.watch().then(function() {}, function() {}, function(updateAvailable) {
+    if (updateAvailable) {
+      deploy.download().then(function() {
+        deploy.extract().then(function() {
+          deploy.unwatch();
+          $ionicPopup.show({
+            title: 'Mise à jour disponible',
+            subTitle: "Une nouvelle mise à jour est disponible ! Voulez-vous l'installer?",
+            buttons: [
+              { text: 'Pas maintenant' },
+              {
+                text: 'Redémarrer',
+                onTap: function(e) {
+                  deploy.load();
+                }
+              }
+            ]
+          });
+        });
+      });
+    }
+  });
+});
 CapMission.filter('capitalize', function() {
   return function(input, scope) {
     if (input!=null)
@@ -92,7 +116,7 @@ $rootScope.dateNow = new Date()
   var currentDate,
     weekStart,
     weekEnd,
-    shortWeekFormat = "dddd DD MMMM";
+    shortWeekFormat = "ddd DD/MM";
 
   function setCurrentDate(aMoment) {
     currentDate = aMoment,
@@ -812,12 +836,12 @@ CapMission.config(['$stateProvider', '$urlRouterProvider', '$ionicConfigProvider
     .state('emploiEnfant2', {
       url: '/parent/emploiEnfant2',
       controller: 'ChoixCtrl',
-      templateUrl: 'parent/empoiEnfant.html'
+      templateUrl: 'parent/emploiEnfant.html'
     })
     .state('emploiEnfant', {
       url: '/parent/emploiEnfant',
       controller: 'EnfantCtrl',
-      templateUrl: 'parent/empoiEnfant.html'
+      templateUrl: 'parent/emploiEnfant.html'
     })
     .state('ChoixEnfantSolde', {
       url: '/parent/ChoixEnfantSolde',
