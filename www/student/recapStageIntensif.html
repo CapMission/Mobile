@@ -7,11 +7,13 @@
 
   <ion-tabs class="tabs-icon-top tabs-color-active-positive" ng-class="{'tabs-item-hide': $root.hideTabs}">
 
+
     <ion-tab  hidden="true" >
 
     </ion-tab>
-    <ion-tab title="Planning"  icon-off="ion-ios-calendar-outline" icon-on="ion-ios-calendar" badge="badgehome"
-             badge-style="badge-assertive" ng-controller="EnfantCtrl" ng-click="getd(son.entity.id)">
+
+    <ion-tab title="Planning" icon-off="ion-ios-calendar-outline" icon-on="ion-ios-calendar" badge="badgehome"
+             badge-style="badge-assertive" ng-controller="SProposCtrl" ng-click="sgoChoix()">
 
     </ion-tab>
 
@@ -26,25 +28,30 @@
              badge-style="badge-assertive" ng-click="onTabSelected()">
 
     </ion-tab>
+    <!--
+        <ion-tab title="Messages" icon-off="ion-ios-email-outline" icon-on="ion-ios-email"
+                 badge="badgeMessages" badge-style="badge-assertive" ng-click="onTabSelected()">
 
-    <ion-tab title="Solde" href="#/parent/solde" icon-off="icon ion-ios-calculator-outline"
-             icon-on="icon ion-ios-calculator" ng-controller="PsoldeCtrl" ng-click="getd(son.entity.id)">
+        </ion-tab>-->
+
+    <ion-tab title="Solde" href="#/student/solde" icon-off="icon ion-ios-calculator-outline" icon-on="icon ion-ios-calculator">
 
     </ion-tab>
     <ion-tab title="Ajout cours" icon-off="ion-android-add-circle" icon-on="icon ion-android-add-circle"
-             badge="badgeMessages" badge-style="badge-assertive" ng-controller="PAjoutCoursChoixCtrl" ng-click="goChoixMatiere(son.entity.id)">
-
+             badge="badgeMessages" badge-style="badge-assertive" ng-controller="SAjoutCoursCtrl" ng-click="choixMatiere(student.entity.id)">
     </ion-tab>
+
   </ion-tabs>
 
   <!-- Contenu -->
   <ion-content>
     <br><br>
 
-    <div class="card" ng-controller="PRecapCoursGroupeCtrl">
+    <div class="card" ng-controller="SRecapStageIntensifCtrl">
 
-      <!--{{niv}}-->
-      <!--{{jours1}} {{jours2}}-->
+      <!--{{vacances}}-->
+      <!--{{stageIntensif}}-->
+
       <!--essaie-->
       <div id="listRecap" class="list">
 
@@ -66,7 +73,7 @@
           <i id="iconC" class="icon ion-briefcase"></i>
           Niveau
           <span class="item-note">
-            {{niveauN}}
+            {{niv}}
           </span>
         </div>
 
@@ -75,7 +82,20 @@
           <i id="iconC" class="icon ion-edit"></i>
           Matière
           <span class="item-note">
-            {{matiere}}
+            {{mat}}
+          </span>
+        </div>
+
+        <div class="item item-divider">
+          Période Scolaire :
+        </div>
+
+        <!-- Pour afficher le nom de la période de vacances du stage intensif -->
+        <div id="instruc1" class="item item-icon-left">
+          <i id="iconC" class="icon ion-calendar"></i>
+          Vacances
+          <span class="item-note">
+            {{vacances}}
           </span>
         </div>
 
@@ -83,14 +103,27 @@
           Total :
         </div>
 
-        <!-- Prix cours groupe aide aux devoir ou auyda a los deberes -->
+        <!-- prix du stage -->
         <div id="instruc1" class="item item-icon-left">
           <i id="iconC" class="icon ion-calculator"></i>
           Prix :
           <span class="item-note">
-            {{coursG}}
+            {{stageIntens}}
           </span>
         </div>
+
+
+
+        <!-- Prix cours groupe aide aux devoir ou auyda a los deberes -->
+        <!--<div ng-if="mat == 'Ayuda a los deberes' || mat == 'Aide aux devoirs'">-->
+        <!--<div id="instruc1" class="item item-icon-left">-->
+        <!--<i id="iconC" class="icon ion-calculator"></i>-->
+        <!--Prix :-->
+        <!--<span class="item-note">-->
+        <!--{{coursG}}-->
+        <!--</span>-->
+        <!--</div>-->
+        <!--</div>-->
       </div>
       <!--fin essaie-->
 
@@ -107,7 +140,7 @@
 
         <center>
           <button ng-disabled="myForm.$invalid" class="button button-small buttonEmail button-dark "
-                  ng-click="sendR(mail, matiere, niveauN , coursG);goChoix()">Envoyer       <!--modal.hide()-->
+                  ng-click="sendR(mail, mat, niv, stageIntens, vacances)">Envoyer       <!--modal.hide()-->
           </button>
         </center>
       </form>
@@ -116,10 +149,5 @@
       </div>
     </div>
   </ion-content>
-  <ion-footer-bar ng-hide="parent.entity.students.length == '1' || testNum() == 3">
-    <div class="bar bar-footer" >
-
-      <button class="button icon-left ion-ios-person-outline button-small buttonEmp" ng-controller="ProposCtrl" ng-click="goChoix()">Choisir un autre enfant !</button>
-    </div>
-  </ion-footer-bar>
 </ion-view>
+

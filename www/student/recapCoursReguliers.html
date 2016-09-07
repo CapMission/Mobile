@@ -1,5 +1,6 @@
-<ion-view title='<img class="title-image" src="parent/icon.png"> Cours Particulier </img>' cache-view="false"
-          xmlns="http://www.w3.org/1999/html">
+<!-- En tête de l'application -->
+
+<ion-view  title='<img class="title-image" src="parent/icon.png"> Récapitulatif </img>' cache-view="false">
   <ion-nav-buttons side="right">
     <a class="button button-icon ion-ios-more rotate-90 fs-s" ng-click="popover.show($event)"></a>
   </ion-nav-buttons>
@@ -42,17 +43,70 @@
 
   </ion-tabs>
 
-  <br><br><br><br>
-  <!-- Contenu -->
   <ion-content>
     <br><br>
 
+    <div class="card" ng-controller="SRecapCoursReguliersCtrl">
 
-    <div class="card" ng-controller="SCoursParticulierCtrl">
-      <i class="icon ion-ios-close close-modal" ng-click="modal.hide()"></i>
+      <!--{{niv}}-->
+      <!--{{jours1}} {{jours2}}-->
+      <!--essaie-->
+      <div id="listRecap" class="list">
 
-      <p class="headerModal item-divider padding">Bonjour {{parent.entity.name}}, vous souhaitez ajouter un ou plusieurs cours particulier(s) pour votre enfant, envoyez-nous un
-        message en précisant vos disponibilités !</p>
+        <div class="item item-divider">
+          Récapitulatif de votre demande :
+        </div>
+
+        <!-- Nom et prénom de l'élève -->
+        <div id="instruc1" class="item item-icon-left">
+          <i id="iconC" class="icon ion-person"></i>
+          Elève
+          <span class="item-note">
+            {{eleve.entity.name}}
+          </span>
+        </div>
+
+        <!-- Niveau -->
+        <div id="instruc1" class="item item-icon-left">
+          <i id="iconC" class="icon ion-briefcase"></i>
+          Niveau
+          <span class="item-note">
+            {{niv}}
+          </span>
+        </div>
+
+        <!-- Matiere -->
+        <div id="instruc1" class="item item-icon-left">
+          <i id="iconC" class="icon ion-edit"></i>
+          Matière
+          <span class="item-note">
+            {{mat}}
+          </span>
+        </div>
+
+        <!-- Nombre de cours par semaine -->
+        <div id="instruc1" class="item item-icon-left">
+          <i id="iconC" class="icon ion-plus-round"></i>
+          Nombre de cours
+          <span class="item-note">
+            {{nbJours}}
+          </span>
+        </div>
+
+        <div class="item item-divider">
+          Total :
+        </div>
+
+        <!-- prix cours groupe plusieurs jours -->
+          <div id="instruc1" class="item item-icon-left">
+            <i id="iconC" class="icon ion-calculator"></i>
+            Prix :
+        <span class="item-note">
+        {{coursGpe*nbJours}}
+        </span>
+          </div>
+      </div>
+      <!--fin essaie-->
 
       <form name="myForm" novalidate>
         <input ng-model="id" type="hidden">
@@ -62,19 +116,16 @@
         <input ng-model="mail.subject" type="hidden"><br>
         <label class="item item-input">
          <textarea class='autoExpand' rows='3' col="15" data-min-rows='3' ng-model="mail.body"
-                   placeholder="Votre message" name="msg" required></textarea>
+                   placeholder="Votre remarque" name="msg" required></textarea>
         </label>
-        <br>
+
         <center>
-          <button ng-disabled="myForm.$invalid" class="button button-small buttonEmail button-dark "
-                  ng-click="sendC(mail, coursPar, matiere)">Envoyer       <!--modal.hide()-->
+          <button ng-disabled="myForm.$invalid" class="button button-small buttonEmail button-dark " ng-click="sendR(mail, mat, niv , coursG, coursParti, frequence, dateDeb, nbJours)">Envoyer       <!--modal.hide()-->
           </button>
         </center>
       </form>
       <div class="padding">
-        <p ng-show="myForm.msg1.$error.required">* Objet est obligatoire</p>
         <p ng-show="myForm.msg.$error.required">* Message est obligatoire</p>
-
       </div>
     </div>
   </ion-content>

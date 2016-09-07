@@ -1,0 +1,376 @@
+{
+  "prix": {
+    "primaireGroupe": [
+      {
+        "id": "primaireGpe",
+        "prix": "128"
+      }
+    ],
+    "collegeGroupe": [
+      {
+        "id": "collegeGpe",
+        "prix": "160"
+      }
+    ],
+    "lyceeGroupe": [
+      {
+        "id": "lyceeGpe",
+        "prix": "200"
+      }
+    ],
+    "primaireIndiv": [
+      {
+        "id": "primaireInd",
+        "prix": "224"
+      }
+    ],
+    "collegeIndiv": [
+      {
+        "id": "collegeInd",
+        "prix": "280"
+      }
+    ],
+    "lyceeIndiv": [
+      {
+        "id": "lyceeInd",
+        "prix": "350"
+      }
+    ],
+    "primaireGpeUS": [
+      {
+        "id": "primaireGpeUS",
+        "prix": "158"
+      }
+    ],
+    "primaireIndUS": [
+      {
+        "id": "primaireIndUS",
+        "prix": "254"
+      }
+    ],
+    "collegeGpeUS": [
+      {
+        "id": "collegeGpeUS",
+        "prix": "190"
+      }
+    ],
+    "collegeIndUS": [
+      {
+        "id": "collegeIndUS",
+        "prix": "310"
+      }
+    ],
+    "lyceeGpeUS": [
+      {
+        "id": "lyceeGpeUS",
+        "prix": "230"
+      }
+    ],
+    "lyceeIndUS": [
+      {
+        "id": "lyceeIndUS",
+        "prix": "380"
+      }
+    ],
+    "intensifEte3hIndivPrimaire": [
+      {
+        "id": "intensif3hEteIndivP",
+        "prix": "3000"
+      }
+    ],
+    "intensifEte3hIndivCollege": [
+      {
+        "id": "intensif3hEteIndivC",
+        "prix": "3750"
+      }
+    ],
+    "intensifEte3hIndivLycee": [
+      {
+        "id": "intensif3hEteIndivL",
+        "prix": "4500"
+      }
+    ],
+    "intensifEte3hGpePrimaire": [
+      {
+        "id": "intensif3hEteGpeP",
+        "prix": "1680"
+      }
+    ],
+    "intensifEte3hGpeCollege":[
+      {
+        "id": "intensif3hEteGpeC",
+        "prix": "2100"
+      }
+    ],
+    "intensifEte3hGpeLycee": [
+      {
+        "id": "intensif3hEteGpeL",
+        "prix": "2625"
+      }
+    ],
+    "intensifEte2hIndivPrimaire": [
+      {
+        "id": "intensifEte2hIndivP",
+        "prix": "2400"
+      }
+    ],
+    "intensifEte2hIndivCollege": [
+      {
+        "id": "intensifEte2hIndivC",
+        "prix": "3000"
+      }
+    ],
+    "intensifEte2hIndivLycee": [
+      {
+        "id": "intensifEte2hIndivL",
+        "prix": "3600"
+      }
+    ],
+    "intensifEte2hGpePrimaire": [
+      {
+        "id": "intensifEte2hGpeP",
+        "prix": "1344"
+      }
+    ],
+    "intensifEte2hGpeCollege": [
+      {
+        "id": "intensifEte2hGpeC",
+        "prix": "1680"
+      }
+    ],
+    "intensifEte2hGpeLycee": [
+      {
+        "id": "intensifEte2hGpeL",
+        "prix": "2100"
+      }
+    ],
+    "aideDevoir1": [
+      {
+        "id": "aideDevoir1",
+        "prix": "1950"
+      }
+    ],
+    "aideDevoir2": [
+      {
+        "id": "aideDevoir2",
+        "prix": "3705"
+      }
+    ],
+    "aideDevoir3": [
+      {
+        "id": "aideDevoir3",
+        "prix": "5265"
+      }
+    ],
+    "anglaisCommunicationGpe": [
+      {
+        "id": "anglaisCommunicationGpe",
+        "prix": "80"
+      }
+    ],
+    "anglaisCommunicationInd": [
+      {
+        "id": "anglaisCommunicationInd",
+        "prix": "220"
+      }
+    ],
+    "anglaisGeneraleGpe": [
+      {
+        "id": "anglaisGeneraleGpe",
+        "prix": "80"
+      }
+    ],
+    "anglaisGeneraleInd": [
+      {
+        "id": "anglaisGeneraleInd",
+        "prix": "220"
+      }
+    ],
+    "anglaisBusinessGpe": [
+      {
+        "id": "anglaisBusinessGpe",
+        "prix": "100"
+      }
+    ],
+    "anglaisBusinessInd": [
+      {
+        "id": "anglaisBusinessInd",
+        "prix": "250"
+      }
+    ],
+    "prepaTestAnglaisGpe": [
+      {
+        "id": "prepaTestAnglaisGpe",
+        "prix": "100"
+      }
+    ],
+    "prepaTestAnglaisGpe": [
+      {
+        "id": "prepaTestAnglaisInd",
+        "prix": "250"
+      }
+    ],
+    "arabeCommunicationGpe": [
+      {
+        "id": "arabeCommunicationGpe",
+        "prix": "150"
+      }
+    ],
+    "arabeCommunicationInd": [
+      {
+        "id": "arabeCommunicationInd",
+        "prix": "300"
+      }
+    ],
+    "arabeBusinessGpe": [
+      {
+        "id": "arabeBusinessGpe",
+        "prix": "150"
+      }
+    ],
+    "arabeBusinessInd": [
+      {
+        "id": "arabeBusinessInd",
+        "prix": "300"
+      }
+    ],
+    "francaisCommunicationGpe": [
+      {
+        "id": "francaisCommunicationGpe",
+        "prix": "150"
+      }
+    ],
+    "francaisCommunicationInd": [
+      {
+        "id": "francaisCommunicationInd",
+        "prix": "250"
+      }
+    ],
+    "francaisGeneralGpe": [
+      {
+        "id": "francaisGeneralGpe",
+        "prix": "150"
+      }
+    ],
+    "francaisGeneralInd": [
+      {
+        "id": "francaisGeneralInd",
+        "prix": "250"
+      }
+    ],
+    "francaisBusinessGpe": [
+      {
+        "id": "francaisBusinessGpe",
+        "prix": "150"
+      }
+    ],
+    "francaisBusinessInd": [
+      {
+        "id": "francaisBusinessInd",
+        "prix": "280"
+      }
+    ],
+    "testFrancaisGpe": [
+      {
+        "id": "testFrancaisGpe",
+        "prix": "150"
+      }
+    ],
+    "testFrancaisInd": [
+      {
+        "id": "testFrancaisInd",
+        "prix": "280"
+      }
+    ],
+    "espagnolCommunicationGpe": [
+      {
+        "id": "espagnolCommunicationGpe",
+        "prix": "100"
+      }
+    ],
+    "espagnolCommunicationInd": [
+      {
+        "id": "espagnolCommunicationInd",
+        "prix": "220"
+      }
+    ],
+    "espagnolGeneralGpe": [
+      {
+        "id": "espagnolGeneralGpe",
+        "prix": "100"
+      }
+    ],
+    "espagnolGeneralInd": [
+      {
+        "id": "espagnolGeneralInd",
+        "prix": "220"
+      }
+    ],
+    "espagnolBusinessGpe": [
+      {
+        "id": "espagnolBusinessGpe",
+        "prix": "150"
+      }
+    ],
+    "espagnolBusinessInd": [
+      {
+        "id": "espagnolBusinessInd",
+        "prix": "280"
+      }
+    ],
+    "testEspagnolGpe": [
+      {
+        "id": "testEspagnolGpe",
+        "prix": "150"
+      }
+    ],
+    "testEspagnolInd": [
+      {
+        "id": "testEspagnolInd",
+        "prix": "280"
+      }
+    ],
+    "informatiqueEssai": [
+      {
+        "id": "informatiqueEssai",
+        "prix": "200"
+      }
+    ],
+    "informatiqueTrimestre": [
+      {
+        "id": "informatiqueTrimestre",
+        "prix": "3000"
+      }
+    ],
+    "informatiqueAnnuel": [
+      {
+        "id": "informatiqueAnnuel",
+        "prix": "7900"
+      }
+    ],
+    "testMissionFrancaisePrimaire": [
+      {
+        "id": "testMissionFrancaisePrimaire",
+        "prix": "150"
+      }
+    ],
+    "testMissionFrancaiseCollege": [
+      {
+        "id": "testMissionFrancaiseCollege",
+        "prix": "180"
+      }
+    ],
+    "testMissionFrancaiseLycee": [
+      {
+        "id": "testMissionFrancaiseLycee",
+        "prix": "200"
+      }
+    ],
+    "summerCamp": [
+      {
+        "id": "summerCamp",
+        "prix": "4900"
+      }
+    ]
+  }
+}

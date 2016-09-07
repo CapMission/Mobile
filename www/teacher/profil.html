@@ -10,6 +10,10 @@
 
     </ion-tab>
 
+    <ion-tab title="Planning" icon-off="ion-ios-calendar-outline" icon-on="ion-ios-calendar" badge="badgehome"
+             badge-style="badge-assertive" ng-controller="TProposCtrl" ng-click="tgoChoix()">
+
+    </ion-tab>
 
     <ion-tab title="quiz" icon-off="ion-ios-timer-outline" icon-on="ion-ios-timer" badge="badgequiz"
              badge-style="badge-assertive" ng-click="onTabSelected()">
@@ -50,21 +54,21 @@
           <div class="form-group" id="container">
             <label class="control-label labelF"><i class="ion-person"></i> Nom & Prénom</label> <br>
 
-            <div class="left">{{teacher.entity.name}}</div>
-            <div class="right"><i class="icon ion-compose updateIcon" ng-click="openModal(1)"></i></div>
-            <br><br>
+            <nobr><div class="left">{{teacher.entity.name}}</div>
+            <div class="right"><i class="icon ion-compose updateIcon" ng-click="openModal(1)"></i></div></nobr>
+            <br>
           </div>
           <div class="form-group">
             <label class="control-label labelF"><i class="ion-android-phone-portrait"></i> Téléphone</label><br>
 
-            <div class="left">{{teacher.entity.phone}}</div>
-            <div class="right"><i class="icon ion-compose updateIcon" ng-click="openModal(2)"></i></div>
+            <nobr><div class="left">{{teacher.entity.phone}}</div>
+            <div class="right"><i class="icon ion-compose updateIcon" ng-click="openModal(2)"></i></div></nobr>
           </div><br>
           <div class="form-group">
             <label  class="control-label labelF"><i class="ion-at"></i> Email </label><br>
 
-            <div class="left">{{teacher.entity.mail}}</div>
-            <div class="right"><i class="icon ion-compose updateIcon" ng-click="openModal(3)"></i></div>
+            <nobr><div class="left">{{teacher.entity.mail}}</div>
+            <div class="right"><i class="icon ion-compose updateIcon" ng-click="openModal(3)"></i></div></nobr>
           </div><br>
 
         </form>

@@ -1,14 +1,18 @@
 <!-- En tête de l'application -->
 
-<ion-view  title='<img class="title-image" src="parent/icon.png">Créer ton Groupe !</img>' cache-view="false">
+<ion-view  title='<img class="title-image" src="parent/icon.png"> Date du cours </img>' cache-view="false">
   <ion-nav-buttons side="right">
-    <a class="button button-icon ion-ios-more rotate-90 fs-s" ng-app="capMission.parent" ng-controller="ProposCtrl" ng-click="popover.show($event)"></a>
+    <a class="button button-icon ion-ios-more rotate-90 fs-s" ng-click="popover.show($event)"></a>
   </ion-nav-buttons>
 
   <ion-tabs class="tabs-icon-top tabs-color-active-positive" ng-class="{'tabs-item-hide': $root.hideTabs}">
 
-
     <ion-tab  hidden="true" >
+
+    </ion-tab>
+
+    <ion-tab title="Planning"  icon-off="ion-ios-calendar-outline" icon-on="ion-ios-calendar" badge="badgehome"
+             badge-style="badge-assertive" ng-controller="EnfantCtrl" ng-click="getd(son.entity.id)">
 
     </ion-tab>
 
@@ -24,12 +28,12 @@
 
     </ion-tab>
 
-    <ion-tab title="Solde" href="#/parent/solde" icon-off="icon ion-ios-calculator-outline" icon-on="icon ion-ios-calculator"
-             badge="badgeSolde" badge-style="badge-assertive" ng-controller="ChoixsoldeCtrl" ng-click="get(idE)">
+    <ion-tab title="Solde" href="#/parent/solde" icon-off="icon ion-ios-calculator-outline"
+             icon-on="icon ion-ios-calculator" ng-controller="PsoldeCtrl" ng-click="getd(son.entity.id)">
 
     </ion-tab>
-    <ion-tab title="Ajoutez un cours" icon-off="ion-android-add-circle" icon-on="icon ion-android-add-circle"
-             badge="badgeMessages" badge-style="badge-assertive" ng-controller="ChoixAjoutCoursCtrl" ng-click="get(eleve.entity.id)">
+    <ion-tab title="Ajout cours" icon-off="ion-android-add-circle" icon-on="icon ion-android-add-circle"
+             badge="badgeMessages" badge-style="badge-assertive" ng-controller="PAjoutCoursChoixCtrl" ng-click="goChoixMatiere(son.entity.id)">
 
     </ion-tab>
   </ion-tabs>
@@ -40,23 +44,34 @@
     <div class="card">
       <div class="item item-text-wrap">
         <br><br>
+        <!--{{mat}}-->
+        <!--{{niv}}-->
+        <!--{{coursGpe}}-->
+        <!--{{coursParti}}-->
+        <!--{{freq}}-->
         <form name="myForm" ng-submit="submitTable()">
 
-          <div id="instruc">Heure :<input id="formBlanc" type="time" name="timeD" ng-model="heureDebut" required></div>
-          <br>
-          <div id="instruc">Date :<input id="formBlanc" min="{{dateNow}}" name="dateD" type="date" ng-model="dateDebut" required></div>
+          <div id="instruc">Date :<input id="formBlanc" type="date" ng-model="dateDebut" required></div>
+          <!--min="{{dateNow}}"-->
+          <!--<center><p id="erreur" ng-show="myForm.dateDebut.$error.min "><i class="icon ion-alert-circled">&nbsp;&nbsp;La date n'est pas valide !</i></p></center>-->
 
-        <br><br>
-        <center><button ng-disabled="myForm.$invalid" class="button button-small buttonEmp" ng-model="occ" ng-click="goRecap(mat, coursGpe, creerGroup, nbEt, nom1, nom2, nom3, nom4, nom5, nom6, freq, heureDebut, dateDebut)">
+          <br><br>
+          <center><button class="button button-small buttonEmp" ng-disabled="myForm.$invalid" ng-model="occ" ng-click="goRecap(matiere, niveauN, coursG, coursPar, freq, dateDebut)">
             VALIDER
-            </button></center>
+          </button></center>
         </form>
+        <!--<div class="padding">-->
+        <!--<p ng-show="myForm.dateDebut.$error.required">* Date non valide</p>-->
+        <!--</div>-->
       </div>
-      <div class="padding">
-        <p ng-show="myForm.dateD.$error.min">* Date erronée</p>
-        <p ng-show="myForm.dateD.$error.required"></p>
-        <p ng-show="myForm.timeD.$error.required"></p>
-        </div>
     </div>
   </ion-content>
 
+
+  <ion-footer-bar ng-hide="parent.entity.students.length == '1' || testNum() == 3">
+    <div class="bar bar-footer" >
+
+      <button class="button icon-left ion-ios-person-outline button-small buttonEmp" ng-controller="ProposCtrl" ng-click="goChoix()">Choisir un autre enfant !</button>
+    </div>
+  </ion-footer-bar>
+  </ion-view>

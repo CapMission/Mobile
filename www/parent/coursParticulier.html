@@ -6,8 +6,11 @@ xmlns="http://www.w3.org/1999/html">
 
 <ion-tabs class="tabs-icon-top tabs-color-active-positive" ng-class="{'tabs-item-hide': $root.hideTabs}">
 
-
   <ion-tab  hidden="true" >
+
+  </ion-tab>
+  <ion-tab title="Planning"  icon-off="ion-ios-calendar-outline" icon-on="ion-ios-calendar" badge="badgehome"
+           badge-style="badge-assertive" ng-controller="EnfantCtrl" ng-click="getd(son.entity.id)">
 
   </ion-tab>
 
@@ -23,49 +26,57 @@ xmlns="http://www.w3.org/1999/html">
 
   </ion-tab>
 
-  <ion-tab title="Solde" href="#/parent/solde" icon-off="icon ion-ios-calculator-outline" icon-on="icon ion-ios-calculator"
-           badge="badgeSolde" badge-style="badge-assertive" ng-controller="ChoixsoldeCtrl" ng-click="get(idE)">
+  <ion-tab title="Solde" href="#/parent/solde" icon-off="icon ion-ios-calculator-outline"
+           icon-on="icon ion-ios-calculator" ng-controller="PsoldeCtrl" ng-click="getd(son.entity.id)">
 
   </ion-tab>
-  <ion-tab title="Ajoutez un cours" icon-off="ion-android-add-circle" icon-on="icon ion-android-add-circle"
-           badge="badgeMessages" badge-style="badge-assertive" ng-controller="ChoixAjoutCoursCtrl" ng-click="get(eleve.entity.id)">
+  <ion-tab title="Ajout cours" icon-off="ion-android-add-circle" icon-on="icon ion-android-add-circle"
+           badge="badgeMessages" badge-style="badge-assertive" ng-controller="PAjoutCoursChoixCtrl" ng-click="goChoixMatiere(son.entity.id)">
 
   </ion-tab>
 </ion-tabs>
 
 <br><br><br><br>
 <!-- Contenu -->
-<ion-content>
-  <br><br>
+  <ion-content>
+    <br><br>
 
 
-  <div class="card" ng-controller="PDemandeInfoEmailController">
-    <i class="icon ion-ios-close close-modal" ng-click="modal.hide()"></i>
+    <div class="card" ng-controller="PDemandeInfoEmailController">
+      <i class="icon ion-ios-close close-modal" ng-click="modal.hide()"></i>
 
-    <p class="headerModal item-divider padding">Bonjour {{parent.entity.name}}, vous souhaitez ajouter un ou plusieurs cours particulier(s) pour votre enfant, envoyez-nous un
-      message en précisant vos disponibilités !</p>
+      <p class="headerModal item-divider padding">Bonjour {{parent.entity.name}}, vous souhaitez ajouter un ou plusieurs cours particulier(s) pour votre enfant, envoyez-nous un
+        message en précisant vos disponibilités !</p>
 
-    <form name="myForm" novalidate>
-      <input ng-model="id" type="hidden">
-      <input ng-model="parent" type="hidden">
-      <input ng-model="mail.to" type="hidden">
-      <input ng-model="mail.from" type="hidden">
-      <input ng-model="mail.subject" type="hidden"><br>
-      <label class="item item-input">
+      <form name="myForm" novalidate>
+        <input ng-model="id" type="hidden">
+        <input ng-model="parent" type="hidden">
+        <input ng-model="mail.to" type="hidden">
+        <input ng-model="mail.from" type="hidden">
+        <input ng-model="mail.subject" type="hidden"><br>
+        <label class="item item-input">
          <textarea class='autoExpand' rows='3' col="15" data-min-rows='3' ng-model="mail.body"
                    placeholder="Votre message" name="msg" required></textarea>
-      </label>
-      <br>
-      <center>
-        <button ng-disabled="myForm.$invalid" class="button button-small buttonEmail button-dark "
-                ng-click="sendC(mail, coursPar, matiere)">Envoyer       <!--modal.hide()-->
-        </button>
-      </center>
-    </form>
-    <div class="padding">
-      <p ng-show="myForm.msg1.$error.required">* Objet est obligatoire</p>
-      <p ng-show="myForm.msg.$error.required">* Message est obligatoire</p>
+        </label>
+        <br>
+        <center>
+          <button ng-disabled="myForm.$invalid" class="button button-small buttonEmail button-dark "
+                  ng-click="sendC(mail, coursPar, matiere)">Envoyer       <!--modal.hide()-->
+          </button>
+        </center>
+      </form>
+      <div class="padding">
+        <p ng-show="myForm.msg1.$error.required">* Objet est obligatoire</p>
+        <p ng-show="myForm.msg.$error.required">* Message est obligatoire</p>
 
+      </div>
     </div>
-  </div>
-</ion-content>
+  </ion-content>
+
+  <ion-footer-bar ng-hide="parent.entity.students.length == '1' || testNum() == 3">
+    <div class="bar bar-footer" >
+
+      <button class="button icon-left ion-ios-person-outline button-small buttonEmp" ng-controller="ProposCtrl" ng-click="goChoix()">Choisir un autre enfant !</button>
+    </div>
+  </ion-footer-bar>
+  </ion-view>

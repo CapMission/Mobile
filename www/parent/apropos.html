@@ -5,8 +5,12 @@
   </ion-nav-buttons>
   <ion-tabs class="tabs-icon-top tabs-color-active-positive" ng-class="{'tabs-item-hide': $root.hideTabs}">
 
-
     <ion-tab  hidden="true" >
+
+    </ion-tab>
+
+    <ion-tab title="Planning"  icon-off="ion-ios-calendar-outline" icon-on="ion-ios-calendar" badge="badgehome"
+             badge-style="badge-assertive" ng-controller="ProposCtrl" ng-click="goChoix()">
 
     </ion-tab>
 
@@ -30,7 +34,7 @@
              badge="badgeSolde" badge-style="badge-assertive" ng-controller="ChoixsoldeCtrl" ng-click="get(eleve.entity.id)">
 
     </ion-tab>
-    <ion-tab title="Ajoutez un cours" icon-off="ion-android-add-circle" icon-on="icon ion-android-add-circle"
+    <ion-tab title="Ajout cours" icon-off="ion-android-add-circle" icon-on="icon ion-android-add-circle"
              badge="badgeMessages" badge-style="badge-assertive" ng-controller="ChoixAjoutCoursCtrl" ng-click="get(son.entity.id)">
 
     </ion-tab>

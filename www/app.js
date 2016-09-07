@@ -26,7 +26,7 @@ var CapMission = angular.module('capMission', [
   'ngAnimate',
   'toaster'
 ]);
-CapMission.run(function($ionicPopup) {
+/*CapMission.run(function($ionicPopup) {
   var deploy = new Ionic.Deploy();
   deploy.watch().then(function() {}, function() {}, function(updateAvailable) {
     if (updateAvailable) {
@@ -50,7 +50,7 @@ CapMission.run(function($ionicPopup) {
       });
     }
   });
-});
+});*/
 CapMission.filter('capitalize', function() {
   return function(input, scope) {
     if (input!=null)
@@ -97,8 +97,9 @@ CapMission.controller('NotifController', function($scope, $cordovaLocalNotificat
   })
 });
 
-CapMission.controller('capController', function ($scope, $rootScope, $location, $auth, $http, $ionicLoading, $localStorage) {
-$rootScope.dateNow = new Date()
+CapMission.controller('capController', function ($scope, $rootScope, $location, $http, $ionicLoading, $cordovaOauth,$localStorage) {
+
+  $rootScope.dateNow = new Date()
   /*if(window.localStorage.getItem('login') == null){
   console.log(window.localStorage.getItem('login'))}
 */
@@ -204,7 +205,56 @@ $rootScope.dateNow = new Date()
 
   }
 
+  //Function login facebook
+  $scope.loginFacebook = function(){
+    $cordovaOauth.facebook("561387454023937", ["email"]).then(function(result) {
+      //window.localStorage.setItem('accessToken', result.access.token);
+      $localStorage.accessToken = result.access_token;
+      $location.path("/profile");
+    }, function(error) {
+      alert("There was a problem signing in!  See the console for logs");
+      console.log(error);
+    });
+  }
 })
+CapMission.controller("FeedController", function($scope, $http, $localStorage, $location) {
+
+  $scope.init = function() {
+    if($localStorage.hasOwnProperty("accessToken") === true) {
+      $http.get("https://graph.facebook.com/v2.2/me/feed", { params: { access_token: $localStorage.accessToken, format: "json" }}).then(function(result) {
+        $scope.feedData = result.data.data;
+        $http.get("https://graph.facebook.com/v2.2/me", { params: { access_token: $localStorage.accessToken, fields: "picture", format: "json" }}).then(function(result) {
+          $scope.feedData.myPicture = result.data.picture.data.url;
+        });
+      }, function(error) {
+        alert("There was a problem getting your profile.  Check the logs for details.");
+        console.log(error);
+      });
+    } else {
+      alert("Not signed in");
+      $location.path("/login");
+    }
+  };
+
+});
+
+CapMission.controller("ProfileController", function($scope, $http, $localStorage, $location) {
+
+  $scope.init = function() {
+    if($localStorage.hasOwnProperty("accessToken") === true) {
+      $http.get("https://graph.facebook.com/v2.2/me", { params: { access_token: $localStorage.accessToken, fields: "id,name,gender,location,website,picture,relationship_status", format: "json" }}).then(function(result) {
+        $scope.profileData = result.data;
+      }, function(error) {
+        alert("There was a problem getting your profile.  Check the logs for details.");
+        console.log(error);
+      });
+    } else {
+      alert("Not signed in");
+      $location.path("/login");
+    }
+  };
+
+});
 
 CapMission.controller("EmailController",function($scope,$ionicPopup,$rootScope,$ionicModal,$http,$ionicLoading,$ionicHistory){
   $ionicModal.fromTemplateUrl('templates/modal.html', {
@@ -521,6 +571,18 @@ CapMission.config(['$stateProvider', '$urlRouterProvider', '$ionicConfigProvider
       templateUrl: 'authentication/login.html',
 
     })
+    .state('profile', {
+      url: '/profile',
+      controller: 'ProfileController',
+      templateUrl: 'authentication/profile.html',
+
+    })
+    .state('feed', {
+      url: '/feed',
+      controller: 'FeedController',
+      templateUrl: 'authentication/feed.html',
+
+    })
     .state('logout', {
         url: '/logout',
       //template: 'authentication/logout.html',
@@ -779,7 +841,6 @@ CapMission.config(['$stateProvider', '$urlRouterProvider', '$ionicConfigProvider
       controller: 'TParametresCtrl',
       templateUrl: 'teacher/parametres.html'
     })
-    //state pour student tag ajout cours
     .state('ajoutCours', {
       url: '/student/ajoutCours',
       templateUrl: 'student/choixMatiere.html',
@@ -790,6 +851,23 @@ CapMission.config(['$stateProvider', '$urlRouterProvider', '$ionicConfigProvider
       url: '/student/choixMatiereS',
       templateUrl: 'student/choixMatiere.html',
       controller: 'SChoixMatiereCtrl'
+    })
+    .state('recapAidesDevoirs', {
+      url: '/student/recapAidesDevoirs',
+      templateUrl: 'student/recapAidesDevoirs.html',
+      controller: 'SRecapAidesDevoirsCtrl'
+    })
+    //state pour récapitulatif cours réguliers student
+    .state('recapCoursReguliers', {
+      url: '/student/recapCoursReguliers',
+      templateUrl: 'student/recapCoursReguliers.html',
+      controller: 'SRecapCoursReguliersCtrl'
+    })
+    //state stage intensif student
+    .state('recapStageIntensif1', {
+      url: '/student/recapStageIntensif1',
+      templateUrl: 'student/recapStageIntensif.html',
+      controller: 'SRecapStageIntensifCtrl'
     })
     //state pour choix type cours student
     .state('choixTypeCoursS', {
@@ -832,6 +910,54 @@ CapMission.config(['$stateProvider', '$urlRouterProvider', '$ionicConfigProvider
       url: '/student/coursMultiple',
       templateUrl: 'student/coursMultiple.html',
       controller: 'SCoursMultipleCtrl'
+    })
+    //state cours particulier
+    .state('dispoCoursPart', {
+      url: '/dispoCoursPart',
+      templateUrl: 'authentication/dispoCoursPart.html',
+      controller: 'SDispoCoursPartCtrl'
+    })
+    //state choix matiere cours groupe
+    .state('choixMatiereCoursGroupe', {
+      url: '/choixMatiereCoursGroupe',
+      templateUrl: 'authentication/choixMatiereCoursGroupe.html',
+      controller: 'SChoixMatiereCoursGroupeCtrl'
+    })
+    //state home
+    .state('homePage', {
+      url: '/homePage',
+      templateUrl: 'authentication/home.html',
+      controller: 'HomePageCtrl'
+    })
+    //state pour tarication authentification
+    .state('tarifCours', {
+      url: '/tarifCours',
+      templateUrl: 'authentication/tarifCours.html',
+      controller: 'TarifCoursCtrl'
+    })
+    //state pour frequence cours authentification
+    .state('frequenceCours', {
+      url: '/frequenceCours',
+      templateUrl: 'authentication/frequenceCours.html',
+      controller: 'FrequenceCoursCtrl'
+    })
+    //state pour stage intensif
+    .state('stageIntensif', {
+      url: '/parent/stageIntensif',
+      templateUrl: 'parent/stageIntensif.html',
+      controller: 'StageIntensifCtrl'
+    })
+    //state recapitulatif de stage intensif
+    .state('recapStageIntensif', {
+      url: '/parent/recapStageIntensif',
+      templateUrl: 'parent/recapStageIntensif.html',
+      controller: 'RecapStageIntensifCtrl'
+    })
+    //state racapitulatif cours occasionnels
+    .state('recapCoursOcc', {
+      url: '/parent/recapCoursOcc',
+      templateUrl: 'parent/recapCoursOcc.html',
+      controller: 'RecapCoursOccCtrl'
     })
     .state('emploiEnfant2', {
       url: '/parent/emploiEnfant2',

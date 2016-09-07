@@ -10,6 +10,7 @@
     <ion-tab  hidden="true" >
 
     </ion-tab>
+
     <ion-tab title="Planning"  icon-off="ion-ios-calendar-outline" icon-on="ion-ios-calendar" badge="badgehome"
              badge-style="badge-assertive" ng-controller="EnfantCtrl" ng-click="getd(son.entity.id)">
 
@@ -41,7 +42,7 @@
   <ion-content>
     <br><br>
 
-    <div class="card" ng-controller="PRecapCoursGroupeCtrl">
+    <div class="card" ng-controller="RecapCoursOccCtrl">
 
       <!--{{niv}}-->
       <!--{{jours1}} {{jours2}}-->
@@ -66,7 +67,7 @@
           <i id="iconC" class="icon ion-briefcase"></i>
           Niveau
           <span class="item-note">
-            {{niveauN}}
+            {{niv}}
           </span>
         </div>
 
@@ -75,22 +76,47 @@
           <i id="iconC" class="icon ion-edit"></i>
           Matière
           <span class="item-note">
-            {{matiere}}
+            {{mat}}
           </span>
         </div>
+
+
+        <!-- pour la date souhaitée -->
+        <div id="instruc1" class="item item-icon-left">
+          <i id="iconC" class="icon ion-calendar"></i>
+          Date
+          <span class="item-note">
+            {{dateDeb}}
+          </span>
+        </div>
+
+
 
         <div class="item item-divider">
           Total :
         </div>
 
-        <!-- Prix cours groupe aide aux devoir ou auyda a los deberes -->
-        <div id="instruc1" class="item item-icon-left">
-          <i id="iconC" class="icon ion-calculator"></i>
-          Prix :
-          <span class="item-note">
-            {{coursG}}
-          </span>
+        <!-- Prix cours groupe 1 jours pour les cours primaire et primaria -->
+        <div ng-if="dateDeb != null && (mat !== 'Ayuda a los deberes' || mat !== 'Aide aux devoirs')">
+          <div id="instruc1" class="item item-icon-left">
+            <i id="iconC" class="icon ion-calculator"></i>
+            Prix :
+            <span class="item-note">
+              {{coursG}}
+            </span>
+          </div>
         </div>
+
+        <!-- Prix cours groupe aide aux devoir ou auyda a los deberes -->
+        <!--<div ng-if="mat == 'Ayuda a los deberes' || mat == 'Aide aux devoirs'">-->
+        <!--<div id="instruc1" class="item item-icon-left">-->
+        <!--<i id="iconC" class="icon ion-calculator"></i>-->
+        <!--Prix :-->
+        <!--<span class="item-note">-->
+        <!--{{coursG}}-->
+        <!--</span>-->
+        <!--</div>-->
+        <!--</div>-->
       </div>
       <!--fin essaie-->
 
@@ -106,8 +132,7 @@
         </label>
 
         <center>
-          <button ng-disabled="myForm.$invalid" class="button button-small buttonEmail button-dark "
-                  ng-click="sendR(mail, matiere, niveauN , coursG);goChoix()">Envoyer       <!--modal.hide()-->
+          <button ng-disabled="myForm.$invalid" class="button button-small buttonEmail button-dark " ng-click="sendR(mail, mat, niv , coursG, coursParti, frequence, dateDeb, nbJours);goChoix()">Envoyer       <!--modal.hide()-->
           </button>
         </center>
       </form>

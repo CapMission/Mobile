@@ -6,7 +6,9 @@
   <ion-tabs class="tabs-icon-top tabs-color-active-positive" ng-class="{'tabs-item-hide': $root.hideTabs}">
 
 
-    <ion-tab hidden="true">
+
+    <ion-tab title="Planning" icon-off="ion-ios-calendar-outline" icon-on="ion-ios-calendar" badge="badgehome"
+             badge-style="badge-assertive" href="#/student">
 
     </ion-tab>
 
@@ -17,23 +19,23 @@
     </ion-tab>
 
 
-    <ion-tab title="Suivi" icon-off="ion-ios-pulse" icon-on="ion-ios-pulse-strong" badge="badgeFollow"
+    <ion-tab title="Suivi" icon-off="ion-ios-pulse" icon-on="ion-ios-pulse-strong"  badge="badgeFollow"
              badge-style="badge-assertive" ng-click="onTabSelected()">
 
     </ion-tab>
-
     <!--
         <ion-tab title="Messages" icon-off="ion-ios-email-outline" icon-on="ion-ios-email"
                  badge="badgeMessages" badge-style="badge-assertive" ng-click="onTabSelected()">
 
         </ion-tab>-->
-    <ion-tab title="Solde" href="#/student/solde" icon-off="icon ion-ios-calculator-outline"
-             icon-on="icon ion-ios-calculator">
+
+    <ion-tab title="Solde" href="#/student/solde" icon-off="icon ion-ios-calculator-outline" icon-on="icon ion-ios-calculator">
 
     </ion-tab>
-    <ion-tab title="Ajoutez un cours" icon-off="ion-android-add-circle" icon-on="icon ion-android-add-circle"
+    <ion-tab title="Ajout cours" icon-off="ion-android-add-circle" icon-on="icon ion-android-add-circle"
              badge="badgeMessages" badge-style="badge-assertive" ng-controller="SAjoutCoursCtrl" ng-click="choixMatiere(student.entity.id)">
     </ion-tab>
+
 
 
   </ion-tabs>
@@ -63,7 +65,7 @@
       <div class="col">Date</div>
       <div class="col">Matière</div>
       <div class="col">Solde</div>
-      <div class="col">Plus</div>
+      <div class="col">Détails</div>
 
     </div>
     <div class="row" ng-repeat="recap in student.entity.recaps | limitTo:-limit | orderBy:'-date'">
@@ -74,9 +76,9 @@
                           ng-click="showAlert(recap.id,recap.tarifHour,recap.tarifPeriod,recap.nbreHours,recap.absence,recap.date)">Détails</a>
       </div>
       <div class="col"><a ng-click="modal.show();getRecap(recap.periode.name,recap.date,recap.soldeRemain,recap.tarifHour,recap.tarifPeriod,recap.nbreHours,recap.absence)"><i class="ion-email iconSize"></i></a></div>-->
-      <div class="col iconSize2"><a class="ion-ios-information-outline iconSize2"
+      <div class="col iconSize2"><b><a class="ion-ios-information-outline iconSize2"
                                     ng-click="popover2.show($event);getRecap(recap.periode.name,recap.date,recap.soldeRemain,recap.tarifHour,recap.tarifPeriod,recap.nbreHours,recap.absence,recap.date)">
-      </a></div>
+      </a></b></div>
     </div>
     <br>
 

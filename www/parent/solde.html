@@ -6,7 +6,8 @@
   <ion-tabs class="tabs-icon-top tabs-color-active-positive" ng-class="{'tabs-item-hide': $root.hideTabs}">
 
 
-    <ion-tab hidden="true">
+    <ion-tab title="Planning"  icon-off="ion-ios-calendar-outline" icon-on="ion-ios-calendar" badge="badgehome"
+             badge-style="badge-assertive" ng-controller="EnfantCtrl" ng-click="getd(son.entity.id)">
 
     </ion-tab>
 
@@ -17,22 +18,17 @@
     </ion-tab>
 
 
-    <ion-tab title="Suivi" icon-off="ion-ios-pulse" icon-on="ion-ios-pulse-strong" badge="badgeFollow"
+    <ion-tab title="Suivi" icon-off="ion-ios-pulse" icon-on="ion-ios-pulse-strong"  badge="badgeFollow"
              badge-style="badge-assertive" ng-click="onTabSelected()">
 
     </ion-tab>
-    <!--
 
-        <ion-tab title="Messages" icon-off="ion-ios-email-outline" icon-on="ion-ios-email"
-                 badge="badgeMessages" badge-style="badge-assertive" ng-click="onTabSelected()">
-
-        </ion-tab>-->
     <ion-tab title="Solde" href="#/parent/solde" icon-off="icon ion-ios-calculator-outline"
-             icon-on="icon ion-ios-calculator" ng-controller="PsoldeCtrl" ng-click="getd(sonSolde.entity.id)">
+             icon-on="icon ion-ios-calculator" ng-controller="PsoldeCtrl" ng-click="getd(son.entity.id)">
 
     </ion-tab>
-    <ion-tab title="Ajoutez un cours" icon-off="ion-android-add-circle" icon-on="icon ion-android-add-circle"
-             badge="badgeMessages" badge-style="badge-assertive" ng-controller="ChoixAjoutCoursCtrl" ng-click="get(sonSolde.entity.id)">
+    <ion-tab title="Ajout cours" icon-off="ion-android-add-circle" icon-on="icon ion-android-add-circle"
+             badge="badgeMessages" badge-style="badge-assertive" ng-controller="PAjoutCoursChoixCtrl" ng-click="goChoixMatiere(son.entity.id)">
 
     </ion-tab>
   </ion-tabs>
@@ -59,15 +55,15 @@
       <div class="col">Date</div>
       <div class="col">Matière</div>
       <div class="col">Solde</div>
-      <div class="col">Plus</div>
+      <div class="col">Détails</div>
     </div>
     <div class="row" ng-repeat="recap in sonSolde.entity.recaps | limitTo:-limit | orderBy:'-date'">
       <div class="col">{{recap.date | date:'dd MMM'}}</div>
       <div class="col">{{recap.periode.name.trunc(8)}}</div>
       <div class="col"><strong>{{recap.soldeRemain | number:2}}</strong></div>
-      <div class="col iconSize2"><a class="ion-ios-information-outline iconSize2"
+      <div class="col iconSize2"><b><a class="ion-ios-information-outline iconSize2"
                                     ng-click="popover2.show($event);getRecap(recap.periode.name,recap.date,recap.soldeRemain,recap.tarifHour,recap.tarifPeriod,recap.nbreHours,recap.absence,recap.date)">
-      </a></div>
+      </a></b></div>
 
       <!--<div class="col"><a ng-app="capMission.student" ng-controller="SsoldeCtrl" href="#"
                           ng-click="showAlert(recap.id,recap.tarifHour,recap.tarifPeriod,recap.nbreHours,recap.absence)">Détails</a>
@@ -168,4 +164,10 @@
       </div>
     </div>
   </script>
+  <ion-footer-bar ng-hide="parent.entity.students.length == '1' || testNum() == 3">
+    <div class="bar bar-footer" >
+
+      <button class="button icon-left ion-ios-person-outline button-small buttonEmp" ng-controller="ProposCtrl" ng-click="goChoix()">Choisir un autre enfant !</button>
+    </div>
+  </ion-footer-bar>
 </ion-view>

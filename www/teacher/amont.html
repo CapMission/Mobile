@@ -5,8 +5,12 @@
 
   <ion-tabs class="tabs-icon-top tabs-color-active-positive" ng-class="{'tabs-item-hide': $root.hideTabs}">
 
+    <ion-tab  hidden="true" >
 
-    <ion-tab hidden="true">
+    </ion-tab>
+
+    <ion-tab title="Planning" icon-off="ion-ios-calendar-outline" icon-on="ion-ios-calendar" badge="badgehome"
+             badge-style="badge-assertive" ng-controller="TProposCtrl" ng-click="tgoChoix()">
 
     </ion-tab>
 
@@ -51,7 +55,7 @@
       <div class="col">Date</div>
       <div class="col">Matière</div>
       <div class="col">Cumul Solde</div>
-      <div class="col">Plus</div>
+      <div class="col">Détails</div>
     </div>
     <div class="row" ng-repeat="amont  in teacher.entity.amonts | limitTo:-limit | orderBy:'-date'">
       <div class="col">{{amont.date | date:'dd MMM'}}</div>
@@ -60,8 +64,8 @@
       <!--<div class="col"><a ng-app="capMission.teacher" ng-controller="AmontSoldeCtrl" href="#"
                           ng-click="showAlert(amont.id,amont.solde,amont.nbreHeures,amont.nbreStudents,amont.cout)">Détails</a>
       </div>-->
-      <div class="col iconSize2"><a class="ion-ios-information-outline iconSize2" ng-click="popover2.show($event);getAmont(amont.name,amont.date,amont.cumul,amont.solde,amont.nbreHeures,amont.nbreStudents,amont.cout)">
-      </a></div>
+      <div class="col iconSize2"><b><a class="ion-ios-information-outline iconSize2" ng-click="popover2.show($event);getAmont(amont.name,amont.date,amont.cumul,amont.solde,amont.nbreHeures,amont.nbreStudents,amont.cout)">
+      </a></b></div>
     </div>
     <br>
 

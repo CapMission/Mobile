@@ -1,14 +1,19 @@
 <!-- En tête de l'application -->
 
-<ion-view  title='<img class="title-image" src="parent/icon.png">Créer ton Groupe !</img>' cache-view="false">
+<ion-view  title='<img class="title-image" src="parent/icon.png"> Cours Occasionnels </img>' cache-view="false">
   <ion-nav-buttons side="right">
-    <a class="button button-icon ion-ios-more rotate-90 fs-s" ng-app="capMission.student" ng-controller="SProposCtrl" ng-click="popover.show($event)"></a>
+    <a class="button button-icon ion-ios-more rotate-90 fs-s" ng-click="popover.show($event)"></a>
   </ion-nav-buttons>
 
   <ion-tabs class="tabs-icon-top tabs-color-active-positive" ng-class="{'tabs-item-hide': $root.hideTabs}">
 
 
     <ion-tab  hidden="true" >
+
+    </ion-tab>
+
+    <ion-tab title="Planning" icon-off="ion-ios-calendar-outline" icon-on="ion-ios-calendar" badge="badgehome"
+             badge-style="badge-assertive" ng-controller="SProposCtrl" ng-click="sgoChoix()">
 
     </ion-tab>
 
@@ -23,37 +28,47 @@
              badge-style="badge-assertive" ng-click="onTabSelected()">
 
     </ion-tab>
+    <!--
+        <ion-tab title="Messages" icon-off="ion-ios-email-outline" icon-on="ion-ios-email"
+                 badge="badgeMessages" badge-style="badge-assertive" ng-click="onTabSelected()">
 
-    <ion-tab title="Solde" href="#/student/solde" icon-off="icon ion-ios-calculator-outline" icon-on="icon ion-ios-calculator"></ion-tab>
+        </ion-tab>-->
 
-    <ion-tab title="Ajoutez un cours" icon-off="ion-android-add-circle" icon-on="icon ion-android-add-circle"
-             badge="badgeMessages" badge-style="badge-assertive" ng-controller="SAjoutCoursCtrl" ng-click="choixMatiere(eleve.entity.id)">
+    <ion-tab title="Solde" href="#/student/solde" icon-off="icon ion-ios-calculator-outline" icon-on="icon ion-ios-calculator">
 
     </ion-tab>
+    <ion-tab title="Ajout cours" icon-off="ion-android-add-circle" icon-on="icon ion-android-add-circle"
+             badge="badgeMessages" badge-style="badge-assertive" ng-controller="SAjoutCoursCtrl" ng-click="choixMatiere(student.entity.id)">
+    </ion-tab>
+
   </ion-tabs>
-  <br><br><br><br>
   <!-- Contenu -->
   <ion-content>
-    <br><br><br><br><br><br>
-    <div class="card">
-      <div class="item item-text-wrap">
+  <br><br><br><br><br><br>
+  <div class="card">
+    <div class="item item-text-wrap">
+      <br><br>
+      <!--{{mat}}-->
+      <!--{{niv}}-->
+      <!--{{coursGpe}}-->
+      <!--{{coursParti}}-->
+      <!--{{freq}}-->
+      <form name="myForm" ng-submit="submitTable()">
+
+        <div id="instruc">Date :<input id="formBlanc" type="date" ng-model="dateDebut" required></div>
+        <!--min="{{dateNow}}"-->
+        <!--<center><p id="erreur" ng-show="myForm.dateDebut.$error.min "><i class="icon ion-alert-circled">&nbsp;&nbsp;La date n'est pas valide !</i></p></center>-->
+
         <br><br>
-        <form name="myForm" ng-submit="submitTable()">
-          <div id="instruc">Heure :<input id="formBlanc" type="time" name="timeD" ng-model="heureDebut" required></div>
-          <br>
-          <div id="instruc">Date :<input id="formBlanc" min="{{dateNow}}" name="dateD" type="date" ng-model="dateDebut" required></div>
-
-          <br><br>
-          <center><button ng-disabled="myForm.$invalid" class="button button-small buttonEmp" ng-model="occ" ng-click="goRecap(mat, coursGpe, creerGroup, nbEt, nom1, nom2, nom3, nom4, nom5, nom6, freq, heureDebut, dateDebut)">
-            VALIDER
-          </button></center>
-        </form>
-      </div>
-      <div class="padding">
-        <p ng-show="myForm.dateD.$error.min">* Date erronée</p>
-        <p ng-show="myForm.dateD.$error.required"></p>
-        <p ng-show="myForm.timeD.$error.required"></p>
-      </div>
+        <center><button class="button button-small buttonEmp" ng-disabled="myForm.$invalid" ng-model="occ" ng-click="goRecap(matiere, niveauN, coursG, coursPar, freq, dateDebut)">
+          VALIDER
+        </button></center>
+      </form>
+      <!--<div class="padding">-->
+      <!--<p ng-show="myForm.dateDebut.$error.required">* Date non valide</p>-->
+      <!--</div>-->
     </div>
-  </ion-content>
+  </div>
+</ion-content>
 
+</ion-view>

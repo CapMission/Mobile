@@ -5,8 +5,12 @@
 
   <ion-tabs class="tabs-icon-top tabs-color-active-positive" ng-class="{'tabs-item-hide': $root.hideTabs}">
 
-
     <ion-tab  hidden="true" >
+
+    </ion-tab>
+
+    <ion-tab title="Planning"  icon-off="ion-ios-calendar-outline" icon-on="ion-ios-calendar" badge="badgehome"
+             badge-style="badge-assertive" ng-controller="ProposCtrl" ng-click="goChoix()">
 
     </ion-tab>
 
@@ -21,17 +25,16 @@
              badge-style="badge-assertive" ng-click="onTabSelected()">
 
     </ion-tab>
+    <!-- <ion-tab title="Messages" icon-off="ion-ios-email-outline" icon-on="ion-ios-email"
+              badge="badgeMessages" badge-style="badge-assertive" ng-click="onTabSelected()">
 
-    <!--
-        <ion-tab title="Messages" icon-off="ion-ios-email-outline" icon-on="ion-ios-email"
-                 badge="badgeMessages" badge-style="badge-assertive" ng-click="onTabSelected()">
+     </ion-tab>-->
 
-        </ion-tab>-->
     <ion-tab title="Solde" href="#/parent/solde" icon-off="icon ion-ios-calculator-outline" icon-on="icon ion-ios-calculator"
-             badge="badgeSolde" badge-style="badge-assertive" ng-controller="ChoixsoldeCtrl" ng-click="get(idE)">
+             badge="badgeSolde" badge-style="badge-assertive" ng-controller="ChoixsoldeCtrl" ng-click="get(eleve.entity.id)">
 
     </ion-tab>
-    <ion-tab title="Ajoutez un cours" icon-off="ion-android-add-circle" icon-on="icon ion-android-add-circle"
+    <ion-tab title="Ajout cours" icon-off="ion-android-add-circle" icon-on="icon ion-android-add-circle"
              badge="badgeMessages" badge-style="badge-assertive" ng-controller="ChoixAjoutCoursCtrl" ng-click="get(son.entity.id)">
 
     </ion-tab>
@@ -48,28 +51,28 @@
           <div class="form-group">
             <label class="control-label labelF"><i class="ion-person"></i> Nom & Prénom</label> <br>
 
-            <div class="left">{{parent.entity.name}}</div>
-            <div class="right"><i class="icon ion-compose updateIcon" ng-click="openModal(1)"></i></div>
-            <br><br>
+            <nobr><div class="left">{{parent.entity.name}}</div>
+            <div class="right"><i class="icon ion-compose updateIcon" ng-click="openModal(1)"></i></div></nobr>
+            <br>
           </div>
           <div class="form-group">
            <label  class="control-label labelF"><i class="ion-android-phone-portrait"></i> Téléphone</label><br>
 
-            <div class="left">{{parent.entity.phone}}</div>
-            <div class="right"><i class="icon ion-compose updateIcon" ng-click="openModal(2)"></i></div>
+            <nobr><div class="left">{{parent.entity.phone}}</div>
+            <div class="right"><i class="icon ion-compose updateIcon" ng-click="openModal(2)"></i></div></nobr>
           </div><br>
           <div class="form-group">
             <label  class="control-label labelF"><i class="ion-at"></i> Email </label><br>
 
-            <div class="left">{{parent.entity.mail}}</div>
-            <div class="right"><i class="icon ion-compose updateIcon" ng-click="openModal(3)"></i></div>
+            <nobr><div class="left">{{parent.entity.mail}}</div>
+            <div class="right"><i class="icon ion-compose updateIcon" ng-click="openModal(3)"></i></div></nobr>
           </div><br>
           <div ng-if="parent.entity.job != ''">
           <div class="form-group">
             <label  class="control-label labelF"><i class="icon ion-briefcase"></i> Fonction </label><br>
 
-            <div class="left">{{parent.entity.job}}</div>
-            <div class="right"><i class="icon ion-compose updateIcon" ng-click="openModal(4)"></i></div>
+            <nobr><div class="left">{{parent.entity.job}}</div>
+            <div class="right"><i class="icon ion-compose updateIcon" ng-click="openModal(4)"></i></div></nobr>
           </div></div><br>
         </form>
       </div>

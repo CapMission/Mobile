@@ -185,7 +185,7 @@ authentication.controller('ChoixCtrl', ['$scope','$rootScope','$http','$location
     <!-- ionicToast.show(message, position, stick, time); -->
     // ionicToast.show('This is a toast at the top.', 'top', true, 2500);
     toastr.info('Fontionnalité non disponible pour le moment !');
-    toastr.clear();
+    //toastr.clear();
 
   };
   $scope.idParent = window.localStorage.getItem('id')
@@ -197,6 +197,7 @@ authentication.controller('ChoixCtrl', ['$scope','$rootScope','$http','$location
     $http.get('http://51.255.195.19:8182/CapMissionApp/parents/' + id).success(function (data, status, headers, config) {
       //$scope.test="safaa"
       $rootScope.parent = data
+
       console.log(data)
       if (data.entity == null) {
         toastr.warning("Désolés, vous n'êtes pas autorisés à accéder en tant que parent");
@@ -239,6 +240,8 @@ authentication.controller('ChoixCtrl', ['$scope','$rootScope','$http','$location
             console.log('Le nombre des enfants est :' + $rootScope.parent.entity.students.length)
             // On fait un for pour parcourir l'arrayList (car c'est une liste d'étudiants)
             for (index = 0; index < 2; ++index) {
+              /*$rootScope.variable = $rootScope.parent
+              $rootScope.variableA = $rootScope.variable.lastIndexOf(name);*/
               name = $rootScope.parent.entity.students[index].name
             }
             console.log(name)

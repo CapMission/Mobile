@@ -7,8 +7,11 @@
 
   <ion-tabs class="tabs-icon-top tabs-color-active-positive" ng-class="{'tabs-item-hide': $root.hideTabs}">
 
-
     <ion-tab  hidden="true" >
+
+    </ion-tab>
+    <ion-tab title="Planning"  icon-off="ion-ios-calendar-outline" icon-on="ion-ios-calendar" badge="badgehome"
+             badge-style="badge-assertive" ng-controller="EnfantCtrl" ng-click="getd(son.entity.id)">
 
     </ion-tab>
 
@@ -24,12 +27,12 @@
 
     </ion-tab>
 
-    <ion-tab title="Solde" href="#/parent/solde" icon-off="icon ion-ios-calculator-outline" icon-on="icon ion-ios-calculator"
-             badge="badgeSolde" badge-style="badge-assertive" ng-controller="ChoixsoldeCtrl" ng-click="get(idE)">
+    <ion-tab title="Solde" href="#/parent/solde" icon-off="icon ion-ios-calculator-outline"
+             icon-on="icon ion-ios-calculator" ng-controller="PsoldeCtrl" ng-click="getd(son.entity.id)">
 
     </ion-tab>
-    <ion-tab title="Ajoutez un cours" icon-off="ion-android-add-circle" icon-on="icon ion-android-add-circle"
-             badge="badgeMessages" badge-style="badge-assertive" ng-controller="ChoixAjoutCoursCtrl" ng-click="get(eleve.entity.id)">
+    <ion-tab title="Ajout cours" icon-off="ion-android-add-circle" icon-on="icon ion-android-add-circle"
+             badge="badgeMessages" badge-style="badge-assertive" ng-controller="PAjoutCoursChoixCtrl" ng-click="goChoixMatiere(son.entity.id)">
 
     </ion-tab>
   </ion-tabs>
@@ -68,3 +71,11 @@
       </div>
     </div>
   </ion-content>
+
+  <ion-footer-bar ng-hide="parent.entity.students.length == '1' || testNum() == 3">
+    <div class="bar bar-footer" >
+
+      <button class="button icon-left ion-ios-person-outline button-small buttonEmp" ng-controller="ProposCtrl" ng-click="goChoix()">Choisir un autre enfant !</button>
+    </div>
+  </ion-footer-bar>
+  </ion-view>

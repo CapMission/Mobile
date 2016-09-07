@@ -26,10 +26,10 @@
             <div class="padding">
               <button class="button button-small buttonEmp2" ng-disabled="myForm.$invalid"
                       ng-click="login(user)">Se connecter
-              <!--<span ng-show="!myForm.loading">Se connecter</span>
-              <span class="overlord-loading-spinner fa fa-spinner" ng-show="myForm.loading" ></span>
-              <span ng-show="myForm.loading">En cours de préparation...</span>-->
-            </button>
+            </button><br><br>
+              <button class="button button-small buttonEmp2" ng-controller="capController"
+                      ng-click="loginFacebook()">Login avec Facebook
+              </button>
               <br><br>
 
               <div padding="true">

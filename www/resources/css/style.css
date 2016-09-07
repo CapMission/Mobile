@@ -446,8 +446,17 @@ span:last-of-type{
 .updateIcon {
   padding-left: 90%;
   align-items: baseline;
-  font-size: 1.5em;
+  font-size: 1.80em;
+  color:#E74F11;
 
+}
+
+.edit{
+  border: 1px solid #E74F11;
+  padding: 5px 20px;
+  width: 50px;
+  border-radius: 25px;
+  font-size: smaller;
 }
 .transparent {
   background-color: transparent !important;
@@ -787,8 +796,11 @@ body {
 }
 
 .iconSize2 {
-  font-size: 15px;
   display: inline-block;
+  font-size: 1.20em;
+  color: #E74F11;
+
+
 }
 
 .divText {
@@ -930,6 +942,7 @@ ion-popover-view.fit ion-content {
 
 #listeDeroulante {
   margin-bottom: -5px;
+
 }
 
 ion-popover-view.fit1 {
@@ -1076,6 +1089,52 @@ ion-popover-view.fit1 ion-content {
   color: #BDBDBD;
 }
 
+#imgClass{
+  background-color: black;
+}
+
+.img1Home{
+  z-index: 3;
+  width: 100%;
+  height: auto;
+}
+
+#imgHome{
+  width: 100%;
+  height: auto;
+}
+
+#img1Home{
+  width: 100%;
+  height: auto;
+}
+
+#combo{
+  background-color: #e7e7e7;
+}
+
+#instruc3{
+  color: #E74F11;
+  float: right;
+}
+
+.formBlanc:focus {
+  background-color: #E74F11;
+}
+
+#titrePara{
+  color: #2E2E2E;
+}
+
+#instruc4{
+  color: #E74F11;
+  float: left;
+}
+
+#sousTitre{
+  color: #A4A4A4;
+  font-size: 80%;
+}
 
 
 
@@ -1152,3 +1211,18 @@ ion-popover-view.fit1 ion-content {
   /* bring your own prefixes */
   transform: translate(-50%, -50%);
 }
+
+/* div card ajout cours*/
+
+.divCours {
+  margin-left: auto;
+  margin-right: auto;
+}
+.divCoursType{
+  text-align: center;
+}
+
+.selectItem {
+  background-color: #e5e8d9;
+}
+

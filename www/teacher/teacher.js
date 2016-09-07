@@ -92,10 +92,10 @@ teacher.controller('TeacherCtrl', ['$scope', '$location', '$rootScope', '$http',
       $scope.limit = 10;
 
       $scope.showMore = function () {
-        $scope.limit += 3;
+        $scope.limit += 10;
       }
       $scope.showLess = function () {
-        $scope.limit -= 3;
+        $scope.limit -= 5;
       }
       $ionicLoading.hide();
       //console.log('Data teacher'+JSON.stringify({data: data}))
@@ -127,6 +127,9 @@ teacher.controller('TeacherCtrl', ['$scope', '$location', '$rootScope', '$http',
 
 teacher.controller('TProposCtrl', ['$scope', '$rootScope', '$http', '$location', '$ionicPopover', '$ionicHistory', function ($scope, $rootScope, $http, $location, $ionicPopover, $ionicHistory) {
 
+  $rootScope.tgoChoix = function(){
+    $location.path('/teacher')
+  }
   $scope.goBack = function () {
     $ionicHistory.goBack();
   }
@@ -382,10 +385,10 @@ teacher.controller('TsoldeCtrl', ['$scope', '$rootScope', '$ionicModal', '$http'
       template: 'Chargement',
       duration: 1500
     })
-    $scope.limit += 3;
+    $scope.limit += 10;
   }
   $scope.showLess = function () {
-    $scope.limit -= 3;
+    $scope.limit -= 5;
   }
   $scope.showAlert = function () {
     var solde = $scope.solde.toFixed(2)
@@ -491,10 +494,10 @@ teacher.controller('AmontSoldeCtrl', ['$scope', '$rootScope', '$http', '$locatio
       template: 'Chargement',
       duration: 1500
     })
-    $scope.limit += 3;
+    $scope.limit += 10;
   }
   $scope.showLess = function () {
-    $scope.limit -= 3;
+    $scope.limit -= 5;
   }
 
   $ionicModal.fromTemplateUrl('templates/modalSolde.html', {

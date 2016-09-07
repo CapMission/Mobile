@@ -1,0 +1,189 @@
+<!-- En tête de l'application -->
+
+<ion-view  title='<img class="title-image" src="parent/icon.png"> Stage Intensif </img>' cache-view="false">
+  <ion-nav-buttons side="right">
+    <a class="button button-icon ion-ios-more rotate-90 fs-s" ng-click="popover.show($event)"></a>
+  </ion-nav-buttons>
+
+  <ion-tabs class="tabs-icon-top tabs-color-active-positive" ng-class="{'tabs-item-hide': $root.hideTabs}">
+
+    <ion-tab  hidden="true" >
+
+    </ion-tab>
+
+    <ion-tab title="Planning"  icon-off="ion-ios-calendar-outline" icon-on="ion-ios-calendar" badge="badgehome"
+             badge-style="badge-assertive" ng-controller="EnfantCtrl" ng-click="getd(son.entity.id)">
+
+    </ion-tab>
+
+
+    <ion-tab title="quiz" icon-off="ion-ios-timer-outline" icon-on="ion-ios-timer" badge="badgequiz"
+             badge-style="badge-assertive" ng-click="onTabSelected()">
+
+    </ion-tab>
+
+
+    <ion-tab title="Suivi" icon-off="ion-ios-pulse" icon-on="ion-ios-pulse-strong"  badge="badgeFollow"
+             badge-style="badge-assertive" ng-click="onTabSelected()">
+
+    </ion-tab>
+
+    <ion-tab title="Solde" href="#/parent/solde" icon-off="icon ion-ios-calculator-outline"
+             icon-on="icon ion-ios-calculator" ng-controller="PsoldeCtrl" ng-click="getd(son.entity.id)">
+
+    </ion-tab>
+    <ion-tab title="Ajout cours" icon-off="ion-android-add-circle" icon-on="icon ion-android-add-circle"
+             badge="badgeMessages" badge-style="badge-assertive" ng-controller="PAjoutCoursChoixCtrl" ng-click="goChoixMatiere(son.entity.id)">
+
+    </ion-tab>
+  </ion-tabs>
+  <br><br><br><br>
+  <!-- Contenu -->
+  <ion-content>
+    <br><br><br><br><br><br>
+    <div class="card" ng-controller="StageIntensifCtrl">
+      <div class="item item-text-wrap">
+
+        <!--{{matiere}}-->
+        <!--{{niveauN}}-->
+        <!--{{coursG}}-->
+        <!--{{coursPar}}-->
+        <!--{{freq}}-->
+
+        A quelle période scolaire désirez-vous prendre des cours pour votre enfant ? <br><br>
+
+        <!-- stage intensif concernant la mission française -->
+        <!--<div ng-if="niveauN == 'Terminale' || niveauN == 'Première' || niveauN == 'Seconde' || niveauN == 'Troisième' || niveauN == 'Quatrième' || niveauN == 'Cinquième' || niveauN == 'Sixième' ||-->
+        <!--niveauN == 'CP' || niveauN == 'CE1' || niveauN == 'CE2' || niveauN == 'PS' || niveauN == 'MS' || niveauN == 'GS' || niveauN == '  CM1' || niveauN == 'CM2'">-->
+        <div ng-if="niveauN == 'CM2'">
+          <label id="combo" class="item item-input item-select">
+            <div id="instruc">    <!-- class="input-label" -->
+              Vacances:
+            </div>
+            <select id="combo" ng-model="vac" required>
+              <option>Toussaint</option>
+              <option>Noël</option>
+              <option>Février</option>
+              <option>Avril</option>
+            </select>
+          </label>
+          <br><br>
+
+          <center><button class="button button-small buttonEmp" ng-model="occ" ng-click="goR(matiere, niveauN, stageIntens, vac)">
+            VALIDER
+          </button></center>
+        </div>
+
+
+
+        <!-- stage intensif concernant les bilingues -->
+        <div ng-if="niveauN == 'BAC1 - 2ºAL' || niveauN == 'BAC2 - 3ºAL' || niveauN == 'CE1 - 1ºAP' || niveauN == 'CE2 - 2ºAP' || niveauN == 'CE3 - 3ºAP' || niveauN == 'CE4 - 4ºAP' || niveauN == 'CE5 - 5ºAP' ||
+         niveauN == 'CE6 - 6ºAP' || niveauN == 'CE7 - 1ºAC' || niveauN == 'CE8 - 2ºAC' || niveauN == 'CE9 - 3ºAC' || niveauN == 'Tronc commun - 1ºAL' || niveauN == 'GS-CP'">
+          <label id="combo" class="item item-input item-select">
+            <div id="instruc">    <!-- class="input-label" -->
+              Vacances:
+            </div>
+            <select id="combo" ng-model="vac" required>
+              <option>Novembre/Décembre</option>
+              <option>Mars/Avril</option>
+            </select>
+          </label>
+          <br><br>
+
+          <center><button class="button button-small buttonEmp" ng-model="occ" ng-click="goR(matiere, niveauN, stageIntens, freq, vac)">
+            VALIDER
+          </button></center>
+        </div>
+
+        <!-- stage intensif concernant la mission espagnole -->
+        <div ng-if="niveauN == '1º Bachillerato' || niveauN == '2º Bachillerato' || niveauN == '3º ESO' || niveauN == '4º ESO' || niveauN == '1º ESO' || niveauN == '2º ESO' || niveauN == '6º Primaria' ||
+         niveauN == '5º Primaria' || niveauN == '6º Primaria' || niveauN == '4º Primaria' || niveauN == '3º Primaria' || niveauN == '2º Primaria' || niveauN == '1º Primaria'">
+          <label id="combo" class="item item-input item-select">
+            <div id="instruc">    <!-- class="input-label" -->
+              Vacances:
+            </div>
+            <select id="combo" ng-model="vac" required>
+              <option>Noël</option>
+              <option>Février</option>
+              <option>Avril</option>
+            </select>
+          </label>
+          <br><br>
+
+          <center><button class="button button-small buttonEmp" ng-model="occ" ng-click="goR(matiere, niveauN, stageIntens, freq, vac)">
+            VALIDER
+          </button></center>
+        </div>
+
+        <!-- stage intensif concernant la mission U.S. -->
+        <div ng-if="niveauN == '9th Grade' || niveauN == '1st Grade'">
+          <label id="combo" class="item item-input item-select">
+            <div id="instruc">    <!-- class="input-label" -->
+              Vacances:
+            </div>
+            <select id="combo" ng-model="vac" required>
+              <option>Toussaint</option>
+              <option>Noël</option>
+              <option>Pâques</option>
+              <option>Février</option>
+              <option>Avril</option>
+            </select>
+          </label>
+          <br><br>
+
+          <center><button class="button button-small buttonEmp" ng-model="occ" ng-click="goR(matiere, niveauN, stageIntens, freq, vac)">
+            VALIDER
+          </button></center>
+        </div>
+
+        <!-- stage intensif concernant la mission Belge -->
+        <div ng-if="niveauN == '6° AP' || niveauN == '4° AP'">
+          <label id="combo" class="item item-input item-select">
+            <div id="instruc">    <!-- class="input-label" -->
+              Vacances:
+            </div>
+            <select id="combo" ng-model="vac" required>
+              <option>Toussaint</option>
+              <option>Noël</option>
+              <option>Février</option>
+              <option>Avril</option>
+            </select>
+          </label>
+          <br><br>
+
+          <center><button class="button button-small buttonEmp" ng-model="occ" ng-click="goR(matiere, niveauN, stageIntens, freq, vac)">
+            VALIDER
+          </button></center>
+        </div>
+
+        <!-- stage intensif concernant la mission Italienne -->
+        <div ng-if="niveauN == 'CE6' || niveauN == 'CE4'">
+          <label id="combo" class="item item-input item-select">
+            <div id="instruc">    <!-- class="input-label" -->
+              Vacances:
+            </div>
+            <select id="combo" ng-model="vac" required>
+              <option>Toussaint</option>
+              <option>Noël</option>
+              <option>Février</option>
+              <option>Avril</option>
+            </select>
+          </label>
+          <br><br>
+
+          <center><button class="button button-small buttonEmp" ng-model="occ" ng-click="goR(matiere, niveauN, stageIntens, freq, vac)">
+            VALIDER
+          </button></center>
+        </div>
+
+      </div>
+    </div>
+  </ion-content>
+  <ion-footer-bar ng-hide="parent.entity.students.length == '1' || testNum() == 3">
+    <div class="bar bar-footer" >
+
+      <button class="button icon-left ion-ios-person-outline button-small buttonEmp" ng-controller="ProposCtrl" ng-click="goChoix()">Choisir un autre enfant !</button>
+    </div>
+  </ion-footer-bar>
+  </ion-view>
+

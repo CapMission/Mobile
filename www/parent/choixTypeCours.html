@@ -1,14 +1,18 @@
 <!-- En tête de l'application -->
 
-<ion-view  title='<img class="title-image" src="parent/icon.png">Cours</img>' cache-view="false">
+<ion-view  title='<img class="title-image" src="parent/icon.png"> Tarif & Type de cours</img>' cache-view="false">
   <ion-nav-buttons side="right">
-    <a class="button button-icon ion-ios-more rotate-90 fs-s" ng-app="capMission.parent" ng-controller="ProposCtrl" ng-click="popover.show($event)"></a>
+    <a class="button button-icon ion-ios-more rotate-90 fs-s" ng-click="popover.show($event)"></a>
   </ion-nav-buttons>
 
   <ion-tabs class="tabs-icon-top tabs-color-active-positive" ng-class="{'tabs-item-hide': $root.hideTabs}">
 
-
     <ion-tab  hidden="true" >
+
+    </ion-tab>
+
+    <ion-tab title="Planning"  icon-off="ion-ios-calendar-outline" icon-on="ion-ios-calendar" badge="badgehome"
+             badge-style="badge-assertive" ng-controller="EnfantCtrl" ng-click="getd(son.entity.id)">
 
     </ion-tab>
 
@@ -24,29 +28,1427 @@
 
     </ion-tab>
 
-    <ion-tab title="Solde" href="#/parent/solde" icon-off="icon ion-ios-calculator-outline" icon-on="icon ion-ios-calculator"
-             badge="badgeSolde" badge-style="badge-assertive" ng-controller="ChoixsoldeCtrl" ng-click="get(idE)">
+    <ion-tab title="Solde" href="#/parent/solde" icon-off="icon ion-ios-calculator-outline"
+             icon-on="icon ion-ios-calculator" ng-controller="PsoldeCtrl" ng-click="getd(son.entity.id)">
 
     </ion-tab>
-    <ion-tab title="Ajoutez un cours" icon-off="ion-android-add-circle" icon-on="icon ion-android-add-circle"
-             badge="badgeMessages" badge-style="badge-assertive" ng-controller="ChoixAjoutCoursCtrl" ng-click="get(eleve.entity.id)">
+    <ion-tab title="Ajout cours" icon-off="ion-android-add-circle" icon-on="icon ion-android-add-circle"
+             badge="badgeMessages" badge-style="badge-assertive" ng-controller="PAjoutCoursChoixCtrl" ng-click="goChoixMatiere(son.entity.id)">
 
     </ion-tab>
   </ion-tabs>
-  <br><br><br><br>
+  <br><br><br>
   <!-- Contenu -->
   <ion-content>
-    <br><br><br><br><br><br>
-    <div class="card">
+    <br><br>
+    <div ng-controller="PChoixTypeCours" class="card">
       <div class="item item-text-wrap">
-        Quel type de cours souhaitez-vous ?
-        <br><br>
-        <div>
-          <input ng-model="coursParti" type="radio" value="Cours Particulier" id="squared1" name="check" ng-click="coursPart(mat, coursParti)" />
-          <label id="instruc" for="squared1">Cours Particulier</label>&nbsp;
-          <input ng-model="coursGpe" type="radio" value="Cours en Groupe" id="squared2" name="check" ng-click="coursGroupe(mat,coursGpe)"/>
-          <label id="instruc" for="squared2">Cours en groupe</label>
+
+        <!-- prix pour les primaires sauf U.S. et sauf aides aux devoirs -->
+        <div ng-hide="(mat == 'Aide aux devoirs' || mat == 'Ayuda a los deberes')">
+          <div ng-if="(niv == 'CP' || niv == 'CE1' || niv == 'CE2' || niv == 'CM1' || niv == 'CM2' || niv == '1º Primaria' || niv == '2º Primaria' || niv == '3º Primaria' ||
+         niv == '4º Primaria' || niv == '5º Primaria' || niv == '6º Primaria' || niv == 'GS-CP' || niv == 'CP-CE1' || niv == 'CE1 - 1ºAP' || niv == 'CE2 - 2ºAP' ||
+         niv == 'CE2 - 3ºAP' || niv == 'CE3 - 3ºAP' || niv == 'CE4 - 4ºAP' || niv == 'CE4' || niv == 'CE5 - 5ºAP' || niv == 'CE6 - 6ºAP' || niv == 'CE6')">
+            <!-- cours -->
+            <div class="check-element animate-show" ng-hide="si"> <!-- pour cacher cours lorsqu'on clique sur stage intensif -->
+              <u>Cours</u>
+              <input id='instruc3' type="checkbox" ng-model="checked" aria-label="Toggle ngHide">
+              <br><br>
+            </div>
+
+            <!-- Cours en groupe -->
+            <div class="check-element animate-show" ng-show="checked"> <!-- pour faire apparaitre cours occ et regulier qd un clique sur cours en groupe -->
+              <div ng-repeat="alpha in prixC.prix.primaireGroupe">
+                Cours en Groupe
+                <div id="instruc3">
+                  <input ng-model="coursGpe"  ng-true-value="{{alpha.prix}}" type="checkbox" value="{{alpha.prix}}" id="squared2"/>
+                  <label for="squared2">{{alpha.prix+' MAD/h'}}</label><br><br>
+                </div><br>
+
+                <!-- choix entre cours réguliers et cours occasionnel -->
+                <div class="check-element animate-show" ng-show="coursGpe"> <!-- pour faire apparaitre le cours occ ou en groupe lorsqu'on clique sur cours en groupe -->
+                  <br>
+                  <div id="titrePara">
+                    Vous souhaitez un ou des cours
+                  </div><br>
+                  <div id="instruc4">
+                    <input type="checkbox" value="Cours occasionel" id="squared1" name="coursOcc" ng-model="freq1" ng-click="goCoursOcc(mat, niv, coursGpe, coursParti, freq1)" required />
+                    <label for="squared1">Occasionnel</label>
+                  </div>
+
+                  <div id="instruc3">
+                    <input type="checkbox" value="Plusieurs cours" id="squared2" name="coursMultiple" ng-model="freq2" ng-click="goCoursRegulier(mat, niv, coursGpe, coursParti, freq2)" required />
+                    <label for="squared2">Régulier</label>
+                  </div>
+                </div><br>
+
+                <!-- cours particulier -->
+                <div class="check-element animate-show" ng-hide="coursGpe"> <!-- pour cacher cours groupe lorsqu'on clique sur cours part-->
+                  Cours Particulier
+                  <div id="instruc3" ng-repeat="alpha in prixC.prix.primaireIndiv">
+                    <input ng-model="coursParti" type="checkbox" value="Cours Particulier"  ng-true-value="{{alpha.prix}}" id="squared1" name="check" ng-click="coursPart(mat, niv, coursParti)"/>
+                    <label for="squared1">{{alpha.prix+' MAD/h'}}</label>&nbsp;
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <!-- stage intensif -->
+            <div class="check-element animate-show" ng-hide="checked"> <!-- pour cacher lorsqu'on clique sur stage intensif -->
+              <u>Stages Intensifs</u>
+              <input id='instruc3' ng-model="si" type="checkbox" value="si" id="squared2"/><br>
+              <span id="sousTitre" style="font-style:italic;">Stage d'une durée de 1 semaine avec 2h de cours par jour durant les vacances scolaires</span>
+              <br><br>
+            </div>
+
+            <div class="check-element animate-show" ng-show="si"> <!-- pour faire apparaitre cours groupe et cours part qd un clique sur stage intensif -->
+              <!--stage intensif concernant la mission française -->
+              <div ng-if="niveauN == 'Terminale' || niveauN == 'Première' || niveauN == 'Seconde' || niveauN == 'Troisième' || niveauN == 'Quatrième' || niveauN == 'Cinquième' || niveauN == 'Sixième' ||
+              niveauN == 'CP' || niveauN == 'CE1' || niveauN == 'CE2' || niveauN == 'PS' || niveauN == 'MS' || niveauN == 'GS' || niveauN == '  CM1' || niveauN == 'CM2'">
+                <!--<div ng-if="niveauN == 'CM2'">-->
+                <form name="myForm">
+                  <label id="combo" class="item item-input item-select">
+                    <div id="instruc">    <!-- class="input-label" -->
+                      Vacances:
+                    </div>
+                    <select id="combo" ng-model="vacs" name="vac" required>
+                      <option>Toussaint</option>
+                      <option>Noël</option>
+                      <option>Février</option>
+                      <option>Avril</option>
+                    </select>
+                  </label>
+                  <br>
+
+                  <div ng-repeat="alpha in prixC.prix.intensifEte2hGpePrimaire">
+                    Cours en Groupe
+                    <div id="instruc3">
+                      <input ng-model="stageint1" type="checkbox" value="{{alpha.prix}}" ng-true-value="{{alpha.prix}}" ng-disabled="myForm.$invalid" id="squared2" ng-click="stageI1(mat, niv, stageint1, vacs)"/>
+                      <label for="squared2">{{alpha.prix+' MAD'}}</label><br><br>
+                    </div>
+                  </div><br>
+                  <div ng-repeat="alpha in prixC.prix.intensifEte2hIndivPrimaire">
+                    Cours Particuliers
+                    <div id="instruc3">
+                      <input ng-model="stageint2" type="checkbox" value="{{alpha.prix}}" ng-true-value="{{alpha.prix}}" ng-disabled="myForm.$invalid" id="squared2" ng-click="stageI2(mat, niv, stageint2, vacs)"/>
+                      <label for="squared2">{{alpha.prix+' MAD'}}</label><br><br>
+                    </div>
+                  </div>
+                </form>
+                <div class="padding">
+                  <p ng-show="myForm.vac.$error.required">* Veuillez renseigner les vacances.</p>
+                </div>
+              </div>
+
+              <!-- stage intensif concernant les bilingues -->
+              <div ng-if="niveauN == 'BAC1 - 2ºAL' || niveauN == 'BAC2 - 3ºAL' || niveauN == 'CE1 - 1ºAP' || niveauN == 'CE2 - 2ºAP' || niveauN == 'CE3 - 3ºAP' || niveauN == 'CE4 - 4ºAP' || niveauN == 'CE5 - 5ºAP' ||
+              niveauN == 'CE6 - 6ºAP' || niveauN == 'CE7 - 1ºAC' || niveauN == 'CE8 - 2ºAC' || niveauN == 'CE9 - 3ºAC' || niveauN == 'Tronc commun - 1ºAL' || niveauN == 'GS-CP'">
+                <form name="myForm">
+                  <label id="combo" class="item item-input item-select">
+                    <div id="instruc">    <!-- class="input-label" -->
+                      Vacances:
+                    </div>
+                    <select id="combo" ng-model="vac" required>
+                      <option>Novembre/Décembre</option>
+                      <option>Mars/Avril</option>
+                    </select>
+                  </label>
+                  <br>
+
+                  <div ng-repeat="alpha in prixC.prix.intensifEte2hGpePrimaire">
+                    Cours en Groupe
+                    <div id="instruc3">
+                      <input ng-model="stageint1" type="checkbox" ng-true-value="{{alpha.prix}}" id="squared2" ng-click="stageI1(mat, niv, stageint1, vac)"/>
+                      <label for="squared2">{{alpha.prix+' MAD'}}</label><br><br>
+                    </div>
+                  </div><br>
+
+                  <div ng-repeat="alpha in prixC.prix.intensifEte2hIndivPrimaire">
+                    Cours Particuliers
+                    <div id="instruc3">
+                      <input ng-model="stageint2" type="checkbox" ng-true-value="{{alpha.prix}}" ng-disabled="myForm.$invalid" id="squared2" ng-click="stageI2(mat, niv, stageint2, vac)"/>
+                      <label for="squared2">{{alpha.prix+' MAD'}}</label><br><br>
+                    </div>
+                  </div>
+                </form>
+                <div class="padding">
+                  <p ng-show="myForm.vac.$error.required">* Veuillez renseigner les vacances.</p>
+                </div>
+              </div>
+
+              <!-- stage intensif concernant la mission espagnole -->
+              <div ng-if="niveauN == '1º Bachillerato' || niveauN == '2º Bachillerato' || niveauN == '3º ESO' || niveauN == '4º ESO' || niveauN == '1º ESO' || niveauN == '2º ESO' || niveauN == '6º Primaria' ||
+             niveauN == '5º Primaria' || niveauN == '6º Primaria' || niveauN == '4º Primaria' || niveauN == '3º Primaria' || niveauN == '2º Primaria' || niveauN == '1º Primaria'">
+                <form name="myForm">
+                  <label id="combo" class="item item-input item-select">
+                    <div id="instruc">    <!-- class="input-label" -->
+                      Vacances:
+                    </div>
+                    <select id="combo" ng-model="vac" required>
+                      <option>Noël</option>
+                      <option>Février</option>
+                      <option>Avril</option>
+                    </select>
+                  </label>
+                  <br>
+
+                  <div ng-repeat="alpha in prixC.prix.intensifEte2hGpePrimaire">
+                    Cours en Groupe
+                    <div id="instruc3">
+                      <input ng-model="stageint1" type="checkbox" ng-true-value="{{alpha.prix}}" id="squared2" ng-click="stageI1(mat, niv, stageint1, vac)"/>
+                      <label for="squared2">{{alpha.prix+' MAD'}}</label><br><br>
+                    </div>
+                  </div><br>
+
+                  <div ng-repeat="alpha in prixC.prix.intensifEte2hIndivPrimaire">
+                    Cours Particuliers
+                    <div id="instruc3">
+                      <input ng-model="stageint2" type="checkbox" ng-true-value="{{alpha.prix}}" ng-disabled="myForm.$invalid" id="squared2" ng-click="stageI2(mat, niv, stageint2, vac)"/>
+                      <label for="squared2">{{alpha.prix+' MAD'}}</label><br><br>
+                    </div>
+                  </div>
+                </form>
+                <div class="padding">
+                  <p ng-show="myForm.vac.$error.required">* Veuillez renseigner les vacances.</p>
+                </div>
+              </div>
+
+              <!-- stage intensif concernant la mission U.S. -->
+              <div ng-if="niveauN == '9th Grade' || niveauN == '1st Grade'">
+                <form name="myForm">
+                  <label id="combo" class="item item-input item-select">
+                    <div id="instruc">    <!-- class="input-label" -->
+                      Vacances:
+                    </div>
+                    <select id="combo" ng-model="vac" required>
+                      <option>Toussaint</option>
+                      <option>Noël</option>
+                      <option>Pâques</option>
+                      <option>Février</option>
+                      <option>Avril</option>
+                    </select>
+                  </label>
+                  <br>
+
+                  <div ng-repeat="alpha in prixC.prix.intensifEte2hGpePrimaire">
+                    Cours en Groupe
+                    <div id="instruc3">
+                      <input ng-model="stageint1" type="checkbox" ng-true-value="{{alpha.prix}}" id="squared2" ng-click="stageI1(mat, niv, stageint1, vac)"/>
+                      <label for="squared2">{{alpha.prix+' MAD'}}</label><br><br>
+                    </div>
+                  </div><br>
+
+                  <div ng-repeat="alpha in prixC.prix.intensifEte2hIndivPrimaire">
+                    Cours Particuliers
+                    <div id="instruc3">
+                      <input ng-model="stageint2" type="checkbox" ng-true-value="{{alpha.prix}}" ng-disabled="myForm.$invalid" id="squared2" ng-click="stageI2(mat, niv, stageint2, vac)"/>
+                      <label for="squared2">{{alpha.prix+' MAD'}}</label><br><br>
+                    </div>
+                  </div>
+                </form>
+                <div class="padding">
+                  <p ng-show="myForm.vac.$error.required">* Veuillez renseigner les vacances.</p>
+                </div>
+              </div>
+
+              <!-- stage intensif concernant la mission Belge -->
+              <div ng-if="niveauN == '6° AP' || niveauN == '4° AP'">
+                <form name="myForm">
+                  <label id="combo" class="item item-input item-select">
+                    <div id="instruc">    <!-- class="input-label" -->
+                      Vacances:
+                    </div>
+                    <select id="combo" ng-model="vac" required>
+                      <option>Toussaint</option>
+                      <option>Noël</option>
+                      <option>Février</option>
+                      <option>Avril</option>
+                    </select>
+                  </label>
+                  <br>
+
+                  <div ng-repeat="alpha in prixC.prix.intensifEte2hGpePrimaire">
+                    Cours en Groupe
+                    <div id="instruc3">
+                      <input ng-model="stageint1" type="checkbox" ng-true-value="{{alpha.prix}}" id="squared2" ng-click="stageI1(mat, niv, stageint1, vac)"/>
+                      <label for="squared2">{{alpha.prix+' MAD'}}</label><br><br>
+                    </div>
+                  </div><br>
+
+                  <div ng-repeat="alpha in prixC.prix.intensifEte2hIndivPrimaire">
+                    Cours Particuliers
+                    <div id="instruc3">
+                      <input ng-model="stageint2" type="checkbox" ng-true-value="{{alpha.prix}}" ng-disabled="myForm.$invalid" id="squared2" ng-click="stageI2(mat, niv, stageint2, vac)"/>
+                      <label for="squared2">{{alpha.prix+' MAD'}}</label><br><br>
+                    </div>
+                  </div>
+                </form>
+                <div class="padding">
+                  <p ng-show="myForm.vac.$error.required">* Veuillez renseigner les vacances.</p>
+                </div>
+              </div>
+
+              <!-- stage intensif concernant la mission Italienne -->
+              <div ng-if="niveauN == 'CE6' || niveauN == 'CE4'">
+                <form name="myForm">
+                  <label id="combo" class="item item-input item-select">
+                    <div id="instruc">    <!-- class="input-label" -->
+                      Vacances:
+                    </div>
+                    <select id="combo" ng-model="vac" required>
+                      <option>Toussaint</option>
+                      <option>Noël</option>
+                      <option>Février</option>
+                      <option>Avril</option>
+                    </select>
+                  </label>
+                  <br>
+
+                  <div ng-repeat="alpha in prixC.prix.intensifEte2hGpePrimaire">
+                    Cours en Groupe
+                    <div id="instruc3">
+                      <input ng-model="stageint1" type="checkbox" ng-true-value="{{alpha.prix}}" id="squared2" ng-click="stageI1(mat, niv, stageint1, vac)"/>
+                      <label for="squared2">{{alpha.prix+' MAD'}}</label><br><br>
+                    </div>
+                  </div><br>
+
+                  <div ng-repeat="alpha in prixC.prix.intensifEte2hIndivPrimaire">
+                    Cours Particuliers
+                    <div id="instruc3">
+                      <input ng-model="stageint2" type="checkbox" ng-true-value="{{alpha.prix}}" ng-disabled="myForm.$invalid" id="squared2" ng-click="stageI2(mat, niv, stageint2, vac)"/>
+                      <label for="squared2">{{alpha.prix+' MAD'}}</label><br><br>
+                    </div>
+                  </div>
+                </form>
+                <div class="padding">
+                  <p ng-show="myForm.vac.$error.required">* Veuillez renseigner les vacances.</p>
+                </div>
+              </div>
+            </div>
+          </div>
         </div>
+
+        <!-- prix pour les primaires U.S. -->
+        <div ng-if="niv == '1st Grade' || niv == '2nd Grade' || niv == '3rd Grade' || niv == '4th Grade' || niv == '5th Grade'">
+          <!-- cours -->
+          <div class="check-element animate-show" ng-hide="si"> <!-- pour cacher cours lorsqu'on clique sur stage intensif -->
+            <u>Cours</u>
+            <input id='instruc3' type="checkbox" ng-model="checked" aria-label="Toggle ngHide">
+            <br><br>
+          </div>
+
+          <!-- Cours en groupe -->
+          <div class="check-element animate-show" ng-show="checked"> <!-- pour faire apparaitre cours occ et regulier qd un clique sur cours en groupe -->
+            <div ng-repeat="alpha in prixC.prix.primaireGpeUS">
+              Cours en Groupe
+              <div id="instruc3">
+                <input ng-model="coursGpe"  ng-true-value="{{alpha.prix}}" type="checkbox" value="{{alpha.prix}}" id="squared2"/>
+                <label for="squared2">{{alpha.prix+' MAD/h'}}</label><br><br>
+              </div><br>
+
+              <!-- choix entre cours réguliers et cours occasionnel -->
+              <div class="check-element animate-show" ng-show="coursGpe"> <!-- pour faire apparaitre le cours occ ou en groupe lorsqu'on clique sur cours en groupe -->
+                <br>
+                <div id="titrePara">
+                  Vous souhaitez un ou des cours
+                </div><br>
+                <div id="instruc4">
+                  <input type="checkbox" value="Cours occasionel" id="squared1" name="coursOcc" ng-model="freq1" ng-click="goCoursOcc(mat, niv, coursGpe, coursParti, freq1)" required />
+                  <label for="squared1">Occasionnel</label>
+                </div>
+
+                <div id="instruc3">
+                  <input type="checkbox" value="Plusieurs cours" id="squared2" name="coursMultiple" ng-model="freq2" ng-click="goCoursRegulier(mat, niv, coursGpe, coursParti, freq2)" required />
+                  <label for="squared2">Régulier</label>
+                </div>
+              </div><br>
+
+              <!-- cours particulier -->
+              <div class="check-element animate-show" ng-hide="coursGpe"> <!-- pour cacher cours groupe lorsqu'on clique sur cours part-->
+                Cours Particulier
+                <div id="instruc3" ng-repeat="alpha in prixC.prix.primaireIndUS">
+                  <input ng-model="coursParti" type="checkbox" value="Cours Particulier"  ng-true-value="{{alpha.prix}}" id="squared1" name="check" ng-click="coursPart(mat, niv, coursParti)"/>
+                  <label for="squared1">{{alpha.prix+' MAD/h'}}</label>&nbsp;
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <!-- stage intensif -->
+          <div class="check-element animate-show" ng-hide="checked"> <!-- pour cacher lorsqu'on clique sur stage intensif -->
+            <u>Stages Intensifs</u>
+            <input id='instruc3' ng-model="si" type="checkbox" value="si" id="squared2"/><br>
+            <span id="sousTitre" style="font-style:italic;">Stage d'une durée de 1 semaine avec 2h de cours par jour durant les vacances scolaires</span>
+            <br><br>
+          </div>
+
+          <div class="check-element animate-show" ng-show="si"> <!-- pour faire apparaitre cours groupe et cours part qd un clique sur stage intensif -->
+            <!-- stage intensif concernant la mission française -->
+            <!--<div ng-if="niveauN == 'Terminale' || niveauN == 'Première' || niveauN == 'Seconde' || niveauN == 'Troisième' || niveauN == 'Quatrième' || niveauN == 'Cinquième' || niveauN == 'Sixième' ||-->
+            <!--niveauN == 'CP' || niveauN == 'CE1' || niveauN == 'CE2' || niveauN == 'PS' || niveauN == 'MS' || niveauN == 'GS' || niveauN == '  CM1' || niveauN == 'CM2'">-->
+            <!--<div ng-if="niveauN == 'CM2'">-->
+            <form name="myForm">
+              <label id="combo" class="item item-input item-select">
+                <div id="instruc">    <!-- class="input-label" -->
+                  Vacances:
+                </div>
+                <select id="combo" ng-model="vacs" name="vac" required>
+                  <option>Toussaint</option>
+                  <option>Noël</option>
+                  <option>Février</option>
+                  <option>Avril</option>
+                </select>
+              </label>
+              <br>
+
+              <div ng-repeat="alpha in prixC.prix.intensifEte2hGpePrimaire">
+                Cours en Groupe
+                <div id="instruc3">
+                  <input ng-model="stageint1" type="checkbox" value="{{alpha.prix}}" ng-true-value="{{alpha.prix}}" ng-disabled="myForm.$invalid" id="squared2" ng-click="stageI1(mat, niv, stageint1, vacs)"/>
+                  <label for="squared2">{{alpha.prix+' MAD'}}</label><br><br>
+                </div>
+              </div><br>
+              <div ng-repeat="alpha in prixC.prix.intensifEte2hIndivPrimaire">
+                Cours Particuliers
+                <div id="instruc3">
+                  <input ng-model="stageint2" type="checkbox" value="{{alpha.prix}}" ng-true-value="{{alpha.prix}}" ng-disabled="myForm.$invalid" id="squared2" ng-click="stageI2(mat, niv, stageint2, vacs)"/>
+                  <label for="squared2">{{alpha.prix+' MAD'}}</label><br><br>
+                </div>
+              </div>
+            </form>
+            <div class="padding">
+              <p ng-show="myForm.vac.$error.required">* Veuillez renseigner les vacances.</p>
+            </div>
+
+
+
+            <!--</div>-->
+
+            <!-- stage intensif concernant les bilingues -->
+            <div ng-if="niveauN == 'BAC1 - 2ºAL' || niveauN == 'BAC2 - 3ºAL' || niveauN == 'CE1 - 1ºAP' || niveauN == 'CE2 - 2ºAP' || niveauN == 'CE3 - 3ºAP' || niveauN == 'CE4 - 4ºAP' || niveauN == 'CE5 - 5ºAP' ||
+             niveauN == 'CE6 - 6ºAP' || niveauN == 'CE7 - 1ºAC' || niveauN == 'CE8 - 2ºAC' || niveauN == 'CE9 - 3ºAC' || niveauN == 'Tronc commun - 1ºAL' || niveauN == 'GS-CP'">
+              <label id="combo" class="item item-input item-select">
+                <div id="instruc">    <!-- class="input-label" -->
+                  Vacances:
+                </div>
+                <select id="combo" ng-model="vac" required>
+                  <option>Novembre/Décembre</option>
+                  <option>Mars/Avril</option>
+                </select>
+              </label>
+              <br>
+
+              <div ng-repeat="alpha in prixC.prix.intensifEte2hGpePrimaire">
+                Cours en Groupe
+                <div id="instruc3">
+                  <input ng-model="stageIntensif" type="checkbox" value="{{alpha.prix}}" id="squared2" ng-click="stageI(mat, niv, stageIntensif, vac)"/>
+                  <label for="squared2">{{alpha.prix+' MAD'}}</label><br><br>
+                </div>
+              </div><br>
+
+              <div ng-repeat="alpha in prixC.prix.intensifEte2hIndivPrimaire">
+                Cours Particuliers
+                <div id="instruc3">
+                  <input ng-model="stageIntensif" type="checkbox" value="{{alpha.prix}}" id="squared2" ng-click="stageI(mat, niv, stageIntensif, vac)"/>
+                  <label for="squared2">{{alpha.prix+' MAD'}}</label><br><br>
+                </div>
+              </div>
+            </div>
+
+            <!-- stage intensif concernant la mission espagnole -->
+            <div ng-if="niveauN == '1º Bachillerato' || niveauN == '2º Bachillerato' || niveauN == '3º ESO' || niveauN == '4º ESO' || niveauN == '1º ESO' || niveauN == '2º ESO' || niveauN == '6º Primaria' ||
+             niveauN == '5º Primaria' || niveauN == '6º Primaria' || niveauN == '4º Primaria' || niveauN == '3º Primaria' || niveauN == '2º Primaria' || niveauN == '1º Primaria'">
+              <label id="combo" class="item item-input item-select">
+                <div id="instruc">    <!-- class="input-label" -->
+                  Vacances:
+                </div>
+                <select id="combo" ng-model="vac" required>
+                  <option>Noël</option>
+                  <option>Février</option>
+                  <option>Avril</option>
+                </select>
+              </label>
+              <br>
+
+              <div ng-repeat="alpha in prixC.prix.intensifEte2hGpePrimaire">
+                Cours en Groupe
+                <div id="instruc3">
+                  <input ng-model="stageIntensif" type="checkbox" value="{{alpha.prix}}" id="squared2" ng-click="stageI(mat, niv, stageIntensif, vac)"/>
+                  <label for="squared2">{{alpha.prix+' MAD'}}</label><br><br>
+                </div>
+              </div><br>
+
+              <div ng-repeat="alpha in prixC.prix.intensifEte2hIndivPrimaire">
+                Cours Particuliers
+                <div id="instruc3">
+                  <input ng-model="stageIntensif" type="checkbox" value="{{alpha.prix}}" id="squared2" ng-click="stageI(mat, niv, stageIntensif, vac)"/>
+                  <label for="squared2">{{alpha.prix+' MAD'}}</label><br><br>
+                </div>
+              </div>
+            </div>
+
+            <!-- stage intensif concernant la mission U.S. -->
+            <div ng-if="niveauN == '9th Grade' || niveauN == '1st Grade'">
+              <label id="combo" class="item item-input item-select">
+                <div id="instruc">    <!-- class="input-label" -->
+                  Vacances:
+                </div>
+                <select id="combo" ng-model="vac" required>
+                  <option>Toussaint</option>
+                  <option>Noël</option>
+                  <option>Pâques</option>
+                  <option>Février</option>
+                  <option>Avril</option>
+                </select>
+              </label>
+              <br>
+
+              <div ng-repeat="alpha in prixC.prix.intensifEte2hGpePrimaire">
+                Cours en Groupe
+                <div id="instruc3">
+                  <input ng-model="stageIntensif" type="checkbox" value="{{alpha.prix}}" id="squared2" ng-click="stageI(mat, niv, stageIntensif, vac)"/>
+                  <label for="squared2">{{alpha.prix+' MAD'}}</label><br><br>
+                </div>
+              </div><br>
+
+              <div ng-repeat="alpha in prixC.prix.intensifEte2hIndivPrimaire">
+                Cours Particuliers
+                <div id="instruc3">
+                  <input ng-model="stageIntensif" type="checkbox" value="{{alpha.prix}}" id="squared2" ng-click="stageI(mat, niv, stageIntensif, vac)"/>
+                  <label for="squared2">{{alpha.prix+' MAD'}}</label><br><br>
+                </div>
+              </div>
+            </div>
+
+            <!-- stage intensif concernant la mission Belge -->
+            <div ng-if="niveauN == '6° AP' || niveauN == '4° AP'">
+              <label id="combo" class="item item-input item-select">
+                <div id="instruc">    <!-- class="input-label" -->
+                  Vacances:
+                </div>
+                <select id="combo" ng-model="vac" required>
+                  <option>Toussaint</option>
+                  <option>Noël</option>
+                  <option>Février</option>
+                  <option>Avril</option>
+                </select>
+              </label>
+              <br>
+
+              <div ng-repeat="alpha in prixC.prix.intensifEte2hGpePrimaire">
+                Cours en Groupe
+                <div id="instruc3">
+                  <input ng-model="stageIntensif" type="checkbox" value="{{alpha.prix}}" id="squared2" ng-click="stageI(mat, niv, stageIntensif, vac)"/>
+                  <label for="squared2">{{alpha.prix+' MAD'}}</label><br><br>
+                </div>
+              </div><br>
+
+              <div ng-repeat="alpha in prixC.prix.intensifEte2hIndivPrimaire">
+                Cours Particuliers
+                <div id="instruc3">
+                  <input ng-model="stageIntensif" type="checkbox" value="{{alpha.prix}}" id="squared2" ng-click="stageI(mat, niv, stageIntensif, vac)"/>
+                  <label for="squared2">{{alpha.prix+' MAD'}}</label><br><br>
+                </div>
+              </div>
+            </div>
+
+            <!-- stage intensif concernant la mission Italienne -->
+            <div ng-if="niveauN == 'CE6' || niveauN == 'CE4'">
+              <label id="combo" class="item item-input item-select">
+                <div id="instruc">    <!-- class="input-label" -->
+                  Vacances:
+                </div>
+                <select id="combo" ng-model="vac" required>
+                  <option>Toussaint</option>
+                  <option>Noël</option>
+                  <option>Février</option>
+                  <option>Avril</option>
+                </select>
+              </label>
+              <br>
+
+              <div ng-repeat="alpha in prixC.prix.intensifEte2hGpePrimaire">
+                Cours en Groupe
+                <div id="instruc3">
+                  <input ng-model="stageIntensif" type="checkbox" value="{{alpha.prix}}" id="squared2" ng-click="stageI(mat, niv, stageIntensif, vac)"/>
+                  <label for="squared2">{{alpha.prix+' MAD'}}</label><br><br>
+                </div>
+              </div><br>
+
+              <div ng-repeat="alpha in prixC.prix.intensifEte2hIndivPrimaire">
+                Cours Particuliers
+                <div id="instruc3">
+                  <input ng-model="stageIntensif" type="checkbox" value="{{alpha.prix}}" id="squared2" ng-click="stageI(mat, niv, stageIntensif, vac)"/>
+                  <label for="squared2">{{alpha.prix+' MAD'}}</label><br><br>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- prix pour les collèges toutes missions sauf U.S. -->
+        <div ng-hide="(mat == 'Aide aux devoirs' || mat == 'Ayuda a los deberes')">
+          <div ng-if="niv == 'Sixième' || niv == 'Cinquième' || niv == 'Quatrième' || niv == 'Troisième' || niv == '1º ESO' || niv == '2º ESO' || niv == '3º ESO' || niv == '4º ESO'
+          || niv == 'CE7 - 1ºAC' || niv == 'CE8 - 2ºAC' || niv == 'CE8 - 1ºAC' || niv =='CE9 - 3ºAC'">
+            <!-- cours -->
+            <div class="check-element animate-show" ng-hide="si"> <!-- pour cacher cours lorsqu'on clique sur stage intensif -->
+              <u>Cours</u>
+              <input id='instruc3' type="checkbox" ng-model="checked" aria-label="Toggle ngHide">
+              <br><br>
+            </div>
+
+            <!-- Cours en groupe -->
+            <div class="check-element animate-show" ng-show="checked"> <!-- pour faire apparaitre cours occ et regulier qd un clique sur cours en groupe -->
+              <div ng-repeat="alpha in prixC.prix.collegeGroupe">
+                Cours en Groupe
+                <div id="instruc3">
+                  <input ng-model="coursGpe"  ng-true-value="{{alpha.prix}}" type="checkbox" value="{{alpha.prix}}" id="squared2"/>
+                  <label for="squared2">{{alpha.prix+' MAD/h'}}</label><br><br>
+                </div><br>
+
+                <!-- choix entre cours réguliers et cours occasionnel -->
+                <div class="check-element animate-show" ng-show="coursGpe"> <!-- pour faire apparaitre le cours occ ou en groupe lorsqu'on clique sur cours en groupe -->
+                  <br>
+                  <div id="titrePara">
+                    Vous souhaitez un ou des cours
+                  </div><br>
+                  <div id="instruc4">
+                    <input type="checkbox" value="Cours occasionel" id="squared1" name="coursOcc" ng-model="freq1" ng-click="goCoursOcc(mat, niv, coursGpe, coursParti, freq1)" required />
+                    <label for="squared1">Occasionnel</label>
+                  </div>
+
+                  <div id="instruc3">
+                    <input type="checkbox" value="Plusieurs cours" id="squared2" name="coursMultiple" ng-model="freq2" ng-click="goCoursRegulier(mat, niv, coursGpe, coursParti, freq2)" required />
+                    <label for="squared2">Régulier</label>
+                  </div>
+                </div><br>
+
+                <!-- cours particulier -->
+                <div class="check-element animate-show" ng-hide="coursGpe"> <!-- pour cacher cours groupe lorsqu'on clique sur cours part-->
+                  Cours Particulier
+                  <div id="instruc3" ng-repeat="alpha in prixC.prix.collegeIndiv">
+                    <input ng-model="coursParti" type="checkbox" value="Cours Particulier"  ng-true-value="{{alpha.prix}}" id="squared1" name="check" ng-click="coursPart(mat, niv, coursParti)"/>
+                    <label for="squared1">{{alpha.prix+' MAD/h'}}</label>&nbsp;
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <!-- stage intensif -->
+            <div class="check-element animate-show" ng-hide="checked"> <!-- pour cacher lorsqu'on clique sur stage intensif -->
+              <u>Stages Intensifs</u>
+              <input id='instruc3' ng-model="si" type="checkbox" value="si" id="squared2"/><br>
+              <span id="sousTitre" style="font-style:italic;">Stage d'une durée de 1 semaine avec 2h de cours par jour durant les vacances scolaires</span>
+              <br><br>
+            </div>
+
+            <div class="check-element animate-show" ng-show="si"> <!-- pour faire apparaitre cours groupe et cours part qd un clique sur stage intensif -->
+              <!-- stage intensif concernant la mission française -->
+              <div ng-if="niveauN == 'Terminale' || niveauN == 'Première' || niveauN == 'Seconde' || niveauN == 'Troisième' || niveauN == 'Quatrième' || niveauN == 'Cinquième' || niveauN == 'Sixième' ||
+              niveauN == 'CP' || niveauN == 'CE1' || niveauN == 'CE2' || niveauN == 'PS' || niveauN == 'MS' || niveauN == 'GS' || niveauN == '  CM1' || niveauN == 'CM2'">
+                <!--<div ng-if="niveauN == 'CM2'">-->
+                <form name="myForm">
+                  <label id="combo" class="item item-input item-select">
+                    <div id="instruc">    <!-- class="input-label" -->
+                      Vacances:
+                    </div>
+                    <select id="combo" ng-model="vacs" name="vac" required>
+                      <option>Toussaint</option>
+                      <option>Noël</option>
+                      <option>Février</option>
+                      <option>Avril</option>
+                    </select>
+                  </label>
+                  <br>
+
+                  <div ng-repeat="alpha in prixC.prix.intensifEte2hGpeCollege">
+                    Cours en Groupe
+                    <div id="instruc3">
+                      <input ng-model="stageint1" type="checkbox" value="{{alpha.prix}}" ng-true-value="{{alpha.prix}}" ng-disabled="myForm.$invalid" id="squared2" ng-click="stageI1(mat, niv, stageint1, vacs)"/>
+                      <label for="squared2">{{alpha.prix+' MAD'}}</label><br><br>
+                    </div>
+                  </div><br>
+                  <div ng-repeat="alpha in prixC.prix.intensifEte2hIndivCollege">
+                    Cours Particuliers
+                    <div id="instruc3">
+                      <input ng-model="stageint2" type="checkbox" value="{{alpha.prix}}" ng-true-value="{{alpha.prix}}" ng-disabled="myForm.$invalid" id="squared2" ng-click="stageI2(mat, niv, stageint2, vacs)"/>
+                      <label for="squared2">{{alpha.prix+' MAD'}}</label><br><br>
+                    </div>
+                  </div>
+                </form>
+                <div class="padding">
+                  <p ng-show="myForm.vac.$error.required">* Veuillez renseigner les vacances.</p>
+                </div>
+
+
+
+              </div>
+
+              <!-- stage intensif concernant les bilingues -->
+              <div ng-if="niveauN == 'BAC1 - 2ºAL' || niveauN == 'BAC2 - 3ºAL' || niveauN == 'CE1 - 1ºAP' || niveauN == 'CE2 - 2ºAP' || niveauN == 'CE3 - 3ºAP' || niveauN == 'CE4 - 4ºAP' || niveauN == 'CE5 - 5ºAP' ||
+               niveauN == 'CE6 - 6ºAP' || niveauN == 'CE7 - 1ºAC' || niveauN == 'CE8 - 2ºAC' || niveauN == 'CE9 - 3ºAC' || niveauN == 'Tronc commun - 1ºAL' || niveauN == 'GS-CP'">
+                <label id="combo" class="item item-input item-select">
+                  <div id="instruc">    <!-- class="input-label" -->
+                    Vacances:
+                  </div>
+                  <select id="combo" ng-model="vac" required>
+                    <option>Novembre/Décembre</option>
+                    <option>Mars/Avril</option>
+                  </select>
+                </label>
+                <br>
+
+                <div ng-repeat="alpha in prixC.prix.intensifEte2hGpePrimaire">
+                  Cours en Groupe
+                  <div id="instruc3">
+                    <input ng-model="stageint1" type="checkbox" ng-true-value="{{alpha.prix}}" id="squared2" ng-click="stageI1(mat, niv, stageint1, vac)"/>
+                    <label for="squared2">{{alpha.prix+' MAD'}}</label><br><br>
+                  </div>
+                </div><br>
+
+                <div ng-repeat="alpha in prixC.prix.intensifEte2hIndivPrimaire">
+                  Cours Particuliers
+                  <div id="instruc3">
+                    <input ng-model="stageint2" type="checkbox" ng-true-value="{{alpha.prix}}" id="squared2" ng-click="stageI2(mat, niv, stageint2, vac)"/>
+                    <label for="squared2">{{alpha.prix+' MAD'}}</label><br><br>
+                  </div>
+                </div>
+              </div>
+
+              <!-- stage intensif concernant la mission espagnole -->
+              <div ng-if="niveauN == '1º Bachillerato' || niveauN == '2º Bachillerato' || niveauN == '3º ESO' || niveauN == '4º ESO' || niveauN == '1º ESO' || niveauN == '2º ESO' || niveauN == '6º Primaria' ||
+               niveauN == '5º Primaria' || niveauN == '6º Primaria' || niveauN == '4º Primaria' || niveauN == '3º Primaria' || niveauN == '2º Primaria' || niveauN == '1º Primaria'">
+                <label id="combo" class="item item-input item-select">
+                  <div id="instruc">    <!-- class="input-label" -->
+                    Vacances:
+                  </div>
+                  <select id="combo" ng-model="vac" required>
+                    <option>Noël</option>
+                    <option>Février</option>
+                    <option>Avril</option>
+                  </select>
+                </label>
+                <br>
+
+                <div ng-repeat="alpha in prixC.prix.intensifEte2hGpePrimaire">
+                  Cours en Groupe
+                  <div id="instruc3">
+                    <input ng-model="stageint1" type="checkbox"  ng-true-value="{{alpha.prix}}" id="squared2" ng-click="stageI1(mat, niv, stageint1, vac)"/>
+                    <label for="squared2">{{alpha.prix+' MAD'}}</label><br><br>
+                  </div>
+                </div><br>
+
+                <div ng-repeat="alpha in prixC.prix.intensifEte2hIndivPrimaire">
+                  Cours Particuliers
+                  <div id="instruc3">
+                    <input ng-model="stageint2" type="checkbox" ng-true-value="{{alpha.prix}}" id="squared2" ng-click="stageI2(mat, niv, stageint2, vac)"/>
+                    <label for="squared2">{{alpha.prix+' MAD'}}</label><br><br>
+                  </div>
+                </div>
+              </div>
+
+              <!-- stage intensif concernant la mission U.S. -->
+              <div ng-if="niveauN == '9th Grade' || niveauN == '1st Grade'">
+                <label id="combo" class="item item-input item-select">
+                  <div id="instruc">    <!-- class="input-label" -->
+                    Vacances:
+                  </div>
+                  <select id="combo" ng-model="vac" required>
+                    <option>Toussaint</option>
+                    <option>Noël</option>
+                    <option>Pâques</option>
+                    <option>Février</option>
+                    <option>Avril</option>
+                  </select>
+                </label>
+                <br>
+
+                <div ng-repeat="alpha in prixC.prix.intensifEte2hGpePrimaire">
+                  Cours en Groupe
+                  <div id="instruc3">
+                    <input ng-model="stageint1" type="checkbox" ng-true-value="{{alpha.prix}}" id="squared2" ng-click="stageI1(mat, niv, stageint1, vac)"/>
+                    <label for="squared2">{{alpha.prix+' MAD'}}</label><br><br>
+                  </div>
+                </div><br>
+
+                <div ng-repeat="alpha in prixC.prix.intensifEte2hIndivPrimaire">
+                  Cours Particuliers
+                  <div id="instruc3">
+                    <input ng-model="stageint2" type="checkbox" ng-true-value="{{alpha.prix}}" id="squared2" ng-click="stageI2(mat, niv, stageint2, vac)"/>
+                    <label for="squared2">{{alpha.prix+' MAD'}}</label><br><br>
+                  </div>
+                </div>
+              </div>
+
+              <!-- stage intensif concernant la mission Belge -->
+              <div ng-if="niveauN == '6° AP' || niveauN == '4° AP'">
+                <label id="combo" class="item item-input item-select">
+                  <div id="instruc">    <!-- class="input-label" -->
+                    Vacances:
+                  </div>
+                  <select id="combo" ng-model="vac" required>
+                    <option>Toussaint</option>
+                    <option>Noël</option>
+                    <option>Février</option>
+                    <option>Avril</option>
+                  </select>
+                </label>
+                <br>
+
+                <div ng-repeat="alpha in prixC.prix.intensifEte2hGpePrimaire">
+                  Cours en Groupe
+                  <div id="instruc3">
+                    <input ng-model="stageint1" type="checkbox" ng-true-value="{{alpha.prix}}" id="squared2" ng-click="stageI1(mat, niv, stageint1, vac)"/>
+                    <label for="squared2">{{alpha.prix+' MAD'}}</label><br><br>
+                  </div>
+                </div><br>
+
+                <div ng-repeat="alpha in prixC.prix.intensifEte2hIndivPrimaire">
+                  Cours Particuliers
+                  <div id="instruc3">
+                    <input ng-model="stageint2" type="checkbox" ng-true-value="{{alpha.prix}}" id="squared2" ng-click="stageI2(mat, niv, stageint2, vac)"/>
+                    <label for="squared2">{{alpha.prix+' MAD'}}</label><br><br>
+                  </div>
+                </div>
+              </div>
+
+              <!-- stage intensif concernant la mission Italienne -->
+              <div ng-if="niveauN == 'CE6' || niveauN == 'CE4'">
+                <label id="combo" class="item item-input item-select">
+                  <div id="instruc">    <!-- class="input-label" -->
+                    Vacances:
+                  </div>
+                  <select id="combo" ng-model="vac" required>
+                    <option>Toussaint</option>
+                    <option>Noël</option>
+                    <option>Février</option>
+                    <option>Avril</option>
+                  </select>
+                </label>
+                <br>
+
+                <div ng-repeat="alpha in prixC.prix.intensifEte2hGpePrimaire">
+                  Cours en Groupe
+                  <div id="instruc3">
+                    <input ng-model="stageint1" type="checkbox" ng-true-value="{{alpha.prix}}" id="squared2" ng-click="stageI1(mat, niv, stageint1, vac)"/>
+                    <label for="squared2">{{alpha.prix+' MAD'}}</label><br><br>
+                  </div>
+                </div><br>
+
+                <div ng-repeat="alpha in prixC.prix.intensifEte2hIndivPrimaire">
+                  Cours Particuliers
+                  <div id="instruc3">
+                    <input ng-model="stageint2" type="checkbox" ng-true-value="{{alpha.prix}}" id="squared2" ng-click="stageI2(mat, niv, stageint2, vac)"/>
+                    <label for="squared2">{{alpha.prix+' MAD'}}</label><br><br>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- prix pour les collèges U.S. -->
+        <div ng-if="niv ==  '6th Grade' || niv == '7th Grade' || niv == '8th Grade'">
+          <!-- cours -->
+          <div class="check-element animate-show" ng-hide="si"> <!-- pour cacher cours lorsqu'on clique sur stage intensif -->
+            <u>Cours</u>
+            <input id='instruc3' type="checkbox" ng-model="checked" aria-label="Toggle ngHide">
+            <br><br>
+          </div>
+
+          <!-- Cours en groupe -->
+          <div class="check-element animate-show" ng-show="checked"> <!-- pour faire apparaitre cours occ et regulier qd un clique sur cours en groupe -->
+            <div ng-repeat="alpha in prixC.prix.collegeGpeUS">
+              Cours en Groupe
+              <div id="instruc3">
+                <input ng-model="coursGpe"  ng-true-value="{{alpha.prix}}" type="checkbox" value="{{alpha.prix}}" id="squared2"/>
+                <label for="squared2">{{alpha.prix+' MAD/h'}}</label><br><br>
+              </div><br>
+
+              <!-- choix entre cours réguliers et cours occasionnel -->
+              <div class="check-element animate-show" ng-show="coursGpe"> <!-- pour faire apparaitre le cours occ ou en groupe lorsqu'on clique sur cours en groupe -->
+                <br>
+                <div id="titrePara">
+                  Vous souhaitez un ou des cours
+                </div><br>
+                <div id="instruc4">
+                  <input type="checkbox" value="Cours occasionel" id="squared1" name="coursOcc" ng-model="freq1" ng-click="goCoursOcc(mat, niv, coursGpe, coursParti, freq1)" required />
+                  <label for="squared1">Occasionnel</label>
+                </div>
+
+                <div id="instruc3">
+                  <input type="checkbox" value="Plusieurs cours" id="squared2" name="coursMultiple" ng-model="freq2" ng-click="goCoursRegulier(mat, niv, coursGpe, coursParti, freq2)" required />
+                  <label for="squared2">Régulier</label>
+                </div>
+              </div><br>
+
+              <!-- cours particulier -->
+              <div class="check-element animate-show" ng-hide="coursGpe"> <!-- pour cacher cours groupe lorsqu'on clique sur cours part-->
+                Cours Particulier
+                <div id="instruc3" ng-repeat="alpha in prixC.prix.collegeIndUS">
+                  <input ng-model="coursParti" type="checkbox" value="Cours Particulier"  ng-true-value="{{alpha.prix}}" id="squared1" name="check" ng-click="coursPart(mat, niv, coursParti)"/>
+                  <label for="squared1">{{alpha.prix+' MAD/h'}}</label>&nbsp;
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <!-- stage intensif -->
+          <div class="check-element animate-show" ng-hide="checked"> <!-- pour cacher lorsqu'on clique sur stage intensif -->
+            <u>Stages Intensifs</u>
+            <input id='instruc3' ng-model="si" type="checkbox" value="si" id="squared2"/><br>
+            <span id="sousTitre" style="font-style:italic;">Stage d'une durée de 1 semaine avec 2h de cours par jour durant les vacances scolaires</span>
+            <br><br>
+          </div>
+
+          <div class="check-element animate-show" ng-show="si"> <!-- pour faire apparaitre cours groupe et cours part qd un clique sur stage intensif -->
+            <!-- stage intensif concernant la mission française -->
+            <div ng-if="niveauN == 'Terminale' || niveauN == 'Première' || niveauN == 'Seconde' || niveauN == 'Troisième' || niveauN == 'Quatrième' || niveauN == 'Cinquième' || niveauN == 'Sixième' ||
+            niveauN == 'CP' || niveauN == 'CE1' || niveauN == 'CE2' || niveauN == 'PS' || niveauN == 'MS' || niveauN == 'GS' || niveauN == '  CM1' || niveauN == 'CM2'">
+              <!--<div ng-if="niveauN == 'CM2'">-->
+              <form name="myForm">
+                <label id="combo" class="item item-input item-select">
+                  <div id="instruc">    <!-- class="input-label" -->
+                    Vacances:
+                  </div>
+                  <select id="combo" ng-model="vacs" name="vac" required>
+                    <option>Toussaint</option>
+                    <option>Noël</option>
+                    <option>Février</option>
+                    <option>Avril</option>
+                  </select>
+                </label>
+                <br>
+
+                <div ng-repeat="alpha in prixC.prix.intensifEte2hGpeCollege">
+                  Cours en Groupe
+                  <div id="instruc3">
+                    <input ng-model="stageint1" type="checkbox" value="{{alpha.prix}}" ng-true-value="{{alpha.prix}}" ng-disabled="myForm.$invalid" id="squared2" ng-click="stageI1(mat, niv, stageint, vacs)"/>
+                    <label for="squared2">{{alpha.prix+' MAD'}}</label><br><br>
+                  </div>
+                </div><br>
+                <div ng-repeat="alpha in prixC.prix.intensifEte2hIndivCollege">
+                  Cours Particuliers
+                  <div id="instruc3">
+                    <input ng-model="stageint2" type="checkbox" value="{{alpha.prix}}" ng-true-value="{{alpha.prix}}" ng-disabled="myForm.$invalid" id="squared2" ng-click="stageI2(mat, niv, stageint, vacs)"/>
+                    <label for="squared2">{{alpha.prix+' MAD'}}</label><br><br>
+                  </div>
+                </div>
+              </form>
+              <div class="padding">
+                <p ng-show="myForm.vac.$error.required">* Veuillez renseigner les vacances.</p>
+              </div>
+
+
+
+            </div>
+
+            <!-- stage intensif concernant les bilingues -->
+            <div ng-if="niveauN == 'BAC1 - 2ºAL' || niveauN == 'BAC2 - 3ºAL' || niveauN == 'CE1 - 1ºAP' || niveauN == 'CE2 - 2ºAP' || niveauN == 'CE3 - 3ºAP' || niveauN == 'CE4 - 4ºAP' || niveauN == 'CE5 - 5ºAP' ||
+             niveauN == 'CE6 - 6ºAP' || niveauN == 'CE7 - 1ºAC' || niveauN == 'CE8 - 2ºAC' || niveauN == 'CE9 - 3ºAC' || niveauN == 'Tronc commun - 1ºAL' || niveauN == 'GS-CP'">
+              <form name="myForm">
+                <label id="combo" class="item item-input item-select">
+                  <div id="instruc">    <!-- class="input-label" -->
+                    Vacances:
+                  </div>
+                  <select id="combo" ng-model="vac" required>
+                    <option>Novembre/Décembre</option>
+                    <option>Mars/Avril</option>
+                  </select>
+                </label>
+                <br>
+
+                <div ng-repeat="alpha in prixC.prix.intensifEte2hGpePrimaire">
+                  Cours en Groupe
+                  <div id="instruc3">
+                    <input ng-model="stageint1" type="checkbox" ng-true-value="{{alpha.prix}}" id="squared2" ng-disabled="myForm.$invalid" ng-click="stageI1(mat, niv, stageint1, vac)"/>
+                    <label for="squared2">{{alpha.prix+' MAD'}}</label><br><br>
+                  </div>
+                </div><br>
+
+                <div ng-repeat="alpha in prixC.prix.intensifEte2hIndivPrimaire">
+                  Cours Particuliers
+                  <div id="instruc3">
+                    <input ng-model="stageint2" type="checkbox" ng-true-value="{{alpha.prix}}" id="squared2" ng-disabled="myForm.$invalid" ng-click="stageI2(mat, niv, stageint2, vac)"/>
+                    <label for="squared2">{{alpha.prix+' MAD'}}</label><br><br>
+                  </div>
+                </div>
+              </form>
+              <div class="padding">
+                <p ng-show="myForm.vac.$error.required">* Veuillez renseigner les vacances.</p>
+              </div>
+            </div>
+
+            <!-- stage intensif concernant la mission espagnole -->
+            <div ng-if="niveauN == '1º Bachillerato' || niveauN == '2º Bachillerato' || niveauN == '3º ESO' || niveauN == '4º ESO' || niveauN == '1º ESO' || niveauN == '2º ESO' || niveauN == '6º Primaria' ||
+             niveauN == '5º Primaria' || niveauN == '6º Primaria' || niveauN == '4º Primaria' || niveauN == '3º Primaria' || niveauN == '2º Primaria' || niveauN == '1º Primaria'">
+              <form name="myForm">
+                <label id="combo" class="item item-input item-select">
+                  <div id="instruc">    <!-- class="input-label" -->
+                    Vacances:
+                  </div>
+                  <select id="combo" ng-model="vac" required>
+                    <option>Noël</option>
+                    <option>Février</option>
+                    <option>Avril</option>
+                  </select>
+                </label>
+                <br>
+
+                <div ng-repeat="alpha in prixC.prix.intensifEte2hGpePrimaire">
+                  Cours en Groupe
+                  <div id="instruc3">
+                    <input ng-model="stageint1" type="checkbox" ng-true-value="{{alpha.prix}}" ng-disabled="myForm.$invalid" id="squared2" ng-click="stageI1(mat, niv, stageint1, vac)"/>
+                    <label for="squared2">{{alpha.prix+' MAD'}}</label><br><br>
+                  </div>
+                </div><br>
+
+                <div ng-repeat="alpha in prixC.prix.intensifEte2hIndivPrimaire">
+                  Cours Particuliers
+                  <div id="instruc3">
+                    <input ng-model="stageint2" type="checkbox" ng-true-value="{{alpha.prix}}" ng-disabled="myForm.$invalid" id="squared2" ng-click="stageI2(mat, niv, stageint2, vac)"/>
+                    <label for="squared2">{{alpha.prix+' MAD'}}</label><br><br>
+                  </div>
+                </div>
+              </form>
+              <div class="padding">
+                <p ng-show="myForm.vac.$error.required">* Veuillez renseigner les vacances.</p>
+              </div>
+            </div>
+
+            <!-- stage intensif concernant la mission U.S. -->
+            <div ng-if="niveauN == '9th Grade' || niveauN == '1st Grade'">
+              <form name="myForm">
+                <label id="combo" class="item item-input item-select">
+                  <div id="instruc">    <!-- class="input-label" -->
+                    Vacances:
+                  </div>
+                  <select id="combo" ng-model="vac" required>
+                    <option>Toussaint</option>
+                    <option>Noël</option>
+                    <option>Pâques</option>
+                    <option>Février</option>
+                    <option>Avril</option>
+                  </select>
+                </label>
+                <br>
+
+                <div ng-repeat="alpha in prixC.prix.intensifEte2hGpePrimaire">
+                  Cours en Groupe
+                  <div id="instruc3">
+                    <input ng-model="stageint1" type="checkbox" ng-true-value="{{alpha.prix}}" id="squared2" ng-disabled="myForm.$invalid" ng-click="stageI1(mat, niv, stageint1, vac)"/>
+                    <label for="squared2">{{alpha.prix+' MAD'}}</label><br><br>
+                  </div>
+                </div><br>
+
+                <div ng-repeat="alpha in prixC.prix.intensifEte2hIndivPrimaire">
+                  Cours Particuliers
+                  <div id="instruc3">
+                    <input ng-model="stageint2" type="checkbox" ng-true-value="{{alpha.prix}}" id="squared2" ng-disabled="myForm.$invalid" ng-click="stageI2(mat, niv, stageint2, vac)"/>
+                    <label for="squared2">{{alpha.prix+' MAD'}}</label><br><br>
+                  </div>
+                </div>
+              </form>
+              <div class="padding">
+                <p ng-show="myForm.vac.$error.required">* Veuillez renseigner les vacances.</p>
+              </div>
+            </div>
+
+            <!-- stage intensif concernant la mission Belge -->
+            <div ng-if="niveauN == '6° AP' || niveauN == '4° AP'">
+              <form name="myForm">
+                <label id="combo" class="item item-input item-select">
+                  <div id="instruc">    <!-- class="input-label" -->
+                    Vacances:
+                  </div>
+                  <select id="combo" ng-model="vac" required>
+                    <option>Toussaint</option>
+                    <option>Noël</option>
+                    <option>Février</option>
+                    <option>Avril</option>
+                  </select>
+                </label>
+                <br>
+
+                <div ng-repeat="alpha in prixC.prix.intensifEte2hGpePrimaire">
+                  Cours en Groupe
+                  <div id="instruc3">
+                    <input ng-model="stageint1" type="checkbox" ng-true-value="{{alpha.prix}}" ng-disabled="myForm.$invalid" id="squared2" ng-click="stageI1(mat, niv, stageint1, vac)"/>
+                    <label for="squared2">{{alpha.prix+' MAD'}}</label><br><br>
+                  </div>
+                </div><br>
+
+                <div ng-repeat="alpha in prixC.prix.intensifEte2hIndivPrimaire">
+                  Cours Particuliers
+                  <div id="instruc3">
+                    <input ng-model="stageint2" type="checkbox" ng-true-value="{{alpha.prix}}" ng-disabled="myForm.$invalid" id="squared2" ng-click="stageI2(mat, niv, stageint2, vac)"/>
+                    <label for="squared2">{{alpha.prix+' MAD'}}</label><br><br>
+                  </div>
+                </div>
+              </form>
+              <div class="padding">
+                <p ng-show="myForm.vac.$error.required">* Veuillez renseigner les vacances.</p>
+              </div>
+            </div>
+
+            <!-- stage intensif concernant la mission Italienne -->
+            <div ng-if="niveauN == 'CE6' || niveauN == 'CE4'">
+              <form name="myForm">
+                <label id="combo" class="item item-input item-select">
+                  <div id="instruc">    <!-- class="input-label" -->
+                    Vacances:
+                  </div>
+                  <select id="combo" ng-model="vac" required>
+                    <option>Toussaint</option>
+                    <option>Noël</option>
+                    <option>Février</option>
+                    <option>Avril</option>
+                  </select>
+                </label>
+                <br>
+
+                <div ng-repeat="alpha in prixC.prix.intensifEte2hGpePrimaire">
+                  Cours en Groupe
+                  <div id="instruc3">
+                    <input ng-model="stageint1" type="checkbox" ng-true-value="{{alpha.prix}}" ng-disabled="myForm.$invalid" id="squared2" ng-click="stageI1(mat, niv, stageint1, vac)"/>
+                    <label for="squared2">{{alpha.prix+' MAD'}}</label><br><br>
+                  </div>
+                </div><br>
+
+                <div ng-repeat="alpha in prixC.prix.intensifEte2hIndivPrimaire">
+                  Cours Particuliers
+                  <div id="instruc3">
+                    <input ng-model="stageint2" type="checkbox" ng-true-value="{{alpha.prix}}" ng-disabled="myForm.$invalid" id="squared2" ng-click="stageI2(mat, niv, stageint2, vac)"/>
+                    <label for="squared2">{{alpha.prix+' MAD'}}</label><br><br>
+                  </div>
+                </div>
+              </form>
+              <div class="padding">
+                <p ng-show="myForm.vac.$error.required">* Veuillez renseigner les vacances.</p>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- prix pour les lycées toutes missions sauf U.S. -->
+        <div ng-if="niv == 'Seconde' || niv == 'Première' || niv == 'Terminale' || niv == '1º Bachillerato' || niv == '1º Bachillerato' || niv == '2º Bachillerato' || niv == 'BAC1 - 2ºAL'
+        || niv == 'BAC2 - 3ºAL' || niv == 'Tronc commun - 1ºAL'">
+          <!-- cours -->
+          <div class="check-element animate-show" ng-hide="si"> <!-- pour cacher cours lorsqu'on clique sur stage intensif -->
+            <u>Cours</u>
+            <input id='instruc3' type="checkbox" ng-model="checked" aria-label="Toggle ngHide">
+            <br><br>
+          </div>
+
+          <!-- Cours en groupe -->
+          <div class="check-element animate-show" ng-show="checked"> <!-- pour faire apparaitre cours occ et regulier qd un clique sur cours en groupe -->
+            <div ng-repeat="alpha in prixC.prix.lyceeGroupe">
+              Cours en Groupe
+              <div id="instruc3">
+                <input ng-model="coursGpe"  ng-true-value="{{alpha.prix}}" type="checkbox" value="{{alpha.prix}}" id="squared2"/>
+                <label for="squared2">{{alpha.prix+' MAD/h'}}</label><br><br>
+              </div><br>
+
+              <!-- choix entre cours réguliers et cours occasionnel -->
+              <div class="check-element animate-show" ng-show="coursGpe"> <!-- pour faire apparaitre le cours occ ou en groupe lorsqu'on clique sur cours en groupe -->
+                <br>
+                <div id="titrePara">
+                  Vous souhaitez un ou des cours
+                </div><br>
+                <div id="instruc4">
+                  <input type="checkbox" value="Cours occasionel" id="squared1" name="coursOcc" ng-model="freq1" ng-click="goCoursOcc(mat, niv, coursGpe, coursParti, freq1)" required />
+                  <label for="squared1">Occasionnel</label>
+                </div>
+
+                <div id="instruc3">
+                  <input type="checkbox" value="Plusieurs cours" id="squared2" name="coursMultiple" ng-model="freq2" ng-click="goCoursRegulier(mat, niv, coursGpe, coursParti, freq2)" required />
+                  <label for="squared2">Régulier</label>
+                </div>
+              </div><br>
+
+              <!-- cours particulier -->
+              <div class="check-element animate-show" ng-hide="coursGpe"> <!-- pour cacher cours groupe lorsqu'on clique sur cours part-->
+                Cours Particulier
+                <div id="instruc3" ng-repeat="alpha in prixC.prix.lyceeIndiv">
+                  <input ng-model="coursParti" type="checkbox" value="Cours Particulier"  ng-true-value="{{alpha.prix}}" id="squared1" name="check" ng-click="coursPart(mat, niv, coursParti)"/>
+                  <label for="squared1">{{alpha.prix+' MAD/h'}}</label>&nbsp;
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <!-- stage intensif -->
+          <div class="check-element animate-show" ng-hide="checked"> <!-- pour cacher lorsqu'on clique sur stage intensif -->
+            <u>Stages Intensifs</u>
+            <input id='instruc3' ng-model="si" type="checkbox" value="si" id="squared2"/><br>
+            <span id="sousTitre" style="font-style:italic;">Stage d'une durée de 1 semaine avec 2h de cours par jour durant les vacances scolaires</span>
+            <br><br>
+          </div>
+
+          <div class="check-element animate-show" ng-show="si"> <!-- pour faire apparaitre cours groupe et cours part qd un clique sur stage intensif -->
+            <!-- stage intensif concernant la mission française -->
+            <div ng-if="niveauN == 'Terminale' || niveauN == 'Première' || niveauN == 'Seconde' || niveauN == 'Troisième' || niveauN == 'Quatrième' || niveauN == 'Cinquième' || niveauN == 'Sixième' ||
+            niveauN == 'CP' || niveauN == 'CE1' || niveauN == 'CE2' || niveauN == 'PS' || niveauN == 'MS' || niveauN == 'GS' || niveauN == '  CM1' || niveauN == 'CM2'">
+              <!--<div ng-if="niveauN == 'CM2'">-->
+              <form name="myForm">
+                <label id="combo" class="item item-input item-select">
+                  <div id="instruc">    <!-- class="input-label" -->
+                    Vacances:
+                  </div>
+                  <select id="combo" ng-model="vacs" name="vac" required>
+                    <option>Toussaint</option>
+                    <option>Noël</option>
+                    <option>Février</option>
+                    <option>Avril</option>
+                  </select>
+                </label>
+                <br>
+
+                <div ng-repeat="alpha in prixC.prix.intensifEte2hGpeLycee">
+                  Cours en Groupe
+                  <div id="instruc3">
+                    <input ng-model="stageint1" type="checkbox" value="{{alpha.prix}}" ng-true-value="{{alpha.prix}}" ng-disabled="myForm.$invalid" id="squared2" ng-click="stageI1(mat, niv, stageint1, vacs)"/>
+                    <label for="squared2">{{alpha.prix+' MAD'}}</label><br><br>
+                  </div>
+                </div><br>
+                <div ng-repeat="alpha in prixC.prix.intensifEte2hIndivLycee">
+                  Cours Particuliers
+                  <div id="instruc3">
+                    <input ng-model="stageint2" type="checkbox" value="{{alpha.prix}}" ng-true-value="{{alpha.prix}}" ng-disabled="myForm.$invalid" id="squared2" ng-click="stageI2(mat, niv, stageint2, vacs)"/>
+                    <label for="squared2">{{alpha.prix+' MAD'}}</label><br><br>
+                  </div>
+                </div>
+              </form>
+              <div class="padding">
+                <p ng-show="myForm.vac.$error.required">* Veuillez renseigner les vacances.</p>
+              </div>
+
+
+
+            </div>
+
+            <!-- stage intensif concernant les bilingues -->
+            <div ng-if="niveauN == 'BAC1 - 2ºAL' || niveauN == 'BAC2 - 3ºAL' || niveauN == 'CE1 - 1ºAP' || niveauN == 'CE2 - 2ºAP' || niveauN == 'CE3 - 3ºAP' || niveauN == 'CE4 - 4ºAP' || niveauN == 'CE5 - 5ºAP' ||
+             niveauN == 'CE6 - 6ºAP' || niveauN == 'CE7 - 1ºAC' || niveauN == 'CE8 - 2ºAC' || niveauN == 'CE9 - 3ºAC' || niveauN == 'Tronc commun - 1ºAL' || niveauN == 'GS-CP'">
+              <form name="myForm">
+                <label id="combo" class="item item-input item-select">
+                  <div id="instruc">    <!-- class="input-label" -->
+                    Vacances:
+                  </div>
+                  <select id="combo" ng-model="vac" required>
+                    <option>Novembre/Décembre</option>
+                    <option>Mars/Avril</option>
+                  </select>
+                </label>
+                <br>
+
+                <div ng-repeat="alpha in prixC.prix.intensifEte2hGpePrimaire">
+                  Cours en Groupe
+                  <div id="instruc3">
+                    <input ng-model="stageint1" type="checkbox" ng-true-value="{{alpha.prix}}" ng-disabled="myForm.$invalid" id="squared2" ng-click="stageI1(mat, niv, stageint1, vac)"/>
+                    <label for="squared2">{{alpha.prix+' MAD'}}</label><br><br>
+                  </div>
+                </div><br>
+
+                <div ng-repeat="alpha in prixC.prix.intensifEte2hIndivPrimaire">
+                  Cours Particuliers
+                  <div id="instruc3">
+                    <input ng-model="stageint2" type="checkbox" ng-true-value="{{alpha.prix}}" ng-disabled="myForm.$invalid" id="squared2" ng-click="stageI2(mat, niv, stageint2, vac)"/>
+                    <label for="squared2">{{alpha.prix+' MAD'}}</label><br><br>
+                  </div>
+                </div>
+              </form>
+              <div class="padding">
+                <p ng-show="myForm.vac.$error.required">* Veuillez renseigner les vacances.</p>
+              </div>
+            </div>
+
+            <!-- stage intensif concernant la mission espagnole -->
+            <div ng-if="niveauN == '1º Bachillerato' || niveauN == '2º Bachillerato' || niveauN == '3º ESO' || niveauN == '4º ESO' || niveauN == '1º ESO' || niveauN == '2º ESO' || niveauN == '6º Primaria' ||
+             niveauN == '5º Primaria' || niveauN == '6º Primaria' || niveauN == '4º Primaria' || niveauN == '3º Primaria' || niveauN == '2º Primaria' || niveauN == '1º Primaria'">
+              <form name="myForm">
+                <label id="combo" class="item item-input item-select">
+                  <div id="instruc">    <!-- class="input-label" -->
+                    Vacances:
+                  </div>
+                  <select id="combo" ng-model="vac" required>
+                    <option>Noël</option>
+                    <option>Février</option>
+                    <option>Avril</option>
+                  </select>
+                </label>
+                <br>
+
+                <div ng-repeat="alpha in prixC.prix.intensifEte2hGpePrimaire">
+                  Cours en Groupe
+                  <div id="instruc3">
+                    <input ng-model="stageint1" type="checkbox" ng-true-value="{{alpha.prix}}" id="squared2" ng-disabled="myForm.$invalid" ng-click="stageI1(mat, niv, stageint1, vac)"/>
+                    <label for="squared2">{{alpha.prix+' MAD'}}</label><br><br>
+                  </div>
+                </div><br>
+
+                <div ng-repeat="alpha in prixC.prix.intensifEte2hIndivPrimaire">
+                  Cours Particuliers
+                  <div id="instruc3">
+                    <input ng-model="stageint2" type="checkbox" ng-true-value="{{alpha.prix}}" id="squared2" ng-disabled="myForm.$invalid" ng-click="stageI2(mat, niv, stageint2, vac)"/>
+                    <label for="squared2">{{alpha.prix+' MAD'}}</label><br><br>
+                  </div>
+                </div>
+              </form>
+              <div class="padding">
+                <p ng-show="myForm.vac.$error.required">* Veuillez renseigner les vacances.</p>
+              </div>
+            </div>
+
+            <!-- stage intensif concernant la mission U.S. -->
+            <div ng-if="niveauN == '9th Grade' || niveauN == '1st Grade'">
+              <form name="myForm">
+                <label id="combo" class="item item-input item-select">
+                  <div id="instruc">    <!-- class="input-label" -->
+                    Vacances:
+                  </div>
+                  <select id="combo" ng-model="vac" required>
+                    <option>Toussaint</option>
+                    <option>Noël</option>
+                    <option>Pâques</option>
+                    <option>Février</option>
+                    <option>Avril</option>
+                  </select>
+                </label>
+                <br>
+
+                <div ng-repeat="alpha in prixC.prix.intensifEte2hGpePrimaire">
+                  Cours en Groupe
+                  <div id="instruc3">
+                    <input ng-model="stageint1" type="checkbox" ng-true-value="{{alpha.prix}}" ng-disabled="myForm.$invalid" id="squared2" ng-click="stageI1(mat, niv, stageint1, vac)"/>
+                    <label for="squared2">{{alpha.prix+' MAD'}}</label><br><br>
+                  </div>
+                </div><br>
+
+                <div ng-repeat="alpha in prixC.prix.intensifEte2hIndivPrimaire">
+                  Cours Particuliers
+                  <div id="instruc3">
+                    <input ng-model="stageint2" type="checkbox" ng-true-value="{{alpha.prix}}" ng-disabled="myForm.$invalid" id="squared2" ng-click="stageI2(mat, niv, stageint2, vac)"/>
+                    <label for="squared2">{{alpha.prix+' MAD'}}</label><br><br>
+                  </div>
+                </div>
+              </form>
+              <div class="padding">
+                <p ng-show="myForm.vac.$error.required">* Veuillez renseigner les vacances.</p>
+              </div>
+            </div>
+
+            <!-- stage intensif concernant la mission Belge -->
+            <div ng-if="niveauN == '6° AP' || niveauN == '4° AP'">
+              <form name="myForm">
+                <label id="combo" class="item item-input item-select">
+                  <div id="instruc">    <!-- class="input-label" -->
+                    Vacances:
+                  </div>
+                  <select id="combo" ng-model="vac" required>
+                    <option>Toussaint</option>
+                    <option>Noël</option>
+                    <option>Février</option>
+                    <option>Avril</option>
+                  </select>
+                </label>
+                <br>
+
+                <div ng-repeat="alpha in prixC.prix.intensifEte2hGpePrimaire">
+                  Cours en Groupe
+                  <div id="instruc3">
+                    <input ng-model="stageint1" type="checkbox" ng-true-value="{{alpha.prix}}" ng-disabled="myForm.$invalid" id="squared2" ng-click="stageI1(mat, niv, stageint1, vac)"/>
+                    <label for="squared2">{{alpha.prix+' MAD'}}</label><br><br>
+                  </div>
+                </div><br>
+
+                <div ng-repeat="alpha in prixC.prix.intensifEte2hIndivPrimaire">
+                  Cours Particuliers
+                  <div id="instruc3">
+                    <input ng-model="stageint12" type="checkbox" ng-true-value="{{alpha.prix}}" ng-disabled="myForm.$invalid" id="squared2" ng-click="stageI2(mat, niv, stageint2, vac)"/>
+                    <label for="squared2">{{alpha.prix+' MAD'}}</label><br><br>
+                  </div>
+                </div>
+              </form>
+              <div class="padding">
+                <p ng-show="myForm.vac.$error.required">* Veuillez renseigner les vacances.</p>
+              </div>
+            </div>
+
+            <!-- stage intensif concernant la mission Italienne -->
+            <div ng-if="niveauN == 'CE6' || niveauN == 'CE4'">
+              <form name="myForm">
+                <label id="combo" class="item item-input item-select">
+                  <div id="instruc">    <!-- class="input-label" -->
+                    Vacances:
+                  </div>
+                  <select id="combo" ng-model="vac" required>
+                    <option>Toussaint</option>
+                    <option>Noël</option>
+                    <option>Février</option>
+                    <option>Avril</option>
+                  </select>
+                </label>
+                <br>
+
+                <div ng-repeat="alpha in prixC.prix.intensifEte2hGpePrimaire">
+                  Cours en Groupe
+                  <div id="instruc3">
+                    <input ng-model="stageint1" type="checkbox" ng-true-value="{{alpha.prix}}" ng-disabled="myForm.$invalid" id="squared2" ng-click="stageI1(mat, niv, stageint1, vac)"/>
+                    <label for="squared2">{{alpha.prix+' MAD'}}</label><br><br>
+                  </div>
+                </div><br>
+
+                <div ng-repeat="alpha in prixC.prix.intensifEte2hIndivPrimaire">
+                  Cours Particuliers
+                  <div id="instruc3">
+                    <input ng-model="stageint2" type="checkbox" ng-true-value="{{alpha.prix}}" ng-disabled="myForm.$invalid" id="squared2" ng-click="stageI2(mat, niv, stageint2, vac)"/>
+                    <label for="squared2">{{alpha.prix+' MAD'}}</label><br><br>
+                  </div>
+                </div>
+              </form>
+              <div class="padding">
+                <p ng-show="myForm.vac.$error.required">* Veuillez renseigner les vacances.</p>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- prix pour aide aux devoirs ou ayuda a los deberes -->
+        <div ng-show="(mat == 'Aide aux devoirs' || mat == 'Ayuda a los deberes')">
+
+          Cours de 1 session semaine :<br><br>
+          <div id="instruc3" ng-repeat="alpha in prixC.prix.aideDevoir1">
+            <input ng-model="coursGpe" type="radio" value="{{alpha.prix}}" id="squared2" name="check" ng-click="coursAideDevoirs(mat, niv, coursGpe)"/>
+            <label for="squared2">{{alpha.prix+' MAD/trimestre'}}</label>
+          </div>
+
+          <br><br><hr><br>
+
+          Cours de 2 session semaine :<br><br>
+          <div id="instruc3" ng-repeat="beta in prixC.prix.aideDevoir2">
+            <input ng-model="coursGpe" type="radio" value="{{beta.prix}}" id="squared2" name="check" ng-click="coursAideDevoirs(mat, niv, coursGpe)"/>
+            <label for="squared2">{{beta.prix+' MAD/trimestre'}}</label>
+          </div>
+
+          <br><br><hr><br>
+
+          Cours de 3 sessions par semaine :<br><br>
+          <div id="instruc3" ng-repeat="delta in prixC.prix.aideDevoir3">
+            <input ng-model="coursGpe" type="radio" value="{{delta.prix}}" id="squared1" name="check" ng-click="coursAideDevoirs(mat, niv, coursGpe)" />
+            <label for="squared1">{{delta.prix+' MAD/trimestre'}}</label>&nbsp;
+          </div><br><br>
+        </div>
+
       </div>
     </div>
+
   </ion-content>
+
+  <ion-footer-bar ng-hide="parent.entity.students.length == '1' || testNum() == 3">
+    <div class="bar bar-footer" >
+
+      <button class="button icon-left ion-ios-person-outline button-small buttonEmp" ng-controller="ProposCtrl" ng-click="goChoix()">Choisir un autre enfant !</button>
+    </div>
+  </ion-footer-bar>
+  </ion-view>

@@ -1,14 +1,19 @@
 <!-- En tête de l'application -->
 
-<ion-view  title='<img class="title-image" src="parent/icon.png">Cours Groupe</img>' cache-view="false">
+<ion-view  title='<img class="title-image" src="parent/icon.png"> Récapitulatif </img>' cache-view="false">
   <ion-nav-buttons side="right">
-    <a class="button button-icon ion-ios-more rotate-90 fs-s" ng-app="capMission.student" ng-controller="SProposCtrl" ng-click="popover.show($event)"></a>
+    <a class="button button-icon ion-ios-more rotate-90 fs-s" ng-click="popover.show($event)"></a>
   </ion-nav-buttons>
 
   <ion-tabs class="tabs-icon-top tabs-color-active-positive" ng-class="{'tabs-item-hide': $root.hideTabs}">
 
 
     <ion-tab  hidden="true" >
+
+    </ion-tab>
+
+    <ion-tab title="Planning" icon-off="ion-ios-calendar-outline" icon-on="ion-ios-calendar" badge="badgehome"
+             badge-style="badge-assertive" ng-controller="SProposCtrl" ng-click="sgoChoix()">
 
     </ion-tab>
 
@@ -23,29 +28,53 @@
              badge-style="badge-assertive" ng-click="onTabSelected()">
 
     </ion-tab>
+    <!--
+        <ion-tab title="Messages" icon-off="ion-ios-email-outline" icon-on="ion-ios-email"
+                 badge="badgeMessages" badge-style="badge-assertive" ng-click="onTabSelected()">
 
-    <ion-tab title="Solde" href="#/student/solde" icon-off="icon ion-ios-calculator-outline" icon-on="icon ion-ios-calculator"></ion-tab>
+        </ion-tab>-->
 
-    <ion-tab title="Ajoutez un cours" icon-off="ion-android-add-circle" icon-on="icon ion-android-add-circle"
-             badge="badgeMessages" badge-style="badge-assertive" ng-controller="SAjoutCoursCtrl" ng-click="choixMatiere(eleve.entity.id)">
+    <ion-tab title="Solde" href="#/student/solde" icon-off="icon ion-ios-calculator-outline" icon-on="icon ion-ios-calculator">
 
     </ion-tab>
+    <ion-tab title="Ajout cours" icon-off="ion-android-add-circle" icon-on="icon ion-android-add-circle"
+             badge="badgeMessages" badge-style="badge-assertive" ng-controller="SAjoutCoursCtrl" ng-click="choixMatiere(student.entity.id)">
+    </ion-tab>
+
   </ion-tabs>
-  <br><br><br><br>
+
   <!-- Contenu -->
   <ion-content>
-    <br><br><br>
+    <br><br>
 
     <div class="card" ng-controller="SRecapOccCtrl">
-      <i class="icon ion-ios-close close-modal" ng-click="modal.hide()"></i>
 
-      <div class="item item-divider">
-        Récapitulatif de votre demande :
-      </div>
-
-
+      <!--{{niv}}-->
+      <!--{{jours1}} {{jours2}}-->
       <!--essaie-->
       <div id="listRecap" class="list">
+
+        <div class="item item-divider">
+          Récapitulatif de votre demande :
+        </div>
+
+        <!-- Nom et prénom de l'élève -->
+        <div id="instruc1" class="item item-icon-left">
+          <i id="iconC" class="icon ion-person"></i>
+          Elève
+          <span class="item-note">
+            {{eleve.entity.name}}
+          </span>
+        </div>
+
+        <!-- Niveau -->
+        <div id="instruc1" class="item item-icon-left">
+          <i id="iconC" class="icon ion-briefcase"></i>
+          Niveau
+          <span class="item-note">
+            {{niv}}
+          </span>
+        </div>
 
         <!-- Matiere -->
         <div id="instruc1" class="item item-icon-left">
@@ -56,516 +85,40 @@
           </span>
         </div>
 
-        <!--&lt;!&ndash; Nombre d'élèves &ndash;&gt;-->
-        <!--<div id="instruc1" class="item item-icon-left">-->
-        <!--<i id="iconC" class="icon ion-person-stalker"></i>-->
-        <!--Nombre d'élève-->
-        <!--<span class="badge badge-assertive">-->
-        <!--{{nbEt}}-->
-        <!--</span>-->
-        <!--</div>-->
-
-        <div class="item item-divider">
-          Nom et Prénom des élèves :
-        </div>
-
-        <!-- Si 3 élèves-->
-        <div ng-if="nbEt == 3">
-          <div id="instruc1" class="item item-icon-left">
-            <i id="iconC" class="icon ion-person"></i>
-            Elève 1
-          <span class="item-note">
-            {{nom1}}
-          </span>
-          </div>
-
-          <div id="instruc1" class="item item-icon-left">
-            <i id="iconC" class="icon ion-person"></i>
-            Elève 2
-          <span class="item-note">
-            {{nom2}}
-          </span>
-          </div>
-
-          <div id="instruc1" class="item item-icon-left">
-            <i id="iconC" class="icon ion-person"></i>
-            Elève 3
-          <span class="item-note">
-            {{nom3}}
-          </span>
-          </div>
-        </div>
-
-        <!-- Si 4 élèves-->
-        <div ng-if="nbEt == 4">
-          <div id="instruc1" class="item item-icon-left">
-            <i id="iconC" class="icon ion-person"></i>
-            Elève 1
-          <span class="item-note">
-            {{nom1}}
-          </span>
-          </div>
-
-          <div id="instruc1" class="item item-icon-left">
-            <i id="iconC" class="icon ion-person"></i>
-            Elève 2
-          <span class="item-note">
-            {{nom2}}
-          </span>
-          </div>
-
-          <div id="instruc1" class="item item-icon-left">
-            <i id="iconC" class="icon ion-person"></i>
-            Elève 3
-          <span class="item-note">
-            {{nom3}}
-          </span>
-          </div>
-
-          <div id="instruc1" class="item item-icon-left">
-            <i id="iconC" class="icon ion-person"></i>
-            Elève 4
-          <span class="item-note">
-            {{nom4}}
-          </span>
-          </div>
-        </div>
-
-        <!-- Si 5 élèves-->
-        <div ng-if="nbEt == 5">
-          <div id="instruc1" class="item item-icon-left">
-            <i id="iconC" class="icon ion-person"></i>
-            Elève 1
-          <span class="item-note">
-            {{nom1}}
-          </span>
-          </div>
-
-          <div id="instruc1" class="item item-icon-left">
-            <i id="iconC" class="icon ion-person"></i>
-            Elève 2
-          <span class="item-note">
-            {{nom2}}
-          </span>
-          </div>
-
-          <div id="instruc1" class="item item-icon-left">
-            <i id="iconC" class="icon ion-person"></i>
-            Elève 3
-          <span class="item-note">
-            {{nom3}}
-          </span>
-          </div>
-
-          <div id="instruc1" class="item item-icon-left">
-            <i id="iconC" class="icon ion-person"></i>
-            Elève 4
-          <span class="item-note">
-            {{nom4}}
-          </span>
-          </div>
-
-          <div id="instruc1" class="item item-icon-left">
-            <i id="iconC" class="icon ion-person"></i>
-            Elève 5
-          <span class="item-note">
-            {{nom5}}
-          </span>
-          </div>
-        </div>
-
-        <!-- Si 6 élèves-->
-        <div ng-if="nbEt == 6">
-          <div id="instruc1" class="item item-icon-left">
-            <i id="iconC" class="icon ion-person"></i>
-            Elève 1
-          <span class="item-note">
-            {{nom1}}
-          </span>
-          </div>
-
-          <div id="instruc1" class="item item-icon-left">
-            <i id="iconC" class="icon ion-person"></i>
-            Elève 2
-          <span class="item-note">
-            {{nom2}}
-          </span>
-          </div>
-
-          <div id="instruc1" class="item item-icon-left">
-            <i id="iconC" class="icon ion-person"></i>
-            Elève 3
-          <span class="item-note">
-            {{nom3}}
-          </span>
-          </div>
-
-          <div id="instruc1" class="item item-icon-left">
-            <i id="iconC" class="icon ion-person"></i>
-            Elève 4
-          <span class="item-note">
-            {{nom4}}
-          </span>
-          </div>
-
-          <div id="instruc" class="item item-icon-left">
-            <i id="iconC" class="icon ion-person"></i>
-            Elève 5
-          <span class="item-note">
-            {{nom5}}
-          </span>
-          </div>
-
-          <div id="instruc1" class="item item-icon-left">
-            <i id="iconC" class="icon ion-person"></i>
-            Elève 6
-          <span class="item-note">
-            {{nom6}}
-          </span>
-          </div>
-        </div>
-
-        <div class="item item-divider">
-          Heure et Date du cours :
-        </div>
-
-        <!-- Si cours occasionnel heure -->
-        <div ng-if="frequence != null">
-          <div id="instruc1" class="item item-icon-left">
-            <i id="iconC" class="icon ion-clock"></i>
-            Heure
-          <span class="item-note">
-            {{heureDeb | date: 'HH:mm'}}
-          </span>
-          </div>
-        </div>
-
-        <!-- Si cours occasionnel date -->
-        <div ng-if="dateDeb != null">
-          <div id="instruc1" class="item item-icon-left">
-            <i id="iconC" class="icon ion-calendar"></i>
-            Date
+        <!-- pour la date souhaitée -->
+        <div id="instruc1" class="item item-icon-left">
+          <i id="iconC" class="icon ion-calendar"></i>
+          Date
           <span class="item-note">
             {{dateDeb}}
           </span>
-          </div>
         </div>
 
-        <!-- Si cours multiple 2 jours -->
-        <div ng-if="nbJours == 2">
-          <div id="instruc1" class="item item-icon-left">
-            <i id="iconC" class="icon ion-clock"></i>
-            Heure
-            <span class="item-note">
-              {{heureDeb1 | date: 'HH:mm'}}
-            </span>
-          </div>
-          <div id="instruc1" class="item item-icon-left">
-            <i id="iconC" class="icon ion-calendar"></i>
-            Jour
-            <span class="item-note">
-              {{jours1}}
-            </span>
-          </div>
+        <div class="item item-divider">
+          Total :
+        </div>
 
+        <!-- Prix cours groupe 1 jours pour les cours primaire et primaria -->
+        <div ng-if="dateDeb != null && (mat !== 'Ayuda a los deberes' || mat !== 'Aide aux devoirs')">
           <div id="instruc1" class="item item-icon-left">
-            <i id="iconC" class="icon ion-clock"></i>
-            Heure
+            <i id="iconC" class="icon ion-calculator"></i>
+            Prix :
             <span class="item-note">
-              {{heureDeb2 | date: 'HH:mm'}}
-            </span>
-          </div>
-          <div id="instruc1" class="item item-icon-left">
-            <i id="iconC" class="icon ion-calendar"></i>
-            Jour
-            <span class="item-note">
-              {{jours2}}
+              {{coursG}}
             </span>
           </div>
         </div>
 
-        <!-- Si cours multiple 3 jours -->
-        <div ng-if="nbJours == 3">
-
-          <div id="instruc1" class="item item-icon-left">
-            <i id="iconC" class="icon ion-clock"></i>
-            Heure
-            <span class="item-note">
-              {{heureDeb1 | date: 'HH:mm'}}
-            </span>
-          </div>
-          <div id="instruc1" class="item item-icon-left">
-            <i id="iconC" class="icon ion-calendar"></i>
-            Jour
-            <span class="item-note">
-              {{jours1}}
-            </span>
-          </div>
-
-          <div id="instruc1" class="item item-icon-left">
-            <i id="iconC" class="icon ion-clock"></i>
-            Heure
-            <span class="item-note">
-              {{heureDeb2 | date: 'HH:mm'}}
-            </span>
-          </div>
-          <div id="instruc1" class="item item-icon-left">
-            <i id="iconC" class="icon ion-calendar"></i>
-            Jour
-            <span class="item-note">
-              {{jours2}}
-            </span>
-          </div>
-
-          <div id="instruc1" class="item item-icon-left">
-            <i id="iconC" class="icon ion-clock"></i>
-            Heure
-            <span class="item-note">
-              {{heureDeb3 | date: 'HH:mm'}}
-            </span>
-          </div>
-          <div id="instruc1" class="item item-icon-left">
-            <i id="iconC" class="icon ion-calendar"></i>
-            Jour
-            <span class="item-note">
-              {{jours3}}
-            </span>
-          </div>
-        </div>
-
-        <!-- Si cours multiple 4 jours -->
-        <div ng-if="nbJours == 4">
-          <div id="instruc1" class="item item-icon-left">
-            <i id="iconC" class="icon ion-clock"></i>
-            Heure
-            <span class="item-note">
-              {{heureDeb1 | date: 'HH:mm'}}
-            </span>
-          </div>
-          <div id="instruc1" class="item item-icon-left">
-            <i id="iconC" class="icon ion-calendar"></i>
-            Jour
-            <span class="item-note">
-              {{jours1}}
-            </span>
-          </div>
-
-          <div id="instruc1" class="item item-icon-left">
-            <i id="iconC" class="icon ion-clock"></i>
-            Heure
-            <span class="item-note">
-              {{heureDeb2 | date: 'HH:mm'}}
-            </span>
-          </div>
-          <div id="instruc1" class="item item-icon-left">
-            <i id="iconC" class="icon ion-calendar"></i>
-            Jour
-            <span class="item-note">
-              {{jours2}}
-            </span>
-          </div>
-
-          <div id="instruc1" class="item item-icon-left">
-            <i id="iconC" class="icon ion-clock"></i>
-            Heure
-            <span class="item-note">
-              {{heureDeb3 | date: 'HH:mm'}}
-            </span>
-          </div>
-          <div id="instruc1" class="item item-icon-left">
-            <i id="iconC" class="icon ion-calendar"></i>
-            Jour
-            <span class="item-note">
-              {{jours3}}
-            </span>
-          </div>
-
-          <div id="instruc1" class="item item-icon-left">
-            <i id="iconC" class="icon ion-clock"></i>
-            Heure
-            <span class="item-note">
-              {{heureDeb4 | date: 'HH:mm'}}
-            </span>
-          </div>
-          <div id="instruc1" class="item item-icon-left">
-            <i id="iconC" class="icon ion-calendar"></i>
-            Jour
-            <span class="item-note">
-              {{jours4}}
-            </span>
-          </div>
-        </div>
-
-        <!-- Si cours multiple 5 jours -->
-        <div ng-if="nbJours == 5">
-          <div id="instruc1" class="item item-icon-left">
-            <i id="iconC" class="icon ion-clock"></i>
-            Heure
-            <span class="item-note">
-              {{heureDeb1 | date: 'HH:mm'}}
-            </span>
-          </div>
-          <div id="instruc1" class="item item-icon-left">
-            <i id="iconC" class="icon ion-calendar"></i>
-            Jour
-            <span class="item-note">
-              {{jours1}}
-            </span>
-          </div>
-
-          <div id="instruc1" class="item item-icon-left">
-            <i id="iconC" class="icon ion-clock"></i>
-            Heure
-            <span class="item-note">
-              {{heureDeb2 | date: 'HH:mm'}}
-            </span>
-          </div>
-          <div id="instruc1" class="item item-icon-left">
-            <i id="iconC" class="icon ion-calendar"></i>
-            Jour
-            <span class="item-note">
-              {{jours2}}
-            </span>
-          </div>
-
-          <div id="instruc1" class="item item-icon-left">
-            <i id="iconC" class="icon ion-clock"></i>
-            Heure
-            <span class="item-note">
-              {{heureDeb3 | date: 'HH:mm'}}
-            </span>
-          </div>
-          <div id="instruc1" class="item item-icon-left">
-            <i id="iconC" class="icon ion-calendar"></i>
-            Jour
-            <span class="item-note">
-              {{jours3}}
-            </span>
-          </div>
-
-          <div id="instruc1" class="item item-icon-left">
-            <i id="iconC" class="icon ion-clock"></i>
-            Heure
-            <span class="item-note">
-              {{heureDeb4 | date: 'HH:mm'}}
-            </span>
-          </div>
-          <div id="instruc1" class="item item-icon-left">
-            <i id="iconC" class="icon ion-calendar"></i>
-            Jour
-            <span class="item-note">
-              {{jours4}}
-            </span>
-          </div>
-
-          <div id="instruc1" class="item item-icon-left">
-            <i id="iconC" class="icon ion-clock"></i>
-            Heure
-            <span class="item-note">
-              {{heureDeb5 | date: 'HH:mm'}}
-            </span>
-          </div>
-          <div id="instruc1" class="item item-icon-left">
-            <i id="iconC" class="icon ion-calendar"></i>
-            Jour
-            <span class="item-note">
-              {{jours5}}
-            </span>
-          </div>
-        </div>
-
-        <!-- Si cours multiple 6 jours -->
-        <div ng-if="nbJours == 6">
-          <div id="instruc1" class="item item-icon-left">
-            <i id="iconC" class="icon ion-clock"></i>
-            Heure
-            <span class="item-note">
-              {{heureDeb1 | date: 'HH:mm'}}
-            </span>
-          </div>
-          <div id="instruc1" class="item item-icon-left">
-            <i id="iconC" class="icon ion-calendar"></i>
-            Jour
-            <span class="item-note">
-              {{jours1}}
-            </span>
-          </div>
-
-          <div id="instruc1" class="item item-icon-left">
-            <i id="iconC" class="icon ion-clock"></i>
-            Heure
-            <span class="item-note">
-              {{heureDeb2 | date: 'HH:mm'}}
-            </span>
-          </div>
-          <div id="instruc1" class="item item-icon-left">
-            <i id="iconC" class="icon ion-calendar"></i>
-            Jour
-            <span class="item-note">
-              {{jours2}}
-            </span>
-          </div>
-
-          <div id="instruc1" class="item item-icon-left">
-            <i id="iconC" class="icon ion-clock"></i>
-            Heure
-            <span class="item-note">
-              {{heureDeb3 | date: 'HH:mm'}}
-            </span>
-          </div>
-          <div id="instruc1" class="item item-icon-left">
-            <i id="iconC" class="icon ion-calendar"></i>
-            Jour
-            <span class="item-note">
-              {{jours3}}
-            </span>
-          </div>
-
-          <div id="instruc1" class="item item-icon-left">
-            <i id="iconC" class="icon ion-clock"></i>
-            Heure
-            <span class="item-note">
-              {{heureDeb4 | date: 'HH:mm'}}
-            </span>
-          </div>
-          <div id="instruc1" class="item item-icon-left">
-            <i id="iconC" class="icon ion-calendar"></i>
-            Jour
-            <span class="item-note">
-              {{jours4}}
-            </span>
-          </div>
-
-          <div id="instruc1" class="item item-icon-left">
-            <i id="iconC" class="icon ion-clock"></i>
-            Heure
-            <span class="item-note">
-              {{heureDeb5 | date: 'HH:mm'}}
-            </span>
-          </div>
-          <div id="instruc1" class="item item-icon-left">
-            <i id="iconC" class="icon ion-calendar"></i>
-            Jour
-            <span class="item-note">
-              {{jours5}}
-            </span>
-          </div>
-
-          <div id="instruc1" class="item item-icon-left">
-            <i id="iconC" class="icon ion-clock"></i>
-            Heure
-            <span class="item-note">
-              {{heureDeb6 | date: 'HH:mm'}}
-            </span>
-          </div>
-          <div id="instruc1" class="item item-icon-left">
-            <i id="iconC" class="icon ion-calendar"></i>
-            Jour
-            <span class="item-note">
-              {{jours6}}
-            </span>
-          </div>
-        </div>
+        <!-- Prix cours groupe aide aux devoir ou auyda a los deberes -->
+        <!--<div ng-if="mat == 'Ayuda a los deberes' || mat == 'Aide aux devoirs'">-->
+        <!--<div id="instruc1" class="item item-icon-left">-->
+        <!--<i id="iconC" class="icon ion-calculator"></i>-->
+        <!--Prix :-->
+        <!--<span class="item-note">-->
+        <!--{{coursG}}-->
+        <!--</span>-->
+        <!--</div>-->
+        <!--</div>-->
       </div>
       <!--fin essaie-->
 
@@ -581,9 +134,7 @@
         </label>
 
         <center>
-          <button ng-disabled="myForm.$invalid" class="button button-small buttonEmail button-dark "
-                  ng-click="sendR(mail, mat, coursGpe, creerGroup, nbEt, nom1, nom2, nom3, nom4, nom5, nom6, heureDeb, dateDeb, heureDeb1, heureDeb2, heureDeb3, heureDeb4, heureDeb5, heureDeb6,
-                     nbJours, jours1, jours2, jours3, jours4, jours5, jours6, frequence)">Envoyer       <!--modal.hide()-->
+          <button ng-disabled="myForm.$invalid" class="button button-small buttonEmail button-dark " ng-click="sendR(mail, mat, niv , coursG, coursParti, frequence, dateDeb, nbJours)">Envoyer       <!--modal.hide()-->
           </button>
         </center>
       </form>
@@ -591,5 +142,5 @@
         <p ng-show="myForm.msg.$error.required">* Message est obligatoire</p>
       </div>
     </div>
-    </div>
   </ion-content>
+</ion-view>
