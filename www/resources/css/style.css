@@ -510,16 +510,15 @@ span:last-of-type{
   border-radius: 12px;
 }
 
-@media (min-width: 680px) {
+/*@media (min-width: 680px) {
   .modalSize {
-    width: 90%;
-    height: 90%;
-    top: 5%;
-    left: 5%;
-    right: 5%;
-    bottom: 5%;
+    top: 20px !important;
+    bottom: 0 !important;
+    left: 0 !important;
+    right: 0 !important;
+    width: 100% !important;
   }
-}
+}*/
 
 textarea {
   display: block;

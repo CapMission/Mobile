@@ -390,7 +390,7 @@ teacher.controller('TsoldeCtrl', ['$scope', '$rootScope', '$ionicModal', '$http'
   $scope.showLess = function () {
     $scope.limit -= 5;
   }
-  $scope.showAlert = function () {
+  /*$scope.showAlert = function () {
     var solde = $scope.solde.toFixed(2)
     var coutHoraire = $scope.cout.toFixed(2)
     var alertPopup = $ionicPopup.alert({
@@ -402,7 +402,7 @@ teacher.controller('TsoldeCtrl', ['$scope', '$rootScope', '$ionicModal', '$http'
       //console.log('OK');
     });
 
-  };
+  };*/
   $scope.goBack = function(){
     $ionicHistory.goBack();
   }
@@ -411,11 +411,11 @@ teacher.controller('TsoldeCtrl', ['$scope', '$rootScope', '$ionicModal', '$http'
   }).then(function (popover) {
     $scope.popover = popover;
   });
-  $ionicPopover.fromTemplateUrl('templates/popover2.html', {
+  /*$ionicPopover.fromTemplateUrl('templates/popover2.html', {
     scope: $scope,
   }).then(function (popover) {
     $scope.popover2 = popover;
-  });
+  });*/
 }]);
 
 teacher.controller('TtimeCtrl', ['$scope','$ionicPopover','$rootScope','$http','$location', function ($scope, $ionicPopover,$rootScope,$http,$location) {
@@ -582,7 +582,7 @@ teacher.controller('AmontSoldeCtrl', ['$scope', '$rootScope', '$http', '$locatio
     });
 
   }
-  $scope.showAlert = function () {
+  /*$scope.showAlert = function () {
     var solde = $scope.solde.toFixed(2)
     var coutHoraire = $scope.cout.toFixed(2)
     var alertPopup = $ionicPopup.alert({
@@ -594,7 +594,7 @@ teacher.controller('AmontSoldeCtrl', ['$scope', '$rootScope', '$http', '$locatio
       //console.log('OK');
     });
 
-  };
+  };*/
   $scope.goBack = function () {
     $ionicHistory.goBack();
   }
@@ -603,11 +603,11 @@ teacher.controller('AmontSoldeCtrl', ['$scope', '$rootScope', '$http', '$locatio
   }).then(function (popover) {
     $scope.popover = popover;
   });
-  $ionicPopover.fromTemplateUrl('templates/popover2.html', {
+  /*$ionicPopover.fromTemplateUrl('templates/popover2.html', {
     scope: $scope,
   }).then(function (popover) {
     $scope.popover2 = popover;
-  });
+  });*/
 }]);
 
 teacher.controller('ChoixEtudiantCtrl', ['$scope', '$rootScope', '$http', '$location', '$ionicPopover', '$ionicHistory', function ($scope, $rootScope, $http, $location, $ionicPopover, $ionicHistory) {

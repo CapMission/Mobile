@@ -358,7 +358,7 @@ student.controller('SsoldeCtrl', ['$scope', '$rootScope', '$ionicModal', '$http'
     });
 
   }
-  $scope.showAlert = function () {
+  /*$scope.showAlert = function () {
     var tarif = $scope.tarifHour.toFixed(2)
     var period = $scope.tarifPeriod.toFixed(2)
     if ($scope.absence = "null") {
@@ -373,7 +373,7 @@ student.controller('SsoldeCtrl', ['$scope', '$rootScope', '$ionicModal', '$http'
     alertPopup.then(function (res) {
       console.log('OK');
     });
-  };
+  };*/
 
   $scope.goBack = function(){
     $ionicHistory.goBack();
@@ -383,11 +383,11 @@ student.controller('SsoldeCtrl', ['$scope', '$rootScope', '$ionicModal', '$http'
   }).then(function (popover) {
     $scope.popover = popover;
   });
-  $ionicPopover.fromTemplateUrl('templates/popover2.html', {
+  /*$ionicPopover.fromTemplateUrl('templates/popover2.html', {
     scope: $scope,
   }).then(function (popover) {
     $scope.popover2 = popover;
-  });
+  });*/
 }]);
 
 student.controller('SProposCtrl', ['$scope', '$rootScope', '$http', '$location', '$ionicPopover', '$ionicHistory', function ($scope, $rootScope, $http, $location, $ionicPopover, $ionicHistory) {

@@ -64,7 +64,7 @@
       <!--<div class="col"><a ng-app="capMission.teacher" ng-controller="AmontSoldeCtrl" href="#"
                           ng-click="showAlert(amont.id,amont.solde,amont.nbreHeures,amont.nbreStudents,amont.cout)">Détails</a>
       </div>-->
-      <div class="col iconSize2"><b><a class="ion-ios-information-outline iconSize2" ng-click="popover2.show($event);getAmont(amont.name,amont.date,amont.cumul,amont.solde,amont.nbreHeures,amont.nbreStudents,amont.cout)">
+      <div class="col iconSize2"><b><a class="ion-ios-information-outline iconSize2" ng-click="modal.show();getAmont(amont.name,amont.date,amont.cumul,amont.solde,amont.nbreHeures,amont.nbreStudents,amont.cout)">
       </a></b></div>
     </div>
     <br>
@@ -74,7 +74,7 @@
     </div>
 
   </ion-content>
-  <script id="templates/popover.html" type="text/ng-template">
+  <!--<script id="templates/popover.html" type="text/ng-template">
     <ion-popover-view>
       <ion-content>
         <div class="list">
@@ -95,9 +95,9 @@
         </div>
       </ion-content>
     </ion-popover-view>
-  </script>
+  </script>-->
 
-  <script id="templates/popover2.html" type="text/ng-template">
+  <!--<script id="templates/popover2.html" type="text/ng-template">
     <ion-popover-view class="fit customTrans">
       <ion-content>
         <div class="list cont">
@@ -106,14 +106,15 @@
         </div>
       </ion-content>
     </ion-popover-view>
-  </script>
+  </script>-->
 
   <script id="templates/modalSolde.html" type="text/ng-template">
     <div class="modal transparent modalSize">
       <div class="card">
         <i class="icon ion-ios-close close-modal" ng-click="modal.hide()"></i>
 
-        <p class="headerModal item-divider padding">Détails <br> Matière : {{name}} <br> Date : {{date | date:'dd MMMM à HH:mm' }} <br> Solde : {{cumul | number:2}} MAD </p>
+        <p class="headerModal item-divider padding"> Détails <br> Matière : {{name}} <br> Date : {{date | date:'dd MMM à HH:mm' }} <br> Solde : {{cumul | number:2}} MAD
+          <br>  Tarif horaire : {{cout | number:2}} MAD <br> Nombre d'heures : {{nbreHeures}} <br> Nombre d'étudiants : {{nbreStudents}}</p>
 
         <form name="myForm" novalidate>
           <input ng-model="id" type="hidden">

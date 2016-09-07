@@ -62,7 +62,7 @@
       <div class="col">{{recap.periode.name.trunc(8)}}</div>
       <div class="col"><strong>{{recap.soldeRemain | number:2}}</strong></div>
       <div class="col iconSize2"><b><a class="ion-ios-information-outline iconSize2"
-                                    ng-click="popover2.show($event);getRecap(recap.periode.name,recap.date,recap.soldeRemain,recap.tarifHour,recap.tarifPeriod,recap.nbreHours,recap.absence,recap.date)">
+                                    ng-click="modal.show();getRecap(recap.periode.name,recap.date,recap.soldeRemain,recap.tarifHour,recap.tarifPeriod,recap.nbreHours,recap.absence,recap.date)">
       </a></b></div>
 
       <!--<div class="col"><a ng-app="capMission.student" ng-controller="SsoldeCtrl" href="#"
@@ -80,7 +80,7 @@
     <!---->
   </ion-content>
 
-  <script id="templates/popover.html" type="text/ng-template">
+  <!--<script id="templates/popover.html" type="text/ng-template">
     <ion-popover-view class="fit1 platform-android">
       <ion-content>
         <div class="list">
@@ -98,13 +98,13 @@
           <a class="item" href="#/parent/apropos"  ng-click="popover.hide()"><i class="icon ion-android-textsms">
             A propos
           </i></a>
-          <!--<a class="item" href="#/parent/reglement" ng-click="popover.hide()"><i class="icon ion-document-text">
+          &lt;!&ndash;<a class="item" href="#/parent/reglement" ng-click="popover.hide()"><i class="icon ion-document-text">
             Règlement intérieur
-          </i></a>-->
+          </i></a>&ndash;&gt;
           <hr>
-         <!-- <a class="item" href="#/parent/changerMdp" ng-click="popover.hide()"><i class="icon ion-gear-b">
+         &lt;!&ndash; <a class="item" href="#/parent/changerMdp" ng-click="popover.hide()"><i class="icon ion-gear-b">
             Paramètres
-          </i></a>-->
+          </i></a>&ndash;&gt;
           <a class="item" href="#" ng-controller="LogoutCtrl" ng-click="logout();popover.hide()"><i class="icon ion-android-exit">
             Quitter l'application
           </i></a>
@@ -112,9 +112,9 @@
         </div>
       </ion-content>
     </ion-popover-view>
-  </script>
+  </script>-->
 
-  <script id="templates/popover2.html" type="text/ng-template">
+  <!--<script id="templates/popover2.html" type="text/ng-template">
     <ion-popover-view class="fit customTrans">
       <ion-content>
         <div class="list cont">
@@ -123,15 +123,19 @@
         </div>
       </ion-content>
     </ion-popover-view>
-  </script>
+  </script>-->
 
   <script id="templates/modalSoldeEnfant.html" type="text/ng-template">
-    <div class="modal transparent modalSize">
+    <div class="modal transparent modalSize ">
       <div class="card">
         <i class="icon ion-ios-close close-modal" ng-click="modal.hide()"></i>
 
-        <p class="headerModal item-divider padding">Détails <br> Etudiant : {{sonSolde.entity.name}} <br> Matière :
-          {{name}} <br> Date : {{date | date:'dd MMMM à HH:mm' }} <br> Solde : {{solde | number:2}} MAD </p>
+        <div class="headerModal item-divider padding"> Etudiant : {{sonSolde.entity.name}} <br> Matière :
+          {{name}} <br> Date : {{date | date:'dd MMMM à HH:mm' }} <br> Solde : {{solde | number:2}} MAD
+          <br> Tarif horaire : {{tarifHour | number:2}} MAD <br> Tarif de la séance : {{tarifPeriod | number:2}} MAD
+          <br> Nombre d'heures : {{nbreHeures}} <div  ng-if="absence = 'p'"> Présent </div>
+        <div ng-if="!absence"> Présent </div>
+        <div ng-show="!absence && absence != 'p'">{{absence}}</div></div>
 
         <form name="myForm" novalidate>
           <input ng-model="id" type="hidden">

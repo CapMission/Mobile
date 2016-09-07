@@ -421,11 +421,11 @@ parent.controller('PsoldeCtrl', ['$scope', '$rootScope', '$ionicModal', '$http',
   }).then(function (popover) {
     $scope.popover = popover;
   });
-  $ionicPopover.fromTemplateUrl('templates/popover2.html', {
+  /*$ionicPopover.fromTemplateUrl('templates/popover2.html', {
     scope: $scope,
   }).then(function (popover) {
     $scope.popover2 = popover;
-  });
+  });*/
   $scope.getd = function (id) {
     console.log("id function getd : " + id)
     $ionicLoading.show({
@@ -541,7 +541,7 @@ parent.controller('PsoldeCtrl', ['$scope', '$rootScope', '$ionicModal', '$http',
   $scope.showLess = function () {
     $scope.limit -= 5;
   }
-  $scope.showAlert = function () {
+  /*$scope.showAlert = function () {
 
     absence = $scope.absence
     date = $scope.date
@@ -566,7 +566,7 @@ parent.controller('PsoldeCtrl', ['$scope', '$rootScope', '$ionicModal', '$http',
     alertPopup.then(function (res) {
       console.log('OK');
     });
-  };
+  };*/
 
 
   $scope.goBack = function () {
