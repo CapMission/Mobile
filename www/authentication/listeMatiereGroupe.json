@@ -1,0 +1,330 @@
+{
+  "coursDispo": {
+    "maternelle": [
+        {
+          "id": "testMaternelle",
+          "name": "Test Mission G.S."
+        }
+      ],
+    "ce1": [
+      {
+        "id": "mathCE1",
+        "name": "Mathématiques"
+      },
+      {
+        "id": "frCE1",
+        "name": "Français"
+      },
+        {
+          "id": "testCE1",
+          "name": "Test Mission CE1"
+        }
+      ],
+    "ce2": [
+        {
+          "id": "mathCE2",
+          "name": "Mathématiques"
+        },
+        {
+          "id": "frCE2",
+          "name": "Français"
+        },
+        {
+          "id": "testCE2",
+          "name": "Test Mission CE2"
+        }
+      ],
+    "cm1": [
+        {
+          "id": "mathCM1",
+          "name": "Mathématiques"
+        },
+        {
+          "id": "frCM1",
+          "name": "Français"
+        },
+        {
+          "id": "testCM1",
+          "name": "Test Mission CM1"
+        }
+      ],
+    "cm2": [
+        {
+          "id": "mathCM2",
+          "name": "Mathématiques"
+        },
+        {
+          "id": "frCM2",
+          "name": "Français"
+        },
+        {
+          "id": "testCM2",
+          "name": "Test Mission CM2"
+        }
+      ],
+    "sixieme": [
+        {
+          "id": "fr6",
+          "name": "Français"
+        },
+        {
+          "id": "math6",
+          "name": "Mathématiques"
+        }
+      ],
+    "cinquieme": [
+        {
+          "id": "fr5",
+          "name": "Français"
+        },
+        {
+          "id": "math5",
+          "name": "Mathématiques"
+        }
+      ],
+    "quatrieme": [
+        {
+          "id": "fr4",
+          "name": "Français"
+        },
+        {
+          "id": "math4",
+          "name": "Mathématiques"
+        }
+      ],
+    "troisieme": [
+        {
+          "id": "fr3",
+          "name": "Français"
+        },
+        {
+          "id": "math3",
+          "name": "Mathématiques"
+        },
+        {
+          "id": "phys3",
+          "name": "Physique/Chimie"
+        }
+      ],
+    "seconde": [
+        {
+          "id": "math2",
+          "name": "Mathématiques"
+        },
+        {
+          "id": "fr2",
+          "name": "Français"
+        },
+        {
+          "id": "phys2",
+          "name": "Physique/Chimie"
+        }
+      ],
+    "premiere": [
+        {
+          "id": "fr1",
+          "name": "Français"
+        },
+      {
+        "id": "mathES",
+        "name": "Mathématiques ES"
+      }
+      ],
+    "tS": [
+        {
+          "id": "mathTS",
+          "name": "Mathématiques S"
+        },
+        {
+          "id": "physTS",
+          "name": "Physique/Chimie S"
+        },
+        {
+         "id": "ecoTES",
+         "name": "Economie ES"
+        },
+        {
+         "id": "droitSTMG",
+         "name": "Economie/Droit STMG"
+        }
+      ],
+    "primaria1": [
+        {
+          "id": "ayudaDeberes1",
+          "name": "Ayuda a los deberes"
+        }
+      ],
+    "primaria2": [
+        {
+          "id": "ayudaDeberes2",
+          "name": "Ayuda a los deberes"
+        }
+      ],
+    "primaria3": [
+        {
+          "id": "ayudaDeberes3",
+          "name": "Ayuda a los deberes"
+        }
+      ],
+    "primaria4": [
+        {
+          "id": "ayudaDeberes4",
+          "name": "Ayuda a los deberes"
+        },
+        {
+          "id": "mathPrimaria4",
+          "name": "Matemáticas"
+        }
+      ],
+    "primaria5": [
+        {
+          "id": "ayudaDeberes5",
+          "name": "Ayuda a los deberes"
+        },
+        {
+          "id": "mathPrimaria5",
+          "name": "Matemáticas"
+        },
+        {
+          "id": "lengua5",
+          "name": "Lengua Española y Literatura"
+        }
+      ],
+    "primaria6": [
+        {
+          "id": "ayudaDeberes6",
+          "name": "Ayuda a los deberes"
+        },
+        {
+          "id": "mathPrimaria6",
+          "name": "Matemáticas"
+        },
+        {
+          "id": "lengua6",
+          "name": "Lengua Española y Literatura"
+        }
+      ],
+    "1eso": [
+        {
+          "id": "lenguaESO1",
+          "name": "Lengua Española y Literatura"
+        },
+        {
+          "id": "mathESO1",
+          "name": "Matemáticas"
+        }
+      ],
+    "2eso": [
+        {
+          "id": "lenguaESO2",
+          "name": "Lengua Española y Literatura"
+        },
+        {
+          "id": "mathESO2",
+          "name": "Matemáticas"
+        }
+      ],
+    "3eso": [
+        {
+          "id": "mathESO3",
+          "name": "Matemáticas"
+        },
+        {
+          "id": "lenguaESO3",
+          "name": "Lengua Española y Literatura"
+        },
+        {
+          "id": "fisicaESO3",
+          "name": "Física y química"
+        }
+      ],
+    "4eso": [
+        {
+          "id": "mathESO4",
+          "name": "Matemáticas"
+        },
+        {
+          "id": "lenguaESO4",
+          "name": "Lengua Española y Literatura"
+        },
+        {
+          "id": "fisicaESO4",
+          "name": "Física y química"
+        }
+      ],
+    "bacEsp1": [
+        {
+          "id": "mathBacEsp1",
+          "name": "Matemáticas"
+        },
+        {
+          "id": "lenguaBacEsp1",
+          "name": "Lengua Española y Literatura"
+        }
+      ],
+    "bacEsp2": [
+        {
+          "id": "mathBacEsp2",
+          "name": "Matemáticas"
+        },
+        {
+          "id": "lenguaBacEsp2",
+          "name": "Lengua Española y Literatura"
+        },
+        {
+          "id": "ecoEsp2",
+          "name": "Economía"
+        }
+      ],
+    "anglais": [
+      {
+        "id": "debutant",
+        "name": "Débutant"
+      },
+      {
+        "id": "a1",
+        "name": "A1"
+      },
+      {
+        "id": "a2",
+        "name": "A2"
+      },
+      {
+        "id": "b1",
+        "name": "B1"
+      },
+      {
+        "id": "c1",
+        "name": "C1"
+      },
+      {
+        "id": "c2",
+        "name": "C2"
+      },
+      {
+        "id": "businessEngl",
+        "name": "Business English"
+      },
+      {
+        "id": "IELTS",
+        "name": "IELTS"
+      },
+      {
+        "id": "SAT",
+        "name": "SAT"
+      },
+      {
+        "id": "TOEFL",
+        "name": "TOEFL"
+      },
+      {
+        "id": "FLE",
+        "name": "FLE"
+      },
+      {
+        "id": "ELE",
+        "name": "ELE"
+      }
+    ]
+  }
+}

@@ -1,0 +1,52 @@
+<!-- En tête de l'application -->
+
+<ion-view  title='<img class="title-image" src="parent/icon.png">Créer ton Groupe !</img>' cache-view="false">
+  <ion-nav-buttons side="right">
+    <!--<a class="button button-icon ion-ios-more rotate-90 fs-s" ng-click="popover.show($event)"></a>-->
+  </ion-nav-buttons>
+
+  <ion-tabs class="tabs-icon-top tabs-color-active-positive" ng-class="{'tabs-item-hide': $root.hideTabs}">
+
+
+    <ion-tab  hidden="true" >
+
+    </ion-tab>
+
+
+    <ion-tab title="quiz" icon-off="ion-ios-timer-outline" icon-on="ion-ios-timer" badge="badgequiz"
+             badge-style="badge-assertive" ng-click="onTabSelected()">
+
+    </ion-tab>
+
+
+    <ion-tab title="Suivi" icon-off="ion-ios-pulse" icon-on="ion-ios-pulse-strong"  badge="badgeFollow"
+             badge-style="badge-assertive" ng-click="onTabSelected()">
+
+    </ion-tab>
+
+    <ion-tab title="Solde" href="#/parent/solde" icon-off="icon ion-ios-calculator-outline" icon-on="icon ion-ios-calculator"
+             badge="badgeSolde" badge-style="badge-assertive" ng-controller="ChoixsoldeCtrl" ng-click="get(idE)">
+
+    </ion-tab>
+    <ion-tab title="Ajoutez un cours" icon-off="ion-android-add-circle" icon-on="icon ion-android-add-circle"
+             badge="badgeMessages" badge-style="badge-assertive" ng-controller="ChoixAjoutCoursCtrl" ng-click="get(eleve.entity.id)">
+
+    </ion-tab>
+  </ion-tabs>
+  <br><br><br><br>
+  <!-- Contenu -->
+  <ion-content>
+    <br><br><br><br><br><br>
+    <div class="card">
+      <div class="item item-text-wrap">
+        <br><br>
+        <form>
+          <input type="radio" value="Cours occasionel" id="squared1" name="coursOcc" ng-model="frequence" ng-change="goOcc(matiere, niv, coursGpe, creerTonGroupe, coursParti, nb, nomE1, nomE2, nomE3,nomE4, nomE5, nomE6, frequence)" required />
+          <label for="squared1">Cours Occasionnel</label>&nbsp;
+          <input type="radio" value="Plusieurs cours" id="squared2" name="coursMultiple" ng-model="frequence" ng-change="goMultiple(matiere, niv, coursGpe, creerTonGroupe, coursParti, nb, nomE1, nomE2, nomE3, nomE4, nomE5, nomE6, frequence)" required />
+          <label for="squared2">Cours Multiple</label>
+        </form>
+        <br><br>
+      </div>
+    </div>
+  </ion-content>

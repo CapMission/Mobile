@@ -1,233 +1,856 @@
-{"disponibilitesProf": [
-  {"disponibilitesCoursELE":[
-    {"lundi9-10": "Lundi 9h-10h30", "lundi10-12": "Lundi 10h30-12h", "lundi19-20h": "Lundi 19h-20h30",
-      "mardi9-10": "Mardi 9h-10h30", "mardi10-12": "Mardi 10h30-12h", "mardi19-20h": "Mardi 19h-20h30",
-      "mercredi9-10": "Mercredi 9h-10h30", "mercredi10-12": "Mercredi 10h30-12h", "mercredi19-20h": "Mercredi 19h-20h30",
-      "jeudi9-10": "Jeudi 9h-10h30", "jeudi10-12": "Jeudi 10h30-12h", "jeudi19-20h": "Jeudi 19h-20h30",
-      "vendredi9-10": "Vendredi 9h-10h30", "vendredi10-12": "Vendredi 10h30-12h", "vendredi19-20h": "Vendredi 19h-20h30"}
-  ]},
-  {"disponibilitesCoursEnglishInter": [
-    {"lundi9-10": "Lundi 9h-10h30", "lundi10-12": "Lundi 10h30-12h", "lundi19-20h": "Lundi 19h-20h30",
-      "mardi9-10": "Mardi 9h-10h30", "mardi10-12": "Mardi 10h30-12h", "mardi19-20h": "Mardi 19h-20h30",
-      "mercredi9-10": "Mercredi 9h-10h30", "mercredi10-12": "Mercredi 10h30-12h", "mercredi19-20h": "Mercredi 19h-20h30",
-      "jeudi9-10": "Jeudi 9h-10h30", "jeudi10-12": "Jeudi 10h30-12h", "jeudi19-20h": "Jeudi 19h-20h30",
-      "vendredi9-10": "Vendredi 9h-10h30", "vendredi10-12": "Vendredi 10h30-12h", "vendredi19-20h": "Vendredi 19h-20h30"}
-  ]},
-  {"disponibilitesCoursEnglishAdvanced": [
-    {"lundi9-10": "Lundi 9h-10h30", "lundi10-12": "Lundi 10h30-12h",
-      "mardi9-10": "Mardi 9h-10h30", "mardi10-12": "Mardi 10h30-12h",
-      "mercredi9-10": "Mercredi 9h-10h30", "mercredi10-12": "Mercredi 10h30-12h",
-      "jeudi9-10": "Jeudi 9h-10h30", "jeudi10-12": "Jeudi 10h30-12h",
-      "vendredi9-10": "Vendredi 9h-10h30", "vendredi10-12": "Vendredi 10h30-12h"}
-  ]},
-  {"disponibilitesCoursFLE": [
-    {"lundi9-10": "Lundi 9h-10h30", "lundi10-12": "Lundi 10h30-12h",
-      "mardi9-10": "Mardi 9h-10h30", "mardi10-12": "Mardi 10h30-12h",
-      "mercredi9-10": "Mercredi 9h-10h30", "mercredi10-12": "Mercredi 10h30-12h", "mercredi19-20": "Mercredi 19h-20h30",
-      "jeudi9-10": "Jeudi 9h-10h30", "jeudi10-12": "Jeudi 10h30-12h",
-      "vendredi9-10": "Vendredi 9h-10h30", "vendredi10-12": "Vendredi 10h30-12h"}
-  ]},
-  {"disponibilitesCoursEnglishBusiness": [
-    {"lundi9-10": "Lundi 9h-10h30", "lundi10-12": "Lundi 10h30-12h",
-      "mardi9-10": "Mardi 9h-10h30", "mardi10-12": "Mardi 10h30-12h",
-      "mercredi9-10": "Mercredi 9h-10h30", "mercredi10-12": "Mercredi 10h30-12h",
-      "jeudi9-10": "Jeudi 9h-10h30", "jeudi10-12": "Jeudi 10h30-12h",
-      "vendredi9-10": "Vendredi 9h-10h30", "vendredi10-12": "Vendredi 10h30-12h"}
-  ]},
-  {"disponibilitesCoursEnglishBiginner": [
-    {"lundi9-10": "Lundi 9h-10h30", "lundi10-12": "Lundi 10h30-12h", "lundi19-20h": "Lundi 19h-20h30",
-      "mardi9-10": "Mardi 9h-10h30", "mardi10-12": "Mardi 10h30-12h", "mardi19-20h": "Mardi 19h-20h30",
-      "mercredi9-10": "Mercredi 9h-10h30", "mercredi10-12": "Mercredi 10h30-12h", "mercredi19-20h": "Mercredi 19h-20h30",
-      "jeudi9-10": "Jeudi 9h-10h30", "jeudi10-12": "Jeudi 10h30-12h", "jeudi19-20h": "Jeudi 19h-20h30",
-      "vendredi9-10": "Vendredi 9h-10h30", "vendredi10-12": "Vendredi 10h30-12h", "vendredi19-20h": "Vendredi 19h-20h30"}
-  ]},
-  {"disponibilitesAyudaDeberes1":[
-    {"mardi15-17": "Mardi 15h-17h"}
-  ]},
-  {"disponibilitesAyudaDeberes2":[
-    {"mardi15-17": "Mardi 15h-17h"}
-  ]},
-  {"disponibilitesAyudaDeberes3":[
-    {"mardi15-17": "Mardi 15h-17h"}
-  ]},
-  {"disponibilitesAyudaDeberes4":[
-    {"lundi15-17": "Lundi 15h-17h", "mercredi15-17": "Mercredi 15h-17h"}
-  ]},
-  {"disponibilitesMathPrimaria4":[
-    {"lundi15-17": "Lundi 15h-17h", "mercredi17-18": "Mercredi 17h-18h30"}
-  ]},
-  {"disponibilitesAyudaDeberes5":[
-    {"mercredi17-18": "Mercredi 17h-18h30"}
-  ]},
-  {"disponibilitesMathPrimaria5":[
-    {"lundi17-18": "Lundi 17h-18h30"}
-  ]},
-  {"disponibilitesLenguaPrimaria5":[
-    {"jeudi17-18": "Jeudi 17h-18h30"}
-  ]},
-  {"disponibilitesMathPrimaria6":[
-    {"mardi17-18": "Mardi 17h-18h30"}
-  ]},
-  {"disponibilitesLenguaPrimaria6":[
-    {"vendredi17-18": "Vendredi 17h-18h30"}
-  ]},
-  {"disponibilitesAyudaDeberes6":[
-    {"lundi15-17": "Lundi 15h-17h", "mercredi15-17": "Mercredi 15h-17h"}
-  ]},
-  {"disponibilitesCoursMathESO1":[
-    {"lundi16-17": "Lundi 16h-17h30", "jeudi16-17": "Jeudi 16h-17h30"}
-  ]},
-  {"disponibilitesCoursLenguaESO1":[
-    {"mardi16-17": "Mardi 16h-17h30", "vendredi16-17": "Vendredi 16h-17h30"}
-  ]},
-  {"disponibilitesCoursMathESO2":[
-    {"mardi16-17": "Mardi 16h-17h30", "vendredi16-17": "Vendredi 16h-17h30"}
-  ]},
-  {"disponibilitesCoursLenguaESO2":[
-    {"lundi16-17": "Lundi 16h-17h30", "jeudi16-17": "Jeudi 16h-17h30"}
-  ]},
-  {"disponibilitesCoursMathESO3":[
-    {"lundi17-19": "Lundi 17h30-19h", "jeudi17-19": "Jeudi 17h30-19"}
-  ]},
-  {"disponibilitesCoursLenguaESO3":[
-    {"mardi17-19": "Mardi 17h30-19h", "vendredi17-19": "Vendredi 17h30-19h"}
-  ]},
-  {"disponibilitesCoursFisicaESO3":[
-    {"mercredi16-17": "Mercredi 16h-17h30"}
-  ]},
-  {"disponibilitesCoursFisicaESO4":[
-    {"mercredi17-19": "Mercredi 17h30-19h"}
-  ]},
-  {"disponibilitesCoursMathESO4":[
-    {"mardi17-19": "Mardi 17h30-19h", "vendredi17-19": "Vendredi 17h30-19h"}
-  ]},
-  {"disponibilitesCoursLenguaESO4":[
-    {"lundi17-19": "Lundi 17h30-19h", "jeudi17-19": "Jeudi 17h30-19"}
-  ]},
-  {"disponibilitesCoursMathBacEsp1": [
-    {"lundi19-20": "Lundi 19h-20h30", "mercredi19-20": "Mercredi 19h-20h30"}
-  ]},
-  {"disponibilitesCoursEcoBacEsp2": [
-    {"lundi19-20": "Lundi 19h-20h30", "mercredi19-20": "Mercredi 19h-20h30", "jeudi19-20": "Jeudi 19h-20h30"}
-  ]},
-  {"disponibilitesCoursLiteraturaBacEsp1": [
-    {"mardi19-20": "Mardi 19h-20h30"}
-  ]},
-  {"disponibilitesCoursLiteraturaBacEsp2": [
-    {"vendredi19-20": "Vendredi 19h-20h30"}
-  ]},
-  {"disponibilitesCoursMathBacEsp2": [
-    {"vendredi19-20": "Vendredi 19h-20h30"}
-  ]},
-  {"disponibilitesCoursTestMissionCP": [
-    {"mercredi14-16": "Mercredi 14h-16h"}
-  ]},
-  {"disponibilitesCoursFr4eme": [
-    {"mardi16-17": "Mardi 16h-17h30","mercredi17-19": "Mercredi 17h30-19h", "vendredi16-17": "Vendredi 16h-17h30"}
-  ]},
-  {"disponibilitesCoursMath4eme": [
-    {"lundi16-17": "Lundi 16h-17h30", "jeudi17-19": "Jeude 17h30-19h"}
-  ]},
-  {"disponibilitesCoursFr6eme": [
-    {"lundi16-17": "Lundi 16h-17h30", "mercredi14-16": "Mercredi 14h30-16h"}
-  ]},
-  {"disponibilitesCoursMath6eme": [
-    {"mardi17-19": "Mardi 17h30-19h"}
-  ]},
-  {"disponibilitesCoursMath3eme": [
-  {"lundi17-19": "Lundi 17h30-19h", "mercredi17-19": "Mercredi 17h30-19h"}
-  ]},
-  {"disponibilitesCoursFr3eme": [
-    {"mardi17-19": "Mardi 17h30-19h", "mercredi19-20": "Mercredi 19h-20h30", "jeudi17-19": "Jeudi 17h30-19h", "vendredi17-19": "Vendredi 17h30-19h"}
-  ]},
-  {"disponibilitesCoursPhys3eme": [
-    {"mardi19-20": "Mardi 19h-20h30", "vendredi17-19": "Vendredi 17h30-19h"}
-  ]},
-  {"disponibilitesCoursFr5eme": [
-    {"lundi17-19": "Lundi 17h30-19h", "mercredi16-17": "Mercredi 16h-17h30"}
-  ]},
-  {"disponibilitesCoursMath5eme": [
-    {"vendredi16-17": "Vendredi 16h-17h30"}
-  ]},
-  {"disponibilitesCoursMath2nde": [
-    {"lundi19-20": "Lundi 19h-20h30"}
-  ]},
-  {"disponibilitesCoursFr2nde": [
-    {"mardi19-20": "Mardi 19h-20h30"}
-  ]},
-  {"disponibilitesCoursPhys2nde": [
-    {"jeudi19-20": "Jeudi 19h-20h30", "vendredi19-20": "Vendredi 19h-20h30"}
-  ]},
-  {"disponibilitesCoursFr1ere": [
-    {"lundi19-20": "Lundi 19h-20h30", "samedi14-17": "Samedi 14h-17h"}
-  ]},
-  {"disponibilitesCoursMath1ereES": [
-    {"mercredi19-20": "Mercredi 19h-20h30"}
-  ]},
-  {"disponibilitesCoursMathTS": [
-    {"jeudi19-20": "Jeudi 19h-20h30", "samedi14-17": "Samedi 14h-17h"}
-  ]},
-  {"disponibilitesCoursPhysTS": [
-    {"samedi14-17": "Samedi 14h-17h"}
-  ]},
-  {"disponibilitesCoursEcoTES": [
-    {"samedi14-17": "Samedi 14h-17h"}
-  ]},
-  {"disponibilitesCoursEcoDroitSTMG": [
-    {"samedi14-17": "Samedi 14h-17h"}
-  ]},
-  {"disponibilitesCoursMathCE2": [
-    {"lundi16-17": "Lundi 16h-17h30"}
-  ]},
-  {"disponibilitesCoursFrCE2": [
-    {"mardi17-19": "Mardi 17h30-19h", "jeudi16-17": "Jeudi 16h-17h30", "vendredi16-17": "Vendredi 16h-17h30"}
-  ]},
-  {"disponibilitesCoursTestMissionCE2": [
-    {"mercredi16-18": "Mercredi 16h-18h", "samedi11-13": "Samedi 11h-13h"}
-  ]},
-  {"disponibilitesCoursFrCE1": [
-    {"lundi16-17": "Lundi 16h-17h30"}
-  ]},
-  {"disponibilitesCoursMathCE1": [
-    {"mardi16-17": "Mardi 16h-17h30","jeudi16-17": "Jeudi 16h-17h30", "vendredi16-17": "Vendredi 16h-17h30"}
-  ]},
-  {"disponibilitesCoursTestMissionCE1": [
-    {"mercredi16-18": "Mercredi 16h-18h", "samedi11-13": "Samedi 11h-13h"}
-  ]},
-  {"disponibilitesCoursMathCM2": [
-    {"lundi17-19": "Lundi 17h30-19h"}
-  ]},
-  {"disponibilitesCoursFrCM2": [
-    {"mardi17-19": "Mardi 17h30-19h", "jeudi17-19": "Jeudi 17h30-19h", "vendredi17-19": "Vendredi 17h30-19h"}
-  ]},
-  {"disponibilitesCoursTestMissionMathCM2": [
-    {"mercredi14-15": "Mercredi 14h-15h30", "samedi9-10": "Samedi 9h-10h30"}
-  ]},
-  {"disponibilitesCoursTestMissionFrCM2": [
-    {"mercredi15-17": "Mercredi 15h30-17h", "samedi10-12": "Samedi 10h30-12h"}
-  ]},
-  {"disponibilitesCoursFrCM1": [
-    {"lundi17-19": "Lundi 17h30-19h"}
-  ]},
-  {"disponibilitesCoursMathCM1": [
-    {"mardi17-19": "Mardi 17h30-19h", "jeudi17-19": "Jeudi 17h30-19h", "vendredi17-19": "Vendredi 17h30-19h"}
-  ]},
-  {"disponibilitesCoursTestMissionMathCM1": [
-    {"mercredi15-17": "Mercredi 15h30-17h", "samedi10-12": "Samedi 10h30-12h"}
-  ]},
-  {"disponibilitesCoursTestMissionFrCM1": [
-    {"mercredi14-15": "Mercredi 14h-15h30", "samedi9-10": "Samedi 9h-10h30"}
-  ]},
-  {"disponibilitesCoursIELTS": [
-    {"samedi10-13": "Samedi 10h-13h"}
-  ]},
-  {"disponibilitesCoursTOEFL": [
-    {"samedi14-17": "Samedi 14h-17h"}
-  ]},
-  {"disponibilitesSAT": [
-    {"samedi14-17": "Samedi 14h-17h"}
-  ]}
-]
+{
+  "disponibilitesProf": {
+
+  "disponibilitesCoursELE": [
+    {
+      "id": "lundi9-10",
+      "name": "Lundi 9h-10h30"
+    },
+    {
+      "id": "lundi10-12",
+      "name": "Lundi 10h30-12h"
+    },
+    {
+      "id": "lundi19-20h",
+      "name": "Lundi 19h-20h30"
+    },
+    {
+      "id": "mardi9-10",
+      "name": "Mardi 9h-10h30"
+    },
+    {
+      "id": "mardi10-12",
+      "name": "Mardi 10h30-12h"
+    },
+    {
+      "id": "mardi19-20h",
+      "name": "Mardi 19h-20h30"
+    },
+    {
+      "id": "mercredi9-10",
+      "name": "Mercredi 9h-10h30"
+    },
+    {
+      "id": "mercredi10-12",
+      "name": "Mercredi 10h30-12h"
+    },
+    {
+      "id": "mercredi19-20h",
+      "name": "Mercredi 19h-20h30"
+    },
+    {
+      "id": "jeudi9-10",
+      "name": "Jeudi 9h-10h30"
+    },
+    {
+      "id": "jeudi10-12",
+      "name": "Jeudi 10h30-12h"
+    },
+    {
+      "id": "jeudi19-20h",
+      "name": "Jeudi 19h-20h30"
+    },
+    {
+      "id": "vendredi9-10",
+      "name": "Vendredi 9h-10h30"
+    },
+    {
+      "id": "vendredi10-12",
+      "name": "Vendredi 10h30-12h"
+    },
+    {
+      "id": "vendredi19-20h",
+      "name": "Vendredi 19h-20h30"
+    }
+  ],
+    "disponibilitesCoursEnglishInter": [
+        {
+          "id": "lundi9-10",
+          "name": "Lundi 9h-10h30"
+        },
+        {
+          "id": "lundi10-12",
+          "name": "Lundi 10h30-12h"
+        },
+        {
+          "id": "lundi19-20h",
+          "name": "Lundi 19h-20h30"
+        },
+        {
+          "id": "mardi9-10"
+        , "name": "Mardi 9h-10h30"
+        }, {
+          "id": "mardi10-12",
+          "name": "Mardi 10h30-12h"
+        },
+        {
+          "id": "mardi19-20h",
+          "name": "Mardi 19h-20h30"
+        },
+        {
+          "id": "mercredi9-10",
+          "name": "Mercredi 9h-10h30"
+        },
+        {
+          "id": "mercredi10-12",
+          "name": "Mercredi 10h30-12h"
+        },
+        {
+          "id": "mercredi19-20h",
+          "name": "Mercredi 19h-20h30"
+        },
+        {
+          "id": "jeudi9-10",
+          "name": "Jeudi 9h-10h30"
+        },
+        {
+          "id": "jeudi10-12",
+          "name": "Jeudi 10h30-12h"
+        }, {
+          "id": "jeudi19-20h",
+          "name": "Jeudi 19h-20h30"
+        },
+        {
+          "id": "vendredi9-10",
+          "name": "Vendredi 9h-10h30"
+        },
+        {
+          "id": "vendredi10-12",
+          "name": "Vendredi 10h30-12h"
+        },
+        {
+          "id": "vendredi19-20h",
+          "name": "Vendredi 19h-20h30"
+        }
+      ],
+    "disponibilitesCoursEnglishAdvanced": [
+    {
+      "id": "lundi9-10",
+      "name": "Lundi 9h-10h30"
+    },
+    {
+      "id": "lundi10-12",
+      "name": "Lundi 10h30-12h"
+    },
+    {
+      "id": "mardi9-10",
+      "name": "Mardi 9h-10h30"
+    },
+    {
+      "id": "mardi10-12",
+      "name": "Mardi 10h30-12h"
+    },
+    {
+      "id": "mercredi9-10",
+      "name": "Mercredi 9h-10h30"
+    },
+    {
+      "id": "mercredi10-12",
+      "name": "Mercredi 10h30-12h"
+    },
+    {
+      "id": "jeudi9-10",
+      "name": "Jeudi 9h-10h30"
+    },
+    {"id": "jeudi10-12",
+      "name": "Jeudi 10h30-12h"
+    },
+    {
+      "id": "vendredi9-10",
+      "name": "Vendredi 9h-10h30"
+    },
+    {
+      "id": "vendredi10-12",
+      "name": "Vendredi 10h30-12h"
+    }
+],
+    "disponibilitesCoursFLE": [
+      {
+        "id": "lundi9-10",
+        "name": "Lundi 9h-10h30"
+      },
+      {
+        "id": "lundi10-12",
+        "name": "Lundi 10h30-12h"
+      },
+      {
+        "id": "mardi9-10",
+        "name": "Mardi 9h-10h30"
+      },
+      {
+        "id": "mardi10-12",
+        "name": "Mardi 10h30-12h"
+      },
+      {
+        "id": "mercredi9-10",
+        "name": "Mercredi 9h-10h30"
+      },
+      {
+        "id": "mercredi10-12",
+        "name": "Mercredi 10h30-12h"
+      },
+      {
+        "id": "mercredi19-20",
+        "name": "Mercredi 19h-20h30"
+      },
+      {
+        "id": "jeudi9-10",
+        "name": "Jeudi 9h-10h30"
+      },
+      {
+        "id": "jeudi10-12",
+        "name": "Jeudi 10h30-12h"
+      },
+      {
+        "id": "vendredi9-10",
+        "name": "Vendredi 9h-10h30"
+      },
+      {
+        "id": "vendredi10-12",
+        "name": "Vendredi 10h30-12h"
+      }
+    ],
+    "disponibilitesCoursEnglishBusiness": [
+      {
+        "id": "lundi9-10",
+        "name": "Lundi 9h-10h30"
+      },
+      {
+        "id": "lundi10-12",
+        "name": "Lundi 10h30-12h"
+      },
+      {
+        "id": "mardi9-10",
+        "name": "Mardi 9h-10h30"
+      },
+      {
+        "id": "mardi10-12",
+        "name": "Mardi 10h30-12h"
+      },
+      {
+        "id": "mercredi9-10",
+        "name": "Mercredi 9h-10h30"
+      },
+      {
+        "id": "mercredi10-12",
+        "name": "Mercredi 10h30-12h"
+      },
+      {
+        "id": "jeudi9-10",
+        "name": "Jeudi 9h-10h30"
+      },
+      {
+        "id": "jeudi10-12",
+        "name": "Jeudi 10h30-12h"
+      },
+      {
+        "id": "vendredi9-10",
+        "name": "Vendredi 9h-10h30"
+      },
+      {
+        "id": "vendredi10-12",
+        "name": "Vendredi 10h30-12h"
+      }
+    ],
+    "disponibilitesCoursEnglishBeginner": [
+      {
+        "id": "lundi9-10",
+        "name": "Lundi 9h-10h30"
+      },
+      {
+        "id": "lundi10-12",
+        "name": "Lundi 10h30-12h"
+      },
+      {
+        "id": "lundi19-20h",
+        "name": "Lundi 19h-20h30"
+      },
+      {
+        "id": "mardi9-10",
+        "name": "Mardi 9h-10h30"
+      },
+      {
+        "id": "mardi10-12",
+        "name": "Mardi 10h30-12h"
+      },
+      {
+        "id": "mardi19-20h",
+        "name": "Mardi 19h-20h30"
+      },
+      {
+        "id": "mercredi9-10",
+        "name": "Mercredi 9h-10h30"
+      },
+      {
+        "id": "mercredi10-12",
+        "name": "Mercredi 10h30-12h"
+      },
+      {
+        "id": "mercredi19-20h",
+        "name": "Mercredi 19h-20h30"
+      },
+      {
+        "id": "jeudi9-10",
+        "name": "Jeudi 9h-10h30"
+      },
+      {
+        "id": "jeudi10-12",
+        "name": "Jeudi 10h30-12h"
+      },
+      {
+        "id": "jeudi19-20h",
+        "name":  "Jeudi 19h-20h30"
+      },
+      {
+        "id": "vendredi9-10",
+        "name": "Vendredi 9h-10h30"
+      },
+      {
+        "id": "vendredi10-12",
+        "name": "Vendredi 10h30-12h"
+      },
+      {
+        "id": "vendredi19-20h",
+        "name": "Vendredi 19h-20h30"
+      }
+    ],
+    "disponibilitesAyudaDeberes1":[
+      {
+        "id": "mardi15-17",
+        "name": "Mardi 15h-17h"
+      }
+    ],
+    "disponibilitesAyudaDeberes2":[
+      {
+        "id": "mardi15-17",
+        "name": "Mardi 15h-17h"
+      }
+    ],
+    "disponibilitesAyudaDeberes3":[
+      {
+        "id": "mardi15-17",
+        "name": "Mardi 15h-17h"
+      }
+    ],
+    "disponibilitesAyudaDeberes4":[
+      {
+        "id": "lundi15-17",
+        "name": "Lundi 15h-17h"
+      },
+      {
+        "id": "mercredi15-17",
+        "name": "Mercredi 15h-17h"
+      }
+    ],
+    "disponibilitesMathPrimaria4":[
+      {
+        "id": "lundi15-17",
+        "name": "Lundi 15h-17h"
+      },
+      {
+        "id": "mercredi17-18",
+        "name": "Mercredi 17h-18h30"
+      }
+    ],
+    "disponibilitesAyudaDeberes5":[
+      {
+        "id": "mercredi17-18",
+        "name": "Mercredi 17h-18h30"
+      }
+    ],
+    "disponibilitesMathPrimaria5":[
+      {
+        "id": "lundi17-18",
+        "name": "Lundi 17h-18h30"
+      }
+    ],
+    "disponibilitesLenguaPrimaria5":[
+      {
+        "id": "jeudi17-18",
+        "name": "Jeudi 17h-18h30"
+      }
+    ],
+    "disponibilitesMathPrimaria6":[
+      {
+        "id": "mardi17-18",
+        "name": "Mardi 17h-18h30"
+      }
+    ],
+    "disponibilitesLenguaPrimaria6":[
+      {
+        "id": "vendredi17-18",
+        "name": "Vendredi 17h-18h30"
+      }
+    ],
+    "disponibilitesAyudaDeberes6":[
+      {
+        "id": "lundi15-17",
+        "name": "Lundi 15h-17h"
+      },
+      {
+        "id": "mercredi15-17",
+        "name":"Mercredi 15h-17h"
+      }
+    ],
+    "disponibilitesCoursMathESO1":[
+      {
+        "id": "lundi16-17",
+        "name": "Lundi 16h-17h30"
+      },
+      {
+        "id": "jeudi16-17",
+        "name": "Jeudi 16h-17h30"
+      }
+    ],
+    "disponibilitesCoursLenguaESO1":[
+      {
+        "id": "mardi16-17",
+        "name": "Mardi 16h-17h30"
+      },
+      {
+        "id": "vendredi16-17",
+        "name": "Vendredi 16h-17h30"
+      }
+    ],
+    "disponibilitesCoursMathESO2":[
+      {
+        "id": "mardi16-17",
+        "name": "Mardi 16h-17h30"
+      },
+      {
+        "id": "vendredi16-17",
+        "name": "Vendredi 16h-17h30"
+      }
+    ],
+    "disponibilitesCoursLenguaESO2":[
+      {
+        "id": "lundi16-17",
+        "name": "Lundi 16h-17h30"
+      },
+      {"id": "jeudi16-17",
+        "name": "Jeudi 16h-17h30"
+      }
+    ],
+    "disponibilitesCoursMathESO3":[
+      {
+        "id": "lundi17-19",
+        "name": "Lundi 17h30-19h"
+      },
+      {
+        "id": "jeudi17-19",
+        "name": "Jeudi 17h30-19h"
+      }
+    ],
+    "disponibilitesCoursLenguaESO3":[
+      {
+        "id": "mardi17-19",
+        "name": "Mardi 17h30-19h"
+      },
+      {
+        "id": "vendredi17-19",
+        "name": "Vendredi 17h30-19h"
+      }
+    ],
+    "disponibilitesCoursFisicaESO3":[
+      {
+        "id": "mercredi16-17",
+        "name": "Mercredi 16h-17h30"
+      }
+    ],
+    "disponibilitesCoursFisicaESO4":[
+      {
+        "id": "mercredi17-19",
+        "name": "Mercredi 17h30-19h"
+      }
+    ],
+    "disponibilitesCoursMathESO4":[
+      {
+        "id": "mardi17-19",
+        "name": "Mardi 17h30-19h"
+      },
+      {
+        "id": "vendredi17-19",
+        "name": "Vendredi 17h30-19h"
+      }
+    ],
+    "disponibilitesCoursLenguaESO4":[
+      {
+        "id": "lundi17-19",
+        "name": "Lundi 17h30-19h"
+      },
+      {
+        "id": "jeudi17-19",
+        "name": "Jeudi 17h30-19h"
+      }
+    ],
+    "disponibilitesCoursMathBacEsp1": [
+      {
+        "id": "lundi19-20",
+        "name": "Lundi 19h-20h30"
+      },
+      {
+        "id": "mercredi19-20",
+        "name": "Mercredi 19h-20h30"
+      }
+    ],
+    "disponibilitesCoursEcoBacEsp2": [
+      {
+        "id": "lundi19-20",
+        "name": "Lundi 19h-20h30"
+      },
+      {
+        "id": "mercredi19-20",
+        "name": "Mercredi 19h-20h30"
+      },
+      {
+        "id": "jeudi19-20",
+        "name": "Jeudi 19h-20h30"
+      }
+    ],
+    "disponibilitesCoursLiteraturaBacEsp1": [
+      {
+        "id": "mardi19-20",
+        "name": "Mardi 19h-20h30"
+      }
+    ],
+    "disponibilitesCoursLiteraturaBacEsp2": [
+      {
+        "id": "vendredi19-20",
+        "name": "Vendredi 19h-20h30"
+      }
+    ],
+    "disponibilitesCoursMathBacEsp2": [
+      {
+        "id": "vendredi19-20",
+        "name": "Vendredi 19h-20h30"
+      }
+    ],
+    "disponibilitesCoursTestMissionCP": [
+      {
+        "id": "mercredi14-16",
+        "name": "Mercredi 14h-16h"
+      }
+    ],
+    "disponibilitesCoursFr4eme": [
+      {
+        "id": "mardi16-17",
+        "name": "Mardi 16h-17h30"
+      },
+      {
+        "id": "mercredi17-19",
+        "name": "Mercredi 17h30-19h"
+      },
+      {
+        "id": "vendredi16-17",
+        "name": "Vendredi 16h-17h30"
+      }
+    ],
+    "disponibilitesCoursMath4eme": [
+      {
+        "id": "lundi16-17",
+        "name": "Lundi 16h-17h30"
+      },
+      {
+        "id": "jeudi17-19",
+        "name": "Jeudi 17h30-19h"
+      }
+    ],
+    "disponibilitesCoursFr6eme": [
+      {
+        "id": "lundi16-17",
+        "name": "Lundi 16h-17h30"
+      },
+      {
+        "id": "mercredi14-16",
+        "name": "Mercredi 14h30-16h"
+      }
+    ],
+    "disponibilitesCoursMath6eme": [
+      {
+        "id": "mardi17-19",
+        "name": "Mardi 17h30-19h"
+      }
+    ],
+    "disponibilitesCoursMath3eme": [
+      {
+        "id": "lundi17-19",
+        "name": "Lundi 17h30-19h"
+      },
+      {
+        "id": "mercredi17-19",
+        "name": "Mercredi 17h30-19h"
+      }
+    ],
+    "disponibilitesCoursFr3eme": [
+      {
+        "id": "mardi17-19",
+        "name": "Mardi 17h30-19h"
+      },
+      {
+        "id": "mercredi19-20",
+        "name": "Mercredi 19h-20h30"
+      },
+      {
+        "id": "jeudi17-19",
+        "name": "Jeudi 17h30-19h"
+      },
+      {
+        "id": "vendredi17-19",
+        "name": "Vendredi 17h30-19h"
+      }
+    ],
+    "disponibilitesCoursPhys3eme": [
+      {
+        "id": "mardi19-20",
+        "name": "Mardi 19h-20h30"
+      },
+      {
+        "id": "vendredi17-19",
+        "name": "Vendredi 17h30-19h"
+      }
+    ],
+    "disponibilitesCoursFr5eme": [
+      {
+        "id": "lundi17-19",
+        "name": "Lundi 17h30-19h"
+      },
+      {
+        "id": "mercredi16-17",
+        "name": "Mercredi 16h-17h30"
+      }
+    ],
+    "disponibilitesCoursMath5eme": [
+      {
+        "id": "vendredi16-17",
+        "name": "Vendredi 16h-17h30"
+      }
+    ],
+    "disponibilitesCoursMath2nde": [
+      {
+        "id": "lundi19-20",
+        "name": "Lundi 19h-20h30"
+      }
+    ],
+    "disponibilitesCoursFr2nde": [
+      {
+        "id": "mardi19-20",
+        "name": "Mardi 19h-20h30"
+      }
+    ],
+    "disponibilitesCoursPhys2nde": [
+      {
+        "id": "jeudi19-20",
+        "name": "Jeudi 19h-20h30"
+      },
+      {
+        "id": "vendredi19-20",
+        "name": "Vendredi 19h-20h30"
+      }
+    ],
+    "disponibilitesCoursFr1ere": [
+      {
+        "id": "lundi19-20",
+        "name": "Lundi 19h-20h30"
+      },
+      {
+        "id": "samedi14-17",
+        "name": "Samedi 14h-17h"
+      }
+    ],
+    "disponibilitesCoursMath1ereES": [
+      {
+        "id": "mercredi19-20",
+        "name": "Mercredi 19h-20h30"
+      }
+    ],
+    "disponibilitesCoursMathTS": [
+      {
+        "id": "jeudi19-20",
+        "name": "Jeudi 19h-20h30"
+      },
+      {
+        "id": "samedi14-17",
+        "name": "Samedi 14h-17h"
+      }
+    ],
+    "disponibilitesCoursPhysTS": [
+      {
+        "id": "samedi14-17",
+        "name": "Samedi 14h-17h"
+      }
+    ],
+    "disponibilitesCoursEcoTES": [
+      {
+        "id": "samedi14-17",
+        "name": "Samedi 14h-17h"
+      }
+    ],
+    "disponibilitesCoursEcoDroitSTMG": [
+      {
+        "id": "samedi14-17",
+        "name": "Samedi 14h-17h"
+      }
+    ],
+
+    "disponibilitesCoursMathCE2": [
+      {
+        "id": "lundi16-17",
+        "name": "Lundi 16h-17h30"
+      }
+    ],
+    "disponibilitesCoursFrCE2": [
+      {
+        "id": "mardi17-19",
+        "name": "Mardi 17h30-19h"
+      },
+      {
+        "id": "jeudi16-17",
+        "name": "Jeudi 16h-17h30"
+      },
+      {
+        "id": "vendredi16-17",
+        "name": "Vendredi 16h-17h30"
+      }
+    ],
+    "disponibilitesCoursTestMissionCE2": [
+      {
+        "id": "mercredi16-18",
+        "name": "Mercredi 16h-18h"
+      },
+      {
+        "id": "samedi11-13",
+        "name": "Samedi 11h-13h"
+      }
+    ],
+    "disponibilitesCoursFrCE1": [
+      {
+        "id": "lundi16-17",
+        "name": "Lundi 16h-17h30"
+      }
+    ],
+    "disponibilitesCoursMathCE1": [
+      {
+        "id": "mardi16-17",
+        "name": "Mardi 16h-17h30"
+      },
+      {
+        "id": "jeudi16-17",
+        "name": "Jeudi 16h-17h30"
+      },
+      {
+        "id": "vendredi16-17",
+        "name": "Vendredi 16h-17h30"
+      }
+    ],
+    "disponibilitesCoursTestMissionCE1": [
+      {
+        "id": "mercredi16-18",
+        "name": "Mercredi 16h-18h"
+      },
+      {
+        "id": "samedi11-13",
+        "name": "Samedi 11h-13h"
+      }
+    ],
+    "disponibilitesCoursMathCM2": [
+      {
+        "id": "lundi17-19",
+        "name": "Lundi 17h30-19h"
+      }
+    ],
+    "disponibilitesCoursFrCM2": [
+      {
+        "id": "mardi17-19",
+        "name": "Mardi 17h30-19h"
+      },
+      {
+        "id": "jeudi17-19",
+        "name": "Jeudi 17h30-19h"
+      },
+      {
+        "id": "vendredi17-19",
+        "name": "Vendredi 17h30-19h"
+      }
+    ],
+    "disponibilitesCoursTestMissionMathCM2": [
+      {
+        "id": "mercredi14-15",
+        "name": "Mercredi 14h-15h30"
+      },
+      {
+        "id": "samedi9-10",
+        "name": "Samedi 9h-10h30"
+      }
+    ],
+    "disponibilitesCoursTestMissionFrCM2": [
+      {
+        "id": "mercredi15-17",
+        "name": "Mercredi 15h30-17h"
+      },
+      {
+        "id": "samedi10-12",
+        "name": "Samedi 10h30-12h"
+      }
+    ],
+    "disponibilitesCoursFrCM1": [
+      {
+        "id": "lundi17-19",
+        "name": "Lundi 17h30-19h"
+      }
+    ],
+    "disponibilitesCoursMathCM1": [
+      {
+        "id": "mardi17-19",
+        "name": "Mardi 17h30-19h"
+      },
+      {
+        "id": "jeudi17-19",
+        "name": "Jeudi 17h30-19h"
+      },
+      {
+        "id": "vendredi17-19",
+        "name": "Vendredi 17h30-19h"
+      }
+    ],
+    "disponibilitesCoursTestMissionMathCM1": [
+      {
+        "id": "mercredi15-17",
+        "name": "Mercredi 15h30-17h"
+      },
+      {
+        "id": "samedi10-12",
+        "name": "Samedi 10h30-12h"
+      }
+    ],
+    "disponibilitesCoursTestMissionFrCM1": [
+      {
+        "id": "mercredi14-15",
+        "name": "Mercredi 14h-15h30"
+      },
+      {
+        "id": "samedi9-10",
+        "name": "Samedi 9h-10h30"
+      }
+    ],
+    "disponibilitesCoursIELTS": [
+      {
+        "id": "samedi10-13",
+        "name": "Samedi 10h-13h"
+      }
+    ],
+    "disponibilitesCoursTOEFL": [
+      {
+        "id": "samedi14-17",
+        "name": "Samedi 14h-17h"
+      }
+    ],
+    "disponibilitesSAT": [
+      {
+        "id": "samedi14-17",
+        "name": "Samedi 14h-17h"
+      }
+    ]
+}
 }
 
 

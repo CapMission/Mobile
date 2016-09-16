@@ -1,0 +1,505 @@
+<ion-view  title='<img class="title-image" src="parent/icon.png"> Catalogue CapMission </img>' cache-view="false">
+  <ion-nav-buttons side="right">
+    <!--<a class="button button-icon ion-ios-more rotate-90 fs-s" ng-click="popover.show($event)"></a>-->
+  </ion-nav-buttons>
+
+
+  <ion-content>
+    <div ng-controller="SDispoCoursPartCtrl">
+      <div>
+        <br>
+        Nombre de jour par semaines :
+        <br><br>
+
+        <center><div>
+          <!-- Choix du nb de jours par semaine -->
+          <form>
+            <input type="radio" value="1" id="squared0" name="nb1" ng-model="boutonR" selected/>
+            <label id="instruc" for="squared0">1</label>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+            <input type="radio" value="2" id="squared1" name="nb2" ng-model="boutonR" selected/>
+            <label id="instruc" for="squared1">2</label>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+            <input type="radio" value="3" id="squared2" name="nb3" ng-model="boutonR"/>
+            <label id="instruc" for="squared2">3</label>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+            <input type="radio" value="4" id="squared3" name="nb4" ng-model="boutonR"/>
+            <label id="instruc" for="squared3">4</label>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+            <input type="radio" value="5" id="squared4" name="nb5" ng-model="boutonR"/>
+            <label id="instruc" for="squared4">5</label>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+            <input type="radio" value="6" id="squared5" name="nb6" ng-model="boutonR"/>
+            <label id="instruc" for="squared5">6</label>
+          </form>
+        </div></center>
+
+        <!-- Affichage du nb de comboBox en fonction du radioButton sélectionné -->
+        <br>
+        Choisissez les jours de la semaine que vous souhaitez :
+        <br><br>
+
+        <!-- Pour 1 jour -->
+        <div ng-switch on="boutonR">
+          <div ng-switch-when="1">
+            <div class="list">
+              <form name="myForm" method="POST">
+                <div id="instruc">Heure:<input id="formBlanc" type="time" ng-model="heureDebut1" required></div><br>
+
+                <div>
+                  <label class="item item-input item-select">
+                    <div id="instruc">    <!-- class="input-label" -->
+                      Jour:
+                    </div>
+                    <select id="jour" ng-model="jour1" required>
+                      <option>Lundi</option>
+                      <option>Mardi</option>
+                      <option>Mercredi</option>
+                      <option>Jeudi</option>
+                      <option>Vendredi</option>
+                      <option>Samedi</option>
+                    </select>
+                  </label>
+                </div><br><br>
+
+                <center><button class="button button-small buttonEmp" type="submit" ng-model="nbJours2" ng-disabled="myForm.$invalid" value="2" ng-click="recapitulatif1(nomPrenomP, telP, emailP, choixParent, autreRaison,
+              nomPrenomEnfant, telEnfant, emailEnfant, dateNaissanceEnfant, ecoleEnfant, coursParti, coursEnGpe, choixMission, choixSection, choixNiveau, choixMatiere, choixFiliere, datecours,
+              heureDebut1, boutonR, jour1)">
+                  VALIDER
+                </button>
+                </center>
+              </form>
+            </div>
+          </div>
+        </div>
+
+        <!-- Pour 2 jours -->
+        <div ng-switch on="boutonR">
+          <div ng-switch-when="2">
+            <div class="list">
+              <form name="myForm" method="POST">
+                <div id="instruc">Heure:<input id="formBlanc" type="time" ng-model="heureDebut1" required></div><br>
+
+                <div id="inputC">
+                  <label class="item item-input item-select">
+                    <div id="instruc">
+                      Jour:
+                    </div>
+                    <select id="jour" ng-model="jour1" required>
+                      <option>Lundi</option>
+                      <option>Mardi</option>
+                      <option>Mercredi</option>
+                      <option>Jeudi</option>
+                      <option>Vendredi</option>
+                      <option>Samedi</option>
+                    </select>
+                  </label>
+                </div><br>
+
+                <div id="instruc">Heure:<input id="formBlanc" type="time" ng-model="heureDebut2" required></div><br>
+
+                <div id="inputC">
+                  <label class="item item-input item-select">
+                    <div id="instruc">
+                      Jour:
+                    </div>
+                    <select id="jour" ng-model="jour2" required>
+                      <option>Lundi</option>
+                      <option>Mardi</option>
+                      <option>Mercredi</option>
+                      <option>Jeudi</option>
+                      <option>Vendredi</option>
+                      <option>Samedi</option>
+                    </select>
+                  </label>
+                </div><br><br>
+                <center><button class="button button-small buttonEmp" type="submit" ng-model="nbJours2" ng-disabled="myForm.$invalid" value="2" ng-click="recapitulatif2(nomPrenomP, telP, emailP, choixParent, autreRaison,
+              nomPrenomEnfant, telEnfant, emailEnfant, dateNaissanceEnfant, ecoleEnfant, coursParti, coursEnGpe, choixMission, choixSection, choixNiveau, choixMatiere, choixFiliere, datecours,
+              heureDebut1, heureDebut2, boutonR, jour1, jour2)">
+                  VALIDER
+                </button>
+                </center>
+              </form>
+            </div>
+          </div>
+        </div>
+
+        <!-- Pour 3 jours -->
+        <div ng-switch on="boutonR">
+          <div ng-switch-when="3">
+            <div class="list">
+              <form name="myForm" ng-submit="submitTable()">
+                <div id="instruc">Heure:<input id="formBlanc" type="time" ng-model="heureDebut1" required></div><br>
+
+              <div id="inputC">
+                <label class="item item-input item-select">
+                  <div id="instruc">
+                    Jour:
+                  </div>
+                  <select id="jour" ng-model="jour1" required>
+                    <option>Lundi</option>
+                    <option>Mardi</option>
+                    <option>Mercredi</option>
+                    <option>Jeudi</option>
+                    <option>Vendredi</option>
+                    <option>Samedi</option>
+                  </select>
+                </label>
+              </div><br>
+
+                <div id="instruc">Heure:<input id="formBlanc" type="time" ng-model="heureDebut2" required></div><br>
+
+              <div id="inputC">
+                <label class="item item-input item-select">
+                  <div id="instruc">
+                    Jour:
+                  </div>
+                  <select id="jour" ng-model="jour2" required>
+                    <option>Lundi</option>
+                    <option>Mardi</option>
+                    <option>Mercredi</option>
+                    <option>Jeudi</option>
+                    <option>Vendredi</option>
+                    <option>Samedi</option>
+                  </select>
+                </label>
+              </div><br>
+
+                <div id="instruc">Heure:<input id="formBlanc" type="time" ng-model="heureDebut3" required></div><br>
+
+              <div id="inputC">
+                <label class="item item-input item-select">
+                  <div id="instruc">
+                    Jour:
+                  </div>
+                  <select id="jour" ng-model="jour3" required>
+                    <option>Lundi</option>
+                    <option>Mardi</option>
+                    <option>Mercredi</option>
+                    <option>Jeudi</option>
+                    <option>Vendredi</option>
+                    <option>Samedi</option>
+                  </select>
+                </label>
+              </div><br><br>
+              <center><button class="button button-small buttonEmp" ng-model="nbJours3" value="3" ng-disabled="myForm.$invalid" ng-click="recapitulatif3(nomPrenomP, telP, emailP, choixParent, autreRaison,
+              nomPrenomEnfant, telEnfant, emailEnfant, dateNaissanceEnfant, ecoleEnfant, coursParti, coursEnGpe, choixMission, choixSection, choixNiveau, choixMatiere, choixFiliere, datecours,
+              heureDebut1, heureDebut2, heureDebut3, boutonR, jour1, jour2, jour3)">
+                VALIDER
+              </button></center>
+                </form>
+            </div>
+          </div>
+        </div>
+
+        <!-- Pour 4 jours -->
+        <div ng-switch on="boutonR">
+          <div ng-switch-when="4">
+            <div class="list">
+              <form name="myForm" method="POST">
+                <div id="instruc">Heure:<input id="formBlanc" type="time" ng-model="heureDebut1" required></div><br>
+
+              <div id="inputC">
+                <label class="item item-input item-select">
+                  <div id="instruc">
+                    Jour:
+                  </div>
+                  <select id="jour" ng-model="jour1" required>
+                    <option>Lundi</option>
+                    <option>Mardi</option>
+                    <option>Mercredi</option>
+                    <option>Jeudi</option>
+                    <option>Vendredi</option>
+                    <option>Samedi</option>
+                  </select>
+                </label>
+              </div><br>
+
+                <div id="instruc">Heure:<input id="formBlanc" type="time" ng-model="heureDebut2" required></div><br>
+
+              <div id="inputC">
+                <label class="item item-input item-select">
+                  <div id="instruc">
+                    Jour:
+                  </div>
+                  <select id="jour" ng-model="jour2" required>
+                    <option>Lundi</option>
+                    <option>Mardi</option>
+                    <option>Mercredi</option>
+                    <option>Jeudi</option>
+                    <option>Vendredi</option>
+                    <option>Samedi</option>
+                  </select>
+                </label>
+              </div><br>
+
+                <div id="instruc">Heure:<input id="formBlanc" type="time" ng-model="heureDebut3" required></div><br>
+
+              <div id="inputC">
+                <label class="item item-input item-select">
+                  <div id="instruc">
+                    Jour:
+                  </div>
+                  <select id="jour" ng-model="jour3" required>
+                    <option>Lundi</option>
+                    <option>Mardi</option>
+                    <option>Mercredi</option>
+                    <option>Jeudi</option>
+                    <option>Vendredi</option>
+                    <option>Samedi</option>
+                  </select>
+                </label>
+              </div><br>
+
+                <div id="instruc">Heure:<input id="formBlanc" type="time" ng-model="heureDebut4" required></div><br>
+
+              <div id="inputC">
+                <label class="item item-input item-select">
+                  <div id="instruc">
+                    Jour:
+                  </div>
+                  <select id="jour" ng-model="jour4" required>
+                    <option>Lundi</option>
+                    <option>Mardi</option>
+                    <option>Mercredi</option>
+                    <option>Jeudi</option>
+                    <option>Vendredi</option>
+                    <option>Samedi</option>
+                  </select>
+                </label>
+              </div><br><br>
+              <center><button class="button button-small buttonEmp" ng-model="nbJours4" value="4" ng-disabled="myForm.$invalid" ng-click="recapitulatif4(nomPrenomP, telP, emailP, choixParent, autreRaison,
+              nomPrenomEnfant, telEnfant, emailEnfant, dateNaissanceEnfant, ecoleEnfant, coursParti, coursEnGpe, choixMission, choixSection, choixNiveau, choixMatiere, choixFiliere, datecours,
+              heureDebut1, heureDebut2, heureDebut3, heureDebut4, boutonR, jour1, jour2, jour3, jour4)">
+                VALIDER
+              </button></center>
+                </form>
+            </div>
+          </div>
+        </div>
+
+        <!-- Pour 5 jours -->
+        <div ng-switch on="boutonR">
+          <div ng-switch-when="5">
+            <div class="list">
+              <form name="myForm" method="POST">
+                <div id="instruc">Heure:<input id="formBlanc" type="time" ng-model="heureDebut1" required></div><br>
+
+              <div id="inputC">
+                <label class="item item-input item-select">
+                  <div id="instruc">
+                    Jour:
+                  </div>
+                  <select id="jour" ng-model="jour1" required>
+                    <option>Lundi</option>
+                    <option>Mardi</option>
+                    <option>Mercredi</option>
+                    <option>Jeudi</option>
+                    <option>Vendredi</option>
+                    <option>Samedi</option>
+                  </select>
+                </label>
+              </div><br>
+
+                <div id="instruc">Heure:<input id="formBlanc" type="time" ng-model="heureDebut2" required></div><br>
+
+              <div id="inputC">
+                <label class="item item-input item-select">
+                  <div id="instruc">
+                    Jour:
+                  </div>
+                  <select id="jour" ng-model="jour2" required>
+                    <option>Lundi</option>
+                    <option>Mardi</option>
+                    <option>Mercredi</option>
+                    <option>Jeudi</option>
+                    <option>Vendredi</option>
+                    <option>Samedi</option>
+                  </select>
+                </label>
+              </div><br>
+
+                <div id="instruc">Heure:<input id="formBlanc" type="time" ng-model="heureDebut3" required></div><br>
+
+              <div id="inputC">
+                <label class="item item-input item-select">
+                  <div id="instruc">
+                    Jour:
+                  </div>
+                  <select id="jour" ng-model="jour3" required>
+                    <option>Lundi</option>
+                    <option>Mardi</option>
+                    <option>Mercredi</option>
+                    <option>Jeudi</option>
+                    <option>Vendredi</option>
+                    <option>Samedi</option>
+                  </select>
+                </label>
+              </div><br>
+
+                <div id="instruc">Heure:<input id="formBlanc" type="time" ng-model="heureDebut4" required></div><br>
+
+              <div id="inputC">
+                <label class="item item-input item-select">
+                  <div id="instruc">
+                    Jour:
+                  </div>
+                  <select id="jour" ng-model="jour4" required>
+                    <option>Lundi</option>
+                    <option>Mardi</option>
+                    <option>Mercredi</option>
+                    <option>Jeudi</option>
+                    <option>Vendredi</option>
+                    <option>Samedi</option>
+                  </select>
+                </label>
+              </div><br>
+
+                <div id="instruc">Heure:<input id="formBlanc" type="time" ng-model="heureDebut5" required></div><br>
+
+              <div id="inputC">
+                <label class="item item-input item-select">
+                  <div id="instruc">
+                    Jour:
+                  </div>
+                  <select id="jour" ng-model="jour5" required>
+                    <option>Lundi</option>
+                    <option>Mardi</option>
+                    <option>Mercredi</option>
+                    <option>Jeudi</option>
+                    <option>Vendredi</option>
+                    <option>Samedi</option>
+                  </select>
+                </label>
+              </div><br><br>
+              <center><button class="button button-small buttonEmp" ng-model="nbJours5" value="5" ng-disabled="myForm.$invalid" ng-click="recapitulatif5(nomPrenomP, telP, emailP, choixParent, autreRaison,
+              nomPrenomEnfant, telEnfant, emailEnfant, dateNaissanceEnfant, ecoleEnfant, coursParti, coursEnGpe, choixMission, choixSection, choixNiveau, choixMatiere, choixFiliere, dateDebutCours,
+              heureDebut1, heureDebut2, heureDebut3, heureDebut4, heureDebut5, boutonR, jour1, jour2, jour3, jour4, jour5)">
+                VALIDER
+              </button></center>
+                </form>
+            </div>
+          </div>
+        </div>
+
+        <!-- Pour 6 jours -->
+        <div ng-switch on="boutonR">
+          <div ng-switch-when="6">
+            <div class="list">
+              <form name="myForm" method="POST">
+                <div id="instruc">Heure:<input id="formBlanc" type="time" ng-model="heureDebut1" required></div><br>
+
+              <div id="inputC">
+                <label class="item item-input item-select">
+                  <div id="instruc">
+                    Jour:
+                  </div>
+                  <select id="jour" ng-model="jour1" required>
+                    <option>Lundi</option>
+                    <option>Mardi</option>
+                    <option>Mercredi</option>
+                    <option>Jeudi</option>
+                    <option>Vendredi</option>
+                    <option>Samedi</option>
+                  </select>
+                </label>
+              </div><br>
+
+                <div id="instruc">Heure:<input id="formBlanc" type="time" ng-model="heureDebut2" required></div><br>
+
+              <div id="inputC">
+                <label class="item item-input item-select">
+                  <div id="instruc">
+                    Jour:
+                  </div>
+                  <select id="jour" ng-model="jour2" required>
+                    <option>Lundi</option>
+                    <option>Mardi</option>
+                    <option>Mercredi</option>
+                    <option>Jeudi</option>
+                    <option>Vendredi</option>
+                    <option>Samedi</option>
+                  </select>
+                </label>
+              </div><br>
+
+                <div id="instruc">Heure:<input id="formBlanc" type="time" ng-model="heureDebut3" required></div><br>
+
+              <div id="inputC">
+                <label class="item item-input item-select">
+                  <div id="instruc">
+                    Jour:
+                  </div>
+                  <select id="jour" ng-model="jour3" required>
+                    <option>Lundi</option>
+                    <option>Mardi</option>
+                    <option>Mercredi</option>
+                    <option>Jeudi</option>
+                    <option>Vendredi</option>
+                    <option>Samedi</option>
+                  </select>
+                </label>
+              </div><br>
+
+                <div id="instruc">Heure:<input id="formBlanc" type="time" ng-model="heureDebut4" required></div><br>
+
+              <div id="inputC">
+                <label class="item item-input item-select">
+                  <div id="instruc">
+                    Jour:
+                  </div>
+                  <select id="jour" ng-model="jour4" required>
+                    <option>Lundi</option>
+                    <option>Mardi</option>
+                    <option>Mercredi</option>
+                    <option>Jeudi</option>
+                    <option>Vendredi</option>
+                    <option>Samedi</option>
+                  </select>
+                </label>
+              </div><br>
+
+                <div id="instruc">Heure:<input id="formBlanc" type="time" ng-model="heureDebut5" required></div><br>
+
+              <div id="inputC">
+                <label class="item item-input item-select">
+                  <div id="instruc">
+                    Jour:
+                  </div>
+                  <select id="jour" ng-model="jour5" required>
+                    <option>Lundi</option>
+                    <option>Mardi</option>
+                    <option>Mercredi</option>
+                    <option>Jeudi</option>
+                    <option>Vendredi</option>
+                    <option>Samedi</option>
+                  </select>
+                </label>
+              </div><br>
+
+                <div id="instruc">Heure:<input id="formBlanc" type="time" ng-model="heureDebut6" required></div><br>
+
+              <div id="inputC">
+                <label class="item item-input item-select">
+                  <div id="instruc">
+                    Jour:
+                  </div>
+                  <select id="jour" ng-model="jour6" required>
+                    <option>Lundi</option>
+                    <option>Mardi</option>
+                    <option>Mercredi</option>
+                    <option>Jeudi</option>
+                    <option>Vendredi</option>
+                    <option>Samedi</option>
+                  </select>
+                </label>
+              </div><br><br>
+              <center><button class="button button-small buttonEmp" ng-model="nbJours6" value="6" ng-disabled="myForm.$invalid" ng-click="recapitulatif6(nomPrenomP, telP, emailP, choixParent, autreRaison,
+              nomPrenomEnfant, telEnfant, emailEnfant, dateNaissanceEnfant, ecoleEnfant, coursParti, coursEnGpe, choixMission, choixSection, choixNiveau, choixMatiere, choixFiliere, datecours,
+              heureDebut1, heureDebut2, heureDebut3, heureDebut4, heureDebut5, heureDebut6, boutonR, jour1, jour2, jour3, jour4, jour5, jour6)">
+                VALIDER
+              </button></center>
+                </form>
+            </div>
+          </div>
+          </div>
+
+      </div>
+    </div>
+  </ion-content>
+</ion-view>

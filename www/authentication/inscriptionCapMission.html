@@ -1,6 +1,6 @@
 <ion-view  title='<img class="title-image" src="parent/icon.png"> Inscription </img>' cache-view="false">
   <ion-nav-buttons side="right">
-    <a class="button button-icon ion-ios-more rotate-90 fs-s" ng-click="popover.show($event)"></a>
+    <!--<a class="button button-icon ion-ios-more rotate-90 fs-s" ng-click="popover.show($event)"></a>-->
   </ion-nav-buttons>
 
 
@@ -47,12 +47,12 @@
           </div> <br><br>
           <!--{{nomPrenomP}}<br>{{telP}}<br>{{emailP}}<br>{{choix}}<br>{{bodyAutre}}-->
           <div>
-            <button class="button button-small buttonEmp1" ng-disabled="myForm.$invalid" ng-model="catalogue" ng-click="goCatalogue(nomPrenomP, telP, emailP, choix, bodyAutre)">Consulter<br>notre<br>Catalogue</button>
-            <button class="button button-small buttonEmp1" ng-disabled="myForm.$invalid" ng-model="cours" ng-click="goCours(nomPrenomP, telP, emailP, choix, bodyAutre)">Commander<br>un ou des<br>Cours</button>
+            <button class="button button-small buttonEmp1" ng-disabled="myForm.$invalid" ng-model="catalogue" ng-click="goCatalogue(nomPrenomP, telP, emailP, choix, bodyAutre)"><nobr>Notre Catalogue</nobr></button>
+            <button class="button button-small buttonEmp1" ng-disabled="myForm.$invalid" ng-model="cours" ng-click="goCours(nomPrenomP, telP, emailP, choix, bodyAutre)"><nobr>Réserver cours</nobr></button>
           </div>
         </form>
       </div>
     </div>
-  </ion-content>
+    </ion-content>
 </ion-view>
 

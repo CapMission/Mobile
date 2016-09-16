@@ -25,6 +25,7 @@ var CapMission = angular.module('capMission', [
   'simplePagination',
   'ngAnimate',
   'toaster'
+  //'googleanalytics'
 ]);
 /*CapMission.run(function($ionicPopup) {
   var deploy = new Ionic.Deploy();
@@ -207,14 +208,21 @@ CapMission.controller('capController', function ($scope, $rootScope, $location, 
 
   //Function login facebook
   $scope.loginFacebook = function(){
-    $cordovaOauth.facebook("561387454023937", ["email"]).then(function(result) {
+    $http.get('http://localhost:8182/connect/facebook').success(function (data) {
+      $rootScope.facebookData = data
+      console.log(JSON.stringify({data: data}))
+
+    }).error(function (data,error) {
+     console.log("erreur facebook " + error)
+    });
+    /*$cordovaOauth.facebook("561387454023937", ["email"]).then(function(result) {
       //window.localStorage.setItem('accessToken', result.access.token);
       $localStorage.accessToken = result.access_token;
       $location.path("/profile");
     }, function(error) {
       alert("There was a problem signing in!  See the console for logs");
       console.log(error);
-    });
+    });*/
   }
 })
 CapMission.controller("FeedController", function($scope, $http, $localStorage, $location) {
@@ -237,6 +245,17 @@ CapMission.controller("FeedController", function($scope, $http, $localStorage, $
   };
 
 });
+
+/*CapMission.controller('AnalyticsController', function($scope,$ionicPlatform) {
+  $ionicPlatform.ready(function () {
+    if(typeof analytics !== undefined) { analytics.trackView("Analytics Controller"); }
+
+    $scope.initEvent = function() {
+      if(typeof analytics !== undefined) { analytics.trackEvent("Category", "Action", "Label", 25); }
+    }
+  });
+
+});*/
 
 CapMission.controller("ProfileController", function($scope, $http, $localStorage, $location) {
 
@@ -408,6 +427,20 @@ CapMission.constant("Constants", {
   }
 });*/
 
+
+CapMission.run(['$ionicPlatform', '$ionicPopup','$rootScope', function ($ionicPlatform, $ionicPopup, $rootScope) {
+  $ionicPlatform.ready(function () {
+    $rootScope.$on('$stateChangeSuccess', function () {
+      if(typeof analytics !== undefined) {
+        analytics.startTrackerWithId("UA-84205623-1");
+        analytics.trackView($state.current.name);
+      } else {
+        console.log("Google Analytics Unavailable");
+      }
+    });
+  });
+}]);
+
 CapMission.run(['$ionicPlatform', '$ionicPopup', function ($ionicPlatform, $ionicPopup) {
   $ionicPlatform.ready(function () {
     if(window.Connection) {
@@ -470,6 +503,12 @@ CapMission.run(['$ionicPlatform', '$ionicPopup', function ($ionicPlatform, $ioni
       // org.apache.cordova.statusbar required
       StatusBar.styleLightContent();
     }
+
+    /*if(typeof analytics !== "undefined") {
+      analytics.startTrackerWithId("UA-84205623-1");
+    } else {
+      console.log("Google Analytics Unavailable");
+    }*/
   });
 }]);
 /*CapMission.run(function($ionicPlatform, $ionicPopup) {
@@ -508,7 +547,7 @@ CapMission.controller('LogoutCtrl', function ($location, $auth, $state, $ionicHi
 CapMission.config(function($authProvider) {
   $authProvider.facebook({
     clientId: '561387454023937',
-    redirectUri : 'http://localhost:8100/'
+    //redirectUri : 'http://localhost:8100/'
   });
 
   $authProvider.google({
@@ -525,21 +564,21 @@ CapMission.config(function($authProvider) {
       }
     };
 
-    if (ionic.Platform.isIOS() || ionic.Platform.isAndroid()) {
+   /* if (ionic.Platform.isIOS() || ionic.Platform.isAndroid()) {
       //$authProvider.Platform ='mobile';
       //commonConfig.redirectUri = 'http://localhost:8100/';
       $authProvider.cordova = true;
       commonConfig.redirectUri = 'http://localhost:8100/';
-    }
+    }*/
 
     //$authProvider.redirectUri = 'http://localhost:8100/';
 
-    $authProvider.facebook(angular.extend({}, commonConfig, {
+   /* $authProvider.facebook(angular.extend({}, commonConfig, {
       clientId: '561387454023937',
-      //responseType : 'token'
-      url: 'http://localhost:8182/auth/facebook'
+      responseType : 'token',
+      //url: 'http://localhost:8182/auth/facebook'
       //redirectUri : 'http://localhost:8100/'
-    }));
+    }));*/
 
 
    /* $authProvider.twitter(angular.extend({}, commonConfig, {

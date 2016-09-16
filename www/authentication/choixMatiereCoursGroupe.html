@@ -1,0 +1,304 @@
+<ion-view  title='<img class="title-image" src="parent/icon.png"> Renseignements du Niveau scolaire </img>' cache-view="false">
+  <ion-nav-buttons side="right">
+    <!--<a class="button button-icon ion-ios-more rotate-90 fs-s" ng-click="popover.show($event)"></a>-->
+  </ion-nav-buttons>
+
+
+  <ion-content>
+    <div ng-controller="SChoixMatiereCoursGroupeCtrl">
+        <br><br>
+        Veulliez remplir les informations suivantes :
+
+        {{cours.coursDispo.anglais.name}}
+        <!--{{nomPrenomParent}}<br>-->
+        <!--{{telParent}}<br>-->
+        <!--{{emailParent}}<br>-->
+        <!--{{choixP}}<br>-->
+        <!--{{raisonAutre}}<br>-->
+        <!--{{nomPrenomEnfant}}<br>-->
+        <!--{{dateNaissanceEnfant}}<br>-->
+        <!--{{telEnfant}}<br>-->
+        <!--{{emailEnfant}}<br>-->
+        <!--{{ecoleEnfant}}-->
+        <br><br>
+
+        <form name="myForm">
+          <!-- choix de la Mission -->
+          <div id="inputC">
+            Choisissez la mission que suis l'élève :<br>
+            <label class="item item-input item-select">
+              <div id="instruc" class="input-label">
+                Mission:
+              </div>
+              <select  ng-model="choixMission" required>
+                <option ng-repeat="mission in missions">{{mission}}</option>
+              </select>
+            </label>
+          </div>
+
+        <!-- si choix est billingue, belge ou mission francaise -->
+        <div ng-show="choixMission == 'Bilingue' || choixMission == 'Mission Française' || choixMission == 'Mission Belge'" required>
+          <div id="inputC">
+            Choisissez la section de l'élève :
+            <label class="item item-input item-select">
+              <div id="instruc" class="input-label">
+                Section:
+              </div>
+              <select ng-model="choixSection" required>
+                <option ng-repeat="section in sections">{{section}}</option>
+              </select>
+            </label>
+          </div>
+        </div>
+
+        <!-- si choix est Mission Espagnol -->
+        <div ng-show="choixMission == 'Mission Espagnole'" required>
+          <div id="inputC">
+            Choisissez la section de l'élève :
+            <label class="item item-input item-select">
+              <div id="instruc" class="input-label">
+                Section:
+              </div>
+              <select ng-model="choixSection" required>
+                <option ng-repeat="sectionEsp in sectionsEsp">{{sectionEsp}}</option>
+              </select>
+            </label>
+          </div>
+        </div>
+
+        <!-- si choix est maternelle -->
+        <div ng-show="(choixMission == 'Mission Française' || choixMission == 'Mission Belge') && choixSection == 'Maternelle'" required>
+          <div id="inputC">
+            Choisissez la matière du cours que vous souhaitez prendre :
+            <label class="item item-input item-select">
+              <div id="instruc" class="input-label">
+                Matière:
+              </div>
+              <select ng-model="choixMatiere" required>
+                <option ng-repeat="tour in cours.coursDispo.maternelle">{{tour.name}}</option>
+              </select>
+            </label>
+          </div>
+        </div>
+
+        <!-- si choix est primaire -->
+        <div ng-show="(choixMission == 'Mission Française' || choixMission == 'Mission Belge') && choixSection == 'Primaire'" required>
+          <div id="inputC">
+            Choisissez le niveau de l'élève :
+            <label class="item item-input item-select">
+              <div id="instruc" class="input-label">
+                Niveau:
+              </div>
+              <select ng-model="choixNiveau" required>
+                <option ng-repeat="niveau1 in niveaux1">{{niveau1}}</option>
+              </select>
+            </label>
+          </div>
+        </div>
+
+        <!-- si choix est CE1 -->
+        <div ng-show="(choixMission == 'Mission Française' || choixMission == 'Mission Belge') && choixNiveau == 'CE1'" required>
+          <div id="inputC">
+            Choisissez la matière du cours que vous souhaitez prendre :
+            <label class="item item-input item-select">
+              <div id="instruc" class="input-label">
+                Matière:
+              </div>
+              <select ng-model="choixMatiere" required>
+                <option ng-repeat="tour in cours.coursDispo.ce1">{{tour.name}}</option>
+              </select>
+            </label>
+          </div>
+        </div>
+
+        <!-- si choix est CE2 -->
+        <div ng-show="(choixMission == 'Mission Française' || choixMission == 'Mission Belge') && choixNiveau == 'CE2'" required>
+          <div id="inputC">
+            Choisissez la matière du cours que vous souhaitez prendre :
+            <label class="item item-input item-select">
+              <div id="instruc" class="input-label">
+                Matière:
+              </div>
+              <select ng-model="choixMatiere" required>
+                <option ng-repeat="tour in cours.coursDispo.ce2">{{tour.name}}</option>
+              </select>
+            </label>
+          </div>
+        </div>
+
+        <!-- si choix est CM1 -->
+        <div ng-show="(choixMission == 'Mission Française' || choixMission == 'Mission Belge') && choixNiveau == 'CM1'" required>
+          <div id="inputC">
+            Choisissez la matière du cours que vous souhaitez prendre :
+            <label class="item item-input item-select">
+              <div id="instruc" class="input-label">
+                Matière:
+              </div>
+              <select ng-model="choixMatiere" required>
+                <option ng-repeat="tour in cours.coursDispo.cm1">{{tour.name}}</option>
+              </select>
+            </label>
+          </div>
+        </div>
+
+        <!-- si choix est CM2 -->
+        <div ng-show="(choixMission == 'Mission Française' || choixMission == 'Mission Belge') && choixNiveau == 'CM2'" required>
+          <div id="inputC">
+            Choisissez la matière du cours que vous souhaitez prendre :
+            <label class="item item-input item-select">
+              <div id="instruc" class="input-label">
+                Matière:
+              </div>
+              <select ng-model="choixMatiere" required>
+                <option ng-repeat="tour in cours.coursDispo.cm2">{{tour.name}}</option>
+              </select>
+            </label>
+          </div>
+        </div>
+
+        <!-- si choix est collège -->
+        <div ng-show="(choixMission == 'Mission Française' || choixMission == 'Mission Belge') && choixSection == 'Collège'" required>
+          <div id="inputC">
+            Choisissez le niveau de l'élève :
+            <label class="item item-input item-select">
+              <div id="instruc" class="input-label">
+                Niveau:
+              </div>
+              <select ng-model="choixNiveau" required>
+                <option ng-repeat="niveau2 in niveaux2">{{niveau2}}</option>
+              </select>
+            </label>
+          </div>
+        </div>
+
+        <!-- si choix est 6ème -->
+        <div ng-show="(choixMission == 'Mission Française' || choixMission == 'Mission Belge') && choixNiveau == '6ème'" required>
+          <div id="inputC">
+            Choisissez la matière du cours que vous souhaitez prendre :
+            <label class="item item-input item-select">
+              <div id="instruc" class="input-label">
+                Matière:
+              </div>
+              <select ng-model="choixMatiere" required>
+                <option ng-repeat="tour in cours.coursDispo.sixieme">{{tour.name}}</option>
+              </select>
+            </label>
+          </div>
+        </div>
+
+        <!-- si choix est 5ème -->
+        <div ng-show="(choixMission == 'Mission Française' || choixMission == 'Mission Belge') && choixNiveau == '5ème'" required>
+          <div id="inputC">
+            Choisissez la matière du cours que vous souhaitez prendre :
+            <label class="item item-input item-select">
+              <div id="instruc" class="input-label">
+                Matière:
+              </div>
+              <select ng-model="choixMatiere" required>
+                <option ng-repeat="tour in cours.coursDispo.cinquieme">{{tour.name}}</option>
+              </select>
+            </label>
+          </div>
+        </div>
+
+        <!-- si choix est 4ème -->
+        <div ng-show="(choixMission == 'Mission Française' || choixMission == 'Mission Belge') && choixNiveau == '4ème'" required>
+          <div id="inputC">
+            Choisissez la matière du cours que vous souhaitez prendre :
+            <label class="item item-input item-select">
+              <div id="instruc" class="input-label">
+                Matière:
+              </div>
+              <select ng-model="choixMatiere" required>
+                <option ng-repeat="tour in cours.coursDispo.quatrieme">{{tour.name}}</option>
+              </select>
+            </label>
+          </div>
+        </div>
+
+        <!-- si choix est 3ème -->
+        <div ng-show="(choixMission == 'Mission Française' || choixMission == 'Mission Belge') && choixNiveau == '3ème'" required>
+          <div id="inputC">
+            Choisissez la matière du cours que vous souhaitez prendre :
+            <label class="item item-input item-select">
+              <div id="instruc" class="input-label">
+                Matière:
+              </div>
+              <select ng-model="choixMatiere" required>
+                <option ng-repeat="tour in cours.coursDispo.troisieme">{{tour.name}}</option>
+              </select>
+            </label>
+          </div>
+        </div>
+
+        <!-- si choix est lycée -->
+        <div ng-show="(choixMission == 'Mission Française' || choixMission == 'Mission Belge') && choixSection == 'Lycée'" required>
+          <div id="inputC">
+            Choisissez le niveau de l'élève :
+            <label class="item item-input item-select">
+              <div id="instruc" class="input-label">
+                Niveau:
+              </div>
+              <select ng-model="choixNiveau" required>
+                <option ng-repeat="niveau3 in niveaux3">{{niveau3}}</option>
+              </select>
+            </label>
+          </div>
+        </div>
+
+        <!-- si choix est 2nde -->
+        <div ng-show="(choixMission == 'Mission Française' || choixMission == 'Mission Belge') && choixNiveau == '2nde'" required>
+          <div id="inputC">
+            Choisissez la matière du cours que vous souhaitez prendre :
+            <label class="item item-input item-select">
+              <div id="instruc" class="input-label">
+                Matière:
+              </div>
+              <select ng-model="choixMatiere" required>
+                <option ng-repeat="tour in cours.coursDispo.seconde">{{tour.name}}</option>
+              </select>
+            </label>
+          </div>
+        </div>
+
+        <!-- si choix est 1ère -->
+        <div ng-show="(choixMission == 'Mission Française' || choixMission == 'Mission Belge') && choixNiveau == '1ère'" required>
+          <div id="inputC">
+            Choisissez la matière du cours que vous souhaitez prendre :
+            <label class="item item-input item-select">
+              <div id="instruc" class="input-label">
+                Matière:
+              </div>
+              <select ng-model="choixMatiere" required>
+                <option ng-repeat="tour in cours.coursDispo.premiere">{{tour.name}}</option>
+              </select>
+            </label>
+          </div>
+        </div>
+
+        <!-- si choix est terminale -->
+        <div ng-show="(choixMission == 'Mission Française' || choixMission == 'Mission Belge') && choixNiveau == 'Terminale'" required>
+          <div id="inputC">
+            Choisissez la matière du cours que vous souhaitez prendre :
+            <label class="item item-input item-select">
+              <div id="instruc" class="input-label">
+                Matière:
+              </div>
+              <select ng-model="choixMatiere" required>
+                <option ng-repeat="tour in cours.coursDispo.tS">{{tour.name}}</option>
+              </select>
+            </label>
+          </div>
+        </div></form>
+
+        <br><br>
+        <div>
+          <button class="button button-small icon-right ion-chevron-right buttonEmp" ng-model="cours" ng-click="goNbJoursNnInsc(nomPrenomParent, telParent, emailParent, choixP, raisonAutre, nomPrenomEnfant, telEnfant,
+          emailEnfant, dateNaissanceEnfant, ecoleEnfant, coursParti, coursEnGpe, choixMission, choixSection, choixNiveau, choixMatiere, choixFiliere)">Suivant</button>
+        </div>
+      <!--ng-disabled="myForm.$invalid"-->
+        <br><br>
+      </div>
+    </div>
+  </ion-content>
+</ion-view>

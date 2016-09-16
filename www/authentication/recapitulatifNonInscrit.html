@@ -1,12 +1,10 @@
 <ion-view  title='<img class="title-image" src="parent/icon.png"> Récapitulatif de votre Commande </img>' cache-view="false">
-  <ion-nav-buttons side="right">
-    <a class="button button-icon ion-ios-more rotate-90 fs-s" ng-click="popover.show($event)"></a>
-  </ion-nav-buttons>
 
-  <br><br>
+  <ion-content>
+
   <div>
     <div class="card" ng-controller="RecapitulatifNonInscritCtrl">
-      <i class="icon ion-ios-close close-modal" ng-click="modal.hide()"></i>
+
       <div>
         <div class="item item-divider">
           Récapitulatif de votre demande : <br>
@@ -36,30 +34,16 @@
             <i id="iconC" class="icon ion-edit"></i>
             Matière
           <span class="item-note">
-            {{choixMat}}
+            {{choixMatiere}}
           </span>
           </div>
 
-          <!-- Nombre de cours si 1 cours-->
-          <div ng-if="plusCours == 'non'">
-            <div id="instruc1" class="item item-icon-left">
-              <i id="iconC" class="icon ion-calculator"></i>
-              Nombre de cours
-          <span class="item-note">
-            1
-          </span>
-            </div>
-            </div>
-
-          <!-- Nombre de cours si plusieurs cours-->
-          <div ng-if="plusCours == 'oui'">
-            <div id="instruc1" class="item item-icon-left">
-              <i id="iconC" class="icon ion-calculator"></i>
-              Nombre de cours
-          <span class="item-note">
-            {{nbJoursC}}
-          </span>
-            </div>
+          <div id="instruc1" class="item item-icon-left">
+            <i id="iconC" class="icon ion-calculator"></i>
+            Nombre de cours
+            <span class="item-note">
+              {{joursCoursNb}}
+            </span>
           </div>
 
           <div class="item item-divider">
@@ -71,203 +55,923 @@
             <i id="iconC" class="icon ion-calendar"></i>
             Date
           <span class="item-note">
-            {{dateDebutCours | date:'MM/dd/yyyy'}}
+            {{dateDebCours | date:'d MMMM yyyy'}}
           </span>
           </div>
 
           <div class="item item-divider">
-            Vos Disponibilités :
+            Horaires et jours :
           </div>
 
-          <div ng-if="crenaux8h0">
+          <!-- nombre de jour =1 -->
+          <div ng-if="joursCoursNb == 1">
             <div id="instruc1" class="item item-icon-left">
-              <i id="iconC" class="icon ion-clock"></i></i>
-              Lundi
+              <i id="iconC" class="icon ion-clock"></i>
+              Heure
           <span class="item-note">
-            8h-10h
+            {{horaire1 | date:'HH:mm'}} <!-- | date:'h:mma' -->
           </span>
+            </div>
+
+            <div id="instruc1" class="item item-icon-left">
+              <i id="iconC" class="icon ion-calendar"></i>
+              Jour
+            <span class="item-note">
+              {{date1}}
+            </span>
             </div>
           </div>
 
-          <div ng-if="crenaux8h1">
+          <!-- nombre de jour = 2-->
+          <div ng-if="joursCoursNb == 2">
             <div id="instruc1" class="item item-icon-left">
-              <i id="iconC" class="icon ion-clock"></i></i>
-              Mardi
+              <i id="iconC" class="icon ion-clock"></i>
+              Heure
           <span class="item-note">
-            8h-10h
+            {{horaire1 | date:'HH:mm'}} <!-- | date:'h:mma' -->
           </span>
+            </div>
+
+            <div id="instruc1" class="item item-icon-left">
+              <i id="iconC" class="icon ion-calendar"></i>
+              Jour
+            <span class="item-note">
+              {{date1}}
+            </span>
+            </div>
+
+            <div id="instruc1" class="item item-icon-left">
+              <i id="iconC" class="icon ion-clock"></i>
+              Heure
+          <span class="item-note">
+            {{horaire2 | date:'HH:mm'}} <!-- | date:'h:mma' -->
+          </span>
+            </div>
+
+            <div id="instruc1" class="item item-icon-left">
+              <i id="iconC" class="icon ion-calendar"></i>
+              Jour
+            <span class="item-note">
+              {{date2}}
+            </span>
             </div>
           </div>
 
-          <div ng-if="crenaux8h2">
+          <!-- nombre de jour = 3-->
+          <div ng-if="joursCoursNb == 3">
             <div id="instruc1" class="item item-icon-left">
-              <i id="iconC" class="icon ion-clock"></i></i>
-              Mercredi
+              <i id="iconC" class="icon ion-clock"></i>
+              Heure
           <span class="item-note">
-            8h-10h
+            {{horaire1 | date:'HH:mm'}} <!-- | date:'h:mma' -->
           </span>
+            </div>
+
+            <div id="instruc1" class="item item-icon-left">
+              <i id="iconC" class="icon ion-calendar"></i>
+              Jour
+            <span class="item-note">
+              {{date1}}
+            </span>
+            </div>
+
+            <div id="instruc1" class="item item-icon-left">
+              <i id="iconC" class="icon ion-clock"></i>
+              Heure
+          <span class="item-note">
+            {{horaire2 | date:'HH:mm'}} <!-- | date:'h:mma' -->
+          </span>
+            </div>
+
+            <div id="instruc1" class="item item-icon-left">
+              <i id="iconC" class="icon ion-calendar"></i>
+              Jour
+            <span class="item-note">
+              {{date2}}
+            </span>
+            </div>
+
+            <div id="instruc1" class="item item-icon-left">
+              <i id="iconC" class="icon ion-clock"></i>
+              Heure
+          <span class="item-note">
+            {{horaire3 | date:'HH:mm'}} <!-- | date:'h:mma' -->
+          </span>
+            </div>
+
+            <div id="instruc1" class="item item-icon-left">
+              <i id="iconC" class="icon ion-calendar"></i>
+              Jour
+            <span class="item-note">
+              {{date3}}
+            </span>
             </div>
           </div>
 
-          <div ng-if="crenaux8h3 == '8h-9h'">
+          <!-- nombre de jour = 4-->
+          <div ng-if="joursCoursNb == 4">
             <div id="instruc1" class="item item-icon-left">
-              <i id="iconC" class="icon ion-clock"></i></i>
-              Jeudi
+              <i id="iconC" class="icon ion-clock"></i>
+              Heure
           <span class="item-note">
-            {{crenaux8h3}}
+            {{horaire1 | date:'HH:mm'}} <!-- | date:'h:mma' -->
           </span>
+            </div>
+
+            <div id="instruc1" class="item item-icon-left">
+              <i id="iconC" class="icon ion-calendar"></i>
+              Jour
+            <span class="item-note">
+              {{date1}}
+            </span>
+            </div>
+
+            <div id="instruc1" class="item item-icon-left">
+              <i id="iconC" class="icon ion-clock"></i>
+              Heure
+          <span class="item-note">
+            {{horaire2 | date:'HH:mm'}} <!-- | date:'h:mma' -->
+          </span>
+            </div>
+
+            <div id="instruc1" class="item item-icon-left">
+              <i id="iconC" class="icon ion-calendar"></i>
+              Jour
+            <span class="item-note">
+              {{date2}}
+            </span>
+            </div>
+
+            <div id="instruc1" class="item item-icon-left">
+              <i id="iconC" class="icon ion-clock"></i>
+              Heure
+          <span class="item-note">
+            {{horaire3 | date:'HH:mm'}} <!-- | date:'h:mma' -->
+          </span>
+            </div>
+
+            <div id="instruc1" class="item item-icon-left">
+              <i id="iconC" class="icon ion-calendar"></i>
+              Jour
+            <span class="item-note">
+              {{date3}}
+            </span>
+            </div>
+
+            <div id="instruc1" class="item item-icon-left">
+              <i id="iconC" class="icon ion-clock"></i>
+              Heure
+          <span class="item-note">
+            {{horaire4 | date:'HH:mm'}} <!-- | date:'h:mma' -->
+          </span>
+            </div>
+
+            <div id="instruc1" class="item item-icon-left">
+              <i id="iconC" class="icon ion-calendar"></i>
+              Jour
+            <span class="item-note">
+              {{date4}}
+            </span>
             </div>
           </div>
 
-          <div ng-if="crenaux8h4">
+          <!-- nombre de jour = 5-->
+          <div ng-if="joursCoursNb == 5">
             <div id="instruc1" class="item item-icon-left">
-              <i id="iconC" class="icon ion-clock"></i></i>
-              Vendredi
+              <i id="iconC" class="icon ion-clock"></i>
+              Heure
           <span class="item-note">
-            8h-10h
+            {{horaire1 | date:'HH:mm'}} <!-- | date:'h:mma' -->
           </span>
+            </div>
+
+            <div id="instruc1" class="item item-icon-left">
+              <i id="iconC" class="icon ion-calendar"></i>
+              Jour
+            <span class="item-note">
+              {{date1}}
+            </span>
+            </div>
+
+            <div id="instruc1" class="item item-icon-left">
+              <i id="iconC" class="icon ion-clock"></i>
+              Heure
+          <span class="item-note">
+            {{horaire2 | date:'HH:mm'}} <!-- | date:'h:mma' -->
+          </span>
+            </div>
+
+            <div id="instruc1" class="item item-icon-left">
+              <i id="iconC" class="icon ion-calendar"></i>
+              Jour
+            <span class="item-note">
+              {{date2}}
+            </span>
+            </div>
+
+            <div id="instruc1" class="item item-icon-left">
+              <i id="iconC" class="icon ion-clock"></i>
+              Heure
+          <span class="item-note">
+            {{horaire3 | date:'HH:mm'}} <!-- | date:'h:mma' -->
+          </span>
+            </div>
+
+            <div id="instruc1" class="item item-icon-left">
+              <i id="iconC" class="icon ion-calendar"></i>
+              Jour
+            <span class="item-note">
+              {{date3}}
+            </span>
+            </div>
+
+            <div id="instruc1" class="item item-icon-left">
+              <i id="iconC" class="icon ion-clock"></i>
+              Heure
+          <span class="item-note">
+            {{horaire4 | date:'HH:mm'}} <!-- | date:'h:mma' -->
+          </span>
+            </div>
+
+            <div id="instruc1" class="item item-icon-left">
+              <i id="iconC" class="icon ion-calendar"></i>
+              Jour
+            <span class="item-note">
+              {{date4}}
+            </span>
+            </div>
+
+            <div id="instruc1" class="item item-icon-left">
+              <i id="iconC" class="icon ion-clock"></i>
+              Heure
+          <span class="item-note">
+            {{horaire5 | date:'HH:mm'}} <!-- | date:'h:mma' -->
+          </span>
+            </div>
+
+            <div id="instruc1" class="item item-icon-left">
+              <i id="iconC" class="icon ion-calendar"></i>
+              Jour
+            <span class="item-note">
+              {{date5}}
+            </span>
             </div>
           </div>
 
-          <div ng-if="crenaux8h5">
+          <!-- nombre de jour = 6-->
+          <div ng-if="joursCoursNb == 6">
             <div id="instruc1" class="item item-icon-left">
-              <i id="iconC" class="icon ion-clock"></i></i>
-              Samedi
+              <i id="iconC" class="icon ion-clock"></i>
+              Heure
           <span class="item-note">
-            8h-10h
+            {{horaire1 | date:'HH:mm'}} <!-- | date:'h:mma' -->
           </span>
+            </div>
+
+            <div id="instruc1" class="item item-icon-left">
+              <i id="iconC" class="icon ion-calendar"></i>
+              Jour
+            <span class="item-note">
+              {{date1}}
+            </span>
+            </div>
+
+            <div id="instruc1" class="item item-icon-left">
+              <i id="iconC" class="icon ion-clock"></i>
+              Heure
+          <span class="item-note">
+            {{horaire2 | date:'HH:mm'}} <!-- | date:'h:mma' -->
+          </span>
+            </div>
+
+            <div id="instruc1" class="item item-icon-left">
+              <i id="iconC" class="icon ion-calendar"></i>
+              Jour
+            <span class="item-note">
+              {{date2}}
+            </span>
+            </div>
+
+            <div id="instruc1" class="item item-icon-left">
+              <i id="iconC" class="icon ion-clock"></i>
+              Heure
+          <span class="item-note">
+            {{horaire3 | date:'HH:mm'}} <!-- | date:'h:mma' -->
+          </span>
+            </div>
+
+            <div id="instruc1" class="item item-icon-left">
+              <i id="iconC" class="icon ion-calendar"></i>
+              Jour
+            <span class="item-note">
+              {{date3}}
+            </span>
+            </div>
+
+            <div id="instruc1" class="item item-icon-left">
+              <i id="iconC" class="icon ion-clock"></i>
+              Heure
+          <span class="item-note">
+            {{horaire4 | date:'HH:mm'}} <!-- | date:'h:mma' -->
+          </span>
+            </div>
+
+            <div id="instruc1" class="item item-icon-left">
+              <i id="iconC" class="icon ion-calendar"></i>
+              Jour
+            <span class="item-note">
+              {{date4}}
+            </span>
+            </div>
+
+            <div id="instruc1" class="item item-icon-left">
+              <i id="iconC" class="icon ion-clock"></i>
+              Heure
+          <span class="item-note">
+            {{horaire5 | date:'HH:mm'}} <!-- | date:'h:mma' -->
+          </span>
+            </div>
+
+            <div id="instruc1" class="item item-icon-left">
+              <i id="iconC" class="icon ion-calendar"></i>
+              Jour
+            <span class="item-note">
+              {{date5}}
+            </span>
+            </div>
+
+            <div id="instruc1" class="item item-icon-left">
+              <i id="iconC" class="icon ion-clock"></i>
+              Heure
+          <span class="item-note">
+            {{horaire6 | date:'HH:mm'}} <!-- | date:'h:mma' -->
+          </span>
+            </div>
+
+            <div id="instruc1" class="item item-icon-left">
+              <i id="iconC" class="icon ion-calendar"></i>
+              Jour
+            <span class="item-note">
+              {{date6}}
+            </span>
             </div>
           </div>
 
-          <div ng-if="crenaux8h6">
+          <!-- prix cas cours paticulier mission francaise/belge primaire -->
+          <div ng-if="choixS == 'Primaire' && choixMat !== 'Test Mission CE2' && choixMat !== 'Test Mission CE1' && choixMat !== 'Test Mission Maths CM1' && choixMat !== 'Test Mission Français CM1'
+            && choixMat !== 'Test Mission Maths CM2' && choixMat !== 'Test Mission Français CM2'&& (choixMiss == 'Mission Française' || choixMiss == 'Mission Belge') && (choixMat !==  'Aides aux devoirs')
+            && coursParticulier == 'Cours Particulier'">
+            <div class="item item-divider">
+              Total :
+            </div>
             <div id="instruc1" class="item item-icon-left">
-              <i id="iconC" class="icon ion-clock"></i></i>
-              Dimanche
-          <span class="item-note">
-            8h-10h
-          </span>
+              <i id="iconC" class="icon ion-calculator"></i>
+              Prix:
+            <span class="item-note">
+              <option ng-repeat="alpha in prixCours.prix.primaireIndiv">{{alpha.prix*joursCoursNb}}</option>
+            </span>
             </div>
           </div>
 
-          <div ng-if="crenaux9h1">
+          <!-- prix cas cours en groupe mission francaise/belge primaire                 à tester !!  -->
+          <div ng-if="choixS == 'Primaire' && choixMat !== 'Test Mission CE2' && choixMat !== 'Test Mission CE1' && choixMat !== 'Test Mission Maths CM1' && choixMat !== 'Test Mission Français CM1'
+            && choixMat !== 'Test Mission Maths CM2' && choixMat !== 'Test Mission Français CM2'&& (choixMiss == 'Mission Française' || choixMiss == 'Mission Belge') && (choixMat !==  'Aides aux devoirs')
+            && coursParticulier == 'Cours en Groupe'">
+            <div class="item item-divider">
+              Total :
+            </div>
             <div id="instruc1" class="item item-icon-left">
-              <i id="iconC" class="icon ion-clock"></i></i>
-              Mercredi
-          <span class="item-note">
-            8h-10h
-          </span>
+            <i id="iconC" class="icon ion-calculator"></i>
+            Prix:
+            <span class="item-note">
+              <option ng-repeat="alpha in prixCours.prix.primaireGroupe">{{alpha.prix*joursCoursNb}}</option>
+            </span>
+          </div>
+        </div>
+
+          <!-- prix cas cours en particulier mission francaise/belge collège -->
+          <div ng-if="choixS == 'Collège' && (choixMiss == 'Mission Française' || choixMiss == 'Mission Belge') && (choixMat !==  'Aides aux devoirs')  && coursParticulier == 'Cours Particulier'">
+            <div class="item item-divider">
+              Total :
+            </div>
+            <div id="instruc1" class="item item-icon-left">
+              <i id="iconC" class="icon ion-calculator"></i>
+              Prix:
+            <span class="item-note">
+              <option ng-repeat="alpha in prixCours.prix.collegeIndiv">{{alpha.prix*joursCoursNb}}</option>
+            </span>
             </div>
           </div>
 
-          <div ng-if="crenaux9h2 == '9h-10h'">
+          <!-- prix cas cours en groupe mission francaise/belge collège                 à tester !!  -->
+          <div ng-if="choixS == 'Collège' && (choixMiss == 'Mission Française' || choixMiss == 'Mission Belge') && (choixMat !==  'Aides aux devoirs')  && coursParticulier == 'Cours en Groupe'">
+            <div class="item item-divider">
+              Total :
+            </div>
             <div id="instruc1" class="item item-icon-left">
-              <i id="iconC" class="icon ion-clock"></i></i>
-              Jeudi
-          <span class="item-note">
-            {{crenaux9h2}}
-          </span>
+              <i id="iconC" class="icon ion-calculator"></i>
+              Prix:
+            <span class="item-note">
+              <option ng-repeat="alpha in prixCours.prix.collegeGroupe">{{alpha.prix*joursCoursNb}}</option>
+            </span>
             </div>
           </div>
 
-          <div ng-if="crenaux9h3 == '9h-10h'">
+          <!-- prix cas cours en particulier mission francaise/belge lycee -->
+          <div ng-if="choixS == 'Lycée' && (choixMiss == 'Mission Française' || choixMiss == 'Mission Belge') && (choixMat !==  'Aides aux devoirs')  && coursParticulier == 'Cours Particulier'">
+            <div class="item item-divider">
+              Total :
+            </div>
             <div id="instruc1" class="item item-icon-left">
-              <i id="iconC" class="icon ion-clock"></i></i>
-              Jeudi
-          <span class="item-note">
-            {{crenaux9h3}}
-          </span>
+              <i id="iconC" class="icon ion-calculator"></i>
+              Prix:
+            <span class="item-note">
+              <option ng-repeat="alpha in prixCours.prix.lyceeIndiv">{{alpha.prix*joursCoursNb}}</option>
+            </span>
             </div>
           </div>
 
-          <div ng-if="crenaux10h1 == '10h-11h'">
+          <!-- prix cas cours en groupe mission francaise/belge lycee                 à tester !!  -->
+          <div ng-if="choixS == 'Lycée' && (choixMiss == 'Mission Française' || choixMiss == 'Mission Belge') && (choixMat !==  'Aides aux devoirs')  && coursParticulier == 'Cours en Groupe'">
+            <div class="item item-divider">
+              Total :
+            </div>
             <div id="instruc1" class="item item-icon-left">
-              <i id="iconC" class="icon ion-clock"></i></i>
-              Mardi
-          <span class="item-note">
-            {{crenaux10h1}}
-          </span>
+              <i id="iconC" class="icon ion-calculator"></i>
+              Prix:
+            <span class="item-note">
+              <option ng-repeat="alpha in prixCours.prix.lyceeGroupe">{{alpha.prix*joursCoursNb}}</option>
+            </span>
             </div>
           </div>
 
-          <div ng-if="crenaux10h2 == '10h-11h'">
+          <!-- prix cas aides aux devoirs 1 fois par semaine -->
+          <div ng-if="coursParticulier == 'Cours Particulier' && (choixMat == 'Ayuda a los deberes' || choixMat == 'Aides aux devoirs') && joursCoursNb == '1'">
+            <div class="item item-divider">
+              Total :
+            </div>
             <div id="instruc1" class="item item-icon-left">
-              <i id="iconC" class="icon ion-clock"></i></i>
-              Mercredi
-          <span class="item-note">
-            {{crenaux10h2}}
-          </span>
+              <i id="iconC" class="icon ion-calculator"></i>
+              Prix:
+            <span class="item-note">
+              <option ng-repeat="alpha in prixCours.prix.aideDevoir1">{{alpha.prix}}</option>
+            </span>
             </div>
           </div>
 
-          <div ng-if="crenaux10h3 == '10h-11h'">
+          <!-- prix cas aides aux devoirs 2 fois par semaine -->
+          <div ng-if="coursParticulier == 'Cours Particulier' && (choixMat == 'Ayuda a los deberes' || choixMat == 'Aides aux devoirs') && joursCoursNb == '2'">
+            <div class="item item-divider">
+              Total :
+            </div>
             <div id="instruc1" class="item item-icon-left">
-              <i id="iconC" class="icon ion-clock"></i></i>
-              Jeudi
-          <span class="item-note">
-            {{crenaux10h3}}
-          </span>
+              <i id="iconC" class="icon ion-calculator"></i>
+              Prix:
+            <span class="item-note">
+              <option ng-repeat="alpha in prixCours.prix.aideDevoir2">{{alpha.prix}}</option>
+            </span>
             </div>
           </div>
 
-          <div ng-if="crenaux11h1 == '11h-12h'">
+          <!-- prix cas aides aux devoirs 3 fois par semaine -->
+          <div ng-if="coursParticulier == 'Cours Particulier' && (choixMat == 'Ayuda a los deberes' || choixMat == 'Aides aux devoirs') && joursCoursNb == '3'">
+            <div class="item item-divider">
+              Total :
+            </div>
             <div id="instruc1" class="item item-icon-left">
-              <i id="iconC" class="icon ion-clock"></i></i>
-              Mardi
-          <span class="item-note">
-            {{crenaux11h1}}
-          </span>
+              <i id="iconC" class="icon ion-calculator"></i>
+              Prix:
+            <span class="item-note">
+              <option ng-repeat="alpha in prixCours.prix.aideDevoir3">{{alpha.prix}}</option>
+            </span>
             </div>
           </div>
 
-          <div ng-if="crenaux11h2 == '11h-12h'">
+          <!-- prix cas cours anglais -->
+          <div ng-if="coursParticulier == 'Cours Particulier' && (choixMat == 'Débutant' || choixMat == 'A1'|| choixMat == 'A2' || choixMat == 'B1' || choixMat == 'B2' || choixMat == 'C1' || choixMat == 'C2')">
+            <div class="item item-divider">
+              Total :
+            </div>
             <div id="instruc1" class="item item-icon-left">
-              <i id="iconC" class="icon ion-clock"></i></i>
-              Mercredi
-          <span class="item-note">
-            {{crenaux11h2}}
-          </span>
+              <i id="iconC" class="icon ion-calculator"></i>
+              Prix:
+            <span class="item-note">
+              <option ng-repeat="alpha in prixCours.prix.anglaisCommunicationInd">{{alpha.prix*joursCoursNb}}</option>
+            </span>
             </div>
           </div>
 
-          <div ng-if="crenaux11h3 == '11h-12h'">
+          <!-- prix cas cours anglais                                                  à tester !! -->
+          <div ng-if="coursParticulier == 'Cours en Groupe' && (choixMat == 'Débutant' || choixMat == 'A1'|| choixMat == 'A2' || choixMat == 'B1' || choixMat == 'B2' || choixMat == 'C1' || choixMat == 'C2')">
+            <div class="item item-divider">
+              Total :
+            </div>
             <div id="instruc1" class="item item-icon-left">
-              <i id="iconC" class="icon ion-clock"></i></i>
-              Jeudi
-          <span class="item-note">
-            {{crenaux11h3}}
-          </span>
+              <i id="iconC" class="icon ion-calculator"></i>
+              Prix:
+            <span class="item-note">
+              <option ng-repeat="alpha in prixCours.prix.anglaisGeneraleGpe">{{alpha.prix*joursCoursNb}}</option>
+            </span>
             </div>
           </div>
 
-          <div ng-if="crenaux12h1 == '12h-11h'">
+          <!-- prix cas cours en particulier anglais Business -->
+          <div ng-if="coursParticulier == 'Cours Particulier' && choixMat == 'Business English'">
+            <div class="item item-divider">
+              Total :
+            </div>
             <div id="instruc1" class="item item-icon-left">
-              <i id="iconC" class="icon ion-clock"></i></i>
-              Jeudi
-          <span class="item-note">
-            {{crenaux12h1}}
-          </span>
+              <i id="iconC" class="icon ion-calculator"></i>
+              Prix:
+            <span class="item-note">
+              <option ng-repeat="alpha in prixCours.prix.anglaisBusinessInd">{{alpha.prix*joursCoursNb}}</option>
+            </span>
             </div>
           </div>
 
-          <div ng-if="crenaux12h2 == '11h-12h'">
+          <!-- prix cas cours en groupe anglais Business                               à tester !! -->
+          <div ng-if="coursParticulier == 'Cours en Groupe' && choixMat == 'Business English'">
+            <div class="item item-divider">
+              Total :
+            </div>
             <div id="instruc1" class="item item-icon-left">
-              <i id="iconC" class="icon ion-clock"></i></i>
-              Vendredi
-          <span class="item-note">
-            {{crenaux12h2}}
-          </span>
+              <i id="iconC" class="icon ion-calculator"></i>
+              Prix:
+            <span class="item-note">
+              <option ng-repeat="alpha in prixCours.prix.anglaisBusinessGpe">{{alpha.prix*joursCoursNb}}</option>
+            </span>
             </div>
           </div>
 
-          <div ng-if="crenaux12h3 == '11h-12h'">
+          <!-- prix cas cours en particulier anglais Test -->
+          <div ng-if="coursParticulier == 'Cours Particulier' && (choixMat == 'TOEFL' || choixMat == 'SAT' || choixMat == 'IELTS')">
+            <div class="item item-divider">
+              Total :
+            </div>
             <div id="instruc1" class="item item-icon-left">
-              <i id="iconC" class="icon ion-clock"></i></i>
-              Samedi
-          <span class="item-note">
-            {{crenaux12h3}}
-          </span>
+              <i id="iconC" class="icon ion-calculator"></i>
+              Prix:
+            <span class="item-note">
+              <option ng-repeat="alpha in prixCours.prix.prepaTestAnglaisInd">{{alpha.prix*joursCoursNb}}</option>
+            </span>
             </div>
           </div>
+
+          <!-- prix cas cours en groupe anglais Test                                   à tester !! -->
+          <div ng-if="coursParticulier == 'Cours en Groupe' && (choixMat == 'TOEFL' || choixMat == 'SAT' || choixMat == 'IELTS')">
+            <div class="item item-divider">
+              Total :
+            </div>
+            <div id="instruc1" class="item item-icon-left">
+              <i id="iconC" class="icon ion-calculator"></i>
+              Prix:
+            <span class="item-note">
+              <option ng-repeat="alpha in prixCours.prix.prepaTestAnglaisGpe">{{alpha.prix*joursCoursNb}}</option>
+            </span>
+            </div>
+          </div>
+
+          <!-- prix cas cours en particulier arabe communication -->
+          <div ng-if="coursParticulier == 'Cours Particulier' && choixMat == 'Arabe Communication'">
+            <div class="item item-divider">
+              Total :
+            </div>
+            <div id="instruc1" class="item item-icon-left">
+              <i id="iconC" class="icon ion-calculator"></i>
+              Prix:
+            <span class="item-note">
+              <option ng-repeat="alpha in prixCours.prix.arabeCommunicationInd">{{alpha.prix*joursCoursNb}}</option>
+            </span>
+            </div>
+          </div>
+
+          <!-- prix cas cours en groupe arabe communication                            à tester !! -->
+          <div ng-if="coursParticulier == 'Cours en Groupe' && choixMat == 'Arabe Communication'">
+            <div class="item item-divider">
+              Total :
+            </div>
+            <div id="instruc1" class="item item-icon-left">
+              <i id="iconC" class="icon ion-calculator"></i>
+              Prix:
+            <span class="item-note">
+              <option ng-repeat="alpha in prixCours.prix.arabeCommunicationGpe">{{alpha.prix*joursCoursNb}}</option>
+            </span>
+            </div>
+          </div>
+
+          <!-- prix cas cours en particulier arabe Business -->
+          <div ng-if="coursParticulier == 'Cours Particulier' && choixMat == 'Arabe Business'">
+            <div class="item item-divider">
+              Total :
+            </div>
+            <div id="instruc1" class="item item-icon-left">
+              <i id="iconC" class="icon ion-calculator"></i>
+              Prix:
+            <span class="item-note">
+              <option ng-repeat="alpha in prixCours.prix.arabeBusinessInd">{{alpha.prix*joursCoursNb}}</option>
+            </span>
+            </div>
+          </div>
+
+          <!-- prix cas cours en groupe arabe Business                                 à tester !!  -->
+          <div ng-if="coursParticulier == 'Cours en Groupe' && choixMat == 'Arabe Business'">
+            <div class="item item-divider">
+              Total :
+            </div>
+            <div id="instruc1" class="item item-icon-left">
+              <i id="iconC" class="icon ion-calculator"></i>
+              Prix:
+            <span class="item-note">
+              <option ng-repeat="alpha in prixCours.prix.arabeBusinessGpe">{{alpha.prix*joursCoursNb}}</option>
+            </span>
+            </div>
+          </div>
+
+          <!-- prix cas cours en particulier fle-->
+          <div ng-if="coursParticulier == 'Cours Particulier' && choixMat == 'FLE'">
+            <div class="item item-divider">
+              Total :
+            </div>
+            <div id="instruc1" class="item item-icon-left">
+              <i id="iconC" class="icon ion-calculator"></i>
+              Prix:
+            <span class="item-note">
+              <option ng-repeat="alpha in prixCours.prix.francaisGeneralInd">{{alpha.prix*joursCoursNb}}</option>
+            </span>
+            </div>
+          </div>
+
+          <!-- prix cas cours en groupe fle                                            à tester !! -->
+          <div ng-if="coursParticulier == 'Cours en Groupe' && choixMat == 'FLE'">
+            <div class="item item-divider">
+              Total :
+            </div>
+            <div id="instruc1" class="item item-icon-left">
+              <i id="iconC" class="icon ion-calculator"></i>
+              Prix:
+            <span class="item-note">
+              <option ng-repeat="alpha in prixCours.prix.francaisGeneralGpe">{{alpha.prix*joursCoursNb}}</option>
+            </span>
+            </div>
+          </div>
+
+          <!-- prix cas cours en particulier fle business-->
+          <div ng-if="coursParticulier == 'Cours Particulier' && choixMat == 'FLE Business'">
+            <div class="item item-divider">
+              Total :
+            </div>
+            <div id="instruc1" class="item item-icon-left">
+              <i id="iconC" class="icon ion-calculator"></i>
+              Prix:
+            <span class="item-note">
+              <option ng-repeat="alpha in prixCours.prix.francaisBusinessInd">{{alpha.prix*joursCoursNb}}</option>
+            </span>
+            </div>
+          </div>
+
+          <!-- prix cas cours en groupe fle business                                    à tester !! -->
+          <div ng-if="coursParticulier == 'Cours en Groupe' && choixMat == 'FLE Business'">
+            <div class="item item-divider">
+              Total :
+            </div>
+            <div id="instruc1" class="item item-icon-left">
+              <i id="iconC" class="icon ion-calculator"></i>
+              Prix:
+            <span class="item-note">
+              <option ng-repeat="alpha in prixCours.prix.francaisBusinessGpe">{{alpha.prix*joursCoursNb}}</option>
+            </span>
+            </div>
+          </div>
+
+          <!-- prix cas cours en particulier francais test-->
+          <div ng-if="coursParticulier == 'Cours Particulier' && choixMat == 'Test Français'">
+            <div class="item item-divider">
+              Total :
+            </div>
+            <div id="instruc1" class="item item-icon-left">
+              <i id="iconC" class="icon ion-calculator"></i>
+              Prix:
+            <span class="item-note">
+              <option ng-repeat="alpha in prixCours.prix.testFrancaisInd">{{alpha.prix*joursCoursNb}}</option>
+            </span>
+            </div>
+          </div>
+
+          <!-- prix cas cours en groupe fle business                                    à tester !! -->
+          <div ng-if="coursParticulier == 'Cours en Groupe' && choixMat == 'Test Français'">
+            <div class="item item-divider">
+              Total :
+            </div>
+            <div id="instruc1" class="item item-icon-left">
+              <i id="iconC" class="icon ion-calculator"></i>
+              Prix:
+            <span class="item-note">
+              <option ng-repeat="alpha in prixCours.prix.testFrancaisGpe">{{alpha.prix*joursCoursNb}}</option>
+            </span>
+            </div>
+          </div>
+
+          <!-- prix cas cours en particulier espagnol-->
+          <div ng-if="coursParticulier == 'Cours Particulier' && choixMat == 'ELE'">
+            <div class="item item-divider">
+              Total :
+            </div>
+            <div id="instruc1" class="item item-icon-left">
+              <i id="iconC" class="icon ion-calculator"></i>
+              Prix:
+            <span class="item-note">
+              <option ng-repeat="alpha in prixCours.prix.espagnolCommunicationInd">{{alpha.prix*joursCoursNb}}</option>
+            </span>
+            </div>
+          </div>
+
+          <!-- prix cas cours en groupe ELE                                             à tester !! -->
+          <div ng-if="coursParticulier == 'Cours en Groupe' && choixMat == 'ELE'">
+            <div class="item item-divider">
+              Total :
+            </div>
+            <div id="instruc1" class="item item-icon-left">
+              <i id="iconC" class="icon ion-calculator"></i>
+              Prix:
+            <span class="item-note">
+              <option ng-repeat="alpha in prixCours.prix.espagnolCommunicationGpe">{{alpha.prix*joursCoursNb}}</option>
+            </span>
+            </div>
+          </div>
+
+          <!-- prix cas cours en particulier espagnol Business-->
+          <div ng-if="coursParticulier == 'Cours Particulier' && choixMat == 'ELE Business'">
+            <div class="item item-divider">
+              Total :
+            </div>
+            <div id="instruc1" class="item item-icon-left">
+              <i id="iconC" class="icon ion-calculator"></i>
+              Prix:
+            <span class="item-note">
+              <option ng-repeat="alpha in prixCours.prix.espagnolBusinessInd">{{alpha.prix*joursCoursNb}}</option>
+            </span>
+            </div>
+          </div>
+
+          <!-- prix cas cours en groupe ELE business                                   à tester !! -->
+          <div ng-if="coursParticulier == 'Cours en Groupe' && choixMat == 'ELE Business'">
+            <div class="item item-divider">
+              Total :
+            </div>
+            <div id="instruc1" class="item item-icon-left">
+              <i id="iconC" class="icon ion-calculator"></i>
+              Prix:
+            <span class="item-note">
+              <option ng-repeat="alpha in prixCours.prix.espagnolBusinessGpe">{{alpha.prix*joursCoursNb}}</option>
+            </span>
+            </div>
+          </div>
+
+          <!-- prix cas cours en particulier espagnol test-->
+          <div ng-if="coursParticulier == 'Cours Particulier' && choixMat == 'ELE Test'">
+            <div class="item item-divider">
+              Total :
+            </div>
+            <div id="instruc1" class="item item-icon-left">
+              <i id="iconC" class="icon ion-calculator"></i>
+              Prix:
+            <span class="item-note">
+              <option ng-repeat="alpha in prixCours.prix.testEspagnolInd">{{alpha.prix*joursCoursNb}}</option>
+            </span>
+            </div>
+          </div>
+
+          <!-- prix cas cours en groupe ELE test                                      à tester !! -->
+          <div ng-if="coursParticulier == 'Cours en Groupe' && choixMat == 'ELE Test'">
+            <div class="item item-divider">
+              Total :
+            </div>
+            <div id="instruc1" class="item item-icon-left">
+              <i id="iconC" class="icon ion-calculator"></i>
+              Prix:
+            <span class="item-note">
+              <option ng-repeat="alpha in prixCours.prix.testEspagnolGpe">{{alpha.prix*joursCoursNb}}</option>
+            </span>
+            </div>
+          </div>
+
+          <!-- prix cas cours en particulier informatisue essai-->
+          <div ng-if="coursParticulier == 'Cours Particulier' && choixMat == 'Essai'">
+            <div class="item item-divider">
+              Total :
+            </div>
+            <div id="instruc1" class="item item-icon-left">
+              <i id="iconC" class="icon ion-calculator"></i>
+              Prix:
+            <span class="item-note">
+              <option ng-repeat="alpha in prixCours.prix.informatiqueEssai">{{alpha.prix*joursCoursNb}}</option>
+            </span>
+            </div>
+          </div>
+
+          <!-- prix cas cours en particulier informatisue trimestre-->
+          <div ng-if="coursParticulier == 'Cours Particulier' && choixMat == 'Trimestre'">
+            <div class="item item-divider">
+              Total :
+            </div>
+            <div id="instruc1" class="item item-icon-left">
+              <i id="iconC" class="icon ion-calculator"></i>
+              Prix:
+            <span class="item-note">
+              <option ng-repeat="alpha in prixCours.prix.informatiqueTrimestre">{{alpha.prix*joursCoursNb}}</option>
+            </span>
+            </div>
+          </div>
+
+          <!-- prix cas cours en particulier informatisue annuel-->
+          <div ng-if="coursParticulier == 'Cours Particulier' && choixMat == 'Annuel'">
+            <div class="item item-divider">
+              Total :
+            </div>
+            <div id="instruc1" class="item item-icon-left">
+              <i id="iconC" class="icon ion-calculator"></i>
+              Prix:
+            <span class="item-note">
+              <option ng-repeat="alpha in prixCours.prix.informatiqueAnnuel">{{alpha.prix*joursCoursNb}}</option>
+            </span>
+            </div>
+          </div>
+
+          <!-- prix cas cours en groupe informatisue essai                            à tester !! -->
+          <div ng-if="coursParticulier == 'Cours en Groupe' && choixMat == 'Essai'">
+            <div class="item item-divider">
+              Total :
+            </div>
+            <div id="instruc1" class="item item-icon-left">
+              <i id="iconC" class="icon ion-calculator"></i>
+              Prix:
+            <span class="item-note">
+              <option ng-repeat="alpha in prixCours.prix.informatiqueEssai">{{alpha.prix*joursCoursNb}}</option>
+            </span>
+            </div>
+          </div>
+
+          <!-- prix cas cours en groupe informatisue trimestre                        à tester !! -->
+          <div ng-if="coursParticulier == 'Cours en Groupe' && choixMat == 'Trimestre'">
+            <div class="item item-divider">
+              Total :
+            </div>
+            <div id="instruc1" class="item item-icon-left">
+              <i id="iconC" class="icon ion-calculator"></i>
+              Prix:
+            <span class="item-note">
+              <option ng-repeat="alpha in prixCours.prix.informatiqueTrimestre">{{alpha.prix*joursCoursNb}}</option>
+            </span>
+            </div>
+          </div>
+
+          <!-- prix cas cours en groupe informatisue annuel                           à tester !! -->
+          <div ng-if="coursParticulier == 'Cours en Groupe' && choixMat == 'Annuel'">
+            <div class="item item-divider">
+              Total :
+            </div>
+            <div id="instruc1" class="item item-icon-left">
+              <i id="iconC" class="icon ion-calculator"></i>
+              Prix:
+            <span class="item-note">
+              <option ng-repeat="alpha in prixCours.prix.informatiqueAnnuel">{{alpha.prix*joursCoursNb}}</option>
+            </span>
+            </div>
+          </div>
+
+          <!-- prix cas cours en particulier test mission francaise primaire-->
+          <div ng-if="coursParticulier == 'Cours Particulier' && (choixMat == 'Test Mission CE2' || choixMat == 'Test Mission CE1' || choixMat == 'Test Mission Maths CM1' || choixMat =='Test Mission Français CM1'
+          || choixMat == 'Test Mission Maths CM2' || choixMat == 'Test Mission Français CM2')">
+            <div class="item item-divider">
+              Total :
+            </div>
+            <div id="instruc1" class="item item-icon-left">
+              <i id="iconC" class="icon ion-calculator"></i>
+              Prix:
+            <span class="item-note">
+              <option ng-repeat="alpha in prixCours.prix.informatiqueEssai">{{alpha.prix*joursCoursNb}}</option>
+            </span>
+            </div>
+          </div>
+
+          <!-- prix cas cours en groupe test mission francaise primaire               à tester !! -->
+          <div ng-if="coursParticulier == 'Cours en Groupe' || choixMat == 'Test Mission CE2' || choixMat == 'Test Mission CE1' && choixMat == 'Test Mission Maths CM1' || choixMat == 'Test Mission Français CM1'
+          || choixMat == 'Test Mission Maths CM2' || choixMat == 'Test Mission Français CM2'">
+            <div class="item item-divider">
+              Total :
+            </div>
+            <div id="instruc1" class="item item-icon-left">
+              <i id="iconC" class="icon ion-calculator"></i>
+              Prix:
+            <span class="item-note">
+              <option ng-repeat="alpha in prixCours.prix.informatiqueEssai">{{alpha.prix*joursCoursNb}}</option>
+            </span>
+            </div>
+          </div>
+
+
+
+
 
 
 
@@ -286,9 +990,9 @@
           <br>
           <center>
             <button ng-disabled="myForm.$invalid" class="button button-small buttonEmail button-dark "
-                    ng-click="sendRecaptitulatif(mail, nomPrenomP, telP, emailP, choixParent, autreRaison, nomPrenomEnfant, telEnfant, emailEnfant, dateNaissanceEnfant, ecoleEnfant, coursParti, coursEnGpe, choixMission, choixSection,
-                                             choixNiveau, choixMatiere, nbJoursCours, heureDebutCours, heureDebutCours1, heureDebutCours2, heureDebutCours3, heureDebutCours4, heureDebutCours5, heureDebutCours6, dateDebutCours, jCours1, jCours2, jCours3, jCours4,
-                                             jCours5, jCours6)">Envoyer
+                    ng-click="sendRecaptitulatif(mail, nomPrenomParent, telParent, emailParent, choixP, raisonAutre, nomPrenomE, telE, emailE, dateNaissanceE, ecoleE, coursParticulier, coursEnGroupe, choixMiss,
+                                             choixS, choixN, choixMat, choixF, joursCoursNb, dateDebCours, horaire1, horaire2, horaire2, horaire3, horaire4, horaire5, horaire6, date1, date2,
+                                             date2, date3, date4, date5, date6)">Envoyer
             </button>
           </center>
         </form>

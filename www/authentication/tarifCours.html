@@ -1,0 +1,432 @@
+<!-- En tête de l'application -->
+
+<ion-view  title='<img class="title-image" src="parent/icon.png">  Cours</img>' cache-view="false">
+  <ion-nav-buttons side="right">
+    <!--<a class="button button-icon ion-ios-more rotate-90 fs-s" ng-click="popover.show($event)"></a>-->
+  </ion-nav-buttons>
+
+  <ion-tabs class="tabs-icon-top tabs-color-active-positive" ng-class="{'tabs-item-hide': $root.hideTabs}">
+
+
+    <ion-tab  hidden="true" >
+
+    </ion-tab>
+
+
+    <ion-tab title="quiz" icon-off="ion-ios-timer-outline" icon-on="ion-ios-timer" badge="badgequiz"
+             badge-style="badge-assertive" ng-click="onTabSelected()">
+
+    </ion-tab>
+
+
+    <ion-tab title="Suivi" icon-off="ion-ios-pulse" icon-on="ion-ios-pulse-strong"  badge="badgeFollow"
+             badge-style="badge-assertive" ng-click="onTabSelected()">
+
+    </ion-tab>
+
+    <ion-tab title="Solde" href="#/parent/solde" icon-off="icon ion-ios-calculator-outline" icon-on="icon ion-ios-calculator"
+             badge="badgeSolde" badge-style="badge-assertive" ng-controller="ChoixsoldeCtrl" ng-click="get(idE)">
+
+    </ion-tab>
+    <ion-tab title="Ajoutez un cours" icon-off="ion-android-add-circle" icon-on="icon ion-android-add-circle"
+             badge="badgeMessages" badge-style="badge-assertive" ng-controller="ChoixAjoutCoursCtrl" ng-click="get(eleve.entity.id)">
+
+    </ion-tab>
+  </ion-tabs>
+  <br><br><br>
+  <!-- Contenu -->
+    <ion-content>
+      <br><br><br>
+      <div ng-controller="TarifCoursCtrl">
+        <div>
+          <!--class="item item-text-wrap"-->
+
+          <div ng-repeat="voilon in prixCours">
+            {{voilon}}
+          </div>
+
+
+
+        <!--&lt;!&ndash; prix pour les primaires toutes missions sauf U.S. &ndash;&gt;-->
+        <!--<div ng-if="(choixN == 'CP' || choixN == 'CE1' || choixN == 'CE2' || choixN == 'CM1' || choixN == 'CM2' || choixN == 'Primero de primaria' || choixN == 'Segundo de primaria' || choixN == 'Tercero de primaria' ||-->
+          <!--choixN == 'Cuarto de primaria' || choixN == 'Quinto de primaria' || choixN == 'Sexto de primaria' || choixN == 'Maternelle' || choixN == 'CE3' || choixN == 'CE4' || choixN == 'CE5' ||-->
+          <!--choixN == 'CE6') && choixMat !== 'Aides aux devoirs' && choixMat !== 'Ayuda a los deberes'">-->
+          <!--Cours en Groupe :-->
+          <!--<div id="instruc3" ng-repeat="alpha in prixCours.prix.primaireGroupe">-->
+            <!--<input ng-model="coursGpe" type="radio" value="{{alpha.prix}}" id="squared1" ng-click="goChxFreq(nomPrenomParent, telParent, choixP, raisonAutre, nomPrenomE, telE,-->
+           <!--emailE, dateNaissanceE, ecoleE, coursParticulier, coursEnGroupe, choixMiss, choixS, choixN, choixMat, choixF)" />-->
+            <!--<label for="squared1">{{alpha.prix+' MAD/h'}}</label>-->
+          <!--</div>-->
+
+            <!--<br><br><hr><br>-->
+
+          <!--Cours Particulier :-->
+          <!--<div id="instruc3" ng-repeat="alpha in prixCours.prix.primaireIndiv">-->
+            <!--<input ng-model="coursParti" type="radio" value="{{alpha.prix}}" id="squared2" ng-click="go(nomPrenomParent, telParent, emailParent, choixP, raisonAutre, nomPrenomEnfant, telEnfant,-->
+           <!--emailEnfant, dateNaissanceEnfant, ecoleEnfant, coursParti, coursEnGpe, choixMission, choixSection, choixNiveau, choixMatiere, choixFiliere)" />-->
+            <!--<label for="squared1">{{alpha.prix+' MAD/h'}}</label>-->
+          <!--</div>-->
+        <!--</div>-->
+
+        <!--&lt;!&ndash; prix pour les primaires U.S. &ndash;&gt;-->
+        <!--<div ng-if="choixN == '1st Grade' || choixN == '2nd Grade' || choixN == '3rd Grade' || choixN == '4th Grade' || choixN == '5th Grade'">-->
+            <!--Cours en Groupe :<br><br>-->
+            <!--<div id="instruc3" ng-repeat="alpha in prixCours.prix.primaireGpeUS">-->
+              <!--<input ng-model="coursGpe" type="radio" value="{{alpha.prix}}" id="squared2" name="check" ng-click="coursGroupe(mat, niv, coursGpe)"/>-->
+              <!--<label for="squared2">{{alpha.prix+' MAD/h'}}</label>-->
+            <!--</div>-->
+
+            <!--<br><br><hr><br>-->
+
+            <!--Cours Particulier :<br><br>-->
+            <!--<div id="instruc3" ng-repeat="alpha in prixCours.prix.primaireIndUS">-->
+              <!--<input ng-model="coursParti" type="radio" value="Cours Particulier" id="squared1" name="check" ng-click="coursPart(mat, niv, coursParti)" />-->
+              <!--<label for="squared1">{{alpha.prix+' MAD/h'}}</label>&nbsp;-->
+            <!--</div><br><br>-->
+          <!--</div>-->
+
+        <!--&lt;!&ndash; prix pour les collèges toutes missions sauf U.S. &ndash;&gt;-->
+        <!--<div ng-if="(choixN == 'Sixième' || choixN == 'Cinquième' || choixN == 'Quatrième' || choixN == 'Troisième' || choixN == 'Primero de la ESO' || choixN == 'Segundo de la ESO' || choixN == 'Tercero de la ESO'-->
+         <!--|| choixN == 'Cuarto de la ESO' || choixN == 'CE7' || choixN == 'CE8' || choixN == 'CE8' || choixN =='CE9') && (choixMat !== 'Ayuda a los deberes' || choixMat !== 'Aide aux devoirs')">-->
+            <!--Cours en Groupe :<br><br>-->
+            <!--<div id="instruc3" ng-repeat="alpha in prixC.prix.collegeGroupe">-->
+              <!--<input ng-model="coursGpe" type="radio" value="{{alpha.prix}}" id="squared2" name="check" ng-click="coursGroupe(mat, niv, coursGpe)"/>-->
+              <!--<label for="squared2">{{alpha.prix+' MAD/h'}}</label>-->
+            <!--</div>-->
+
+            <!--<br><br><hr><br>-->
+
+            <!--Cours Particulier :<br><br>-->
+            <!--<div id="instruc3" ng-repeat="alpha in prixC.prix.collegeIndiv">-->
+              <!--<input ng-model="coursParti" type="radio" value="Cours Particulier" id="squared1" name="check" ng-click="coursPart(mat, niv, coursParti)" />-->
+              <!--<label for="squared1">{{alpha.prix+' MAD/h'}}</label>&nbsp;-->
+            <!--</div><br><br>-->
+          <!--</div>-->
+
+          <!--&lt;!&ndash; prix pour les collèges U.S. &ndash;&gt;-->
+        <!--<div ng-if="choixN ==  '6th Grade' || choixN == '7th Grade' || choixN == '8th Grade'">-->
+          <!--Cours en Groupe :<br><br>-->
+          <!--<div id="instruc3" ng-repeat="alpha in prixC.prix.collegeGpeUS">-->
+            <!--<input ng-model="coursGpe" type="radio" value="{{alpha.prix}}" id="squared2" name="check" ng-click="coursGroupe(mat, niv, coursGpe)"/>-->
+            <!--<label for="squared2">{{alpha.prix+' MAD/h'}}</label>-->
+          <!--</div>-->
+
+          <!--<br><br><hr><br>-->
+
+          <!--Cours Particulier :<br><br>-->
+          <!--<div id="instruc3" ng-repeat="alpha in prixC.prix.collegeIndUS">-->
+            <!--<input ng-model="coursParti" type="radio" value="Cours Particulier" id="squared1" name="check" ng-click="coursPart(mat, niv, coursParti)" />-->
+            <!--<label for="squared1">{{alpha.prix+' MAD/h'}}</label>&nbsp;-->
+          <!--</div><br><br>-->
+        <!--</div>-->
+
+        <!--&lt;!&ndash; prix pour les lycées toutes missions sauf U.S. &ndash;&gt;-->
+        <!--<div ng-if="choixN == 'Seconde' || choixN == 'Première' || choixN == 'Terminale' || choixN == '1º Bachillerato' || choixN == '1ère Année Baccaloréat' || choixN == '2ème Année Baccaloréat'-->
+        <!--|| choixN == 'Tronc Commun'">-->
+          <!--Cours en Groupe :<br><br>-->
+          <!--<div id="instruc3" ng-repeat="alpha in prixC.prix.lyceeGroupe">-->
+            <!--<input ng-model="coursGpe" type="radio" value="{{alpha.prix}}" id="squared2" name="check" ng-click="coursGroupe(mat, niv, coursGpe)"/>-->
+            <!--<label for="squared2">{{alpha.prix+' MAD/h'}}</label>-->
+          <!--</div>-->
+
+          <!--<br><br><hr><br>-->
+
+          <!--Cours Particulier :<br><br>-->
+          <!--<div id="instruc3" ng-repeat="alpha in prixC.prix.lyceeIndiv">-->
+            <!--<input ng-model="coursParti" type="radio" value="Cours Particulier" id="squared1" name="check" ng-click="coursPart(mat, niv, coursParti)" />-->
+            <!--<label for="squared1">{{alpha.prix+' MAD/h'}}</label>&nbsp;-->
+          <!--</div><br><br>-->
+        <!--</div>-->
+
+        <!--&lt;!&ndash; prix pour les lycées U.S. &ndash;&gt;-->
+        <!--<div ng-if="choixN ==  '9th Grade' || choixN == '10th Grade' || choixN == '11th Grade' || choixN == '12th Grade'">-->
+          <!--Cours en Groupe :<br><br>-->
+          <!--<div id="instruc3" ng-repeat="alpha in prixC.prix.lyceeGpeUS">-->
+            <!--<input ng-model="coursGpe" type="radio" value="{{alpha.prix}}" id="squared2" name="check" ng-click="coursGroupe(mat, niv, coursGpe)"/>-->
+            <!--<label for="squared2">{{alpha.prix+' MAD/h'}}</label>-->
+          <!--</div>-->
+
+          <!--<br><br><hr><br>-->
+
+          <!--Cours Particulier :<br><br>-->
+          <!--<div id="instruc3" ng-repeat="alpha in prixC.prix.lyceeIndUS">-->
+            <!--<input ng-model="coursParti" type="radio" value="Cours Particulier" id="squared1" name="check" ng-click="coursPart(mat, niv, coursParti)" />-->
+            <!--<label for="squared1">{{alpha.prix+' MAD/h'}}</label>&nbsp;-->
+          <!--</div><br><br>-->
+        <!--</div>-->
+
+        <!--&lt;!&ndash; prix pour aide aux devoirs ou ayuda a los deberes &ndash;&gt;-->
+        <!--<div ng-if="(choixN == 'CP' || choixN == 'CE1' || choixN == 'CE2' || choixN == 'CM1' || choixN == 'CM2' || choixN == 'Primero de primaria' || choixN == 'Segundo de primaria' || choixN == 'Tercero de primaria' ||-->
+         <!--choixN == 'Cuarto de primaria' || choixN == 'Quinto de primaria' || choixN == 'Sexto de primaria' || choixN == 'Maternelle' || choixN == 'CE3' || choixN == 'CE4' || choixN == 'CE5' ||-->
+         <!--choixN == 'CE6') && choixMat == 'Aides aux devoirs'">-->
+          <!--Cours de 1 session semaine :<br><br>-->
+          <!--<div id="instruc3" ng-repeat="alpha in prixC.prix.aideDevoir1">-->
+            <!--<input ng-model="coursGpe" type="radio" value="{{alpha.prix}}" id="squared2" name="check" ng-click="coursGroupe(mat, niv, coursGpe)"/>-->
+            <!--<label for="squared2">{{alpha.prix+' MAD/trimestre'}}</label>-->
+          <!--</div>-->
+
+          <!--<br><br><hr><br>-->
+
+          <!--Cours de 2 session semaine :<br><br>-->
+          <!--<div id="instruc3" ng-repeat="beta in prixC.prix.aideDevoir2">-->
+            <!--<input ng-model="coursGpe" type="radio" value="{{beta.prix}}" id="squared2" name="check" ng-click="coursGroupe(mat, niv, coursGpe)"/>-->
+            <!--<label for="squared2">{{beta.prix+' MAD/trimestre'}}</label>-->
+          <!--</div>-->
+
+          <!--<br><br><hr><br>-->
+
+          <!--Cours de 3 sessions par semaine :<br><br>-->
+          <!--<div id="instruc3" ng-repeat="delta in prixC.prix.aideDevoir3">-->
+            <!--<input ng-model="coursParti" type="radio" value="{{delta.prix}}" id="squared1" name="check" ng-click="coursGroupe(mat, niv, coursParti)" />-->
+            <!--<label for="squared1">{{delta.prix+' MAD/trimestre'}}</label>&nbsp;-->
+          <!--</div><br><br>-->
+        <!--</div>-->
+
+          <!--div ng-if-->
+
+        <!--&lt;!&ndash; prix pour l'anglais adulte communication &ndash;&gt;-->
+        <!--<div ng-if="mat == 'Anglais Adultes'">-->
+          <!--Cours en Groupe :<br><br>-->
+          <!--<div id="instruc3" ng-repeat="alpha in prixC.prix.anglaisCommunicationGpe">-->
+            <!--<input ng-model="coursGpe" type="radio" value="{{alpha.prix}}" id="squared2" name="check" ng-click="coursGroupe(mat, niv, coursGpe)"/>-->
+            <!--<label for="squared2">{{alpha.prix+' MAD/h'}}</label>-->
+          <!--</div>-->
+
+          <!--<br><br><hr><br>-->
+
+          <!--Cours Particulier :<br><br>-->
+          <!--<div id="instruc3" ng-repeat="alpha in prixC.prix.anglaisCommunicationInd">-->
+            <!--<input ng-model="coursParti" type="radio" value="Cours Particulier" id="squared1" name="check" ng-click="coursPart(mat, niv, coursParti)" />-->
+            <!--<label for="squared1">{{alpha.prix+' MAD/h'}}</label>&nbsp;-->
+          <!--</div><br><br>-->
+        <!--</div>-->
+
+        <!--&lt;!&ndash; prix pour l'anglais adulte business &ndash;&gt;-->
+        <!--<div ng-if="mat == 'Anglais Business'">-->
+          <!--Cours en Groupe :<br><br>-->
+          <!--<div id="instruc3" ng-repeat="alpha in prixC.prix.anglaisBusinessGpe">-->
+            <!--<input ng-model="coursGpe" type="radio" value="{{alpha.prix}}" id="squared2" name="check" ng-click="coursGroupe(mat, niv, coursGpe)"/>-->
+            <!--<label for="squared2">{{alpha.prix+' MAD/h'}}</label>-->
+          <!--</div>-->
+
+          <!--<br><br><hr><br>-->
+
+          <!--Cours Particulier :<br><br>-->
+          <!--<div id="instruc3" ng-repeat="alpha in prixC.prix.anglaisBusinessInd">-->
+            <!--<input ng-model="coursParti" type="radio" value="Cours Particulier" id="squared1" name="check" ng-click="coursPart(mat, niv, coursParti)" />-->
+            <!--<label for="squared1">{{alpha.prix+' MAD/h'}}</label>&nbsp;-->
+          <!--</div><br><br>-->
+        <!--</div>-->
+
+        <!--&lt;!&ndash; prix pour l'anglais préparation aux tests &ndash;&gt;-->
+        <!--<div ng-if="mat == 'Préparation aux Tests Anglais'">-->
+          <!--Cours en Groupe :<br><br>-->
+          <!--<div id="instruc3" ng-repeat="alpha in prixC.prix.prepaTestAnglaisGpe">-->
+            <!--<input ng-model="coursGpe" type="radio" value="{{alpha.prix}}" id="squared2" name="check" ng-click="coursGroupe(mat, niv, coursGpe)"/>-->
+            <!--<label for="squared2">{{alpha.prix+' MAD/h'}}</label>-->
+          <!--</div>-->
+
+          <!--<br><br><hr><br>-->
+
+          <!--Cours Particulier :<br><br>-->
+          <!--<div id="instruc3" ng-repeat="alpha in prixC.prix.prepaTestAnglaisGpe">-->
+            <!--<input ng-model="coursParti" type="radio" value="Cours Particulier" id="squared1" name="check" ng-click="coursPart(mat, niv, coursParti)" />-->
+            <!--<label for="squared1">{{alpha.prix+' MAD/h'}}</label>&nbsp;-->
+          <!--</div><br><br>-->
+        <!--</div>-->
+
+        <!--&lt;!&ndash; prix pour l'arabe communication &ndash;&gt;-->
+        <!--<div ng-if="mat == 'Arabe Adulte'">-->
+          <!--Cours en Groupe :<br><br>-->
+          <!--<div id="instruc3" ng-repeat="alpha in prixC.prix.arabeCommunicationGpe">-->
+            <!--<input ng-model="coursGpe" type="radio" value="{{alpha.prix}}" id="squared2" name="check" ng-click="coursGroupe(mat, niv, coursGpe)"/>-->
+            <!--<label for="squared2">{{alpha.prix+' MAD/h'}}</label>-->
+          <!--</div>-->
+
+          <!--<br><br><hr><br>-->
+
+          <!--Cours Particulier :<br><br>-->
+          <!--<div id="instruc3" ng-repeat="alpha in prixC.prix.arabeCommunicationInd">-->
+            <!--<input ng-model="coursParti" type="radio" value="Cours Particulier" id="squared1" name="check" ng-click="coursPart(mat, niv, coursParti)" />-->
+            <!--<label for="squared1">{{alpha.prix+' MAD/h'}}</label>&nbsp;-->
+          <!--</div><br><br>-->
+        <!--</div>-->
+
+        <!--&lt;!&ndash; prix pour l'arabe business &ndash;&gt;-->
+        <!--<div ng-if="mat == 'Arabe Business'">-->
+          <!--Cours en Groupe :<br><br>-->
+          <!--<div id="instruc3" ng-repeat="alpha in prixC.prix.arabeBusinessGpe">-->
+            <!--<input ng-model="coursGpe" type="radio" value="{{alpha.prix}}" id="squared2" name="check" ng-click="coursGroupe(mat, niv, coursGpe)"/>-->
+            <!--<label for="squared2">{{alpha.prix+' MAD/h'}}</label>-->
+          <!--</div>-->
+
+          <!--<br><br><hr><br>-->
+
+          <!--Cours Particulier :<br><br>-->
+          <!--<div id="instruc3" ng-repeat="alpha in prixC.prix.arabeBusinessInd">-->
+            <!--<input ng-model="coursParti" type="radio" value="Cours Particulier" id="squared1" name="check" ng-click="coursPart(mat, niv, coursParti)" />-->
+            <!--<label for="squared1">{{alpha.prix+' MAD/h'}}</label>&nbsp;-->
+          <!--</div><br><br>-->
+        <!--</div>-->
+
+        <!--&lt;!&ndash; prix pour le FLE &ndash;&gt;-->
+        <!--<div ng-if="mat == 'FLE'">-->
+          <!--Cours en Groupe :<br><br>-->
+          <!--<div id="instruc3" ng-repeat="alpha in prixC.prix.francaisCommunicationGpe">-->
+            <!--<input ng-model="coursGpe" type="radio" value="{{alpha.prix}}" id="squared2" name="check" ng-click="coursGroupe(mat, niv, coursGpe)"/>-->
+            <!--<label for="squared2">{{alpha.prix+' MAD/h'}}</label>-->
+          <!--</div>-->
+
+          <!--<br><br><hr><br>-->
+
+          <!--Cours Particulier :<br><br>-->
+          <!--<div id="instruc3" ng-repeat="alpha in prixC.prix.francaisCommunicationInd">-->
+            <!--<input ng-model="coursParti" type="radio" value="Cours Particulier" id="squared1" name="check" ng-click="coursPart(mat, niv, coursParti)" />-->
+            <!--<label for="squared1">{{alpha.prix+' MAD/h'}}</label>&nbsp;-->
+          <!--</div><br><br>-->
+        <!--</div>-->
+
+        <!--&lt;!&ndash; prix pour le FLE Business&ndash;&gt;-->
+        <!--<div ng-if="mat == 'FLE Business'">-->
+          <!--Cours en Groupe :<br><br>-->
+          <!--<div id="instruc3" ng-repeat="alpha in prixC.prix.francaisBusinessGpe">-->
+            <!--<input ng-model="coursGpe" type="radio" value="{{alpha.prix}}" id="squared2" name="check" ng-click="coursGroupe(mat, niv, coursGpe)"/>-->
+            <!--<label for="squared2">{{alpha.prix+' MAD/h'}}</label>-->
+          <!--</div>-->
+
+          <!--<br><br><hr><br>-->
+
+          <!--Cours Particulier :<br><br>-->
+          <!--<div id="instruc3" ng-repeat="alpha in prixC.prix.francaisBusinessInd">-->
+            <!--<input ng-model="coursParti" type="radio" value="Cours Particulier" id="squared1" name="check" ng-click="coursPart(mat, niv, coursParti)" />-->
+            <!--<label for="squared1">{{alpha.prix+' MAD/h'}}</label>&nbsp;-->
+          <!--</div><br><br>-->
+        <!--</div>-->
+
+        <!--&lt;!&ndash; prix pour le FLE test&ndash;&gt;-->
+        <!--<div ng-if="mat == 'FLE Test'">-->
+          <!--Cours en Groupe :<br><br>-->
+          <!--<div id="instruc3" ng-repeat="alpha in prixC.prix.testFrancaisGpe">-->
+            <!--<input ng-model="coursGpe" type="radio" value="{{alpha.prix}}" id="squared2" name="check" ng-click="coursGroupe(mat, niv, coursGpe)"/>-->
+            <!--<label for="squared2">{{alpha.prix+' MAD/h'}}</label>-->
+          <!--</div>-->
+
+          <!--<br><br><hr><br>-->
+
+          <!--Cours Particulier :<br><br>-->
+          <!--<div id="instruc3" ng-repeat="alpha in prixC.prix.testFrancaisInd">-->
+            <!--<input ng-model="coursParti" type="radio" value="Cours Particulier" id="squared1" name="check" ng-click="coursPart(mat, niv, coursParti)" />-->
+            <!--<label for="squared1">{{alpha.prix+' MAD/h'}}</label>&nbsp;-->
+          <!--</div><br><br>-->
+        <!--</div>-->
+
+        <!--&lt;!&ndash; prix pour le ELE &ndash;&gt;-->
+        <!--<div ng-if="mat == 'ELE'">-->
+          <!--Cours en Groupe :<br><br>-->
+          <!--<div id="instruc3" ng-repeat="alpha in prixC.prix.espagnolCommunicationGpe">-->
+            <!--<input ng-model="coursGpe" type="radio" value="{{alpha.prix}}" id="squared2" name="check" ng-click="coursGroupe(mat, niv, coursGpe)"/>-->
+            <!--<label for="squared2">{{alpha.prix+' MAD/h'}}</label>-->
+          <!--</div>-->
+
+          <!--<br><br><hr><br>-->
+
+          <!--Cours Particulier :<br><br>-->
+          <!--<div id="instruc3" ng-repeat="alpha in prixC.prix.espagnolCommunicationInd">-->
+            <!--<input ng-model="coursParti" type="radio" value="Cours Particulier" id="squared1" name="check" ng-click="coursPart(mat, niv, coursParti)" />-->
+            <!--<label for="squared1">{{alpha.prix+' MAD/h'}}</label>&nbsp;-->
+          <!--</div><br><br>-->
+        <!--</div>-->
+
+        <!--&lt;!&ndash; prix pour le ELE business &ndash;&gt;-->
+        <!--<div ng-if="mat == 'ELE Business'">-->
+          <!--Cours en Groupe :<br><br>-->
+          <!--<div id="instruc3" ng-repeat="alpha in prixC.prix.espagnolBusinessGpe">-->
+            <!--<input ng-model="coursGpe" type="radio" value="{{alpha.prix}}" id="squared2" name="check" ng-click="coursGroupe(mat, niv, coursGpe)"/>-->
+            <!--<label for="squared2">{{alpha.prix+' MAD/h'}}</label>-->
+          <!--</div>-->
+
+          <!--<br><br><hr><br>-->
+
+          <!--Cours Particulier :<br><br>-->
+          <!--<div id="instruc3" ng-repeat="alpha in prixC.prix.espagnolBusinessInd">-->
+            <!--<input ng-model="coursParti" type="radio" value="Cours Particulier" id="squared1" name="check" ng-click="coursPart(mat, niv, coursParti)" />-->
+            <!--<label for="squared1">{{alpha.prix+' MAD/h'}}</label>&nbsp;-->
+          <!--</div><br><br>-->
+        <!--</div>-->
+
+        <!--&lt;!&ndash; prix pour le ELE test &ndash;&gt;-->
+        <!--<div ng-if="mat == 'ELE Test'">-->
+          <!--Cours en Groupe :<br><br>-->
+          <!--<div id="instruc3" ng-repeat="alpha in prixC.prix.testEspagnolGpe">-->
+            <!--<input ng-model="coursGpe" type="radio" value="{{alpha.prix}}" id="squared2" name="check" ng-click="coursGroupe(mat, niv, coursGpe)"/>-->
+            <!--<label for="squared2">{{alpha.prix+' MAD/h'}}</label>-->
+          <!--</div>-->
+
+          <!--<br><br><hr><br>-->
+
+          <!--Cours Particulier :<br><br>-->
+          <!--<div id="instruc3" ng-repeat="alpha in prixC.prix.testEspagnolInd">-->
+            <!--<input ng-model="coursParti" type="radio" value="Cours Particulier" id="squared1" name="check" ng-click="coursPart(mat, niv, coursParti)" />-->
+            <!--<label for="squared1">{{alpha.prix+' MAD/h'}}</label>&nbsp;-->
+          <!--</div>-->
+        <!--</div>-->
+
+        <!--&lt;!&ndash; prix pour la programmation informatique essai &ndash;&gt;-->
+        <!--<div ng-if="mat == 'Programmation Essai'">-->
+          <!--Cours en Groupe :<br><br>-->
+          <!--<div id="instruc3" ng-repeat="alpha in prixC.prix.informatiqueEssai">-->
+            <!--<input ng-model="coursGpe" type="radio" value="{{alpha.prix}}" id="squared2" name="check" ng-click="coursGroupe(mat, niv, coursGpe)"/>-->
+            <!--<label for="squared2">{{alpha.prix+' MAD/h'}}</label>-->
+          <!--</div><br>-->
+          <!--Pour les cours de <strong>Programmation Informatique</strong>, Cap Mission ne propose pas de cours particulier.-->
+        <!--</div>-->
+
+        <!--&lt;!&ndash; prix pour la programmation informatique trimestre &ndash;&gt;-->
+        <!--<div ng-if="mat == 'Programmation Trimestre'">-->
+          <!--Cours en Groupe :<br><br>-->
+          <!--<div id="instruc3" ng-repeat="alpha in prixC.prix.informatiqueTrimestre">-->
+            <!--<input ng-model="coursGpe" type="radio" value="{{alpha.prix}}" id="squared2" name="check" ng-click="coursGroupe(mat, niv, coursGpe)"/>-->
+            <!--<label for="squared2">{{alpha.prix+' MAD/h'}}</label>-->
+          <!--</div><br>-->
+          <!--Pour les cours de <strong>Programmation Informatique</strong>, Cap Mission ne propose pas de cours particulier.-->
+        <!--</div>-->
+
+        <!--&lt;!&ndash; prix pour la programmation informatique annuel &ndash;&gt;-->
+        <!--<div ng-if="mat == 'Programmation Annuel'">-->
+          <!--Cours en Groupe :<br><br>-->
+          <!--<div id="instruc3" ng-repeat="alpha in prixC.prix.informatiqueAnnuel">-->
+            <!--<input ng-model="coursGpe" type="radio" value="{{alpha.prix}}" id="squared2" name="check" ng-click="coursGroupe(mat, niv, coursGpe)"/>-->
+            <!--<label for="squared2">{{alpha.prix+' MAD/h'}}</label>-->
+          <!--</div><br>-->
+          <!--Pour les cours de <strong>Programmation Informatique</strong>, Cap Mission ne propose pas de cours particulier.-->
+        <!--</div>-->
+
+        <!--&lt;!&ndash; prix pour les test mission francaise primaire &ndash;&gt;-->
+        <!--<div ng-if="mat == 'Test Mission CE1' || mat == 'Test Mission CE2' || mat == 'Test Mission CM1' || mat =='Test Mission CM2'">-->
+          <!--Les tarifs pour faire ce test sont :<br><br>-->
+          <!--<div id="instruc3" ng-repeat="alpha in prixC.prix.testMissionFrancaisePrimaire">-->
+            <!--<input ng-model="coursGpe" type="radio" value="{{alpha.prix}}" id="squared2" name="check" ng-click="coursGroupe(mat, niv, coursGpe)"/>-->
+            <!--<label for="squared2">{{alpha.prix+' MAD/h'}}</label>-->
+          <!--</div><br>-->
+        <!--</div>-->
+
+        <!--&lt;!&ndash; prix pour les test mission francaise collège &ndash;&gt;-->
+        <!--<div ng-if="mat == 'Test Mission Collège'">-->
+          <!--Les tarifs pour faire ce test sont :<br><br>-->
+          <!--<div id="instruc3" ng-repeat="alpha in prixC.prix.testMissionFrancaiseCollege">-->
+            <!--<input ng-model="coursGpe" type="radio" value="{{alpha.prix}}" id="squared2" name="check" ng-click="coursGroupe(mat, niv, coursGpe)"/>-->
+            <!--<label for="squared2">{{alpha.prix+' MAD/h'}}</label>-->
+          <!--</div><br>-->
+        <!--</div>-->
+
+        <!--&lt;!&ndash; prix pour les test mission francaise lycée &ndash;&gt;-->
+        <!--<div ng-if="mat == 'Test Mission Lycée'">-->
+          <!--Les tarifs pour faire ce test sont :<br><br>-->
+          <!--<div id="instruc3" ng-repeat="alpha in prixC.prix.testMissionFrancaiseLycee">-->
+            <!--<input ng-model="coursGpe" type="radio" value="{{alpha.prix}}" id="squared2" name="check" ng-click="coursGroupe(mat, niv, coursGpe)"/>-->
+            <!--<label for="squared2">{{alpha.prix+' MAD/h'}}</label>-->
+          <!--</div><br>-->
+        <!--</div>-->
+      </div>
+    </div>
+  </ion-content>
