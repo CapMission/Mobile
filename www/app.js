@@ -283,7 +283,7 @@ CapMission.controller("EmailController",function($scope,$ionicPopup,$rootScope,$
   }).then(function(modal) {
     $scope.modal = modal;
   });
-  $rootScope.get = function(id,enfant,period,debut){
+  $rootScope.getEmailInfo = function(id,enfant,period,debut){
     $rootScope.idF = id
     $rootScope.child = enfant
     $rootScope.period = period
@@ -428,7 +428,7 @@ CapMission.constant("Constants", {
 });*/
 
 
-CapMission.run(['$ionicPlatform', '$ionicPopup','$rootScope', function ($ionicPlatform, $ionicPopup, $rootScope) {
+CapMission.run(['$ionicPlatform', '$ionicPopup','$rootScope','$state', function ($ionicPlatform, $ionicPopup, $rootScope,$state) {
   $ionicPlatform.ready(function () {
     $rootScope.$on('$stateChangeSuccess', function () {
       if(typeof analytics !== undefined) {

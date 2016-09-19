@@ -1,4 +1,4 @@
-<ion-view  title='<img class="title-image" src="parent/icon.png"> Cap Mission </img>' cache-view="false">
+<ion-view  title='<img class="title-image" src="parent/icon.png"> Planning </img>' cache-view="false">
   <ion-nav-buttons side="right">
     <a class="button button-icon ion-ios-more rotate-90 fs-s" ng-app="capMission.parent" ng-controller="ProposCtrl" ng-click="popover.show($event)"></a>
   </ion-nav-buttons>
@@ -12,7 +12,7 @@
     </ion-tab>
 
 
-    <ion-tab title="quiz" icon-off="ion-ios-timer-outline" icon-on="ion-ios-timer" badge="badgequiz"
+    <!--<ion-tab title="quiz" icon-off="ion-ios-timer-outline" icon-on="ion-ios-timer" badge="badgequiz"
              badge-style="badge-assertive" ng-click="onTabSelected()">
 
     </ion-tab>
@@ -21,7 +21,7 @@
     <ion-tab title="Suivi" icon-off="ion-ios-pulse" icon-on="ion-ios-pulse-strong"  badge="badgeFollow"
              badge-style="badge-assertive" ng-click="onTabSelected()">
 
-    </ion-tab>
+    </ion-tab>-->
 
     <!-- <ion-tab title="Messages" icon-off="ion-ios-email-outline" icon-on="ion-ios-email"
               badge="badgeMessages" badge-style="badge-assertive" ng-click="onTabSelected()">
@@ -65,7 +65,7 @@
 
       <div ng-if="timetables.start > now" class="item item-divider divItem item-icon-right">
         <div><a href="#" ng-app="capMission" ng-controller="EmailController"
-                                               ng-click="modal.show();get(timetables.id,son.entity.name,timetables.name,timetables.start)"><i
+                                               ng-click="modal.show();getEmailInfo(timetables.id,son.entity.name,timetables.name,timetables.start)"><i
           class="icon ion-compose iMod"></i></a></div>
         <div class="TextS">
           <nobr>
@@ -119,7 +119,7 @@
     </script>
 
   </ion-content>
-  <ion-footer-bar ng-hide="parent.entity.students.length == '1' || testNum() == 3">
+  <ion-footer-bar ng-app="capMission.parent" ng-controller="ProposCtrl" ng-hide="parent.entity.students.length == '1' || testNum() == 3">
     <div class="bar bar-footer">
 
       <button class="button icon-left ion-ios-person-outline button-small buttonEmp" ng-controller="ProposCtrl" ng-click="goChoix()">Choisir un autre enfant !</button>

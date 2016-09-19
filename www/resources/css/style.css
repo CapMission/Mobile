@@ -1090,6 +1090,9 @@ ion-popover-view.fit1 ion-content {
   text-transform: capitalize;
 }
 
+.lower {
+  text-transform: lowercase;
+}
 /*.idOublie{*/
   /*float: left;*/
 /*}*/

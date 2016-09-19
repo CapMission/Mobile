@@ -635,9 +635,9 @@ teacher.controller('TParametresCtrl', ['$scope', '$ionicPopup', '$rootScope', '$
         template: '<form name="MyForm" ><input type="hidden" name = "oldLogin" ng-model="data.oldLogin" ng-init="data.oldLogin = resp.entity.login">' +
         '<input type="hidden" ng-model="user.id" ng-init="user.id = resp.entity.id">'+
         '<input type="hidden" ng-model="user.password" ng-init="user.password = resp.entity.password">'+
-        '<input type="text" name = "oldLogin2" placeholder="Ancien Login" ng-model="data.oldLogin2" ng-pattern="data.oldLogin" ><br>' +
-        '<input type="text" placeholder="Nouveau Login" name="newLogin" ng-model="user.newLogin"><br>' +
-        '<input type="text" placeholder="Confirmer votre Login" name="confLogin" ng-model="data.confLogin" ng-pattern="user.newLogin">'+
+        '<input type="text" class="lower" name = "oldLogin2" placeholder="Ancien Login" ng-model="data.oldLogin2" ng-pattern="data.oldLogin" ><br>' +
+        '<input type="text" class="lower" placeholder="Nouveau Login" name="newLogin" ng-model="user.newLogin"><br>' +
+        '<input type="text" class="lower" placeholder="Confirmer votre Login" name="confLogin" ng-model="data.confLogin" ng-pattern="user.newLogin">'+
         '<p ng-if="showError" class="errror">Champs obligatoires</p>'+
         '<p ng-if="showError1" class="errror"></p>'+
         '<div ng-show="MyForm.oldLogin2.$error.pattern" style="color: red">*Ancien login incorrect !</div>'+
@@ -713,11 +713,11 @@ teacher.controller('TParametresCtrl', ['$scope', '$ionicPopup', '$rootScope', '$
       // An elaborate, custom popup
       var myPopup = $ionicPopup.show({
         template: '<form name="MyForm" ><input type="hidden" name = "oldPwd" placeholder="Ancien mot de passe" ng-model="data.oldPwd" ng-init="data.oldPwd = resp.entity.password">' +
-        '<input type="password" name = "oldPwd2" placeholder="Ancien mot de passe" ng-model="data.oldPwd2" ng-pattern="data.oldPwd" required="required"><br>' +
+        '<input type="password" class="lower" name = "oldPwd2" placeholder="Ancien mot de passe" ng-model="data.oldPwd2" ng-pattern="data.oldPwd" required="required"><br>' +
         '<input type="hidden" ng-model="user.id" ng-init="user.id = resp.entity.id">'+
         '<input type="hidden" ng-model="user.login" ng-init="user.login = resp.entity.login">'+
-        '<input type="password" name="oldLogin" placeholder="Nouveau mot de passe" ng-model="user.oldLogin"><br>' +
-        '<input type="password" name="confLogin" placeholder="Confirmer votre Mot de Passe" ng-model="data.confLogin" ng-pattern="user.oldLogin"></form>' +
+        '<input type="password" class="lower" name="oldLogin" placeholder="Nouveau mot de passe" ng-model="user.oldLogin"><br>' +
+        '<input type="password" class="lower" name="confLogin" placeholder="Confirmer votre Mot de Passe" ng-model="data.confLogin" ng-pattern="user.oldLogin"></form>' +
         '<p ng-if="showError" class="errror">Champs obligatoires</p>'+
         '<p ng-if="showError1" class="errror"></p>'+
         '<div ng-show="MyForm.oldPwd2.$error.pattern" style="color: red">*Ancien mot de passe incorrect !</div>'+
