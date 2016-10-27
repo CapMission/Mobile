@@ -1,3 +1,57 @@
+<ion-view   hide-back-button="true" cache-view="false" hide-nav-bar="true">
+  <ion-content class="content">
+    <br><br><br>
+    <center><div  class="item item-image homeImg" >
+      <a href="" onclick="window.open('http://www.capmission.com', '_system');">
+        <img class="home" src="resources/img/logo.png">
+      </a>
+    </div></center>
+    <div >
+      <br><br><br>
+      <form name="myForm" id="myForm" novalidate ng-controller="capController">
+        <label>
+          <input id="instruc1" type="text"  name="login" ng-model="user.login" placeholder="Login" ng-init="user.login = username"
+                 required>
+        </label>
+        <br>
+        <label>
+          <input id="instruc1" type="password" name="password" ng-model="user.password" placeholder="Password"
+                 ng-init="user.password = password"  required>
+        </label><br>
+        <div class="padding">
+          <center><button class="button buttonLogin"  ng-disabled="myForm.$invalid"
+                          ng-click="login(user)">Se connecter
+          </button></center>
+          <br>
+          <div padding="true">
+            <nobr>
+
+              <input type="checkbox" id="checkbox21" class="css-checkbox" ng-checked="checkStatus"
+                     ng-model='checkStatus'
+                     ng-init="checkStatus">
+              <label id="instruc" for="checkbox21" name="checkbox21_lbl" class="css-label dark-check-orange">Se souvenir de moi</label>
+
+              <!--<input type="checkbox" id="checkbox65" class="css-checkbox med" ng-checked="checkStatus"
+                     ng-model='checkStatus'
+                     ng-init="checkStatus">
+              <label for="checkbox65" id="checkbox65" class="css-label med elegant" >Se souvenir de moi</label>-->
+            </nobr>
+          </div>
+
+          <br>
+
+          <div id="instruc"  ng-controller="LoginCtrl" ng-click="goMdpPage()"><i class="icon ion-locked">&nbsp;&nbsp;Identifiants oubliés</i></div><br>
+        </div>
+      </form>
+      <div class="padding">
+        <p ng-show="myForm.login.$error.required">* Login obligatoire</p>
+        <p ng-show="myForm.password.$error.required">* Mot de passe obligatoire</p>
+      </div>
+    </div>
+  </ion-content>
+</ion-view>
+
+<!--
 <ion-view title="Connexion" hide-back-button="true" style="background: white" cache-view="false" hide-nav-bar="true">
 
       <ion-content has-header="true" padding="true">
@@ -6,12 +60,12 @@
         <img src="resources/img/logo.png">
            </a>
         </div>
-          <div class="list list-inset"  style="background: white">
-          <!--div class="card">
+          <div class="list list-inset" >
+          &lt;!&ndash;div class="card">
              <div class="item item-text-wrap">
              Choisissez une méthode de connexion !
             </div>
-          </div-->
+          </div&ndash;&gt;
             <form name="myForm" id="myForm" novalidate ng-controller="capController">
           <div class="list list-inset">
             <br>
@@ -27,9 +81,9 @@
               <button class="button button-small buttonEmp2" ng-disabled="myForm.$invalid"
                       ng-click="login(user)">Se connecter
             </button><br><br>
-              <!--<button class="button button-small buttonEmp2" ng-controller="LoginCtrl"
+              <button class="button button-small buttonEmp2" ng-controller="LoginCtrl"
                       ng-click="loginFacebook()">Login avec Facebook
-              </button>-->
+              </button>
               <br><br>
 
               <div padding="true">
@@ -53,10 +107,10 @@
             </div>
             <br><br><br>
 
-            <!--<div class="bar bar-footer" ng-controller="LoginCtrl">-->
-              <!--<button class="button button-small buttonEmp" ng-model="insc" ng-click="goInscription()">S'incrire à CapMission</button>-->
-            <!--</div>-->
-            <!-- <div class="padding">
+            &lt;!&ndash;<div class="bar bar-footer" ng-controller="LoginCtrl">&ndash;&gt;
+              &lt;!&ndash;<button class="button button-small buttonEmp" ng-model="insc" ng-click="goInscription()">S'incrire à CapMission</button>&ndash;&gt;
+            &lt;!&ndash;</div>&ndash;&gt;
+            &lt;!&ndash; <div class="padding">
              <button style="background-color:#3b5998 " ng-click="authenticate('facebook')" class="button button-block icon-left ion-social-facebook" >
                    &nbsp;Login avec Facebook
                </button>
@@ -64,15 +118,16 @@
                    &nbsp;Login avec Google+
                </button>
 
-             </div>-->
+             </div>&ndash;&gt;
 
       </div></ion-content>
- <!-- <ion-footer-bar>
+ &lt;!&ndash; <ion-footer-bar>
     <div class="bar bar-footer" ng-controller="LoginCtrl">
 
       <button class="button button-small buttonEmp" ng-model="insc" ng-click="goInscription()">S'incrire à CapMission</button>
     </div>
-  </ion-footer-bar>-->
+  </ion-footer-bar>&ndash;&gt;
 
 
   </ion-view>
+-->

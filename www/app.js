@@ -60,6 +60,15 @@ CapMission.filter('capitalize', function() {
   }
 });
 
+CapMission.filter('utc', [function() {
+  return function(date) {
+    if(angular.isNumber(date)) {
+      date = new Date(date);
+    }
+    return new Date(date.getUTCFullYear(), date.getUTCMonth(), date.getUTCDate(),  date.getUTCHours(), date.getUTCMinutes(), date.getUTCSeconds());
+  }
+} ]);
+
 CapMission.filter('singleDecimal', function ($filter) {
   return function (input) {
     if (isNaN(input)) return input;
@@ -78,8 +87,8 @@ CapMission.filter('setDecimal', function ($filter) {
   };
 });
 
-CapMission.controller('NotifController', function($scope, $cordovaLocalNotification, $ionicPlatform) {
-  $scope.testFunction = function(){ alert('hello')}
+/*CapMission.controller('NotifController', function($scope, $cordovaLocalNotification, $ionicPlatform) {
+  /!*$scope.testFunction = function(){ alert('hello')}*!/
 
   $ionicPlatform.ready(function () {
    if (ionic.Platform.isWebView()) {
@@ -90,15 +99,28 @@ CapMission.controller('NotifController', function($scope, $cordovaLocalNotificat
         text: 'login : ' + window.localStorage.getItem('login') ,
         title: 'Rappel Cap Mission',
         icon : 'parent/icon.png',
-        checkstatement : $scope.testFunction()
+        date : new Date()
+        /!*checkstatement : $scope.testFunction()*!/
       }).then(function () {
         //alert("Instant Notification set");
       });
     };
   })
-});
+});*/
 
-CapMission.controller('capController', function ($scope, $rootScope, $location, $http, $ionicLoading, $cordovaOauth,$localStorage) {
+CapMission.controller('capController', function ($scope, $rootScope, $location, $http, $ionicLoading, $cordovaOauth,$localStorage,URL_API) {
+  var toUTCDate = function(date){
+    var _utc = new Date(date.getUTCFullYear(), date.getUTCMonth(), date.getUTCDate(),  date.getUTCHours(), date.getUTCMinutes(), date.getUTCSeconds());
+    return _utc;
+  };
+
+  var millisToUTCDate = function(millis){
+    return toUTCDate(new Date(millis));
+  };
+
+  $rootScope.toUTCDate = toUTCDate;
+  $rootScope.millisToUTCDate = millisToUTCDate;
+
 
   $rootScope.dateNow = new Date()
   /*if(window.localStorage.getItem('login') == null){
@@ -164,50 +186,62 @@ CapMission.controller('capController', function ($scope, $rootScope, $location, 
   }
 
   $rootScope.login = function (user) {
-    console.log('status before : ' + $scope.checkStatus)
+    console.log('local login : ' + window.localStorage.getItem('login'))
+    console.log('local password : ' + window.localStorage.getItem('password'))
+    console.log('user login : ' + user.login)
+    console.log('user password : ' + user.password)
+    /*console.log('status before : ' + $scope.checkStatus)
     window.localStorage.setItem('status', $scope.checkStatus);
-    console.log('status  : ' + $scope.checkStatus)
+    console.log('status  : ' + $scope.checkStatus)*/
     $ionicLoading.show({
       template: 'Chargement'
     });
-    $http.post('http://51.255.195.19:8182/CapMissionApp/auth/login', user, {timeout: 30000}).success(function (data, status, headers, config) {
-      $rootScope.resp = data
-      console.log('idresp'+$rootScope.resp.entity.id)
-      $scope.test = data
-      console.log('login before : ' + $scope.test.entity.login)
+    if((window.localStorage.getItem('login') != user.login) || (window.localStorage.getItem('password') != user.password)){
+      $http.post(URL_API+'/auth/login', user, {timeout: 30000}).success(function (data, status, headers, config) {
+      /*$http.post('http://localhost:8182/CapMissionApp/auth/login', user, {timeout: 30000}).success(function (data, status, headers, config) {*/
+        $rootScope.resp = data
+        console.log('idresp'+$rootScope.resp.entity.id)
+        $scope.test = data
+        console.log('login before : ' + $scope.test.entity.login)
 
-      window.localStorage.setItem('id', $scope.test.entity.id);
-      window.localStorage.setItem('login', $scope.test.entity.login);
-      window.localStorage.setItem('password', $scope.test.entity.password);
+        window.localStorage.setItem('id', $scope.test.entity.id);
+        window.localStorage.setItem('login', $scope.test.entity.login);
+        window.localStorage.setItem('password', $scope.test.entity.password);
 
-      console.log('value id : ' + window.localStorage.getItem('id'))
-      console.log('value login : ' + window.localStorage.getItem('login'))
-      console.log('value password : ' + window.localStorage.getItem('password'))
+        console.log('value id : ' + window.localStorage.getItem('id'))
+        console.log('value login : ' + window.localStorage.getItem('login'))
+        console.log('value password : ' + window.localStorage.getItem('password'))
+        $ionicLoading.hide();
+
+        //console.log(JSON.stringify({data: data}))
+        $location.path('/role');
+      }).error(function (data, status) {
+        if (status == 0) {
+          toastr.error('Echec de connexion ! Veuillez réessayer dans quelques instants !', 'Désolés !', {displayDuration: 1000});
+          navigator.app.exitApp();
+        }
+        /*else if (data.login != window.localStorage.getItem('login') || data.password != window.localStorage.getItem('password')) {
+         $rootScope.errorMessageChang = "Votre login ou mot de passe a été changé ! Veuillez contacter Cap Mission pour plus d'informations";
+         }*/
+        else if (data.login != user.login || data.password != user.password) {
+          toastr.error('Identifiants incorrects ! ', {displayDuration: 1000});
+          //$rootScope.errorMessage = 'Login/Mot de passe incorrect';
+        }
+        $ionicLoading.hide();
+        $location.path('/login');
+
+      });
+    }
+    else {
       $ionicLoading.hide();
-
-      //console.log(JSON.stringify({data: data}))
       $location.path('/role');
-    }).error(function (data, status) {
-      if (status == 0) {
-        toastr.error('Echec de connexion ! Veuillez réessayer dans quelques instants !', 'Désolés !', {displayDuration: 1000});
-        navigator.app.exitApp();
-      }
-      /*else if (data.login != window.localStorage.getItem('login') || data.password != window.localStorage.getItem('password')) {
-        $rootScope.errorMessageChang = "Votre login ou mot de passe a été changé ! Veuillez contacter Cap Mission pour plus d'informations";
-      }*/
-      else if (data.login != user.login || data.password != user.password) {
-        toastr.error('Identifiants incorrects ! ', {displayDuration: 1000});
-        //$rootScope.errorMessage = 'Login/Mot de passe incorrect';
-      }
-      $ionicLoading.hide();
-      $location.path('/login');
+    }
 
-    });
 
   }
 
   //Function login facebook
-  $scope.loginFacebook = function(){
+  /*$scope.loginFacebook = function(){
     $http.get('http://localhost:8182/connect/facebook').success(function (data) {
       $rootScope.facebookData = data
       console.log(JSON.stringify({data: data}))
@@ -215,17 +249,17 @@ CapMission.controller('capController', function ($scope, $rootScope, $location, 
     }).error(function (data,error) {
      console.log("erreur facebook " + error)
     });
-    /*$cordovaOauth.facebook("561387454023937", ["email"]).then(function(result) {
+    /!*$cordovaOauth.facebook("561387454023937", ["email"]).then(function(result) {
       //window.localStorage.setItem('accessToken', result.access.token);
       $localStorage.accessToken = result.access_token;
       $location.path("/profile");
     }, function(error) {
       alert("There was a problem signing in!  See the console for logs");
       console.log(error);
-    });*/
-  }
+    });*!/
+  }*/
 })
-CapMission.controller("FeedController", function($scope, $http, $localStorage, $location) {
+/*CapMission.controller("FeedController", function($scope, $http, $localStorage, $location) {
 
   $scope.init = function() {
     if($localStorage.hasOwnProperty("accessToken") === true) {
@@ -244,7 +278,7 @@ CapMission.controller("FeedController", function($scope, $http, $localStorage, $
     }
   };
 
-});
+});*/
 
 /*CapMission.controller('AnalyticsController', function($scope,$ionicPlatform) {
   $ionicPlatform.ready(function () {
@@ -257,7 +291,7 @@ CapMission.controller("FeedController", function($scope, $http, $localStorage, $
 
 });*/
 
-CapMission.controller("ProfileController", function($scope, $http, $localStorage, $location) {
+/*CapMission.controller("ProfileController", function($scope, $http, $localStorage, $location) {
 
   $scope.init = function() {
     if($localStorage.hasOwnProperty("accessToken") === true) {
@@ -273,9 +307,9 @@ CapMission.controller("ProfileController", function($scope, $http, $localStorage
     }
   };
 
-});
+});*/
 
-CapMission.controller("EmailController",function($scope,$ionicPopup,$rootScope,$ionicModal,$http,$ionicLoading,$ionicHistory){
+CapMission.controller("EmailController",function($scope,$ionicPopup,$rootScope,$ionicModal,$http,$ionicLoading,$ionicHistory,URL_API){
   $ionicModal.fromTemplateUrl('templates/modal.html', {
     scope: $scope,
     backdropClickToClose: false,
@@ -283,11 +317,12 @@ CapMission.controller("EmailController",function($scope,$ionicPopup,$rootScope,$
   }).then(function(modal) {
     $scope.modal = modal;
   });
-  $rootScope.getEmailInfo = function(id,enfant,period,debut){
+  $rootScope.getEmailInfo = function(id,enfant,period,debut,end){
     $rootScope.idF = id
     $rootScope.child = enfant
     $rootScope.period = period
     $rootScope.debut = debut
+    $rootScope.fin = end
     debutDate = new Date(debut).toLocaleDateString('fr-FR', {
       day : 'numeric',
       month : 'short',
@@ -329,7 +364,7 @@ CapMission.controller("EmailController",function($scope,$ionicPopup,$rootScope,$
       template: "En cours d'envoi !",
       duration: 1500
     });
-    $http.post('http://51.255.195.19:8182/CapMissionApp/send-mail', mail, {timeout: 120000}).success(function (data, status, headers, config) {
+    $http.post(URL_API+'/send-mail', mail, {timeout: 120000}).success(function (data, status, headers, config) {
       toastr.success('Votre demande a été envoyée avec succès')
       //$ionicHistory.goBack();
     }).error(function (data, status) {
@@ -414,10 +449,7 @@ CapMission.directive('uiShowPassword', [
   }]);
 */
 
-CapMission.constant("Constants", {
-  "URL_API": "http://51.255.195.19:8182/CapMissionApp"
-  //"URL_CANVAS": "http://192.168.1.9/"
-});
+CapMission.constant('URL_API', 'http://51.255.195.19:8182/CapMissionApp');
 
 /*CapMission.filter('offset', function() {
   return function(input, start) {
@@ -427,8 +459,9 @@ CapMission.constant("Constants", {
   }
 });*/
 
+//51.255.195.19
 
-CapMission.run(['$ionicPlatform', '$ionicPopup','$rootScope','$state', function ($ionicPlatform, $ionicPopup, $rootScope,$state) {
+CapMission.run(['$ionicPlatform', '$ionicPopup','$rootScope','$state','$location', function ($ionicPlatform, $ionicPopup, $rootScope,$state,$location) {
   $ionicPlatform.ready(function () {
     $rootScope.$on('$stateChangeSuccess', function () {
       if(typeof analytics !== undefined) {
@@ -441,19 +474,53 @@ CapMission.run(['$ionicPlatform', '$ionicPopup','$rootScope','$state', function 
   });
 }]);
 
-CapMission.run(['$ionicPlatform', '$ionicPopup', function ($ionicPlatform, $ionicPopup) {
+CapMission.run(['$ionicPlatform', '$ionicPopup','$location', function ($ionicPlatform, $ionicPopup, $location) {
   $ionicPlatform.ready(function () {
     if(window.Connection) {
       if(navigator.connection.type == Connection.NONE) {
-        $ionicPopup.confirm({
+
+        var alertPopup = $ionicPopup.alert({
           title: 'Pas de connexion Internet',
-          content: "Désolés, afin d'accéder à l'application, veuillez vous connecter à Internet"
+          content: "Pour une meilleure navigation, veuillez activer votre connexion Internet !",
+          buttons: [{
+            text: 'Continuer quand même',
+            type: 'button-clear button-assertive',
+
+          }]
+
+        });
+
+        alertPopup.then(function (res) {
+          $location.path("/login")
+          //navigator.app.exitApp();
+        });
+      /*  $ionicPopup.confirm({
+          title: 'Pas de connexion Internet',
+          content: "Pour une meilleure navigation, veuillez activer votre connexion Internet !",
+          buttons: [{
+            text: 'Continuer quand même',
+            type: 'button-clear button-assertive',
+            onTap: function(e) {
+              // e.preventDefault() will stop the popup from closing when tapped.
+              e.preventDefault();
+              $location.path('/login')
+            }
+          }, {
+            text: 'Activer Internet',
+            type: 'button-clear button-stable',
+            onTap: function(e) {
+              // Returning a value will cause the promise to resolve with the given value.
+              alert('Activer')
+            }
+          }]
         })
           .then(function(result) {
-            if(!result) {
-              ionic.Platform.exitApp();
+            if(result) {
+              $location.path('/login')
+            } else {
+              console.log('You are not sure');
             }
-          });
+          });*/
       }
     }
     /*if(window.localStorage.getItem('login') != null) {
@@ -484,14 +551,14 @@ CapMission.run(['$ionicPlatform', '$ionicPopup', function ($ionicPlatform, $ioni
 
       }, false);
     }*/
-    /*cordova.plugins.notification.local.schedule({
+    cordova.plugins.notification.local.schedule({
       id: 1,
       text: 'login : ' + window.localStorage.getItem('login') ,
       title: 'Rappel Cap Mission',
       icon : 'parent/icon.png',
-      firstAt: tomorrow_at_8_am,
+      firstAt: new Date() ,
       every: "day" // "minute", "hour", "week", "month", "year"
-    });*/
+    });
     // Hide the accessory bar by default (remove this to show the accessory bar above the keyboard
     // for form inputs)
     if (window.cordova && window.cordova.plugins && window.cordova.plugins.Keyboard) {
@@ -1286,7 +1353,7 @@ CapMission.config(['$stateProvider', '$urlRouterProvider', '$ionicConfigProvider
           var find = '<img src=\\"';
           var re = new RegExp(find, 'g');
 
-          String.prototype.replaceAll = function(target, replacement) {
+          String.prototype.replaceAll = function(tet, replacement) {
             return this.split(target).join(replacement);
           };
 

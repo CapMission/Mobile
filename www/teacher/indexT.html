@@ -12,7 +12,7 @@
     </ion-tab>
 
 
-    <ion-tab title="quiz" icon-off="ion-ios-timer-outline" icon-on="ion-ios-timer" badge="badgequiz"
+    <!--<ion-tab title="quiz" icon-off="ion-ios-timer-outline" icon-on="ion-ios-timer" badge="badgequiz"
              badge-style="badge-assertive" ng-click="onTabSelected()">
 
     </ion-tab>
@@ -21,7 +21,7 @@
     <ion-tab title="Suivi" icon-off="ion-ios-pulse" icon-on="ion-ios-pulse-strong"  badge="badgeFollow"
              badge-style="badge-assertive" ng-click="onTabSelected()">
 
-    </ion-tab>
+    </ion-tab>-->
 
     <!-- <ion-tab title="Messages" icon-off="ion-ios-email-outline" icon-on="ion-ios-email"
               badge="badgeMessages" badge-style="badge-assertive" ng-click="onTabSelected()">
@@ -44,7 +44,8 @@
     <div>
       <div class="divEmploi"><i class="ion-calendar">&nbsp;Planning</i></div>
       <br>
-
+      <div class="divPlanning" ><strong>
+        {{teacher.entity.name}}</strong>, cliquez sur une séance afin de demander sa modification ou son annulation !</div><br>
       <div class="pagText">
         Semaine du <br>
         <a id="idLeft" class="button icon-left ion-chevron-left button-clear button-dark pagText"
@@ -57,21 +58,22 @@
     <div  class="card divCard item-text-wrap"
           ng-repeat="timetables in teacher.entity.timetables | orderBy:'start' | filter:week">
 
-      <div ng-if="timetables.start > now" class="item item-divider divItem item-icon-right">
-        <div><a href="#" ng-app="capMission.teacher" ng-controller="TEmailController"
+      <div ng-if="millisToUTCDate(timetables.start) > dateNow" class="item item-divider divItem item-icon-right"  ng-app="capMission.teacher" ng-controller="TEmailController"
+           ng-click="modal.show();getTeacher(timetables.id,timetables.name,timetables.start,timetables.end,timetables.niveau)">
+        <!--<div><a href="#" ng-app="capMission.teacher" ng-controller="TEmailController"
                                                ng-click="modal.show();getT(timetables.id,timetables.name,timetables.start)"><i
-          class="icon ion-compose iMod"></i></a></div>
+          class="icon ion-compose iMod"></i></a></div>-->
         <div class="TextS">
           <nobr>
-            {{timetables.start | date: 'EEE dd MMM'}} {{timetables.start | date: 'HH:mm'}}-
-            {{timetables.end | date: 'HH:mm'}} <strong>{{timetables.name.trunc(10)}}</strong></nobr>
+            {{millisToUTCDate(timetables.start) | date: 'EEE dd MMM'}} {{millisToUTCDate(timetables.start) | date: 'HH:mm'}}-
+            {{millisToUTCDate(timetables.end) | date: 'HH:mm'}} <strong>{{timetables.name.trunc(10)}}-{{timetables.niveau}}</strong></nobr>
         </div>
       </div>
-      <div ng-if="timetables.start < now" class="item item-divider divItemS item-icon-right">
+      <div ng-if="millisToUTCDate(timetables.start) < dateNow" class="item item-divider divItemS item-icon-right">
         <div class="TextS">
           <nobr>
-            {{timetables.start | date: 'EEE dd MMM'}} {{timetables.start | date: 'HH:mm'}}-
-            {{timetables.end | date: 'HH:mm'}} <strong>{{timetables.name.trunc(10)}}</strong></nobr>
+            {{millisToUTCDate(timetables.start) | date: 'EEE dd MMM'}} {{millisToUTCDate(timetables.start) | date: 'HH:mm'}}-
+            {{millisToUTCDate(timetables.end) | date: 'HH:mm'}} <strong>{{timetables.name.trunc(10)}}-{{timetables.niveau}}</strong></nobr>
         </div>
       </div>
     </div>
@@ -83,13 +85,14 @@
         <div class="card">
           <i class="icon ion-ios-close close-modal" ng-click="modal.hide()"></i>
 
-          <p class="headerModal item-divider padding"> Vous voulez modifier ou supprimer cette séance? Envoyez-nous un
-            message !</p>
+          <p class="headerModal item-divider padding"> Détails <br> Matière : {{period}} <br> Date    : {{millisToUTCDate(debut) | date:'dd MMMM à HH:mm'}} <br>
+            Fin     : {{millisToUTCDate(fin) | date:'dd MMMM à HH:mm'}}<br>  Niveau  : {{tniv}} </p>
 
           <form name="myForm" novalidate>
             <input ng-model="id" type="hidden">
             <input ng-model="period" type="hidden">
             <input ng-model="debut" type="hidden">
+            <input ng-model="tniv" type="hidden">
             <input ng-model="mail.to" type="hidden">
             <input ng-model="mail.from" type="hidden">
             <input ng-model="mail.subject" type="hidden">
@@ -100,7 +103,7 @@
             <br>
             <center>
               <button ng-disabled="myForm.$invalid" class="button button-small buttonEmail button-dark "
-                      ng-click="sendT(mail,id,period,debut);modal.hide()">Envoyer
+                      ng-click="sendT(mail,id,period,debut,tniv);modal.hide()">Envoyer
               </button>
             </center>
           </form>

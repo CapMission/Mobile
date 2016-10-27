@@ -204,6 +204,13 @@ ion-content{
   font-weight:normal;
 
 }
+
+.divPlanning {
+  font-size:smaller;
+  color: #E74F11;
+  font-weight:normal;
+
+}
 .divEmploi {
   font-size:medium;
   font-family: 'Open Sans', Helvetica, Arial, sans-serif;
@@ -213,6 +220,10 @@ ion-content{
 .divCard {
   border-style: double;
   border-color:#350012;
+  width: 100%;
+  margin-left: 0px;
+  /*margin-left: 0%;
+  margin-right: 0%;*/
 
 }
 
@@ -581,13 +592,68 @@ input[type=checkbox].css-checkbox {
   padding:0;
   border:0;
 }
+.home{
+  background-image: none ;
+}
 /*.back{
-  background: url('home.jpg')no-repeat center center fixed;
-  -webkit-background-size: cover;
-  -moz-background-size: cover;
-  -o-background-size: cover;
-  background-size: cover;
+  background: url('home.jpg') no-repeat top center fixed;
+  position: fixed;
+  left: 0;
+  right: 0;
+  z-index: 1;
+
+  display: block;
+  width: 1200px;
+  height: 800px;
+
+  -webkit-filter: blur(5px);
+  -moz-filter: blur(5px);
+  -o-filter: blur(5px);
+  -ms-filter: blur(5px);
+  filter: blur(5px);
 }*/
+.homeImg{
+  border-style: hidden;
+  background-color: #c5c5c5;
+  height: 50%;
+  width: 80%;
+  left: 0;
+
+}
+/*.inputForm{
+  -webkit-border-radius: 50px;
+  -moz-border-radius: 50px;
+  border-radius: 50px;
+}*/
+
+.content:before {
+  content: "";
+  position: fixed;
+  left: 0;
+  right: 0;
+  /*z-index: -1;*/
+
+  display: block;
+  background: #c5c5c5;
+  background-image: none !important;
+  width: 100%;
+  height: 100%;
+
+  -webkit-filter: blur(5px);
+  -moz-filter: blur(5px);
+  -o-filter: blur(5px);
+  -ms-filter: blur(5px);
+  filter: blur(5px);
+}
+
+.content {
+ /* position: fixed;
+  left: 0;
+  right: 0;
+  z-index: 0;*/
+  /*margin-left: 20px;
+  margin-right: 20px;*/
+}
 #background {
   width: 100%;
   height: 100%;
@@ -596,6 +662,18 @@ input[type=checkbox].css-checkbox {
   top: 0px;
   z-index: -1; /* Ensure div tag stays behind content; -999 might work, too. */
 }
+
+/*#icons {
+  max-width: 100%;
+  position: absolute;
+  bottom: 22%;
+  right: 8%;
+  /!*width: auto;
+  height: auto;*!/
+  z-index: 8;
+  transform: rotate(-57deg); -ms-transform: rotate(-57deg); -webkit-transform: rotate(-57deg); -moz-transform: rotate(-57deg);
+}*/
+
 
 .stretch {
   background: url('home.jpg')no-repeat center center fixed;
@@ -1003,10 +1081,32 @@ ion-popover-view.fit1 ion-content {
   text-indent: 30px;
 
 }
-
+.buttonLogin{
+  -webkit-border-radius: 30px;
+  -moz-border-radius: 30px;
+  border-radius: 30px;
+  width: 100%;
+  height: 10px;
+  color: #E74F11;
+  font-size: medium;
+  background-color: #f1f1f1;
+}
 /*css pour instruction orange*/
 #instruc{
   color: #E74F11;
+  /*background: transparent;*/
+}
+
+#instruc1{
+  color: #E74F11;
+  -webkit-border-radius: 30px;
+  -moz-border-radius: 30px;
+  border-radius: 30px;
+  border-color: #000001;
+  width: 100%;
+  height: 40px;
+  background-color: #f1f1f1;
+  text-align: center;
 }
 #formBlanc{
   background-color: #D8D8D8;

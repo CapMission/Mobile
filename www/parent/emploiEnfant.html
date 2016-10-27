@@ -1,4 +1,4 @@
-<ion-view  title='<img class="title-image" src="parent/icon.png"> Planning </img>' cache-view="false">
+<ion-view   title='<img class="title-image" src="parent/icon.png"> Planning </img>' cache-view="false">
   <ion-nav-buttons side="right">
     <a class="button button-icon ion-ios-more rotate-90 fs-s" ng-app="capMission.parent" ng-controller="ProposCtrl" ng-click="popover.show($event)"></a>
   </ion-nav-buttons>
@@ -50,6 +50,8 @@
 
       <div class="divEmploi"><i class="ion-calendar">&nbsp;Planning de : {{son.entity.name}}</i></div>
       <br>
+      <div class="divPlanning" ><strong>
+        {{parent.entity.name}}</strong>, cliquez sur une séance afin de demander sa modification ou son annulation !</div><br>
 
       <div class="pagText">
         Semaine du <br>
@@ -63,21 +65,23 @@
     <div  class="card divCard item-text-wrap"
           ng-repeat="timetables in son.entity.timetables | orderBy:'start' | filter:week">
 
-      <div ng-if="timetables.start > now" class="item item-divider divItem item-icon-right">
-        <div><a href="#" ng-app="capMission" ng-controller="EmailController"
+      <div ng-if="millisToUTCDate(timetables.start) > dateNow" class="item item-divider divItem item-icon-right"
+           ng-app="capMission" ng-controller="EmailController"
+           ng-click="modal.show();getEmailInfo(timetables.id,son.entity.name,timetables.name,timetables.start,timetables.end)">
+        <!--<div><a href="#" ng-app="capMission" ng-controller="EmailController"
                                                ng-click="modal.show();getEmailInfo(timetables.id,son.entity.name,timetables.name,timetables.start)"><i
-          class="icon ion-compose iMod"></i></a></div>
+          class="icon ion-compose iMod"></i></a></div>-->
         <div class="TextS">
           <nobr>
-            {{timetables.start | date: 'EEE dd MMM'}} {{timetables.start | date: 'HH:mm'}}-
-            {{timetables.end | date: 'HH:mm'}} <strong>{{timetables.name.trunc(10)}}</strong></nobr>
+            {{millisToUTCDate(timetables.start) | date: 'EEE dd MMM'}} {{millisToUTCDate(timetables.start) | date: 'HH:mm'}}-
+            {{millisToUTCDate(timetables.end) | date: 'HH:mm'}} <strong>{{timetables.name}}</strong></nobr>
         </div>
       </div>
-      <div ng-if="timetables.start < now" class="item item-divider divItemS item-icon-right">
+      <div ng-if="millisToUTCDate(timetables.start) < dateNow" class="item item-divider divItemS item-icon-right">
         <div class="TextS">
           <nobr>
-            {{timetables.start | date: 'EEE dd MMM'}} {{timetables.start | date: 'HH:mm'}}-
-            {{timetables.end | date: 'HH:mm'}} <strong>{{timetables.name.trunc(10)}}</strong></nobr>
+            {{millisToUTCDate(timetables.start) | date: 'EEE dd MMM'}} {{millisToUTCDate(timetables.start) | date: 'HH:mm'}}-
+            {{millisToUTCDate(timetables.end) | date: 'HH:mm'}} <strong>{{timetables.name}}</strong></nobr>
         </div>
       </div>
     </div>
@@ -88,8 +92,8 @@
         <div class="card">
           <i class="icon ion-ios-close close-modal" ng-click="modal.hide()"></i>
 
-          <p class="headerModal item-divider padding"> Vous voulez modifier ou supprimer cette séance? Envoyez-nous un
-            message !</p>
+          <p class="headerModal item-divider padding"> Détails <br> Matière : {{period}} <br> Date    : {{millisToUTCDate(debut) | date:'dd MMMM à HH:mm'}} <br>
+            Fin     : {{millisToUTCDate(fin) | date:'dd MMMM à HH:mm'}}<br>  Enfant  : {{son.entity.name}} </p>
 
           <form name="myForm" novalidate>
             <input ng-model="id" type="hidden">

@@ -4,28 +4,30 @@
 var teacher = angular.module('capMission.teacher', ['ngResource', 'ui.router', 'ui.bootstrap', 'simplePagination']);
 
 
-teacher.controller("TEmailController",function($scope,$ionicPopup,$rootScope,$ionicModal,$http,$ionicLoading,$ionicHistory){
+teacher.controller("TEmailController",function($scope,$ionicPopup,$rootScope,$ionicModal,$http,$ionicLoading,$ionicHistory,URL_API){
   $ionicModal.fromTemplateUrl('templates/modalT.html', {
     scope: $scope
   }).then(function(modal) {
     $scope.modal = modal;
   });
-  $rootScope.getT = function(id,period,debut){
+  $rootScope.getTeacher = function(id,period,debut,end,niveau){
     $rootScope.idF = id
     $rootScope.period = period
     $rootScope.debut = debut
+    $rootScope.fin = end
+    $rootScope.tniv = niveau
     debutDate = new Date(debut).toLocaleDateString('fr-FR', {
       day : 'numeric',
       month : 'short',
       year : 'numeric',
       hour : 'numeric',
       minute : 'numeric'
-    }).split(' ').join('-');
+    }).split(' ').join(' ');
     console.log('idF: '+id)
     console.log('period: '+period)
     console.log('debut: '+debutDate)
   }
-  $rootScope.sendT = function(mail,id,period,debut) {
+  $rootScope.sendT = function(mail,id,period,debut,tniv) {
 
     //$test = $rootScope.parent.entity.mail
 
@@ -35,15 +37,10 @@ teacher.controller("TEmailController",function($scope,$ionicPopup,$rootScope,$io
     id = $rootScope.idF
     period = $rootScope.period
     debut = $rootScope.debut
-    debutDate = new Date(debut).toLocaleDateString('fr-FR', {
-      day : 'numeric',
-      month : 'short',
-      year : 'numeric',
-      hour : 'numeric',
-      minute : 'numeric'
-    }).split(' ').join(' ');
+    tniv = $rootScope.tniv
+    debutDate = new Date(debut)
     mail.subject = 'MOB - ' + $rootScope.teacher.entity.name + ' - Modification TimeTable'
-    $scope.body = 'Message :' + mail.body + '\n Détails \n Séance : ' + period + '\n Date : ' + debutDate
+    $scope.body = 'Message :' + mail.body + '\n Détails \n Séance : ' + period + '\n Niveau : ' + tniv + '\n Date : ' + debutDate
     mail.body = $scope.body
 
     console.log('idHF: '+id)
@@ -58,7 +55,7 @@ teacher.controller("TEmailController",function($scope,$ionicPopup,$rootScope,$io
       template: "En cours d'envoi !",
       duration: 1500
     });
-    $http.post('http://51.255.195.19:8182/CapMissionApp/send-mail', mail, {timeout: 120000}).success(function (data, status, headers, config) {
+    $http.post(URL_API+'/send-mail', mail, {timeout: 120000}).success(function (data, status, headers, config) {
       $ionicLoading.hide();
       toastr.success('Votre demande a été envoyée avec succès')
       //$ionicHistory.goBack();
@@ -78,16 +75,19 @@ teacher.controller("TEmailController",function($scope,$ionicPopup,$rootScope,$io
 
 });
 
-teacher.controller('TeacherCtrl', ['$scope', '$location', '$rootScope', '$http', '$ionicPopover', '$ionicLoading', function ($scope, $location, $rootScope, $http, $ionicPopover, $ionicLoading) {
+teacher.controller('TeacherCtrl', ['$scope', '$location', '$rootScope', '$http', '$ionicPopover', '$ionicLoading','URL_API', function ($scope, $location, $rootScope, $http, $ionicPopover, $ionicLoading,URL_API) {
   $scope.idTeacher = window.localStorage.getItem('id')
   $scope.now = new Date()
-  $scope.get = function (id) {
+  $scope.getT = function (id) {
+    console.log("GETT")
     $ionicLoading.show({
       template: 'Chargement'
     });
-    $http.get('http://51.255.195.19:8182/CapMissionApp/teachers/' + id, {timeout: 35000}).success(function (data, status, headers, config) {
+    $http.get(URL_API+'/teachers/' + id, {timeout: 35000}).success(function (data, status, headers, config) {
 
       $rootScope.teacher = data
+      window.localStorage.setItem("teacher", JSON.stringify(data));
+      //console.log('Teacher Data : ' + JSON.stringify({data: data}))
 
       $scope.limit = 10;
 
@@ -113,8 +113,15 @@ teacher.controller('TeacherCtrl', ['$scope', '$location', '$rootScope', '$http',
 
       }
     }).error(function (data) {
-      toastr.error('Echec de connexion ! Veuillez réessayer dans quelques instants !', 'Désolés !', {displayDuration: 1000});
-      navigator.app.exitApp();
+      if(window.localStorage.getItem("teacher") !== undefined) {
+        $rootScope.teacher = JSON.parse(window.localStorage.getItem("teacher"));
+        $ionicLoading.hide();
+        $location.path('/teacher');
+      }
+      else {
+        toastr.error('Echec de connexion ! Veuillez réessayer dans quelques instants !', 'Désolés !', {displayDuration: 1000});
+        navigator.app.exitApp();
+      }
     });
 
   }
@@ -140,7 +147,7 @@ teacher.controller('TProposCtrl', ['$scope', '$rootScope', '$http', '$location',
   });
 }]);
 
-teacher.controller('TprofileCtrl', ['$scope','$rootScope','$ionicPopover','$ionicHistory','$ionicModal','$http','$ionicLoading', function ($scope,$rootScope, $ionicPopover,$ionicHistory,$ionicModal,$http,$ionicLoading) {
+teacher.controller('TprofileCtrl', ['$scope','$rootScope','$ionicPopover','$ionicHistory','$ionicModal','$http','$ionicLoading','URL_API', function ($scope,$rootScope, $ionicPopover,$ionicHistory,$ionicModal,$http,$ionicLoading,URL_API) {
 
   $ionicModal.fromTemplateUrl('templates/modal-1.html', {
     id: '1', // We need to use and ID to identify the modal that is firing the event!
@@ -206,7 +213,7 @@ teacher.controller('TprofileCtrl', ['$scope','$rootScope','$ionicPopover','$ioni
       template: "En cours d'envoi !",
       duration: 1500
     });
-    $http.post('http://51.255.195.19:8182/CapMissionApp/send-mail', mail, {timeout: 120000}).success(function (data, status, headers, config) {
+    $http.post(URL_API+'/send-mail', mail, {timeout: 120000}).success(function (data, status, headers, config) {
       $ionicLoading.hide();
       toastr.success('Votre demande a été envoyée avec succès')
     }).error(function (data, status) {
@@ -242,7 +249,7 @@ teacher.controller('TprofileCtrl', ['$scope','$rootScope','$ionicPopover','$ioni
       template: "En cours d'envoi !",
       duration: 1500
     });
-    $http.post('http://51.255.195.19:8182/CapMissionApp/send-mail', mail, {timeout: 120000}).success(function (data, status, headers, config) {
+    $http.post(URL_API+'/send-mail', mail, {timeout: 120000}).success(function (data, status, headers, config) {
       $ionicLoading.hide();
       toastr.success('Votre demande a été envoyée avec succès')
     }).error(function (data, status) {
@@ -278,7 +285,7 @@ teacher.controller('TprofileCtrl', ['$scope','$rootScope','$ionicPopover','$ioni
       template: "En cours d'envoi !",
       duration: 1500
     });
-    $http.post('http://51.255.195.19:8182/CapMissionApp/send-mail', mail, {timeout: 120000}).success(function (data, status, headers, config) {
+    $http.post(URL_API+'/send-mail', mail, {timeout: 120000}).success(function (data, status, headers, config) {
       $ionicLoading.hide();
       toastr.success('Votre demande a été envoyée avec succès')
     }).error(function (data, status) {
@@ -295,7 +302,13 @@ teacher.controller('TprofileCtrl', ['$scope','$rootScope','$ionicPopover','$ioni
   }
 }]);
 
-teacher.controller('TsoldeCtrl', ['$scope', '$rootScope', '$ionicModal', '$http', '$ionicPopup', '$ionicLoading', '$ionicPopover', '$ionicHistory', function ($scope, $rootScope, $ionicModal, $http, $ionicPopup, $ionicLoading, $ionicPopover, $ionicHistory) {
+teacher.controller('TsoldeCtrl', ['$scope', '$rootScope', '$ionicModal', '$http', '$ionicPopup', '$ionicLoading', '$ionicPopover', '$ionicHistory','URL_API', function ($scope, $rootScope, $ionicModal, $http, $ionicPopup, $ionicLoading, $ionicPopover, $ionicHistory,URL_API) {
+
+  $scope.IsVisible = false;
+  $scope.ShowHide = function () {
+    //If DIV is visible it will be hidden and vice versa.
+    $scope.IsVisible = $scope.IsVisible ? false : true;
+  }
 
   $ionicModal.fromTemplateUrl('templates/modalSolde.html', {
     scope: $scope
@@ -362,7 +375,7 @@ teacher.controller('TsoldeCtrl', ['$scope', '$rootScope', '$ionicModal', '$http'
       template: "En cours d'envoi !",
       duration: 1500
     });
-    $http.post('http://51.255.195.19:8182/CapMissionApp/send-mail', mail, {timeout: 120000}).success(function (data, status, headers, config) {
+    $http.post(URL_API+'/send-mail', mail, {timeout: 120000}).success(function (data, status, headers, config) {
       $ionicLoading.hide();
       toastr.success('Votre demande a été envoyée avec succès')
       //$ionicHistory.goBack();
@@ -418,17 +431,25 @@ teacher.controller('TsoldeCtrl', ['$scope', '$rootScope', '$ionicModal', '$http'
   });*/
 }]);
 
-teacher.controller('TtimeCtrl', ['$scope','$ionicPopover','$rootScope','$http','$location', function ($scope, $ionicPopover,$rootScope,$http,$location) {
+teacher.controller('TtimeCtrl', ['$scope','$ionicPopover','$rootScope','$http','$location','URL_API', function ($scope, $ionicPopover,$rootScope,$http,$location,URL_API) {
   $id = resp.entity.id
-  $http.get('http://51.255.195.19:8182/CapMissionApp/teachers/' + $id, {timeout: 35000}).success(function (data, status, headers, config) {
+  $http.get(URL_API+'/teachers/' + $id, {timeout: 35000}).success(function (data, status, headers, config) {
     //$scope.test="safaa"
 
     $rootScope.teach = data
+    window.localStorage.setItem("teach", JSON.stringify(data));
     console.log('Data emploi'+JSON.stringify({data: data}))
     $location.path('teacher/indexT.html');
   }).error(function (data) {
-    toastr.error('Echec de connexion ! Veuillez réessayer dans quelques instants !', 'Désolés !', {displayDuration: 1000});
-    navigator.app.exitApp();
+    if(window.localStorage.getItem("teach") !== undefined) {
+      $rootScope.teach = JSON.parse(window.localStorage.getItem("teach"));
+      $ionicLoading.hide();
+      $location.path('teacher/indexT.html');
+    }
+    else {
+      toastr.error('Echec de connexion ! Veuillez réessayer dans quelques instants !', 'Désolés !', {displayDuration: 1000});
+      navigator.app.exitApp();
+    }
 
   });
   $ionicPopover.fromTemplateUrl('teacher/teacher-popover.html', {
@@ -476,7 +497,7 @@ teacher.controller('ChoixSoldeCtrl', ['$scope', '$rootScope', '$http', '$locatio
   });
 }]);
 
-teacher.controller('AmontSoldeCtrl', ['$scope', '$rootScope', '$http', '$location', '$ionicPopover', '$ionicHistory', '$ionicPopup', '$ionicModal', '$ionicLoading', function ($scope, $rootScope, $http, $location, $ionicPopover, $ionicHistory, $ionicPopup, $ionicModal, $ionicLoading) {
+teacher.controller('AmontSoldeCtrl', ['$scope', '$rootScope', '$http', '$location', '$ionicPopover', '$ionicHistory', '$ionicPopup', '$ionicModal', '$ionicLoading','URL_API', function ($scope, $rootScope, $http, $location, $ionicPopover, $ionicHistory, $ionicPopup, $ionicModal, $ionicLoading,URL_API) {
   /*
    $scope.getTotal = function() {
    var total = 0;
@@ -566,7 +587,7 @@ teacher.controller('AmontSoldeCtrl', ['$scope', '$rootScope', '$http', '$locatio
       template: "En cours d'envoi !",
       duration: 1500
     });
-    $http.post('http://51.255.195.19:8182/CapMissionApp/send-mail', mail, {timeout: 120000}).success(function (data, status, headers, config) {
+    $http.post(URL_API+'/send-mail', mail, {timeout: 120000}).success(function (data, status, headers, config) {
       $ionicLoading.hide();
       toastr.success('Votre demande a été envoyée avec succès')
       //$ionicHistory.goBack();
@@ -622,8 +643,8 @@ teacher.controller('ChoixEtudiantCtrl', ['$scope', '$rootScope', '$http', '$loca
   });
 }]);
 
-teacher.controller('TParametresCtrl', ['$scope', '$ionicPopup', '$rootScope', '$http', '$ionicLoading','$location','$ionicPopover','$ionicHistory',
-  function($scope,$ionicPopup,$rootScope,$http,$ionicLoading,$location,$ionicPopover,$ionicHistory){
+teacher.controller('TParametresCtrl', ['$scope', '$ionicPopup', '$rootScope', '$http', '$ionicLoading','$location','$ionicPopover','$ionicHistory','URL_API',
+  function($scope,$ionicPopup,$rootScope,$http,$ionicLoading,$location,$ionicPopover,$ionicHistory,URL_API){
 
     //Méthode pour le popup modifier son login
     $scope.modifLogin = function () {
@@ -674,8 +695,9 @@ teacher.controller('TParametresCtrl', ['$scope', '$ionicPopup', '$rootScope', '$
                   template: "En cours !",
                   duration: 1500
                 });
-                $http.put('http://51.255.195.19:8182/CapMissionApp/users/update/' + $scope.user.id, JSON.stringify(user), {timeout: 30000}).success(function (data, status, headers, config) {
+                $http.put(URL_API+'/users/update/' + $scope.user.id, JSON.stringify(user), {timeout: 30000}).success(function (data, status, headers, config) {
                   $scope.updateData = data
+                  //window.localStorage.setItem("updateLogin", JSON.stringify(data));
                   toastr.success('Votre login a été changé avec succès !', {displayDuration: 1000});
                   console.log('new login : ' + $scope.updateData.entity.login)
                   localStorage.removeItem("id")
@@ -685,7 +707,15 @@ teacher.controller('TParametresCtrl', ['$scope', '$ionicPopup', '$rootScope', '$
                   $location.path('/login')
 
                 }).error(function (data, status) {
-
+                 /* if(window.localStorage.getItem("updateLogin") !== undefined) {
+                    $rootScope.updateData = JSON.parse(window.localStorage.getItem("updateLogin"));
+                    $ionicLoading.hide();
+                    $location.path('/login');
+                  }
+                  else {
+                    toastr.error('Echec de connexion ! Veuillez réessayer dans quelques instants !', 'Désolés !', {displayDuration: 1000});
+                    navigator.app.exitApp();
+                  }*/
                   toastr.error('Echec de connexion ! Veuillez réessayer dans quelques instants !', 'Désolés !', {displayDuration: 1000});
                   navigator.app.exitApp();
 
@@ -753,8 +783,9 @@ teacher.controller('TParametresCtrl', ['$scope', '$ionicPopup', '$rootScope', '$
                   template: "En cours !",
                   duration: 1500
                 });
-                $http.put('http://51.255.195.19:8182/CapMissionApp/users/update/' + $scope.user.id, JSON.stringify(user), {timeout: 30000}).success(function (data, status, headers, config) {
+                $http.put(URL_API+'/users/update/' + $scope.user.id, JSON.stringify(user), {timeout: 30000}).success(function (data, status, headers, config) {
                   $scope.updateData = data
+                  //window.localStorage.setItem("updatePass", JSON.stringify(data));
                   toastr.success('Votre mot de passe a été changé avec succès !', {displayDuration: 1000});
                   console.log('new password : ' + $scope.updateData.entity.password)
                   localStorage.removeItem("id")
@@ -764,6 +795,16 @@ teacher.controller('TParametresCtrl', ['$scope', '$ionicPopup', '$rootScope', '$
                   $location.path('/login')
 
                 }).error(function (data, status) {
+
+                 /* if(window.localStorage.getItem("updatePass") !== undefined) {
+                    $rootScope.updateData = JSON.parse(window.localStorage.getItem("updatePass"));
+                    $ionicLoading.hide();
+                    $location.path('/login');
+                  }
+                  else {
+                    toastr.error('Echec de connexion ! Veuillez réessayer dans quelques instants !', 'Désolés !', {displayDuration: 1000});
+                    navigator.app.exitApp();
+                  }*/
 
                   toastr.error('Echec de connexion ! Veuillez réessayer dans quelques instants !', 'Désolés !', {displayDuration: 1000});
                   navigator.app.exitApp();

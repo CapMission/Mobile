@@ -45,7 +45,8 @@
     <div>
       <div class="divEmploi"><i class="ion-calendar">&nbsp;Planning</i></div>
       <br>
-
+      <div class="divPlanning" ><strong>
+        {{student.entity.name}}</strong>, cliquez sur une séance afin de demander sa modification ou son annulation !</div><br>
       <div class="pagText">
         Semaine du <br>
         <a id="idLeft" class="button icon-left ion-chevron-left button-clear button-dark pagText"
@@ -58,21 +59,22 @@
     <div  class="card divCard item-text-wrap"
           ng-repeat="timetables in student.entity.timetables | orderBy:'start' | filter:week">
 
-      <div ng-if="timetables.start > now" class="item item-divider divItem item-icon-right">
-        <div><a href="#" ng-app="capMission.student" ng-controller="SEmailController"
+      <div ng-if="millisToUTCDate(timetables.start) > dateNow" class="item item-divider divItem item-icon-right" ng-app="capMission.student" ng-controller="SEmailController"
+           ng-click="modal.show();getStudent(timetables.id,timetables.name,timetables.start,timetables.end)">
+        <!--<div><a href="#" ng-app="capMission.student" ng-controller="SEmailController"
                                                ng-click="modal.show();getS(timetables.id,timetables.name,timetables.start)"><i
-          class="icon ion-compose iMod"></i></a></div>
+          class="icon ion-compose iMod"></i></a></div>-->
         <div class="TextS">
           <nobr>
-            {{timetables.start | date: 'EEE dd MMM'}} {{timetables.start | date: 'HH:mm'}}-
-            {{timetables.end | date: 'HH:mm'}} <strong>{{timetables.name.trunc(10)}}</strong></nobr>
+            {{millisToUTCDate(timetables.start) | date: 'EEE dd MMM'}} {{millisToUTCDate(timetables.start) | date: 'HH:mm'}}-
+            {{millisToUTCDate(timetables.end) | date: 'HH:mm'}} <strong>{{timetables.name}}</strong></nobr>
         </div>
       </div>
-      <div ng-if="timetables.start < now" class="item item-divider divItemS item-icon-right">
+      <div ng-if="millisToUTCDate(timetables.start) < dateNow" class="item item-divider divItemS item-icon-right">
         <div class="TextS">
           <nobr>
-            {{timetables.start | date: 'EEE dd MMM'}} {{timetables.start | date: 'HH:mm'}}-
-            {{timetables.end | date: 'HH:mm'}} <strong>{{timetables.name.trunc(10)}}</strong></nobr>
+            {{millisToUTCDate(timetables.start) | date: 'EEE dd MMM'}} {{millisToUTCDate(timetables.start) | date: 'HH:mm'}}-
+            {{millisToUTCDate(timetables.end) | date: 'HH:mm'}} <strong>{{timetables.name}}</strong></nobr>
         </div>
       </div>
     </div>
@@ -87,8 +89,8 @@
         <div class="card">
           <i class="icon ion-ios-close close-modal" ng-click="modal.hide()"></i>
 
-          <p class="headerModal item-divider padding"> Vous voulez modifier ou supprimer cette séance? Envoyez-nous un
-            message !</p>
+          <p class="headerModal item-divider padding"> Détails <br> Matière : {{period}} <br> Date    : {{millisToUTCDate(debut) | date:'dd MMMM à HH:mm'}} <br>
+            Fin     : {{millisToUTCDate(fin) | date:'dd MMMM à HH:mm'}}<br> </p>
 
           <form name="myForm" novalidate>
             <input ng-model="id" type="hidden">

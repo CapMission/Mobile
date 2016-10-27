@@ -15,7 +15,7 @@ parent.filter('startFrom', function () {
   }
 });
 
-parent.controller('ParentCtrl', ['$scope', '$rootScope', '$http', '$location', '$ionicPopover', function ($scope, $rootScope, $http, $location, $ionicPopover) {
+parent.controller('ParentCtrl', ['$scope', '$rootScope', '$http', '$location', '$ionicPopover','URL_API', function ($scope, $rootScope, $http, $location, $ionicPopover,URL_API) {
 
   $ionicPopover.fromTemplateUrl('parent/parent-popover.html', {
     scope: $scope
@@ -25,7 +25,7 @@ parent.controller('ParentCtrl', ['$scope', '$rootScope', '$http', '$location', '
 
 }]);
 
-parent.controller('ProposCtrl', ['$scope', '$rootScope', '$http', '$location', '$ionicPopover', '$ionicHistory','$ionicLoading', function ($scope, $rootScope, $http, $location, $ionicPopover, $ionicHistory, $ionicLoading) {
+parent.controller('ProposCtrl', ['$scope', '$rootScope', '$http', '$location', '$ionicPopover', '$ionicHistory','$ionicLoading','URL_API', function ($scope, $rootScope, $http, $location, $ionicPopover, $ionicHistory, $ionicLoading,URL_API) {
 
   $rootScope.testNum = function(){
     var nbrEnf = 0
@@ -62,27 +62,7 @@ parent.controller('ProposCtrl', ['$scope', '$rootScope', '$http', '$location', '
         return nbrEnf
       }
     }
-   /* var nbreEnf = 1
-    if ($rootScope.parent.entity.students.length == '2') {
 
-      console.log($rootScope.parent.entity.name)
-      console.log(' test Le nombre des enfants est :' + $rootScope.parent.entity.students.length)
-      // On fait un for pour parcourir l'arrayList (car c'est une liste d'étudiants)
-      for (index = 0; index < 2; ++index) {
-        /!*$rootScope.variable = $rootScope.parent
-         $rootScope.variableA = $rootScope.variable.lastIndexOf(name);*!/
-        $rootScope.name = $rootScope.parent.entity.students[index].name
-         nbreEnf = 0
-      }
-      console.log($rootScope.name)
-      return nbreEnf;
-
-      console.log('function number '+ $rootScope.testNum())
-    }else {
-      nbreEnf = 1
-      return nbreEnf
-    }
-    console.log('return value : '+nbreEnf)*/
   }
   $rootScope.goChoix = function(){
   if ($rootScope.parent.entity.students.length == '1') {
@@ -98,19 +78,28 @@ parent.controller('ProposCtrl', ['$scope', '$rootScope', '$http', '$location', '
     }
 
     // Connexion au serveur pour récupérer les données Etudiant
-    $http.get('http://51.255.195.19:8182/CapMissionApp/students/' + id, {timeout: 35000}).success(function (data, status, headers, config) {
+    $http.get(URL_API+'/students/' + id, {timeout: 35000}).success(function (data, status, headers, config) {
 
       $rootScope.son = data
+      window.localStorage.setItem("son", JSON.stringify(data));
       $ionicLoading.hide();
       console.log('value : ' + window.localStorage.getItem('login'))
       // Redirige vers la page de l'emploi directement
       $location.path('/parent/emploiEnfant');
 
     }).error(function (data) {
-
+      if(window.localStorage.getItem("son") !== undefined) {
+        $rootScope.son = JSON.parse(window.localStorage.getItem("son"));
+        $ionicLoading.hide();
+        $location.path('/parent/emploiEnfant');
+      }
+      else {
+        toastr.error('Echec de connexion ! Veuillez réessayer dans quelques instants !', 'Désolés !', {displayDuration: 1000});
+        navigator.app.exitApp();
+      }
       //alert("Désolés , échec de connexion ! Veuillez réessayer dans quelques instants !")
-      toastr.error('Echec de connexion ! Veuillez réessayer dans quelques instants !', 'Désolés !', {displayDuration: 1000});
-      navigator.app.exitApp();
+      /*toastr.error('Echec de connexion ! Veuillez réessayer dans quelques instants !', 'Désolés !', {displayDuration: 1000});
+      navigator.app.exitApp();*/
     })
   } else {
     // Dans le cas où l'étudiant est aussi parent
@@ -135,18 +124,27 @@ parent.controller('ProposCtrl', ['$scope', '$rootScope', '$http', '$location', '
           console.log(id)
         }
 
-        $http.get('http://51.255.195.19:8182/CapMissionApp/students/' + id, {timeout: 35000}).success(function (data, status, headers, config) {
+        $http.get(URL_API+'/students/' + id, {timeout: 35000}).success(function (data, status, headers, config) {
 
           $rootScope.son = data
+          window.localStorage.setItem("son", JSON.stringify(data));
           $ionicLoading.hide();
           console.log('value : ' + window.localStorage.getItem('login'))
           $location.path('/parent/emploiEnfant');
 
         }).error(function (data) {
-
+          if(window.localStorage.getItem("son") !== undefined) {
+            $rootScope.son = JSON.parse(window.localStorage.getItem("son"));
+            $ionicLoading.hide();
+            $location.path('/parent/emploiEnfant');
+          }
+          else {
+            toastr.error('Echec de connexion ! Veuillez réessayer dans quelques instants !', 'Désolés !', {displayDuration: 1000});
+            navigator.app.exitApp();
+          }
           //alert("Désolés , échec de connexion ! Veuillez réessayer dans quelques instants !")
-          toastr.error('Echec de connexion ! Veuillez réessayer dans quelques instants !', 'Désolés !', {displayDuration: 1000});
-          navigator.app.exitApp();
+          /*toastr.error('Echec de connexion ! Veuillez réessayer dans quelques instants !', 'Désolés !', {displayDuration: 1000});
+          navigator.app.exitApp();*/
         })
       } else {
         $location.path('/choix');
@@ -181,7 +179,7 @@ parent.controller('BackCtrl', ['$scope', '$rootScope', '$http', '$location', '$i
 
 }]);
 
-parent.controller('EnfantCtrl', ['$scope', '$rootScope', '$http', '$location', '$ionicPopover', '$ionicHistory', '$ionicLoading', '$ionicPopup', '$q', function ($scope, $rootScope, $http, $location, $ionicPopover, $ionicHistory, $ionicLoading, $ionicPopup, $q) {
+parent.controller('EnfantCtrl', ['$scope', '$rootScope', '$http', '$location', '$ionicPopover', '$ionicHistory', '$ionicLoading', '$ionicPopup', '$q','URL_API','$localStorage', function ($scope, $rootScope, $http, $location, $ionicPopover, $ionicHistory, $ionicLoading, $ionicPopup, $q,URL_API, $localStorage) {
   $ionicPopover.fromTemplateUrl('parent/parent-popover.html', {
     scope: $scope
   }).then(function (popover) {
@@ -192,9 +190,13 @@ parent.controller('EnfantCtrl', ['$scope', '$rootScope', '$http', '$location', '
     $ionicLoading.show({
       template: 'Chargement'
     });
-    $http.get('http://51.255.195.19:8182/CapMissionApp/students/' + id, {timeout: 35000}).success(function (data, status, headers, config) {
+    $http.get(URL_API+'/students/' + id, {timeout: 35000}).success(function (data, status, headers, config) {
       //$scope.items = []
+
+      //var son = JSON.stringify(data);
+      //localStorage.setItem('son', son);
       $rootScope.son = data
+      window.localStorage.setItem("son", JSON.stringify(data));
 
       $ionicLoading.hide();
       console.log('value : ' + window.localStorage.getItem('login'))
@@ -208,8 +210,17 @@ parent.controller('EnfantCtrl', ['$scope', '$rootScope', '$http', '$location', '
       $location.path('/parent/emploiEnfant');
     }).error(function (data) {
       //alert("Désolés , échec de connexion ! Veuillez réessayer dans quelques instants !")
-      toastr.error('Echec de connexion ! Veuillez réessayer dans quelques instants !', 'Désolés !', {displayDuration: 1000});
-      navigator.app.exitApp();
+     /* toastr.error('Echec de connexion ! Veuillez réessayer dans quelques instants !', 'Désolés !', {displayDuration: 1000});
+      navigator.app.exitApp();*/
+      if(window.localStorage.getItem("son") !== undefined) {
+        $rootScope.son = JSON.parse(window.localStorage.getItem("son"));
+        $ionicLoading.hide();
+        $location.path('/parent/emploiEnfant');
+      }
+      else {
+        toastr.error('Echec de connexion ! Veuillez réessayer dans quelques instants !', 'Désolés !', {displayDuration: 1000});
+        navigator.app.exitApp();
+      }
 
     })
 
@@ -221,7 +232,7 @@ parent.controller('EnfantCtrl', ['$scope', '$rootScope', '$http', '$location', '
 
 }]);
 
-parent.controller('PprofileCtrl', ['$scope', '$ionicPopover', '$ionicHistory', '$rootScope', '$http','$ionicModal','$ionicLoading', function ($scope, $ionicPopover, $ionicHistory, $rootScope, $http,$ionicModal,$ionicLoading) {
+parent.controller('PprofileCtrl', ['$scope', '$ionicPopover', '$ionicHistory', '$rootScope', '$http','$ionicModal','$ionicLoading','URL_API', function ($scope, $ionicPopover, $ionicHistory, $rootScope, $http,$ionicModal,$ionicLoading,URL_API) {
   $ionicPopover.fromTemplateUrl('parent/parent-popover.html', {
     scope: $scope
   }).then(function (popover) {
@@ -296,7 +307,7 @@ parent.controller('PprofileCtrl', ['$scope', '$ionicPopover', '$ionicHistory', '
       template: "En cours d'envoi !",
       duration: 1500
     });
-    $http.post('http://51.255.195.19:8182/CapMissionApp/send-mail', mail, {timeout: 120000}).success(function (data, status, headers, config) {
+    $http.post(URL_API+'/send-mail', mail, {timeout: 120000}).success(function (data, status, headers, config) {
       toastr.success('Votre demande a été envoyée avec succès')
     }).error(function (data, status) {
       if (status == 0) {
@@ -330,7 +341,7 @@ parent.controller('PprofileCtrl', ['$scope', '$ionicPopover', '$ionicHistory', '
       template: "En cours d'envoi !",
       duration: 1500
     });
-    $http.post('http://51.255.195.19:8182/CapMissionApp/send-mail', mail, {timeout: 120000}).success(function (data, status, headers, config) {
+    $http.post(URL_API+'/send-mail', mail, {timeout: 120000}).success(function (data, status, headers, config) {
       toastr.success('Votre demande a été envoyée avec succès')
     }).error(function (data, status) {
       if (status == 0) {
@@ -364,7 +375,7 @@ parent.controller('PprofileCtrl', ['$scope', '$ionicPopover', '$ionicHistory', '
       template: "En cours d'envoi !",
       duration: 1500
     });
-    $http.post('http://51.255.195.19:8182/CapMissionApp/send-mail', mail, {timeout: 120000}).success(function (data, status, headers, config) {
+    $http.post(URL_API+'/send-mail', mail, {timeout: 120000}).success(function (data, status, headers, config) {
       toastr.success('Votre demande a été envoyée avec succès')
       //$ionicLoading.hide();
     }).error(function (data, status) {
@@ -399,7 +410,7 @@ parent.controller('PprofileCtrl', ['$scope', '$ionicPopover', '$ionicHistory', '
       template: "En cours d'envoi !",
       duration: 1500
     });
-    $http.post('http://51.255.195.19:8182/CapMissionApp/send-mail', mail, {timeout: 120000}).success(function (data, status, headers, config) {
+    $http.post(URL_API+'/send-mail', mail, {timeout: 120000}).success(function (data, status, headers, config) {
       toastr.success('Votre demande a été envoyée avec succès')
     }).error(function (data, status) {
       if (status == 0) {
@@ -415,7 +426,13 @@ parent.controller('PprofileCtrl', ['$scope', '$ionicPopover', '$ionicHistory', '
 
 }]);
 
-parent.controller('PsoldeCtrl', ['$scope', '$rootScope', '$ionicModal', '$http', '$ionicPopover', '$ionicHistory', '$location', '$ionicLoading', '$ionicPopup', function ($scope, $rootScope, $ionicModal, $http, $ionicPopover, $ionicHistory, $location, $ionicLoading, $ionicPopup) {
+parent.controller('PsoldeCtrl', ['$scope', '$rootScope', '$ionicModal', '$http', '$ionicPopover', '$ionicHistory', '$location', '$ionicLoading', '$ionicPopup','URL_API', function ($scope, $rootScope, $ionicModal, $http, $ionicPopover, $ionicHistory, $location, $ionicLoading, $ionicPopup,URL_API) {
+  $scope.IsVisible = false;
+  $scope.ShowHide = function () {
+    //If DIV is visible it will be hidden and vice versa.
+    $scope.IsVisible = $scope.IsVisible ? false : true;
+  }
+
   $ionicPopover.fromTemplateUrl('templates/popover.html', {
     scope: $scope,
   }).then(function (popover) {
@@ -431,15 +448,25 @@ parent.controller('PsoldeCtrl', ['$scope', '$rootScope', '$ionicModal', '$http',
     $ionicLoading.show({
       template: 'Chargement'
     });
-    $http.get('http://51.255.195.19:8182/CapMissionApp/students/' + id, {timeout: 35000}).success(function (data, status, headers, config) {
+    $http.get(URL_API+'/students/' + id, {timeout: 35000}).success(function (data, status, headers, config) {
       //$scope.items = []
       $rootScope.sonSolde = data
+      window.localStorage.setItem("sonSolde", JSON.stringify(data));
       $ionicLoading.hide();
       $location.path('/parent/solde');
     }).error(function (data) {
+      if(window.localStorage.getItem("sonSolde") !== undefined) {
+        $rootScope.sonSolde = JSON.parse(window.localStorage.getItem("sonSolde"));
+        $ionicLoading.hide();
+        $location.path('/parent/solde');
+      }
+      else {
+        toastr.error('Echec de connexion ! Veuillez réessayer dans quelques instants !', 'Désolés !', {displayDuration: 1000});
+        navigator.app.exitApp();
+      }
       //alert("Désolés , échec de connexion ! Veuillez réessayer dans quelques instants !")
-      toastr.error('Echec de connexion ! Veuillez réessayer dans quelques instants !', 'Désolés !', {displayDuration: 1000});
-      navigator.app.exitApp();
+     /* toastr.error('Echec de connexion ! Veuillez réessayer dans quelques instants !', 'Désolés !', {displayDuration: 1000});
+      navigator.app.exitApp();*/
 
     })
 
@@ -513,7 +540,7 @@ parent.controller('PsoldeCtrl', ['$scope', '$rootScope', '$ionicModal', '$http',
       template: "En cours d'envoi !",
       duration: 1500
     });
-    $http.post('http://51.255.195.19:8182/CapMissionApp/send-mail', mail, {timeout: 120000}).success(function (data, status, headers, config) {
+    $http.post(URL_API+'/send-mail', mail, {timeout: 120000}).success(function (data, status, headers, config) {
       //$ionicLoading.hide();
       toastr.success('Votre demande a été envoyée avec succès')
       //$ionicHistory.goBack();
@@ -605,7 +632,7 @@ parent.controller('RegParentCtrl', ['$scope', '$ionicPopover', '$ionicHistory', 
 
 }]);
 
-parent.controller('ChoixsoldeCtrl', ['$scope', '$rootScope', '$http', '$location', '$ionicPopover', '$ionicHistory', '$ionicLoading', function ($scope, $rootScope, $http, $location, $ionicPopover, $ionicHistory, $ionicLoading) {
+parent.controller('ChoixsoldeCtrl', ['$scope', '$rootScope', '$http', '$location', '$ionicPopover', '$ionicHistory', '$ionicLoading','URL_API', function ($scope, $rootScope, $http, $location, $ionicPopover, $ionicHistory, $ionicLoading,URL_API) {
   $ionicPopover.fromTemplateUrl('parent/parent-popover.html', {
     scope: $scope
   }).then(function (popover) {
@@ -628,18 +655,27 @@ parent.controller('ChoixsoldeCtrl', ['$scope', '$rootScope', '$http', '$location
       $ionicLoading.show({
         template: "Chargement..."
       });
-      $http.get('http://51.255.195.19:8182/CapMissionApp/students/' + id, {timeout: 35000}).success(function (data, status, headers, config) {
+      $http.get(URL_API+'/students/' + id, {timeout: 35000}).success(function (data, status, headers, config) {
 
         $rootScope.sonSolde = data
+        window.localStorage.setItem("sonSolde1", JSON.stringify(data));
         $ionicLoading.hide()
         // Redirige vers la page de l'emploi directement
         $location.path('/parent/solde');
 
       }).error(function (data) {
-
+        if(window.localStorage.getItem("sonSolde1") !== undefined) {
+          $rootScope.sonSolde = JSON.parse(window.localStorage.getItem("sonSolde1"));
+          $ionicLoading.hide();
+          $location.path('/parent/solde');
+        }
+        else {
+          toastr.error('Echec de connexion ! Veuillez réessayer dans quelques instants !', 'Désolés !', {displayDuration: 1000});
+          navigator.app.exitApp();
+        }
         //alert("Désolés , échec de connexion ! Veuillez réessayer dans quelques instants !")
-        toastr.error('Echec de connexion ! Veuillez réessayer dans quelques instants !', 'Désolés !', {displayDuration: 1000});
-        navigator.app.exitApp();
+        /*toastr.error('Echec de connexion ! Veuillez réessayer dans quelques instants !', 'Désolés !', {displayDuration: 1000});
+        navigator.app.exitApp();*/
       })
     } else if ($rootScope.parent.entity.students.length == '2') {
 
@@ -660,17 +696,26 @@ parent.controller('ChoixsoldeCtrl', ['$scope', '$rootScope', '$http', '$location
         $ionicLoading.show({
           template: "Chargement..."
         });
-        $http.get('http://51.255.195.19:8182/CapMissionApp/students/' + id, {timeout: 35000}).success(function (data, status, headers, config) {
+        $http.get(URL_API+'/students/' + id, {timeout: 35000}).success(function (data, status, headers, config) {
 
           $rootScope.sonSolde = data
+          window.localStorage.setItem("sonSolde1", JSON.stringify(data));
           $ionicLoading.hide()
           $location.path('/parent/solde');
 
         }).error(function (data) {
-
+          if(window.localStorage.getItem("sonSolde1") !== undefined) {
+            $rootScope.sonSolde = JSON.parse(window.localStorage.getItem("sonSolde1"));
+            $ionicLoading.hide();
+            $location.path('/parent/solde');
+          }
+          else {
+            toastr.error('Echec de connexion ! Veuillez réessayer dans quelques instants !', 'Désolés !', {displayDuration: 1000});
+            navigator.app.exitApp();
+          }
           //alert("Désolés , échec de connexion ! Veuillez réessayer dans quelques instants !")
-          toastr.error('Echec de connexion ! Veuillez réessayer dans quelques instants !', 'Désolés !', {displayDuration: 1000});
-          navigator.app.exitApp();
+         /* toastr.error('Echec de connexion ! Veuillez réessayer dans quelques instants !', 'Désolés !', {displayDuration: 1000});
+          navigator.app.exitApp();*/
         })
       }
       else if (name != $rootScope.parent.entity.name) {
@@ -727,8 +772,8 @@ parent.controller('PRemarqueCtrl', ['$scope', '$ionicPopover', function ($scope,
 }]);
 
 // Controller Remarque pour l'envoie de mail
-parent.controller("PEmailController", ['$scope', '$ionicPopup', '$rootScope', '$ionicModal', '$http', '$ionicLoading',
-  function ($scope, $ionicPopup, $rootScope, $ionicModal, $http, $ionicLoading) {
+parent.controller("PEmailController", ['$scope', '$ionicPopup', '$rootScope', '$ionicModal', '$http', '$ionicLoading','URL_API',
+  function ($scope, $ionicPopup, $rootScope, $ionicModal, $http, $ionicLoading,URL_API) {
     // Fonction qui envoie le mail
     $rootScope.sendR = function (mail) {
 
@@ -749,7 +794,7 @@ parent.controller("PEmailController", ['$scope', '$ionicPopup', '$rootScope', '$
         template: "En cours d'envoi !",
         duration: 1500
       });
-      $http.post('http://51.255.195.19:8182/CapMissionApp/send-mail', mail, {timeout: 120000}).success(function (data, status, headers, config) {
+      $http.post(URL_API+'/send-mail', mail, {timeout: 120000}).success(function (data, status, headers, config) {
 
         toastr.success('Votre remarque a été envoyée avec succès')
         //$ionicHistory.goBack();
@@ -781,8 +826,8 @@ parent.controller('PDemandeInfoController', ['$scope', '$ionicPopover', function
 }]);
 
 // Controller pour demande d'informations envoie Email
-parent.controller("PDemandeInfoEmailController", ['$scope', '$ionicPopup', '$rootScope', '$ionicModal', '$http', '$ionicLoading', '$location', '$ionicPopover',
-  function ($scope, $ionicPopup, $rootScope, $ionicModal, $http, $ionicLoading, $location, $ionicPopover) {
+parent.controller("PDemandeInfoEmailController", ['$scope', '$ionicPopup', '$rootScope', '$ionicModal', '$http', '$ionicLoading', '$location', '$ionicPopover','URL_API',
+  function ($scope, $ionicPopup, $rootScope, $ionicModal, $http, $ionicLoading, $location, $ionicPopover,URL_API) {
     $ionicPopover.fromTemplateUrl('parent/parent-popover.html', {
       scope: $scope
     }).then(function (popover) {
@@ -807,7 +852,7 @@ parent.controller("PDemandeInfoEmailController", ['$scope', '$ionicPopup', '$roo
         template: "En cours d'envoi !",
         duration: 1500
       });
-      $http.post('http://51.255.195.19:8182/CapMissionApp/send-mail', mail, {timeout: 120000}).success(function (data, status, headers, config) {
+      $http.post(URL_API+'/send-mail', mail, {timeout: 120000}).success(function (data, status, headers, config) {
         toastr.success('Votre remarque a été envoyée avec succès')
         //$ionicHistory.goBack();
       }).error(function (data, status) {
@@ -852,15 +897,16 @@ parent.controller('PChoixMatiereCtrl', ['$scope','$rootScope', '$ionicPopover','
 }]);
 
 // Controller page choix enfant à matière
-parent.controller('PAjoutCoursChoixCtrl', ['$scope', '$rootScope', '$ionicPopover', '$location', '$ionicHistory', '$ionicLoading', '$http', function ($scope, $rootScope, $ionicPopover, $location, $ionicHistory, $ionicLoading, $http) {
+parent.controller('PAjoutCoursChoixCtrl', ['$scope', '$rootScope', '$ionicPopover', '$location', '$ionicHistory', '$ionicLoading', '$http','URL_API', function ($scope, $rootScope, $ionicPopover, $location, $ionicHistory, $ionicLoading, $http,URL_API) {
   console.log('On est dans le controller PAjoutCoursChoixCtrl')
   $scope.goChoixMatiere = function(id){
     $rootScope.test = id
     $ionicLoading.show({
       template: "Chargement !",
     });
-    $http.get('http://51.255.195.19:8182/CapMissionApp/students/' + id, {timeout: 35000}).success(function (data) {
+    $http.get(URL_API+'/students/' + id, {timeout: 35000}).success(function (data) {
       $rootScope.eleve = data
+      window.localStorage.setItem("eleve", JSON.stringify(data));
       $rootScope.idE = $rootScope.eleve.entity.id
       $rootScope.nomEnfant = $rootScope.eleve.entity.name
       $rootScope.niveauE = $rootScope.eleve.entity.niveau.id
@@ -874,6 +920,19 @@ parent.controller('PAjoutCoursChoixCtrl', ['$scope', '$rootScope', '$ionicPopove
       $ionicLoading.hide()
       // Redirige vers la page de l'emploi directement
       $location.path('/parent/choixMatiere');
+    }).error(function (data) {
+      if(window.localStorage.getItem("eleve") !== undefined) {
+        $rootScope.eleve = JSON.parse(window.localStorage.getItem("eleve"));
+        $ionicLoading.hide();
+        $location.path('/parent/choixMatiere');
+      }
+      else {
+        toastr.error('Echec de connexion ! Veuillez réessayer dans quelques instants !', 'Désolés !', {displayDuration: 1000});
+        navigator.app.exitApp();
+      }
+      //alert("Désolés , échec de connexion ! Veuillez réessayer dans quelques instants !")
+      /* toastr.error('Echec de connexion ! Veuillez réessayer dans quelques instants !', 'Désolés !', {displayDuration: 1000});
+       navigator.app.exitApp();*/
     })
     // $location.path('/parent/choixMatiere')
   }
@@ -888,13 +947,14 @@ parent.controller('PAjoutCoursChoixCtrl', ['$scope', '$rootScope', '$ionicPopove
 }]);
 
 // Controller choix des enfant pour ajout cours
-parent.controller('ChoixAjoutCoursCtrl', ['$scope', '$rootScope', '$http', '$location', '$ionicPopover', '$ionicHistory', '$ionicLoading', '$http',
-  function ($scope, $rootScope, $http, $location, $ionicPopover, $ionicHistory, $ionicLoading, $http) {
+parent.controller('ChoixAjoutCoursCtrl', ['$scope', '$rootScope', '$http', '$location', '$ionicPopover', '$ionicHistory', '$ionicLoading','URL_API',
+  function ($scope, $rootScope, $http, $location, $ionicPopover, $ionicHistory, $ionicLoading,URL_API) {
     $scope.get = function (id) {
       if ($rootScope.parent.entity.students.length == '1') {
         console.log('Le nombre  :' + $rootScope.parent.entity.students.length)
-        $http.get('http://51.255.195.19:8182/CapMissionApp/students/' + id, {timeout: 35000}).success(function (data) {
+        $http.get(URL_API+'/students/' + id, {timeout: 35000}).success(function (data) {
           $rootScope.eleve = data
+          window.localStorage.setItem("eleve", JSON.stringify(data));
           $rootScope.idE = $rootScope.eleve.entity.id
           $rootScope.nomEnfant = $rootScope.eleve.entity.name
           $rootScope.niveauE = $rootScope.eleve.entity.niveau.id
@@ -908,9 +968,18 @@ parent.controller('ChoixAjoutCoursCtrl', ['$scope', '$rootScope', '$http', '$loc
           $ionicLoading.hide()
           $location.path('/parent/choixMatiere');
         }).error(function (data) {
+          if(window.localStorage.getItem("eleve") !== undefined) {
+            $rootScope.eleve = JSON.parse(window.localStorage.getItem("eleve"));
+            $ionicLoading.hide();
+            $location.path('/parent/choixMatiere');
+          }
+          else {
+            toastr.error('Echec de connexion ! Veuillez réessayer dans quelques instants !', 'Désolés !', {displayDuration: 1000});
+            navigator.app.exitApp();
+          }
           //alert("Désolés , échec de connexion ! Veuillez réessayer dans quelques instants !")
-          toastr.error('Echec de connexion ! Veuillez réessayer dans quelques instants !', 'Désolés !', {displayDuration: 1000});
-          navigator.app.exitApp();
+          /*toastr.error('Echec de connexion ! Veuillez réessayer dans quelques instants !', 'Désolés !', {displayDuration: 1000});
+          navigator.app.exitApp();*/
         })
       } else if ($rootScope.parent.entity.students.length == '2') {
         console.log($rootScope.parent.entity.name)
@@ -928,8 +997,9 @@ parent.controller('ChoixAjoutCoursCtrl', ['$scope', '$rootScope', '$http', '$loc
           $ionicLoading.show({
             template: "Chargement !"
           });
-          $http.get('http://51.255.195.19:8182/CapMissionApp/students/' + id, {timeout: 35000}).success(function (data) {
+          $http.get(URL_API+'/students/' + id, {timeout: 35000}).success(function (data) {
             $rootScope.eleve = data
+            window.localStorage.setItem("eleve", JSON.stringify(data));
             $rootScope.idE = $rootScope.eleve.entity.id
             $rootScope.nomEnfant = $rootScope.eleve.entity.name
             $rootScope.niveauE = $rootScope.eleve.entity.niveau.id
@@ -943,16 +1013,26 @@ parent.controller('ChoixAjoutCoursCtrl', ['$scope', '$rootScope', '$http', '$loc
             $ionicLoading.hide()
             $location.path('/parent/choixMatiere');
           }).error(function (data) {
+            if(window.localStorage.getItem("eleve") !== undefined) {
+              $rootScope.eleve = JSON.parse(window.localStorage.getItem("eleve"));
+              $ionicLoading.hide();
+              $location.path('/parent/choixMatiere');
+            }
+            else {
+              toastr.error('Echec de connexion ! Veuillez réessayer dans quelques instants !', 'Désolés !', {displayDuration: 1000});
+              navigator.app.exitApp();
+            }
             //alert("Désolés , échec de connexion ! Veuillez réessayer dans quelques instants !")
-            toastr.error('Echec de connexion ! Veuillez réessayer dans quelques instants !', 'Désolés !', {displayDuration: 1000});
-            navigator.app.exitApp();
+            /*toastr.error('Echec de connexion ! Veuillez réessayer dans quelques instants !', 'Désolés !', {displayDuration: 1000});
+            navigator.app.exitApp();*/
           })
         }
         else if (name != $rootScope.parent.entity.name) {
           $rootScope.test = id
           console.log('id enfant :' +$rootScope.test)
-          $http.get('http://51.255.195.19:8182/CapMissionApp/students/' + id, {timeout: 35000}).success(function (data) {
+          $http.get(URL_API+'/students/' + id, {timeout: 35000}).success(function (data) {
             $rootScope.eleve = data
+            window.localStorage.setItem("eleve", JSON.stringify(data));
             $rootScope.idE = $rootScope.eleve.entity.id
             $rootScope.nomEnfant = $rootScope.eleve.entity.name
             $rootScope.niveauE = $rootScope.eleve.entity.niveau.id
@@ -965,13 +1045,27 @@ parent.controller('ChoixAjoutCoursCtrl', ['$scope', '$rootScope', '$http', '$loc
             console.log('liste niveau : '+ $rootScope.niveauList)
             $ionicLoading.hide()
             $location.path('/parent/choixAjoutCours');
+          }).error(function (data) {
+            if(window.localStorage.getItem("eleve") !== undefined) {
+              $rootScope.eleve = JSON.parse(window.localStorage.getItem("eleve"));
+              $ionicLoading.hide();
+              $location.path('/parent/choixAjoutCours');
+            }
+            else {
+              toastr.error('Echec de connexion ! Veuillez réessayer dans quelques instants !', 'Désolés !', {displayDuration: 1000});
+              navigator.app.exitApp();
+            }
+            //alert("Désolés , échec de connexion ! Veuillez réessayer dans quelques instants !")
+            /*toastr.error('Echec de connexion ! Veuillez réessayer dans quelques instants !', 'Désolés !', {displayDuration: 1000});
+             navigator.app.exitApp();*/
           })
         }
       }
       else if ($rootScope.parent.entity.students.length >= "2") {
-        $http.get('http://51.255.195.19:8182/CapMissionApp/students/' + id, {timeout: 35000}).success(function (data) {
+        $http.get(URL_API+'/students/' + id, {timeout: 35000}).success(function (data) {
           console.log('id enfant :' +id)
           $rootScope.eleve = data
+          window.localStorage.setItem("eleve", JSON.stringify(data));
           $rootScope.idE = $rootScope.eleve.entity.id
           $rootScope.nomEnfant = $rootScope.eleve.entity.name
           $rootScope.niveauE = $rootScope.eleve.entity.niveau.id
@@ -984,6 +1078,19 @@ parent.controller('ChoixAjoutCoursCtrl', ['$scope', '$rootScope', '$http', '$loc
           console.log('liste niveau : '+ $rootScope.niveauList)
           $ionicLoading.hide()
           $location.path('/parent/choixAjoutCours');
+        }).error(function (data) {
+          if(window.localStorage.getItem("eleve") !== undefined) {
+            $rootScope.eleve = JSON.parse(window.localStorage.getItem("eleve"));
+            $ionicLoading.hide();
+            $location.path('/parent/choixAjoutCours');
+          }
+          else {
+            toastr.error('Echec de connexion ! Veuillez réessayer dans quelques instants !', 'Désolés !', {displayDuration: 1000});
+            navigator.app.exitApp();
+          }
+          //alert("Désolés , échec de connexion ! Veuillez réessayer dans quelques instants !")
+          /*toastr.error('Echec de connexion ! Veuillez réessayer dans quelques instants !', 'Désolés !', {displayDuration: 1000});
+           navigator.app.exitApp();*/
         })
       }
     }
@@ -998,8 +1105,8 @@ parent.controller('ChoixAjoutCoursCtrl', ['$scope', '$rootScope', '$http', '$loc
   }]);
 
 // Controller pour choisir cours part ou cours en groupe
-parent.controller('PChoixTypeCours', ['$scope', '$rootScope', '$ionicPopover', '$location', '$ionicHistory', '$ionicLoading', '$http',
-  function ($scope, $rootScope, $ionicPopover, $location, $ionicHistory, $ionicLoading, $http) {
+parent.controller('PChoixTypeCours', ['$scope', '$rootScope', '$ionicPopover', '$location', '$ionicHistory', '$ionicLoading', '$http','URL_API',
+  function ($scope, $rootScope, $ionicPopover, $location, $ionicHistory, $ionicLoading, $http,URL_API) {
 
     $http.get('parent/prixP.json', {timeout: 35000}).success(function (data) {
       $rootScope.prixC = data
@@ -1074,8 +1181,8 @@ parent.controller('PChoixTypeCours', ['$scope', '$rootScope', '$ionicPopover', '
   }]);
 
 // Controller pour envoyer un mail pour ajout cours part
-parent.controller('PCoursParticulierCtrl', ['$scope', '$ionicPopup', '$rootScope', '$ionicModal', '$http', '$ionicLoading','$location','$ionicPopover',
-  function($scope,$ionicPopup,$rootScope,$ionicModal,$http,$ionicLoading,$location,$ionicPopover){
+parent.controller('PCoursParticulierCtrl', ['$scope', '$ionicPopup', '$rootScope', '$ionicModal', '$http', '$ionicLoading','$location','$ionicPopover','URL_API',
+  function($scope,$ionicPopup,$rootScope,$ionicModal,$http,$ionicLoading,$location,$ionicPopover,URL_API){
 
     // Fonction qui envoie le mail
     $rootScope.sendC = function(mail, coursPar, matiere) {
@@ -1086,7 +1193,7 @@ parent.controller('PCoursParticulierCtrl', ['$scope', '$ionicPopup', '$rootScope
 
       // Envoie de l'objet du mail et de son contenu
       mail.subject= 'MOB - ' + $rootScope.parent.entity.name + ' - AJOUT COURS PART. '
-      mail.body= coursPar + matiere+  '\n' +mail.body
+      mail.body= matiere+  '\n' +mail.body
 
       console.log('to: '+mail.to)
       console.log('from: '+mail.from)
@@ -1097,7 +1204,7 @@ parent.controller('PCoursParticulierCtrl', ['$scope', '$ionicPopup', '$rootScope
         template: "En cours d'envoi !",
         duration: 1500
       });
-      $http.post('http://51.255.195.19:8182/CapMissionApp/send-mail', mail, {timeout: 120000}).success(function (data, status, headers, config) {
+      $http.post(URL_API+'/send-mail', mail, {timeout: 120000}).success(function (data, status, headers, config) {
         toastr.success('Votre demande de cours particulier a été envoyée avec succès')
         //$ionicHistory.goBack();
       }).error(function (data, status) {
@@ -1123,8 +1230,8 @@ parent.controller('PCoursParticulierCtrl', ['$scope', '$ionicPopup', '$rootScope
   }]);
 
 // Controller pour ajout en groupe
-parent.controller('PCoursGroupCtrl', ['$scope', '$ionicPopup', '$rootScope', '$http', '$ionicLoading','$location','$ionicPopover',
-  function($scope,$ionicPopup,$rootScope,$http,$ionicLoading,$location,$ionicPopover){
+parent.controller('PCoursGroupCtrl', ['$scope', '$ionicPopup', '$rootScope', '$http', '$ionicLoading','$location','$ionicPopover','URL_API',
+  function($scope,$ionicPopup,$rootScope,$http,$ionicLoading,$location,$ionicPopover,URL_API){
 
     $scope.goAutre = function(matiere, niv, coursG, autre){
       $rootScope.mat = matiere
@@ -1152,8 +1259,8 @@ parent.controller('PCoursGroupCtrl', ['$scope', '$ionicPopup', '$rootScope', '$h
   }]);
 
 // Controller pour ajout groupe Autre
-parent.controller('PCoursGroupAutreCtrl', ['$scope', '$ionicPopup', '$rootScope', '$http', '$ionicLoading','$location','$ionicPopover',
-  function($scope,$ionicPopup,$rootScope,$http,$ionicLoading,$location,$ionicPopover){
+parent.controller('PCoursGroupAutreCtrl', ['$scope', '$ionicPopup', '$rootScope', '$http', '$ionicLoading','$location','$ionicPopover','URL_API',
+  function($scope,$ionicPopup,$rootScope,$http,$ionicLoading,$location,$ionicPopover,URL_API){
 
     // Fonction qui envoie le mail
     $rootScope.sendAutre = function(mail, mat, coursGpe , autres) {
@@ -1175,7 +1282,7 @@ parent.controller('PCoursGroupAutreCtrl', ['$scope', '$ionicPopup', '$rootScope'
         template: "En cours d'envoi !",
         duration: 1500
       });
-      $http.post('http://51.255.195.19:8182/CapMissionApp/send-mail', mail, {timeout: 120000}).success(function (data, status, headers, config) {
+      $http.post(URL_API+'/send-mail', mail, {timeout: 120000}).success(function (data, status, headers, config) {
         toastr.success('Votre message a été envoyée avec succès')
         //$ionicHistory.goBack();
       }).error(function (data, status) {
@@ -1201,8 +1308,8 @@ parent.controller('PCoursGroupAutreCtrl', ['$scope', '$ionicPopup', '$rootScope'
   }]);
 
 // Controller pour cours en groupe date et heure pour cours multiple
-parent.controller('PDateHoraireGroupeCtrl', ['$scope', '$ionicPopup', '$rootScope', '$http', '$ionicLoading','$location','$ionicPopover',
-  function($scope,$ionicPopup,$rootScope,$http,$ionicLoading,$location,$ionicPopover){
+parent.controller('PDateHoraireGroupeCtrl', ['$scope', '$ionicPopup', '$rootScope', '$http', '$ionicLoading','$location','$ionicPopover','URL_API',
+  function($scope,$ionicPopup,$rootScope,$http,$ionicLoading,$location,$ionicPopover,URL_API ){
 
     $scope.goRecap = function(matiere, niveauN, coursG, coursPar, freq, boutonRadio){
 
@@ -1231,8 +1338,8 @@ parent.controller('PDateHoraireGroupeCtrl', ['$scope', '$ionicPopup', '$rootScop
   }]);
 
 // Controller pour recap cours en groupe
-parent.controller('PRecapCoursGroupeCtrl', ['$scope', '$ionicPopup', '$rootScope', '$http', '$ionicLoading','$location','$ionicPopover',
-  function($scope,$ionicPopup,$rootScope,$http,$ionicLoading,$location,$ionicPopover){
+parent.controller('PRecapCoursGroupeCtrl', ['$scope', '$ionicPopup', '$rootScope', '$http', '$ionicLoading','$location','$ionicPopover','URL_API',
+  function($scope,$ionicPopup,$rootScope,$http,$ionicLoading,$location,$ionicPopover,URL_API){
 
     // Fonction qui envoie le mail
     $rootScope.sendR = function(mail, matiere, niveauN , coursG) {
@@ -1284,7 +1391,7 @@ parent.controller('PRecapCoursGroupeCtrl', ['$scope', '$ionicPopup', '$rootScope
         template: "En cours d'envoi !",
         duration: 1500
       });
-      $http.post('http://51.255.195.19:8182/CapMissionApp/send-mail', mail, {timeout: 120000}).success(function (data, status, headers, config) {
+      $http.post(URL_API+'/send-mail', mail, {timeout: 120000}).success(function (data, status, headers, config) {
         toastr.success('Votre message a été envoyée avec succès')
         $ionicLoading.hide()
         $rootScope.mat = undefined
@@ -1314,8 +1421,8 @@ parent.controller('PRecapCoursGroupeCtrl', ['$scope', '$ionicPopup', '$rootScope
   }]);
 
 // Controller pour choisir cours occasionnel ou cours en groupe
-parent.controller('PCoursChoixCtrl', ['$scope', '$ionicPopup', '$rootScope', '$http', '$ionicLoading','$location','$ionicPopover',
-  function($scope,$ionicPopup,$rootScope,$http,$ionicLoading,$location,$ionicPopover){
+parent.controller('PCoursChoixCtrl', ['$scope', '$ionicPopup', '$rootScope', '$http', '$ionicLoading','$location','$ionicPopover','URL_API',
+  function($scope,$ionicPopup,$rootScope,$http,$ionicLoading,$location,$ionicPopover,URL_API){
 
     $scope.goOcc = function(matiere, niveauN, coursG, coursPar, frequence){
       $rootScope.mat = matiere
@@ -1346,8 +1453,8 @@ parent.controller('PCoursChoixCtrl', ['$scope', '$ionicPopup', '$rootScope', '$h
   }]);
 
 // Controller pour date/h occasionnel
-parent.controller('PDateHoraireOccCtrl', ['$scope', '$ionicPopup', '$rootScope', '$http', '$ionicLoading','$location','$ionicPopover',
-  function($scope,$ionicPopup,$rootScope,$http,$ionicLoading,$location,$ionicPopover){
+parent.controller('PDateHoraireOccCtrl', ['$scope', '$ionicPopup', '$rootScope', '$http', '$ionicLoading','$location','$ionicPopover','URL_API',
+  function($scope,$ionicPopup,$rootScope,$http,$ionicLoading,$location,$ionicPopover,URL_API){
 
     $scope.goRecap = function(matiere, niveauN, coursG, coursPar, freq, dateDebut){
 
@@ -1383,8 +1490,8 @@ parent.controller('PDateHoraireOccCtrl', ['$scope', '$ionicPopup', '$rootScope',
   }]);
 
 // Controller pour recap cours en groupe réguliers
-parent.controller('PTestCtrl', ['$scope', '$ionicPopup', '$rootScope', '$http', '$ionicLoading','$location','$ionicPopover',
-  function($scope,$ionicPopup,$rootScope,$http,$ionicLoading,$location,$ionicPopover){
+parent.controller('PTestCtrl', ['$scope', '$ionicPopup', '$rootScope', '$http', '$ionicLoading','$location','$ionicPopover','URL_API',
+  function($scope,$ionicPopup,$rootScope,$http,$ionicLoading,$location,$ionicPopover,URL_API){
 
     // Fonction qui envoie le mail
 
@@ -1418,7 +1525,7 @@ parent.controller('PTestCtrl', ['$scope', '$ionicPopup', '$rootScope', '$http', 
         template: "En cours d'envoi !",
         duration : 1500
       });
-      $http.post('http://51.255.195.19:8182/CapMissionApp/send-mail', mail, {timeout: 120000}).success(function (data, status, headers, config) {
+      $http.post(URL_API+'/send-mail', mail, {timeout: 120000}).success(function (data, status, headers, config) {
         toastr.success('Votre message a été envoyée avec succès')
         $ionicLoading.hide()
         $rootScope.matiere = undefined
@@ -1452,8 +1559,8 @@ parent.controller('PTestCtrl', ['$scope', '$ionicPopup', '$rootScope', '$http', 
   }
 ]);
 
-parent.controller('ChangerMdpCtrl', ['$scope', '$ionicPopup', '$rootScope', '$http', '$ionicLoading','$location','$ionicPopover','$ionicHistory',
-  function($scope,$ionicPopup,$rootScope,$http,$ionicLoading,$location,$ionicPopover,$ionicHistory){
+parent.controller('ChangerMdpCtrl', ['$scope', '$ionicPopup', '$rootScope', '$http', '$ionicLoading','$location','$ionicPopover','$ionicHistory','URL_API',
+  function($scope,$ionicPopup,$rootScope,$http,$ionicLoading,$location,$ionicPopover,$ionicHistory,URL_API){
 
 
 
@@ -1468,8 +1575,8 @@ parent.controller('ChangerMdpCtrl', ['$scope', '$ionicPopup', '$rootScope', '$ht
   }]);
 
 // Controller pour les parametres
-parent.controller('ParametresCtrl', ['$scope', '$ionicPopup', '$rootScope', '$http', '$ionicLoading','$location','$ionicPopover','$ionicHistory',
-  function($scope,$ionicPopup,$rootScope,$http,$ionicLoading,$location,$ionicPopover,$ionicHistory){
+parent.controller('ParametresCtrl', ['$scope', '$ionicPopup', '$rootScope', '$http', '$ionicLoading','$location','$ionicPopover','$ionicHistory','URL_API',
+  function($scope,$ionicPopup,$rootScope,$http,$ionicLoading,$location,$ionicPopover,$ionicHistory,URL_API){
 
     //Méthode pour le popup modifier son login
     $scope.modifLogin = function () {
@@ -1520,8 +1627,9 @@ parent.controller('ParametresCtrl', ['$scope', '$ionicPopup', '$rootScope', '$ht
                   template: "En cours !",
                   duration: 1500
                 });
-                $http.put('http://51.255.195.19:8182/CapMissionApp/users/update/' + $scope.user.id, JSON.stringify(user), {timeout: 30000}).success(function (data, status, headers, config) {
+                $http.put(URL_API+'/users/update/' + $scope.user.id, JSON.stringify(user), {timeout: 30000}).success(function (data, status, headers, config) {
                   $scope.updateData = data
+                  //window.localStorage.setItem("updateLogin", JSON.stringify(data));
                   toastr.success('Votre login a été changé avec succès !', {displayDuration: 1000});
                   console.log('new login : ' + $scope.updateData.entity.login)
                   localStorage.removeItem("id")
@@ -1531,6 +1639,15 @@ parent.controller('ParametresCtrl', ['$scope', '$ionicPopup', '$rootScope', '$ht
                   $location.path('/login')
 
                 }).error(function (data, status) {
+                  /*if(window.localStorage.getItem("updateLogin") !== undefined) {
+                    $rootScope.updateData = JSON.parse(window.localStorage.getItem("updateLogin"));
+                    $ionicLoading.hide();
+                    $location.path('/login');
+                  }
+                  else {
+                    toastr.error('Echec de connexion ! Veuillez réessayer dans quelques instants !', 'Désolés !', {displayDuration: 1000});
+                    navigator.app.exitApp();
+                  }*/
 
                   toastr.error('Echec de connexion ! Veuillez réessayer dans quelques instants !', 'Désolés !', {displayDuration: 1000});
                   navigator.app.exitApp();
@@ -1599,8 +1716,9 @@ parent.controller('ParametresCtrl', ['$scope', '$ionicPopup', '$rootScope', '$ht
                   template: "En cours !",
                   duration: 1500
                 });
-                $http.put('http://51.255.195.19:8182/CapMissionApp/users/update/' + $scope.user.id, JSON.stringify(user), {timeout: 30000}).success(function (data, status, headers, config) {
+                $http.put(URL_API+'/users/update/' + $scope.user.id, JSON.stringify(user), {timeout: 30000}).success(function (data, status, headers, config) {
                   $scope.updateData = data
+                  //window.localStorage.setItem("updatePass", JSON.stringify(data));
                   toastr.success('Votre mot de passe a été changé avec succès !', {displayDuration: 1000});
                   console.log('new password : ' + $scope.updateData.entity.password)
                   localStorage.removeItem("id")
@@ -1610,6 +1728,16 @@ parent.controller('ParametresCtrl', ['$scope', '$ionicPopup', '$rootScope', '$ht
                   $location.path('/login')
 
                 }).error(function (data, status) {
+
+                 /* if(window.localStorage.getItem("updatePass") !== undefined) {
+                    $rootScope.updateData = JSON.parse(window.localStorage.getItem("updatePass"));
+                    $ionicLoading.hide();
+                    $location.path('/login');
+                  }
+                  else {
+                    toastr.error('Echec de connexion ! Veuillez réessayer dans quelques instants !', 'Désolés !', {displayDuration: 1000});
+                    navigator.app.exitApp();
+                  }*/
 
                   toastr.error('Echec de connexion ! Veuillez réessayer dans quelques instants !', 'Désolés !', {displayDuration: 1000});
                   navigator.app.exitApp();
@@ -1657,8 +1785,8 @@ parent.controller('TarifCoursCtrl', ['$scope', '$ionicPopup', '$rootScope', '$ht
   }]);
 
 //controller pour les stages intensif
-parent.controller('StageIntensifCtrl', ['$scope', '$ionicPopup', '$rootScope', '$http', '$ionicLoading','$location','$ionicPopover',
-  function($scope,$ionicPopup,$rootScope,$http,$ionicLoading,$location,$ionicPopover){
+parent.controller('StageIntensifCtrl', ['$scope', '$ionicPopup', '$rootScope', '$http', '$ionicLoading','$location','$ionicPopover','URL_API',
+  function($scope,$ionicPopup,$rootScope,$http,$ionicLoading,$location,$ionicPopover,URL_API){
 
     $scope.goR = function (matiere, niveauN, stageIntens, vac) {
       $rootScope.mat = matiere
@@ -1679,8 +1807,8 @@ parent.controller('StageIntensifCtrl', ['$scope', '$ionicPopup', '$rootScope', '
   }]);
 
 //controller pour le récapitulatif des stages intensif
-parent.controller('RecapStageIntensifCtrl', ['$scope', '$ionicPopup', '$rootScope', '$http', '$ionicLoading','$location','$ionicPopover',
-  function($scope,$ionicPopup,$rootScope,$http,$ionicLoading,$location,$ionicPopover){
+parent.controller('RecapStageIntensifCtrl', ['$scope', '$ionicPopup', '$rootScope', '$http', '$ionicLoading','$location','$ionicPopover','URL_API',
+  function($scope,$ionicPopup,$rootScope,$http,$ionicLoading,$location,$ionicPopover,URL_API){
 
     $scope.sendR = function (mail, mat, niv, stageIntens, vacances) {
       $rootScope.matiere = mat
@@ -1724,7 +1852,7 @@ parent.controller('RecapStageIntensifCtrl', ['$scope', '$ionicPopup', '$rootScop
         template: "En cours d'envoi !",
         duration : 1500
       });
-      $http.post('http://51.255.195.19:8182/CapMissionApp/send-mail', mail, {timeout: 120000}).success(function (data, status, headers, config) {
+      $http.post(URL_API+'/send-mail', mail, {timeout: 120000}).success(function (data, status, headers, config) {
         toastr.success('Votre message a été envoyée avec succès')
         $rootScope.matiere = undefined
         $rootScope.niveauN = undefined
@@ -1755,8 +1883,8 @@ parent.controller('RecapStageIntensifCtrl', ['$scope', '$ionicPopup', '$rootScop
   }]);
 
 // Controller pour recap cours en groupe occasionnel
-parent.controller('RecapCoursOccCtrl', ['$scope', '$ionicPopup', '$rootScope', '$http', '$ionicLoading','$location','$ionicPopover',
-  function($scope,$ionicPopup,$rootScope,$http,$ionicLoading,$location,$ionicPopover){
+parent.controller('RecapCoursOccCtrl', ['$scope', '$ionicPopup', '$rootScope', '$http', '$ionicLoading','$location','$ionicPopover','URL_API',
+  function($scope,$ionicPopup,$rootScope,$http,$ionicLoading,$location,$ionicPopover,URL_API){
 
     // Fonction qui envoie le mail
 
@@ -1790,7 +1918,7 @@ parent.controller('RecapCoursOccCtrl', ['$scope', '$ionicPopup', '$rootScope', '
         template: "En cours d'envoi !",
         duration: 1500
       });
-      $http.post('http://51.255.195.19:8182/CapMissionApp/send-mail', mail, {timeout: 120000}).success(function (data, status, headers, config) {
+      $http.post(URL_API+'/send-mail', mail, {timeout: 120000}).success(function (data, status, headers, config) {
         toastr.success('Votre message a été envoyée avec succès')
         $rootScope.matiere = undefined
         $rootScope.coursGpe = undefined

@@ -1,5 +1,5 @@
 <ion-view title="Accueil" hide-back-button="true" style="background: white" cache-view="false" hide-nav-bar="true">
-  <ion-content has-header="true" padding="true">
+  <ion-content has-header="true" padding="true" class="content">
     <p>
       <a href="" onclick="window.open('http://www.capmission.com', '_system');">
         <img class="halfsize" src="resources/img/logo.png" width="230" height="60" align="left>">
@@ -12,7 +12,7 @@
 
     <div  ng-app="capMission.parent" ng-controller="ChoixCtrl">
       <center>
-        <button ng-click="get(idParent)" class="button icon-right ion-chevron-right buttonEmp">Tuteur</button>
+        <button ng-click="getP(idParent)" class=" button buttonLogin icon-right ion-chevron-right ">Tuteur</button>
       </center>
       <br>
     </div>
@@ -20,7 +20,7 @@
 
     <div  ng-app="capMission.teacher" ng-controller="TeacherCtrl">
       <center>
-        <button ng-click="get(idTeacher)" class="button icon-right ion-chevron-right buttonEmp">Enseignant</button>
+        <button ng-click="getT(idTeacher)" class="button buttonLogin icon-right ion-chevron-right">Enseignant</button>
       </center>
       <br>
     </div>
@@ -28,7 +28,7 @@
 
     <div  ng-app="capMission.student" ng-controller="StudentCtrl">
       <center>
-        <button ng-click="get(idStudent)" class="button icon-right ion-chevron-right buttonEmp">Etudiant</button>
+        <button ng-click="getS(idStudent)" class="button buttonLogin icon-right ion-chevron-right">Etudiant</button>
       </center>
     </div><br>
 

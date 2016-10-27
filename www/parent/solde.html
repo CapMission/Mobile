@@ -34,7 +34,8 @@
   </ion-tabs>
   <ion-content>
     <br><br><br><br>
-
+    <div class="divEmploi"><i class="icon ion-ios-calculator">&nbsp;Solde de : {{sonSolde.entity.name}}</i></div>
+    <br>
     <div class="row header">
       <div class="col">Payé</div>
       <div class="col">Consommé</div>
@@ -135,8 +136,10 @@
           <br> Tarif horaire : {{tarifHour | number:2}} MAD <br> Tarif de la séance : {{tarifPeriod | number:2}} MAD
           <br> Nombre d'heures : {{nbreHeures}} <div  ng-if="absence = 'p'"> Présent </div>
         <div ng-if="!absence"> Présent </div>
-        <div ng-show="!absence && absence != 'p'">{{absence}}</div></div>
-
+        <div ng-show="!absence && absence != 'p'">{{absence}}</div>
+          <a href="#" ng-click="ShowHide()"><i class="icon ion-android-mail iModM"></i></a>
+        </div>
+        <div ng-show = "IsVisible">
         <form name="myForm" novalidate>
           <input ng-model="id" type="hidden">
           <input ng-model="solde" type="hidden">
@@ -161,10 +164,10 @@
             </button>
           </center>
         </form>
-        <div class="padding">
+        <!--<div class="padding">
           <p ng-show="myForm.msg.$error.required">* Message est obligatoire</p>
-        </div>
-
+        </div>-->
+      </div>
       </div>
     </div>
   </script>

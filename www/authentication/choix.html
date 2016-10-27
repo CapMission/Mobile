@@ -1,6 +1,6 @@
 <ion-view title="Accueil" hide-back-button="true" style="background: white" cache-view="false" hide-nav-bar="true">
 
-  <ion-content has-header="true" padding="true">
+  <ion-content has-header="true" padding="true" class="content">
 
     <p>
       <a href="" onclick="window.open('http://www.capmission.com', '_system');">
@@ -23,7 +23,7 @@
 
     <div   ng-repeat="children in parent.entity.students" ng-if="parent.entity.name != children.name" >
       <div ng-app="capMission.parent" ng-controller="EnfantCtrl">
-      <center>  <button ng-click="getd(children.id)" class="button icon-right ion-chevron-right buttonEmp">{{children.name}}</button></center>
+      <center>  <button ng-click="getd(children.id)" class=" button buttonLogin icon-right ion-chevron-right ">{{children.name}}</button></center>
       <br>
       </div>
     </div>

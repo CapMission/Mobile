@@ -54,7 +54,7 @@
                   Matière
                 </div>
                 <select id="combo" ng-model="matiere" required>
-                  <option ng-repeat="matiere in eleve.entity.niveau.listCourse" ng-value="matiere.name" required>  <!-- matiereList.entity.listCourse -->
+                  <option ng-repeat="matiere in student.entity.niveau.listCourse" ng-value="matiere.name" required>  <!-- matiereList.entity.listCourse -->
                     {{matiere.name}}
                   </option>
                 </select>

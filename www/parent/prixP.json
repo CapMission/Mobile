@@ -252,6 +252,18 @@
         "prix": "150"
       }
     ],
+    "italienGpe": [
+      {
+        "id": "italienGpe",
+        "prix": "100"
+      }
+    ],
+    "italienInd": [
+      {
+        "id": "italienInd",
+        "prix": "250"
+      }
+    ],
     "francaisGeneralInd": [
       {
         "id": "francaisGeneralInd",

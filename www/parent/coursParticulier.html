@@ -53,6 +53,7 @@ xmlns="http://www.w3.org/1999/html">
         <input ng-model="parent" type="hidden">
         <input ng-model="mail.to" type="hidden">
         <input ng-model="mail.from" type="hidden">
+        <input ng-model="coursParti" type="hidden">
         <input ng-model="mail.subject" type="hidden"><br>
         <label class="item item-input">
          <textarea class='autoExpand' rows='3' col="15" data-min-rows='3' ng-model="mail.body"
@@ -61,7 +62,7 @@ xmlns="http://www.w3.org/1999/html">
         <br>
         <center>
           <button ng-disabled="myForm.$invalid" class="button button-small buttonEmail button-dark "
-                  ng-click="sendC(mail, coursPar, matiere)">Envoyer       <!--modal.hide()-->
+                  ng-click="sendC(mail, coursParti, matiere)">Envoyer       <!--modal.hide()-->
           </button>
         </center>
       </form>

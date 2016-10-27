@@ -16,7 +16,7 @@
     </ion-tab>
 
 
-    <ion-tab title="quiz" icon-off="ion-ios-timer-outline" icon-on="ion-ios-timer" badge="badgequiz"
+    <!--<ion-tab title="quiz" icon-off="ion-ios-timer-outline" icon-on="ion-ios-timer" badge="badgequiz"
              badge-style="badge-assertive" ng-click="onTabSelected()">
 
     </ion-tab>
@@ -25,7 +25,7 @@
     <ion-tab title="Suivi" icon-off="ion-ios-pulse" icon-on="ion-ios-pulse-strong" badge="badgeFollow"
              badge-style="badge-assertive" ng-click="onTabSelected()">
 
-    </ion-tab>
+    </ion-tab>-->
 
     <!-- <ion-tab title="Messages" icon-off="ion-ios-email-outline" icon-on="ion-ios-email"
               badge="badgeMessages" badge-style="badge-assertive" ng-click="onTabSelected()">
@@ -123,9 +123,12 @@
       <div class="card">
         <i class="icon ion-ios-close close-modal" ng-click="modal.hide()"></i>
 
-        <p class="headerModal item-divider padding"> Détails <br> Matière : {{name}} <br> Date : {{date | date:'dd MMM à HH:mm' }} <br> Solde : {{cumul | number:2}} MAD
-          <br>  Tarif horaire : {{cout | number:2}} MAD <br> Nombre d'heures : {{nbreHeures}} <br> Nombre d'étudiants : {{nbreStudents}}</p>
+        <div class="headerModal item-divider padding"> Détails <br> Matière : {{name}} <br> Date : {{date | date:'dd MMM à HH:mm' }} <br> Solde : {{cumul | number:2}} MAD
+          <br>  Tarif horaire : {{cout | number:2}} MAD <br> Nombre d'heures : {{nbreHeures}} <br> Nombre d'étudiants : {{nbreStudents}}
+          <br>  <a href="#" ng-click="ShowHide()"><i class="icon ion-android-mail iModM"></i></a>
+          </div>
 
+        <div ng-show = "IsVisible">
         <form name="myForm" novalidate>
           <input ng-model="id" type="hidden">
           <input ng-model="solde" type="hidden">
@@ -150,10 +153,10 @@
             </button>
           </center>
         </form>
-        <div class="padding">
+        <!--<div class="padding">
           <p ng-show="myForm.msg.$error.required">* Message est obligatoire</p>
-        </div>
-
+        </div>-->
+      </div>
       </div>
     </div>
   </script>
