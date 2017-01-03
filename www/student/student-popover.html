@@ -1,5 +1,5 @@
 <body ng-app="capMission.student">
-<ion-popover-view>
+<ion-popover-view class="fit1 platform-android">
   <ion-content>
     <div class="list">
        <a class="item" href="#/student/profil" ng-click="popover.hide()"><i class="icon ion-person">
@@ -10,9 +10,13 @@
         A propos
       </i></a>
       <hr>
-      <!--<a class="item" href="#/student/reglement" ng-click="popover.hide()"><i class="icon ion-document-text">
-        Règlement intérieur
-      </i></a>-->
+      <a class="item" href="#/student/demandeInfoE" ng-click="popover.hide()"><i class="icon ion-information-circled">
+        Informations
+      </i></a>
+      <a class="item" href="#/student/remarque" ng-click="popover.hide()"><i class="icon ion-help-circled">
+        Remarques
+      </i></a>
+      <hr>
       <a class="item" href="#/student/parametres" ng-click="popover.hide()"><i class="icon ion-gear-b">
         Paramètres
       </i></a>

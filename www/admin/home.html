@@ -1,0 +1,61 @@
+<ion-view view-title="Administration">
+  <ion-nav-buttons side="right">
+    <a class="button button-icon ion-ios-more rotate-90 fs-s" ng-app="capMission.administ" ng-controller="adminCtrl" ng-click="popover.show($event)"></a>
+  </ion-nav-buttons>
+  <ion-tabs class="tabs-icon-top tabs-color-active-positive" ng-class="{'tabs-item-hide': $root.hideTabs}">
+
+    <ion-tab  hidden="true" >
+
+    </ion-tab>
+
+    <ion-tab title="Notifications" href="#/home/message"  icon-off="icon ion-android-notifications-none"
+             icon-on="icon ion-android-notifications-none" badge="badgehome"
+             badge-style="badge-assertive" ng-controller="adminCtrl" ng-click="GoNotif()">
+
+    </ion-tab>
+
+
+    <ion-tab title="Historique" href="#/history" icon-off="icon ion-clipboard" icon-on="icon ion-clipboard"
+             badge="badgeSolde" badge-style="badge-assertive" ng-click="msgError()" >
+
+    </ion-tab>
+    <ion-tab title="Tableau de bord" icon-off="ion-ios-timer-outline" icon-on="ion-ios-timer"
+             badge="badgeMessages" badge-style="badge-assertive" ng-click="msgError()" >
+
+    </ion-tab>
+
+  </ion-tabs>
+
+  <br>
+  <ion-content>
+    <br><br>
+  <div class="row">
+    <div class="col-sm-8 col-sm-offset-2">
+
+      <div id="form-container">
+
+        <div class="page-header text-center">
+          <!-- the links to our nested states using relative paths -->
+          <!-- add the active class if the state matches our ui-sref -->
+          <nobr>
+          <div id="status-buttons" class="text-center">
+            <a ui-sref-active="active" ui-sref=".message"><span>1</span> Message</a>
+            <a ui-sref-active="active" ui-sref=".user"><span>2</span> Utilisateurs</a>
+            <a ui-sref-active="active" ui-sref=".date"><span>3</span> Date</a>
+            <a ui-sref-active="active" ui-sref=".recap"><span>4</span> Récapitulatif</a>
+          </div>
+          </nobr>
+        </div>
+
+        <!-- use ng-submit to catch the form submission and use our Angular function -->
+        <form id="signup-form">
+          <!-- our nested state views will be injected here -->
+          <div id="form-views" ui-view></div>
+
+        </form>
+
+      </div>
+    </div>
+  </div>
+  </ion-content>
+</ion-view>

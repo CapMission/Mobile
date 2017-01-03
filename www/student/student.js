@@ -420,11 +420,42 @@ student.controller('SProposCtrl', ['$scope', '$rootScope', '$http', '$location',
   });
 }]);
 
-student.controller('StimeCtrl', ['$scope','$ionicPopover','$http','$ionicHistory', function ($scope,$ionicPopover, $http,$ionicHistory) {
+student.controller('StimeCtrl', ['$scope','$rootScope','$ionicPopover','$http','$ionicLoading', function ($scope,$rootScope,$ionicPopover, $http,$ionicLoading) {
 
-  $scope.goBack = function(){
-    $ionicHistory.goBack();
-  }
+
+  /*$rootScope.getTimetable = function (id) {
+    $ionicLoading.show({
+      template: 'Chargement'
+    });
+    $http.get(URL_API+'/timetables/' + id).success(function (data, status, headers, config) {
+      //$scope.test="safaa"
+
+      $rootScope.studentTime = data
+      //window.localStorage.setItem("timetables", JSON.stringify(data));
+      function comp(a, b) {
+        return new Date(a.$rootScope.studentTime.start).getTime() - new Date(b.$rootScope.studentTime.start).getTime();
+      }
+      console.log("timetable sorted" + $rootScope.studentTime.sort(comp));
+    }).error(function (data) {
+      /!*if(window.localStorage.getItem("timetables") !== undefined) {
+        $rootScope.studentTime = JSON.parse(window.localStorage.getItem("timetables"));
+        $ionicLoading.hide();
+        window.localStorage.setItem("timetables", JSON.stringify(data));
+        function comp(a, b) {
+          return new Date(a.$rootScope.studentTime.start).getTime() - new Date(b.$rootScope.studentTime.start).getTime();
+        }
+        /!*$rootScope.studentTime.sort(comp);*!/
+        console.log("timetable sorted" + $rootScope.studentTime.sort(comp));
+      }
+      else {
+        toastr.error('Echec de connexion ! Veuillez réessayer dans quelques instants !', 'Désolés !', {displayDuration: 1000});
+        navigator.app.exitApp();
+      }*!/
+      toastr.error('Echec de connexion ! Veuillez réessayer dans quelques instants !', 'Désolés !', {displayDuration: 1000});
+       navigator.app.exitApp();
+
+    });
+  }*/
   $ionicPopover.fromTemplateUrl('student/student-popover.html', {
     scope: $scope
   }).then(function (popover) {
@@ -432,17 +463,100 @@ student.controller('StimeCtrl', ['$scope','$ionicPopover','$http','$ionicHistory
   });
 }]);
 
+// Controller pour demande d'informations envoie Email
+student.controller("SDemandeInfoEmailController", ['$scope', '$ionicPopup', '$rootScope', '$ionicModal', '$http', '$ionicLoading', '$location', '$ionicPopover','URL_API',
+  function ($scope, $ionicPopup, $rootScope, $ionicModal, $http, $ionicLoading, $location, $ionicPopover,URL_API) {
+    $ionicPopover.fromTemplateUrl('student/student-popover.html', {
+      scope: $scope
+    }).then(function (popover) {
+      $scope.popover = popover;
+    });
+    // Fonction qui envoie le mail
+    $rootScope.sendIS = function (mail) {
+
+      // Email to and from
+      mail.to = 'info@capmission.com'
+      mail.from = 'capmission.com@gmail.com'
+
+      // Envoie de l'objet du mail et de son contenu
+      mail.subject = 'MOB - ' + $rootScope.student.entity.name + ' - ' + mail.subject
+
+      console.log('to: ' + mail.to)
+      console.log('from: ' + mail.from)
+      console.log('subject: ' + mail.subject)
+      console.log('body: ' + mail.body)
+
+      $ionicLoading.show({
+        template: "En cours d'envoi !",
+        duration: 1500
+      });
+      $http.post(URL_API+'/send-mail', mail, {timeout: 120000}).success(function (data, status, headers, config) {
+        toastr.success('Votre remarque a été envoyée avec succès')
+        //$ionicHistory.goBack();
+      }).error(function (data, status) {
+        if (status == 0) {
+          toastr.error('Echec de connexion ! Veuillez réessayer dans quelques instants !', 'Veuillez nous excuser !', {displayDuration: 1000});
+          navigator.app.exitApp();
+        }
+        else {
+          toastr.error("Echec envoi de message ! Réessayez plus tart !")
+        }
+      });
+
+    }
+
+  }]);
+
+
+
 student.controller("SEmailController",function($scope,$ionicPopup,$rootScope,$ionicModal,$http,$ionicLoading,$ionicHistory,URL_API){
+  $rootScope.sendRS = function (mail) {
+
+    // Email to and from
+    mail.to = 'info@capmission.com'
+    mail.from = 'capmission.com@gmail.com'
+
+    // Envoie de l'objet du mail et de son contenu
+    mail.subject = 'MOB - ' + $rootScope.student.entity.name + ' - ' + mail.subject
+
+    console.log('to: ' + mail.to)
+    console.log('from: ' + mail.from)
+    console.log('subject: ' + mail.subject)
+    console.log('body: ' + mail.body)
+    console.log('body to send: ' + $scope.body)
+
+    $ionicLoading.show({
+      template: "En cours d'envoi !",
+      duration: 1500
+    });
+    $http.post(URL_API+'/send-mail', mail, {timeout: 120000}).success(function (data, status, headers, config) {
+
+      toastr.success('Votre remarque a été envoyée avec succès')
+      //$ionicHistory.goBack();
+    }).error(function (data, status) {
+      if (status == 0) {
+        toastr.error('Echec de connexion ! Veuillez réessayer dans quelques instants !', 'Veuillez nous excuser !', {displayDuration: 1000});
+        navigator.app.exitApp();
+      }
+      else {
+
+        toastr.error("Echec envoi de message ! Réessayez plus tart !")
+      }
+    });
+
+  }
+
   $ionicModal.fromTemplateUrl('templates/modalS.html', {
     scope: $scope
   }).then(function(modal) {
     $scope.modal = modal;
   });
-  $rootScope.getStudent = function(id,period,debut,end){
+  $rootScope.getStudent = function(id,period,debut,end,prof){
     $rootScope.idF = id
     $rootScope.period = period
     $rootScope.debut = debut
     $rootScope.fin = end
+    $rootScope.profS = prof
     debutDate = new Date(debut).toLocaleDateString('fr-FR', {
       day : 'numeric',
       month : 'short',
@@ -604,7 +718,7 @@ student.controller('SChoixMatiereCtrl', ['$scope', '$rootScope', '$ionicPopover'
 student.controller('SChoixTypeCoursCtrl', ['$scope', '$rootScope', '$ionicPopover', '$location', '$ionicHistory', '$ionicLoading', '$http',
   function ($scope, $rootScope, $ionicPopover, $location, $ionicHistory, $ionicLoading, $http) {
 
-    $http.get('student/prixS.json', {timeout: 35000}).success(function (data) {
+    $http.get('student/prixS.json').success(function (data) {
       $rootScope.prixC = data
 
 
@@ -1223,9 +1337,9 @@ student.controller('SParametresCtrl', ['$scope', '$ionicPopup', '$rootScope', '$
         template: '<form name="MyForm" ><input type="hidden" name = "oldLogin" ng-model="data.oldLogin" ng-init="data.oldLogin = resp.entity.login">' +
         '<input type="hidden" ng-model="user.id" ng-init="user.id = resp.entity.id">'+
         '<input type="hidden" ng-model="user.password" ng-init="user.password = resp.entity.password">'+
-        '<input type="text" class="lower" name = "oldLogin2" placeholder="Ancien Login" ng-model="data.oldLogin2" ng-pattern="data.oldLogin" ><br>' +
-        '<input type="text" class="lower" placeholder="Nouveau Login" name="newLogin" ng-model="user.newLogin"><br>' +
-        '<input type="text" class="lower" placeholder="Confirmer votre Login" name="confLogin" ng-model="data.confLogin" ng-pattern="user.newLogin">'+
+        '<input type="text" class="lower" name = "oldLogin2" placeholder=" Ancien Login" ng-model="data.oldLogin2" ng-pattern="data.oldLogin" ><br>' +
+        '<input type="text" class="lower" placeholder=" Nouveau Login" name="newLogin" ng-model="user.newLogin"><br>' +
+        '<input type="text" class="lower" placeholder=" Confirmer votre Login" name="confLogin" ng-model="data.confLogin" ng-pattern="user.newLogin">'+
         '<p ng-if="showError" class="errror">Champs obligatoires</p>'+
         '<p ng-if="showError1" class="errror"></p>'+
         '<div ng-show="MyForm.oldLogin2.$error.pattern" style="color: red">*Ancien login incorrect !</div>'+
@@ -1262,7 +1376,7 @@ student.controller('SParametresCtrl', ['$scope', '$ionicPopup', '$rootScope', '$
                   template: "En cours !",
                   duration: 1500
                 });
-                $http.put(URL_API+'/users/update/' + $scope.user.id, JSON.stringify(user), {timeout: 30000}).success(function (data, status, headers, config) {
+                $http.put(URL_API+'/users/update/' + $scope.user.id, JSON.stringify(user), {timeout: 35000}).success(function (data, status, headers, config) {
                   $scope.updateData = data
                   //window.localStorage.setItem("updateLogin", JSON.stringify(data));
                   toastr.success('Votre login a été changé avec succès !', {displayDuration: 1000});
@@ -1271,6 +1385,8 @@ student.controller('SParametresCtrl', ['$scope', '$ionicPopup', '$rootScope', '$
                   localStorage.removeItem("login")
                   localStorage.removeItem("password")
                   localStorage.removeItem("status")
+                  $ionicHistory.clearCache()
+                  $ionicHistory.clearHistory()
                   $location.path('/login')
 
                 }).error(function (data, status) {
@@ -1285,7 +1401,7 @@ student.controller('SParametresCtrl', ['$scope', '$ionicPopup', '$rootScope', '$
                     navigator.app.exitApp();
                   }*/
                   toastr.error('Echec de connexion ! Veuillez réessayer dans quelques instants !', 'Désolés !', {displayDuration: 1000});
-                   navigator.app.exitApp();
+                  navigator.app.exitApp();
 
 
 
@@ -1312,11 +1428,11 @@ student.controller('SParametresCtrl', ['$scope', '$ionicPopup', '$rootScope', '$
       // An elaborate, custom popup
       var myPopup = $ionicPopup.show({
         template: '<form name="MyForm" ><input type="hidden" name = "oldPwd" placeholder="Ancien mot de passe" ng-model="data.oldPwd" ng-init="data.oldPwd = resp.entity.password">' +
-        '<input type="password" class="lower" name = "oldPwd2" placeholder="Ancien mot de passe" ng-model="data.oldPwd2" ng-pattern="data.oldPwd" required="required"><br>' +
+        '<input type="password" class="lower" name = "oldPwd2" placeholder=" Ancien mot de passe" ng-model="data.oldPwd2" ng-pattern="data.oldPwd" required="required"><br>' +
         '<input type="hidden" ng-model="user.id" ng-init="user.id = resp.entity.id">'+
         '<input type="hidden" ng-model="user.login" ng-init="user.login = resp.entity.login">'+
-        '<input type="password" class="lower" name="oldLogin" placeholder="Nouveau mot de passe" ng-model="user.oldLogin"><br>' +
-        '<input type="password" class="lower" name="confLogin" placeholder="Confirmer votre Mot de Passe" ng-model="data.confLogin" ng-pattern="user.oldLogin"></form>' +
+        '<input type="password" class="lower" name="oldLogin" placeholder=" Nouveau mot de passe" ng-model="user.oldLogin"><br>' +
+        '<input type="password" class="lower" name="confLogin" placeholder=" Confirmer votre Mot de Passe" ng-model="data.confLogin" ng-pattern="user.oldLogin"></form>' +
         '<p ng-if="showError" class="errror">Champs obligatoires</p>'+
         '<p ng-if="showError1" class="errror"></p>'+
         '<div ng-show="MyForm.oldPwd2.$error.pattern" style="color: red">*Ancien mot de passe incorrect !</div>'+
@@ -1352,7 +1468,7 @@ student.controller('SParametresCtrl', ['$scope', '$ionicPopup', '$rootScope', '$
                   template: "En cours !",
                   duration: 1500
                 });
-                $http.put(URL_API+'/users/update/' + $scope.user.id, JSON.stringify(user), {timeout: 30000}).success(function (data, status, headers, config) {
+                $http.put(URL_API+'/users/update/' + $scope.user.id, JSON.stringify(user), {timeout: 35000}).success(function (data, status, headers, config) {
                   $scope.updateData = data
                   //window.localStorage.setItem("updatePass", JSON.stringify(data));
                   toastr.success('Votre mot de passe a été changé avec succès !', {displayDuration: 1000});
@@ -1361,6 +1477,8 @@ student.controller('SParametresCtrl', ['$scope', '$ionicPopup', '$rootScope', '$
                   localStorage.removeItem("login")
                   localStorage.removeItem("password")
                   localStorage.removeItem("status")
+                  $ionicHistory.clearCache()
+                  $ionicHistory.clearHistory()
                   $location.path('/login')
 
                 }).error(function (data, status) {
@@ -1375,7 +1493,7 @@ student.controller('SParametresCtrl', ['$scope', '$ionicPopup', '$rootScope', '$
                   }*/
 
                   toastr.error('Echec de connexion ! Veuillez réessayer dans quelques instants !', 'Désolés !', {displayDuration: 1000});
-                   navigator.app.exitApp();
+                  navigator.app.exitApp();
 
 
                 });

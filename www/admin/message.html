@@ -1,0 +1,16 @@
+<form name="myForm" id="myForm" novalidate >
+<div class="list" >
+    <label class="item item-input item-stacked-label">
+      <input type="text" name="nobjet" ng-model="nobjet"  placeholder="Objet" ng-init="nobjet = objet"  required />
+    </label>
+    <label class="item item-input item-stacked-label">
+      <textarea rows="4" name="nmessage" ng-model="nmessage" placeholder="Message" ng-init="nmessage = message" required></textarea>
+    </label><br>
+
+      <center><button type="button"  class="button icon-right ion-chevron-right button-stable"  ng-disabled="myForm.$invalid"
+                       ng-click="goUser(nobjet,nmessage)">Suivant
+      </button>
+      </center>
+
+</div>
+</form>

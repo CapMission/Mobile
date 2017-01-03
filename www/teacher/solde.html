@@ -67,9 +67,9 @@
       <div class="col">{{payment.date | date:'dd MMM'}}</div>
       <div class="col">{{payment.course.name.trunc(8)}}</div>
       <div class="col"><strong>{{payment.cumul | number:2}}</strong></div>
-      <div class="col iconSize2"><b><a class="ion-ios-information-outline iconSize2"
+      <div class="col iconSize2"><b><div class="ion-ios-information-outline iconSize2"
                                     ng-click="modal.show();getPayment(payment.course.name,payment.date,payment.cumul,payment.solde,payment.nbreHeures,payment.nbreStudents,payment.coutHoraire)">
-      </a></b></div>
+      </div></b></div>
 
       <!--<div class="col"><a ng-app="capMission.teacher" ng-controller="TsoldeCtrl" href="#"
                           ng-click="showAlert(payment.id,payment.solde,payment.nbreHeures,payment.nbreStudents,payment.coutHoraire,payment.date)">Détails</a>
@@ -79,7 +79,7 @@
     <br>
 
     <div>
-      <a class="aRight" href="" ng-show="teacher.entity.payments.length > limit" ng-click="showMore()">Plus détails <i class="icon ion-ios-plus-empty"></i></a>
+      <div class="aRight" ng-show="teacher.entity.payments.length > limit" ng-click="showMore()">Plus détails <i class="icon ion-ios-plus-empty"></i></div>
     </div>
 
 
@@ -124,7 +124,7 @@
         <i class="icon ion-ios-close close-modal" ng-click="modal.hide()"></i>
 
         <div class="headerModal item-divider padding"> Détails <br> Matière : {{name}} <br> Date : {{date | date:'dd MMM à HH:mm' }} <br> Solde : {{cumul | number:2}} MAD
-          <br>  Tarif horaire : {{cout | number:2}} MAD <br> Nombre d'heures : {{nbreHeures}} <br> Nombre d'étudiants : {{nbreStudents}}
+          <br>  Tarif horaire : {{cout | number:2}} MAD <br> Nombre d'heures : {{nbreHeures}}
           <br>  <a href="#" ng-click="ShowHide()"><i class="icon ion-android-mail iModM"></i></a>
           </div>
 
@@ -142,7 +142,7 @@
           <input ng-model="mail.from" type="hidden">
           <input ng-model="mail.subject" type="hidden">
           <label class="item item-input">
-            <center><textarea class='autoExpand' rows='3' col="30" data-min-rows='3' name="msg" ng-model="mail.body"
+            <center><textarea class='autoExpand textarea' rows='3' col="30" data-min-rows='3' name="msg" ng-model="mail.body"
                               placeholder="Votre message" required></textarea></center>
           </label>
           <br>

@@ -1,0 +1,67 @@
+<form >
+ <center><nobr><label class="divEmploi" for="first">Utilisateur(s)</label>
+  <input id="first" type="radio" name="content" ng-model="content" value="first">
+   &nbsp; &nbsp; &nbsp; &nbsp;<label class="divEmploi" for="other">Segment(s)</label>
+  <input id="other" type="radio" name="content" ng-model="content" ng-click="msgError()" value="other">
+
+ </nobr></center>
+</form>
+<br>
+<div class="wrapper">
+  <div class="divEmploi" ng-show="content == 'first'">
+    <form name="myForm1" id="myForm1" novalidate >
+
+    <div class="bar bar-header item-input-inset">
+      <ion-search placeholder="Chercher un utilisateur" filter="search"></ion-search>
+    </div><br>
+      <div>
+        <center><label ng-repeat="option in options"  id="option">
+          <input type="checkbox" class="check" ng-model="option.selected" />	<span class="button button-clear button-balanced">{{option.name}}</span>
+        </label></center>
+      </div>
+      <div class="divScroll">
+    <label ng-repeat="user in users | filter:search.value | filter:itemFilter">
+
+      <input type="checkbox" value="{{user.login}}" ng-click="updateUserValue(user)" ng-model="user.selected" name="group-one"
+             id="{{user.login}}" ng-required="value.length==0"> {{user.nom}}<br>
+    </label><br>
+
+        <center>
+          <button type="button"  class="button icon-left ion-chevron-left button-stable"
+                  ng-click="goMessage(objet,message)">Précédent
+          </button>
+          <button class="button icon-right ion-chevron-right button-stable"  ng-disabled="myForm1.$invalid"
+                        ng-click="goRecapNotf();saveU()">Suivant
+        </button></center>
+
+      </div>
+</form>
+  </div>
+  <!--div class="divEmploi" ng-show="content == 'other'">
+    <form name="myForm2" id="myForm2" novalidate >
+    <div class="divEmploi" ng-show="content == 'other'">
+      <div class="bar bar-header item-input-inset">
+        <ion-search placeholder="Chercher un segments" filter="search"></ion-search>
+      </div><br>
+      <ion-scroll direction="y" class="therootN">
+        <label ng-repeat="segment in segments | filter:search.value">
+          <input type="checkbox" value="{{segment.description}}" ng-click="updateSegmentValue(segment)" ng-model="segment.selected"
+                 name="group-on"
+                 id="{{segment.description}}" ng-required="valseg.length==0"> {{segment.description}}<br>
+        </label><br>
+
+        <center><button type="button"  class="button icon-left ion-chevron-left button-stable"
+                        ng-click="goMessage(nobjet,nmessage)">Précédent
+        </button>
+          <button class="button icon-right ion-chevron-right button-stable"  ng-disabled="myForm2.$invalid"
+                        ng-click="goDate();saveS();saveLogin()">Suivant
+        </button></center>
+      </ion-scroll>
+
+    </div>
+    </form>
+  </div-->
+
+
+</div>
+

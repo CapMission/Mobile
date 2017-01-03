@@ -1,0 +1,43 @@
+<form name="myForm" id="myForm" novalidate >
+<div class="">
+  <div class="card">
+    <div class="item item-divider">
+      <i class="icon ion-email"> Message</i>
+    </div>
+    <div class="item item-text-wrap">
+      <strong>Cap Mission - {{objet}}</strong> <br><br>
+      {{message}}
+    </div>
+  </div>
+
+  <div class="card">
+    <div class="item item-divider">
+      <i class="icon ion-person-stalker"> Destinataires</i>
+    </div>
+    <div class="item item-text-wrap">
+      <div ng-show="value != ''">{{ value | joinBy:', ' }}</div>
+      <div ng-show="valseg != ''">{{ valseg | joinBy:', ' }}</div>
+    </div>
+  </div>
+
+  <div class="card">
+    <div class="item item-divider">
+      <i class="ion-calendar"> Date</i>
+    </div>
+    <div class="item item-text-wrap">
+      <div>Immédiat</div>
+      <!--div ng-show="conten == 'other'">Immédiat</div>
+      <div ng-show="conten != 'other'">{{ndate | date: 'EEEE dd MMMM yyyy'}} à {{ndate | date: 'HH:mm'}}</div-->
+    </div>
+  </div>
+</div>
+  <br>
+
+    <center><nobr>
+      <button ng-disabled="myForm.$invalid" class="button buttonNotif " ng-click="Send(objet, message, value, valseg, ndate)">Envoyer</button>
+      <!--button ng-show="conten != 'other'" ng-disabled="myForm.$invalid" class="button buttonNotif " ng-click="Send(objet, message, selectUs, valseg, ndate)">Enregistrer
+      </button--> <button ng-disabled="myForm.$invalid" class="button buttonNotif" ng-click="goHome()">Annuler
+      </button>
+    </nobr></center>
+  </form>
+

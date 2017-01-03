@@ -9,6 +9,7 @@
   <link href="resources/bower_components/toastr/toastr.css" rel="stylesheet">
   <link href="resources/bower_components/ionic-toast/src/style.css" rel="stylesheet">
   <link href="resources/bower_components/AngularJS-Toaster/toaster.css" rel="stylesheet">
+
   <!--<link href="resources/bower_components/bootstrap/dist/css/bootstrap.min.css" rel="stylesheet">-->
   <!--<link href="resources/bower_components/bootstrap/dist/css/bootstrap.css" rel="stylesheet">
   <link href="resources/bower_components/bootstrap/dist/css/bootstrap.css.map" rel="stylesheet">-->
@@ -16,7 +17,8 @@
   <link href="resources/css/style.css" rel="stylesheet">
   <!--<link href="resources/css/font-awesome-4.6.3/css/font-awesome.min.css" rel="stylesheet">-->
 
-</head>
+
+<!--<script src="lib/ngCordova/dist/ng-cordova.js"></script>--></head>
 
 <body ng-app="capMission" ng-controller="capController">
 
@@ -52,7 +54,9 @@
 <script src="resources/bower_components/hammerjs/hammer.js"></script>
 <script src="resources/bower_components/ionic/js/ionic.js"></script>
 <script src="resources/bower_components/ionic/js/ionic.bundle.js"></script>
-
+<script src="resources/bower_components/ionic-wizard/dist/ion-wizard.js"></script>
+<script src="resources/bower_components/angular-websocket/dist/angular-websocket.js"></script>
+<script src="resources/bower_components/ngCordova/dist/ng-cordova.min.js"></script>
 
 <script src="resources/bower_components/ng-cordova-oauth/dist/ng-cordova-oauth.js"></script>
 <!--<script src="resources/bower_components/ionic-platform-web-client/dist/ionic.io.bundle.js"></script>-->
@@ -75,7 +79,9 @@
 <script src="resources/bower_components/angular-bootstrap/ui-bootstrap-tpls.js"></script>
 <script src="resources/bower_components/bootstrap/dist/js/bootstrap.js"></script>
 <script src="resources/bower_components/angularUtils-pagination/dirPagination.js"></script>
-<script src="resources/bower_components/ngCordova/dist/ng-cordova.min.js" ></script>
+
+<!--script src="resources/bower_components/parsleyjs/dist/parsley.js"></script-->
+
 <script src="cordova.js"></script>
 <!--<script src="resources/bower_components/ngCordova/dist/ng-cordova.js"></script>-->
 
@@ -103,6 +109,7 @@
 <!--<script src="resources/bower_components/ngstorage/ngStorage.js"></script>-->
 <script src="resources/bower_components/moment/moment.js"></script>
 <script src="resources/bower_components/moment/locale/fr.js"></script>
+<script src="resources/bower_components/checklist-model/checklist-model.js"></script>
 
 
 <script src="app.js"></script>
@@ -120,6 +127,7 @@
 <script src="student/student.js"></script>
 <script src="teacher/teacher.js"></script>
 <script src="parent/parent.js"></script>
+<script src="admin/admin.js"></script>
 <script>
   $(document)
     .one('focus.textarea', '.autoExpand', function () {
@@ -138,7 +146,7 @@
       this.rows = minRows + rows;
     });
 </script>
-<script>
+<!--<script>
   window.fbAsyncInit = function() {
     FB.init({
       appId      : 'your-app-id',
@@ -154,7 +162,7 @@
     js.src = "//connect.facebook.net/en_US/sdk.js";
     fjs.parentNode.insertBefore(js, fjs);
   }(document, 'script', 'facebook-jssdk'));
-</script>
+</script>-->
 
 </body>
 </html>

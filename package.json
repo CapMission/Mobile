@@ -27,10 +27,13 @@
       "locator": "https://github.com/katzer/cordova-plugin-local-notifications.git",
       "id": "de.appplant.cordova.plugin.local-notification"
     },
-    "ionic-plugin-deploy"
+    "ionic-plugin-deploy",
+    "cordova-plugin-inappbrowser",
+    "cordova-plugin-velda-devicefeedback",
+    "onesignal-cordova-plugin"
   ],
   "cordovaPlatforms": [
-    "ios",
-    "android"
+    "android",
+    "ios"
   ]
 }

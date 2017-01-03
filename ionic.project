@@ -5,6 +5,14 @@
     {
       "path": "/CapMissionApp",
       "proxyUrl": "http://51.255.195.19:8182/CapMissionApp"
-    }
+    },
+    {
+      "path": "/users.json",
+      "proxyUrl": "http://test-mission.com/users.json"
+    },
+    {
+       "path": "/segments.json",
+       "proxyUrl": "http://test-mission.com/segments.json"
+     }
   ]
 }

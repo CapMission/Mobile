@@ -531,7 +531,18 @@ span:last-of-type{
   }
 }*/
 
-textarea {
+
+@media (min-width: 680px) {
+  .modalSize1 {
+    top: 20px !important;
+    bottom: 0 !important;
+    left: 0 !important;
+    right: 0 !important;
+    width: 100% !important;
+  }
+}
+
+.textarea {
   display: block;
   box-sizing: padding-box;
   overflow: hidden;
@@ -746,7 +757,7 @@ input[type=checkbox].css-checkbox:checked + label.css-label {
 .dark-plus-orange{background-image:url(http://csscheckbox.com/checkboxes/dark-plus-orange.png);}
 .dark-check-cyan{background-image:url(http://csscheckbox.com/checkboxes/dark-check-cyan.png);}
 .dark-check-green{background-image:url(http://csscheckbox.com/checkboxes/dark-check-green.png);}
-.dark-check-orange{background-image:url(http://csscheckbox.com/checkboxes/dark-check-orange.png);}
+.dark-check-orange{background-image:url(dark-check-orange.png);}
 
 
 .depressed-lite-small{background-image:url(http://csscheckbox.com/checkboxes/depressed-lite-small.png);}
@@ -903,6 +914,15 @@ body {
 */
 .theroot {
   height: 300px;
+  width: 100%;
+}
+
+.therootN {
+  height: 200px;
+}
+.ulA {
+  padding-left: 20px;
+  line-height: 80%;
 }
 
 #foo {
@@ -1091,6 +1111,16 @@ ion-popover-view.fit1 ion-content {
   font-size: medium;
   background-color: #f1f1f1;
 }
+.buttonNotif{
+  -webkit-border-radius: 30px;
+  -moz-border-radius: 30px;
+  border-radius: 30px;
+  width: 50%;
+  height: 10px;
+  color: #E74F11;
+  font-size: medium;
+  background-color: #f1f1f1;
+}
 /*css pour instruction orange*/
 #instruc{
   color: #E74F11;
@@ -1126,6 +1156,9 @@ ion-popover-view.fit1 ion-content {
 }
 #iconC{
   font-size: 25px;
+}
+#iconCR{
+  font-size: 20px;
 }
 #listRecap{
   margin-bottom: -15px;
@@ -1368,4 +1401,126 @@ ion-popover-view.fit1 ion-content {
 .selectItem {
   background-color: #e5e8d9;
 }
+
+/* --------------------------- Admin CSS --------------------------- */
+
+/* form styling */
+
+#form-container                {margin-bottom:20px;
+  border-radius:5px; }
+#form-container .page-header   { margin:0; padding:30px;
+  border-top-left-radius:5px; border-top-right-radius:5px; }
+
+/* numbered buttons */
+#status-buttons                 {  }
+#status-buttons a               { color:#FFF; display:inline-block; font-size:12px; margin-right:10px; text-align:center; text-transform:uppercase; }
+#status-buttons a:hover         { text-decoration:none; }
+#status-buttons span            { background: #ced1e1; display:block; height:30px; margin:0 auto 10px; padding-top:5px; width:30px;
+  border-radius:50%; }
+
+/* active buttons */
+#status-buttons a.active span   { background:#E74F11; }
+
+/* ANIMATION STYLINGS
+============================================================================= */
+#signup-form            { position:relative; min-height:100%; overflow:hidden; padding:5px; }
+
+/* basic styling for entering and leaving */
+/* left and right added to ensure full width */
+#form-views.ng-enter,
+#form-views.ng-leave      { position:absolute; left:30px; right:30px;
+  transition:0.5s all ease; -moz-transition:0.5s all ease; -webkit-transition:0.5s all ease;
+}
+
+/* enter animation */
+#form-views.ng-enter            {
+  -webkit-animation:slideInRight 0.5s both ease;
+  -moz-animation:slideInRight 0.5s both ease;
+  animation:slideInRight 0.5s both ease;
+}
+
+/* leave animation */
+#form-views.ng-leave            {
+  -webkit-animation:slideOutLeft 0.5s both ease;
+  -moz-animation:slideOutLeft 0.5s both ease;
+  animation:slideOutLeft 0.5s both ease;
+}
+
+/* ANIMATIONS
+============================================================================= */
+/* slide out to the left */
+@keyframes slideOutLeft {
+  to 		{ transform: translateX(-200%); }
+}
+@-moz-keyframes slideOutLeft {
+  to 		{ -moz-transform: translateX(-200%); }
+}
+@-webkit-keyframes slideOutLeft {
+  to 		{ -webkit-transform: translateX(-200%); }
+}
+
+/* slide in from the right */
+@keyframes slideInRight {
+  from 	{ transform:translateX(200%); }
+  to 		{ transform: translateX(0); }
+}
+@-moz-keyframes slideInRight {
+  from 	{ -moz-transform:translateX(200%); }
+  to 		{ -moz-transform: translateX(0); }
+}
+@-webkit-keyframes slideInRight {
+  from 	{ -webkit-transform:translateX(200%); }
+  to 		{ -webkit-transform: translateX(0); }
+}
+
+#refText{
+display: block;
+  box-sizing: padding-box;
+  overflow: hidden;
+  font-size: 14px;
+}
+
+.divScroll{
+  overflow-y: auto;
+  overflow-x: hidden;
+  height:250px;
+}
+
+
+.subtitle {
+  color: #dcdcdc;
+  text-align: center;
+}
+.options_container {
+  margin: auto;
+  padding: 5px;
+}
+.option {
+  display: inline;
+  /*TEXT SETTINGS*/
+  color: #dcdcdc;
+  /*light grey*/
+  font-weight: 300;
+  font-size: 200%;
+  padding: 10px;
+  /*Prevent div being highlighted upon click*/
+  -webkit-user-select: none;
+  text-shadow: 0px 0px 4px black;
+}
+.option:hover {
+  -webkit-transition: 0.3s;
+  color: white;
+}
+/*Colour the category text*/
+:checked + span {
+  -webkit-transition: 0.1s;
+  color: #ffcc00;
+  text-shadow: 0px 0px 30px gray;
+}
+.check {
+  /*Hide checkboxes but maintain functionality*/
+  width: 0%;
+  visibility: hidden;
+}
+
 

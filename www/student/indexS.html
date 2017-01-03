@@ -49,32 +49,33 @@
         {{student.entity.name}}</strong>, cliquez sur une séance afin de demander sa modification ou son annulation !</div><br>
       <div class="pagText">
         Semaine du <br>
-        <a id="idLeft" class="button icon-left ion-chevron-left button-clear button-dark pagText"
-           ng-click="showLoading();prevWeek()"><strong>{{currentWeekStart()}}</strong></a>
-        <a id="idRight" class="button icon-right ion-chevron-right button-clear button-dark pagText"
-           ng-click="showLoading();nextWeek()"><strong>{{currentWeekEnd()}}</strong></a>
+        <div id="idLeft" class="button icon-left ion-chevron-left button-clear button-dark pagText"
+           ng-click="showLoading();prevWeek()"><strong>{{currentWeekStart()}}</strong></div>
+        <div id="idRight" class="button icon-right ion-chevron-right button-clear button-dark pagText"
+           ng-click="showLoading();nextWeek()"><strong>{{currentWeekEnd()}}</strong></div>
       </div>
+      <br>
     </div>
     <ion-scroll direction="y" class="theroot">
     <div  class="card divCard item-text-wrap"
           ng-repeat="timetables in student.entity.timetables | orderBy:'start' | filter:week">
 
       <div ng-if="millisToUTCDate(timetables.start) > dateNow" class="item item-divider divItem item-icon-right" ng-app="capMission.student" ng-controller="SEmailController"
-           ng-click="modal.show();getStudent(timetables.id,timetables.name,timetables.start,timetables.end)">
+           ng-click="modal.show();getStudent(timetables.id,timetables.name,timetables.start,timetables.end,timetables.professor)">
         <!--<div><a href="#" ng-app="capMission.student" ng-controller="SEmailController"
                                                ng-click="modal.show();getS(timetables.id,timetables.name,timetables.start)"><i
           class="icon ion-compose iMod"></i></a></div>-->
         <div class="TextS">
           <nobr>
             {{millisToUTCDate(timetables.start) | date: 'EEE dd MMM'}} {{millisToUTCDate(timetables.start) | date: 'HH:mm'}}-
-            {{millisToUTCDate(timetables.end) | date: 'HH:mm'}} <strong>{{timetables.name}}</strong></nobr>
+            {{millisToUTCDate(timetables.end) | date: 'HH:mm'}} <strong>{{timetables.name}}</strong> - {{timetables.professor.split(" ").pop()}}</nobr>
         </div>
       </div>
       <div ng-if="millisToUTCDate(timetables.start) < dateNow" class="item item-divider divItemS item-icon-right">
         <div class="TextS">
           <nobr>
             {{millisToUTCDate(timetables.start) | date: 'EEE dd MMM'}} {{millisToUTCDate(timetables.start) | date: 'HH:mm'}}-
-            {{millisToUTCDate(timetables.end) | date: 'HH:mm'}} <strong>{{timetables.name}}</strong></nobr>
+            {{millisToUTCDate(timetables.end) | date: 'HH:mm'}} <strong>{{timetables.name}}</strong> - {{timetables.professor.split(" ").pop()}}</nobr>
         </div>
       </div>
     </div>
@@ -90,7 +91,8 @@
           <i class="icon ion-ios-close close-modal" ng-click="modal.hide()"></i>
 
           <p class="headerModal item-divider padding"> Détails <br> Matière : {{period}} <br> Date    : {{millisToUTCDate(debut) | date:'dd MMMM à HH:mm'}} <br>
-            Fin     : {{millisToUTCDate(fin) | date:'dd MMMM à HH:mm'}}<br> </p>
+            Fin     : {{millisToUTCDate(fin) | date:'dd MMMM à HH:mm'}}
+            <br> Enseignant : {{profS.split(" ").pop()}}  </p>
 
           <form name="myForm" novalidate>
             <input ng-model="id" type="hidden">
@@ -100,7 +102,7 @@
             <input ng-model="mail.from" type="hidden">
             <input ng-model="mail.subject" type="hidden">
             <label class="item item-input">
-              <center><textarea class='autoExpand' rows='3' data-min-rows='3' name="msg" ng-model="mail.body"
+              <center><textarea class='autoExpand textarea' rows='3' data-min-rows='3' name="msg" ng-model="mail.body"
                                 placeholder="Votre message" required></textarea></center>
             </label>
             <br>

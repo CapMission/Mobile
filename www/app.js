@@ -17,6 +17,7 @@ var CapMission = angular.module('capMission', [
   'capMission.student',
   'capMission.teacher',
   'capMission.services',
+  'capMission.administ',
   'satellizer',
   'ui.bootstrap',
   'ionicProcessSpinner',
@@ -24,7 +25,9 @@ var CapMission = angular.module('capMission', [
   'ngStorage',
   'simplePagination',
   'ngAnimate',
-  'toaster'
+  'toaster',
+  'ionic.wizard',
+  "checklist-model"
   //'googleanalytics'
 ]);
 /*CapMission.run(function($ionicPopup) {
@@ -52,6 +55,13 @@ var CapMission = angular.module('capMission', [
     }
   });
 });*/
+
+CapMission.filter('joinBy', function () {
+  return function (input,delimiter) {
+    return (input || []).join(delimiter || ',');
+  };
+});
+
 CapMission.filter('capitalize', function() {
   return function(input, scope) {
     if (input!=null)
@@ -59,6 +69,7 @@ CapMission.filter('capitalize', function() {
     return input.substring(0,1).toUpperCase()+input.substring(1);
   }
 });
+
 
 CapMission.filter('utc', [function() {
   return function(date) {
@@ -87,28 +98,57 @@ CapMission.filter('setDecimal', function ($filter) {
   };
 });
 
-/*CapMission.controller('NotifController', function($scope, $cordovaLocalNotification, $ionicPlatform) {
-  /!*$scope.testFunction = function(){ alert('hello')}*!/
+CapMission.directive('ionSearch', function() {
+  return {
+    restrict: 'E',
+    replace: true,
+    scope: {
+      getData: '&source',
+      model: '=?',
+      search: '=?filter'
+    },
+    link: function(scope, element, attrs) {
+      attrs.minLength = attrs.minLength || 0;
+      scope.placeholder = attrs.placeholder || '';
+      scope.search = {value: ''};
 
-  $ionicPlatform.ready(function () {
-   if (ionic.Platform.isWebView()) {
-    }
-    $scope.scheduleInstantNotification = function () {
-      $cordovaLocalNotification.schedule({
-        id: 1,
-        text: 'login : ' + window.localStorage.getItem('login') ,
-        title: 'Rappel Cap Mission',
-        icon : 'parent/icon.png',
-        date : new Date()
-        /!*checkstatement : $scope.testFunction()*!/
-      }).then(function () {
-        //alert("Instant Notification set");
-      });
-    };
+      if (attrs.class)
+        element.addClass(attrs.class);
+
+      if (attrs.source) {
+        scope.$watch('search.value', function (newValue, oldValue) {
+          if (newValue.length > attrs.minLength) {
+            scope.getData({str: newValue}).then(function (results) {
+              scope.model = results;
+            });
+          } else {
+            scope.model = [];
+          }
+        });
+      }
+
+      scope.clearSearch = function() {
+        scope.search.value = '';
+      };
+    },
+    template: '<div class="item-input-wrapper">' +
+    '<i class="icon ion-android-search"></i>' +
+    '<input type="search" placeholder="{{placeholder}}" ng-model="search.value">' +
+    '<i ng-if="search.value.length > 0" ng-click="clearSearch()" class="icon ion-close"></i>' +
+    '</div>'
+  };
+})
+
+CapMission.controller('LocalNotif', function($scope, $rootScope, $cordovaLocalNotification, $ionicPlatform) {
+
+
+
   })
-});*/
 
 CapMission.controller('capController', function ($scope, $rootScope, $location, $http, $ionicLoading, $cordovaOauth,$localStorage,URL_API) {
+
+
+
   var toUTCDate = function(date){
     var _utc = new Date(date.getUTCFullYear(), date.getUTCMonth(), date.getUTCDate(),  date.getUTCHours(), date.getUTCMinutes(), date.getUTCSeconds());
     return _utc;
@@ -174,7 +214,6 @@ CapMission.controller('capController', function ($scope, $rootScope, $location, 
   if ($scope.checkStatus === 'undefined') {
     window.localStorage.clear()
     $scope.checkStatus = false
-    console.log('false checkbox : ' + $scope.checkStatus)
 
   }
   else if ($scope.checkStatus === 'true') {
@@ -182,132 +221,108 @@ CapMission.controller('capController', function ($scope, $rootScope, $location, 
     $scope.password = window.localStorage.getItem('password')
     $scope.checkStatus = true
     window.localStorage.setItem('status', 'true');
-    console.log('true checkbox : ' + $scope.checkStatus)
+  }
+
+  $rootScope.goAdmin = function(idAdmin){
+    console.log('id admin : ' + idAdmin)
+    $location.path('/home/message')
   }
 
   $rootScope.login = function (user) {
-    console.log('local login : ' + window.localStorage.getItem('login'))
-    console.log('local password : ' + window.localStorage.getItem('password'))
-    console.log('user login : ' + user.login)
-    console.log('user password : ' + user.password)
-    /*console.log('status before : ' + $scope.checkStatus)
-    window.localStorage.setItem('status', $scope.checkStatus);
-    console.log('status  : ' + $scope.checkStatus)*/
     $ionicLoading.show({
       template: 'Chargement'
     });
-    if((window.localStorage.getItem('login') != user.login) || (window.localStorage.getItem('password') != user.password)){
-      $http.post(URL_API+'/auth/login', user, {timeout: 30000}).success(function (data, status, headers, config) {
+
+    if(user.login == "notif" && user.password == "capmission"){
+      $ionicLoading.hide();
+      $location.path('/home/message')
+      window.localStorage.setItem('login', user.login);
+      window.localStorage.setItem('password', user.password);
+
+    }
+
+    else if((window.localStorage.getItem('login') != user.login) || (window.localStorage.getItem('password') != user.password)){
+      $http.post(URL_API+'/auth/login', user, {timeout: 40000}).success(function (data, status, headers, config) {
       /*$http.post('http://localhost:8182/CapMissionApp/auth/login', user, {timeout: 30000}).success(function (data, status, headers, config) {*/
         $rootScope.resp = data
-        console.log('idresp'+$rootScope.resp.entity.id)
         $scope.test = data
-        console.log('login before : ' + $scope.test.entity.login)
+
+
+        /*$http.get(URL_API+'/users/'+ $rootScope.resp.entity.id, {timeout: 40000}).success(function (donnee) {
+          $rootScope.userID = donnee
+          var idUser = window.localStorage.getItem('droit')
+          console.log('$scope type : '+  idUser)
+          //console.log('$scope value : '+ typeof angular.fromJson($scope.userID.entity.droitAdmin) )
+            //window.localStorage.setItem('droit', $rootScope.userID.entity.droitAdmin);
+          //console.log('windows local storage http : '+ window.localStorage.getItem('right'))
+          if(typeof $rootScope.userID.entity.droitAdmin == 'string' ){
+           $location.path('/home/message')
+           }
+          /*else if(($rootScope.userID.entity.droitAdmin === "null" ) || ($rootScope.userID.entity.droitAdmin === null )
+            || ($rootScope.userID.entity.droitAdmin = null ) || ($rootScope.userID.entity.droitAdmin == null ) ||
+            ($rootScope.userID.entity.droitAdmin = "null" ) || ($rootScope.userID.entity.droitAdmin == "null" ) ||
+            ($rootScope.userID.entity.droitAdmin = 'null' ) || ($rootScope.userID.entity.droitAdmin == 'null' )
+            || ($rootScope.userID.entity.droitAdmin === 'null' )) {
+          else{
+            $location.path('/role');
+          }
+
+        }).error(function (donnee) {
+          toastr.error('Erreur', {displayDuration: 1000});
+          $location.path('/login')
+        });*/
+
+        //console.log("$scope.userID" + $scope.userID.entity.droit)
+        //console.log("scope droit" + $scope.test.entity.droit)
+
 
         window.localStorage.setItem('id', $scope.test.entity.id);
         window.localStorage.setItem('login', $scope.test.entity.login);
         window.localStorage.setItem('password', $scope.test.entity.password);
 
-        console.log('value id : ' + window.localStorage.getItem('id'))
-        console.log('value login : ' + window.localStorage.getItem('login'))
-        console.log('value password : ' + window.localStorage.getItem('password'))
+        //console.log('rootscope id !!! ' + $rootScope.resp.entity.id)
+
+        $location.path('/role');
+
+
         $ionicLoading.hide();
 
+        /*if($rootScope.userID.entity.droitAdmin === 'true' ){
+          $location.path('/home/message')
+        }
+        else
+        { *///$location.path('/role');
+      //}
         //console.log(JSON.stringify({data: data}))
-        $location.path('/role');
+
       }).error(function (data, status) {
         if (status == 0) {
           toastr.error('Echec de connexion ! Veuillez réessayer dans quelques instants !', 'Désolés !', {displayDuration: 1000});
           navigator.app.exitApp();
         }
-        /*else if (data.login != window.localStorage.getItem('login') || data.password != window.localStorage.getItem('password')) {
-         $rootScope.errorMessageChang = "Votre login ou mot de passe a été changé ! Veuillez contacter Cap Mission pour plus d'informations";
-         }*/
         else if (data.login != user.login || data.password != user.password) {
+          $ionicLoading.hide()
           toastr.error('Identifiants incorrects ! ', {displayDuration: 1000});
+          $location.path('/login')
           //$rootScope.errorMessage = 'Login/Mot de passe incorrect';
         }
-        $ionicLoading.hide();
-        $location.path('/login');
 
       });
     }
     else {
+      console.log('windows local storage else : '+ window.localStorage.getItem('right'))
       $ionicLoading.hide();
-      $location.path('/role');
+      //console.log("scope droit" + $rootScope.resp.entity.droit)
+        //$ionicLoading.hide();
+        $location.path('/role');
     }
+
 
 
   }
 
-  //Function login facebook
-  /*$scope.loginFacebook = function(){
-    $http.get('http://localhost:8182/connect/facebook').success(function (data) {
-      $rootScope.facebookData = data
-      console.log(JSON.stringify({data: data}))
+});
 
-    }).error(function (data,error) {
-     console.log("erreur facebook " + error)
-    });
-    /!*$cordovaOauth.facebook("561387454023937", ["email"]).then(function(result) {
-      //window.localStorage.setItem('accessToken', result.access.token);
-      $localStorage.accessToken = result.access_token;
-      $location.path("/profile");
-    }, function(error) {
-      alert("There was a problem signing in!  See the console for logs");
-      console.log(error);
-    });*!/
-  }*/
-})
-/*CapMission.controller("FeedController", function($scope, $http, $localStorage, $location) {
-
-  $scope.init = function() {
-    if($localStorage.hasOwnProperty("accessToken") === true) {
-      $http.get("https://graph.facebook.com/v2.2/me/feed", { params: { access_token: $localStorage.accessToken, format: "json" }}).then(function(result) {
-        $scope.feedData = result.data.data;
-        $http.get("https://graph.facebook.com/v2.2/me", { params: { access_token: $localStorage.accessToken, fields: "picture", format: "json" }}).then(function(result) {
-          $scope.feedData.myPicture = result.data.picture.data.url;
-        });
-      }, function(error) {
-        alert("There was a problem getting your profile.  Check the logs for details.");
-        console.log(error);
-      });
-    } else {
-      alert("Not signed in");
-      $location.path("/login");
-    }
-  };
-
-});*/
-
-/*CapMission.controller('AnalyticsController', function($scope,$ionicPlatform) {
-  $ionicPlatform.ready(function () {
-    if(typeof analytics !== undefined) { analytics.trackView("Analytics Controller"); }
-
-    $scope.initEvent = function() {
-      if(typeof analytics !== undefined) { analytics.trackEvent("Category", "Action", "Label", 25); }
-    }
-  });
-
-});*/
-
-/*CapMission.controller("ProfileController", function($scope, $http, $localStorage, $location) {
-
-  $scope.init = function() {
-    if($localStorage.hasOwnProperty("accessToken") === true) {
-      $http.get("https://graph.facebook.com/v2.2/me", { params: { access_token: $localStorage.accessToken, fields: "id,name,gender,location,website,picture,relationship_status", format: "json" }}).then(function(result) {
-        $scope.profileData = result.data;
-      }, function(error) {
-        alert("There was a problem getting your profile.  Check the logs for details.");
-        console.log(error);
-      });
-    } else {
-      alert("Not signed in");
-      $location.path("/login");
-    }
-  };
-
-});*/
 
 CapMission.controller("EmailController",function($scope,$ionicPopup,$rootScope,$ionicModal,$http,$ionicLoading,$ionicHistory,URL_API){
   $ionicModal.fromTemplateUrl('templates/modal.html', {
@@ -317,12 +332,13 @@ CapMission.controller("EmailController",function($scope,$ionicPopup,$rootScope,$
   }).then(function(modal) {
     $scope.modal = modal;
   });
-  $rootScope.getEmailInfo = function(id,enfant,period,debut,end){
+  $rootScope.getEmailInfo = function(id,enfant,period,debut,end,prof){
     $rootScope.idF = id
     $rootScope.child = enfant
     $rootScope.period = period
     $rootScope.debut = debut
     $rootScope.fin = end
+    $rootScope.prof = prof
     debutDate = new Date(debut).toLocaleDateString('fr-FR', {
       day : 'numeric',
       month : 'short',
@@ -450,6 +466,7 @@ CapMission.directive('uiShowPassword', [
 */
 
 CapMission.constant('URL_API', 'http://51.255.195.19:8182/CapMissionApp');
+CapMission.constant('DateNotif_Student', '');
 
 /*CapMission.filter('offset', function() {
   return function(input, start) {
@@ -463,6 +480,27 @@ CapMission.constant('URL_API', 'http://51.255.195.19:8182/CapMissionApp');
 
 CapMission.run(['$ionicPlatform', '$ionicPopup','$rootScope','$state','$location', function ($ionicPlatform, $ionicPopup, $rootScope,$state,$location) {
   $ionicPlatform.ready(function () {
+    // TODO switch to live api key before store release
+    //batch.setConfig({"androidAPIKey":"DEV582AE36F59249F4C6CFAB6FC812"}); // dev
+    batch.setConfig({"androidAPIKey":"582AE36F58FC6F8F82974A791E3E92"}); // live
+    batch.push.setGCMSenderID("44134246491").setup();
+    batch.start();
+    batch.push.registerForRemoteNotifications();
+
+    if(window.localStorage.getItem('login') != "undefined"){
+      batch.user.getEditor()
+        .setIdentifier(window.localStorage.getItem('login')) // Set to `null` if you want to remove the identifier.
+        .save();
+      alert("storage : "+ window.localStorage.getItem('login'))
+    }
+    else {
+      batch.user.getEditor()
+        .setIdentifier($rootScope.resp.entity.login) // Set to `null` if you want to remove the identifier.
+        .save();
+      alert("scope : "+ $rootScope.resp.entity.login)
+    }
+
+
     $rootScope.$on('$stateChangeSuccess', function () {
       if(typeof analytics !== undefined) {
         analytics.startTrackerWithId("UA-84205623-1");
@@ -471,6 +509,54 @@ CapMission.run(['$ionicPlatform', '$ionicPopup','$rootScope','$state','$location
         console.log("Google Analytics Unavailable");
       }
     });
+    var notificationOpenedCallback = function(jsonData) {
+     console.log('notificationOpenedCallback: ' + JSON.stringify(jsonData));
+     };
+
+    window.plugins.OneSignal
+     .startInit("a01a2291-c1f8-40e9-978b-b1dc66d04538", "44134246491")
+     .handleNotificationOpened(notificationOpenedCallback)
+     //.registerForPushNotifications()
+     //.enableInAppAlertNotification(true)
+     .endInit();
+
+    window.plugins.OneSignal.getIds(function(ids) {
+     did = ids.userId;
+     window.localStorage.setItem("did",ids.userId);
+     //alert(window.localStorage.getItem("did"))
+     });
+    //alert(window.localStorage.getItem('login'))
+
+
+    /*$rootScope.$on('$stateChangeSuccess', function () {
+      if(typeof analytics !== undefined) {
+        analytics.startTrackerWithId("UA-84205623-1");
+        analytics.trackView($state.current.name);
+      } else {
+        console.log("Google Analytics Unavailable");
+      }
+    });
+    var notificationOpenedCallback = function(jsonData) {
+      console.log('notificationOpenedCallback: ' + JSON.stringify(jsonData));
+    };
+
+    window.plugins.OneSignal
+      .startInit("a01a2291-c1f8-40e9-978b-b1dc66d04538", "44134246491")
+      .handleNotificationOpened(notificationOpenedCallback)
+      //.registerForPushNotifications()
+      //.enableInAppAlertNotification(true)
+      .endInit();
+
+    /*window.plugins.OneSignal.getIds(function(ids) {
+      did = ids.userId;
+      window.localStorage.setItem("did",ids.userId);
+      alert(window.localStorage.getItem("did"))
+    });*/
+
+   /* window.plugins.OneSignal.getIds(function(ids) {
+      $("#ids").val(ids.userId);
+      alert(ids.userId);
+    });*/
   });
 }]);
 
@@ -481,9 +567,9 @@ CapMission.run(['$ionicPlatform', '$ionicPopup','$location', function ($ionicPla
 
         var alertPopup = $ionicPopup.alert({
           title: 'Pas de connexion Internet',
-          content: "Pour une meilleure navigation, veuillez activer votre connexion Internet !",
+          content: "Pour accéder à l'application, veuillez activer votre connexion Internet !",
           buttons: [{
-            text: 'Continuer quand même',
+            text: "J'ai compris !",
             type: 'button-clear button-assertive',
 
           }]
@@ -551,14 +637,14 @@ CapMission.run(['$ionicPlatform', '$ionicPopup','$location', function ($ionicPla
 
       }, false);
     }*/
-    cordova.plugins.notification.local.schedule({
+    /*cordova.plugins.notification.local.schedule({
       id: 1,
       text: 'login : ' + window.localStorage.getItem('login') ,
       title: 'Rappel Cap Mission',
       icon : 'parent/icon.png',
       firstAt: new Date() ,
       every: "day" // "minute", "hour", "week", "month", "year"
-    });
+    });*/
     // Hide the accessory bar by default (remove this to show the accessory bar above the keyboard
     // for form inputs)
     if (window.cordova && window.cordova.plugins && window.cordova.plugins.Keyboard) {
@@ -570,6 +656,11 @@ CapMission.run(['$ionicPlatform', '$ionicPopup','$location', function ($ionicPla
       // org.apache.cordova.statusbar required
       StatusBar.styleLightContent();
     }
+
+    /*cordova.getAppVersion(function(version) {
+      $rootScope.appVersion = version;
+    });*/
+
 
     /*if(typeof analytics !== "undefined") {
       analytics.startTrackerWithId("UA-84205623-1");
@@ -596,20 +687,13 @@ CapMission.run(['$ionicPlatform', '$ionicPopup','$location', function ($ionicPla
 CapMission.controller('LogoutCtrl', function ($location, $auth, $state, $ionicHistory, authService, $scope, $ionicPopup) {
 
   $scope.logout = function () {
-
-    var alertPopup = $ionicPopup.alert({
-      title: 'A bientôt',
-      template: null
-    });
-
-    alertPopup.then(function (res) {
-      //$location.path("/login")
-      navigator.app.exitApp();
-    });
+    /*batch.user.getEditor()
+      .setIdentifier('null') // Set to `null` if you want to remove the identifier.
+      .save();*/
+    navigator.app.exitApp();
   };
 
 });
-
 
 CapMission.config(function($authProvider) {
   $authProvider.facebook({
@@ -622,41 +706,42 @@ CapMission.config(function($authProvider) {
   });
 
   /*$authProvider.baseUrl = 'http://localhost:8100/';
-    var commonConfig = {
-      popupOptions: {
-        location: 'no',
-        toolbar: 'yes',
-        width: window.screen.width,
-        height: window.screen.height
-      }
-    };
+   var commonConfig = {
+   popupOptions: {
+   location: 'no',
+   toolbar: 'yes',
+   width: window.screen.width,
+   height: window.screen.height
+   }
+   };
 
    /* if (ionic.Platform.isIOS() || ionic.Platform.isAndroid()) {
-      //$authProvider.Platform ='mobile';
-      //commonConfig.redirectUri = 'http://localhost:8100/';
-      $authProvider.cordova = true;
-      commonConfig.redirectUri = 'http://localhost:8100/';
-    }*/
+   //$authProvider.Platform ='mobile';
+   //commonConfig.redirectUri = 'http://localhost:8100/';
+   $authProvider.cordova = true;
+   commonConfig.redirectUri = 'http://localhost:8100/';
+   }*/
 
-    //$authProvider.redirectUri = 'http://localhost:8100/';
+  //$authProvider.redirectUri = 'http://localhost:8100/';
 
-   /* $authProvider.facebook(angular.extend({}, commonConfig, {
-      clientId: '561387454023937',
-      responseType : 'token',
-      //url: 'http://localhost:8182/auth/facebook'
-      //redirectUri : 'http://localhost:8100/'
-    }));*/
+  /* $authProvider.facebook(angular.extend({}, commonConfig, {
+   clientId: '561387454023937',
+   responseType : 'token',
+   //url: 'http://localhost:8182/auth/facebook'
+   //redirectUri : 'http://localhost:8100/'
+   }));*/
 
 
-   /* $authProvider.twitter(angular.extend({}, commonConfig, {
-      url: 'http://localhost:3000/auth/twitter'
-    }));
+  /* $authProvider.twitter(angular.extend({}, commonConfig, {
+   url: 'http://localhost:3000/auth/twitter'
+   }));
 
-    $authProvider.google(angular.extend({}, commonConfig, {
-      clientId: '44134246491-n2ehu6gvrjvcti4jap05kkig4adsgtr9.apps.googleusercontent.com'
-      //redirectUri : 'http://localhost:8100/home/'
-    }));*/
-  });
+   $authProvider.google(angular.extend({}, commonConfig, {
+   clientId: '44134246491-n2ehu6gvrjvcti4jap05kkig4adsgtr9.apps.googleusercontent.com'
+   //redirectUri : 'http://localhost:8100/home/'
+   }));*/
+});
+
 
 CapMission.config(['$stateProvider', '$urlRouterProvider', '$ionicConfigProvider', '$httpProvider', function ($stateProvider, $urlRouterProvider, $ionicConfigProvider, $httpProvider) {
 
@@ -670,6 +755,59 @@ CapMission.config(['$stateProvider', '$urlRouterProvider', '$ionicConfigProvider
   // Each state's controller can be found in 'nom de la partie'.js par exemple: authentication.js, follow.js, home.js etc etc
   $stateProvider
 
+
+    /* Début Interface d'dministration */
+    .state('wizard', {
+      url: '/wizard',
+      abstract: true,
+      template: '<ion-nav-view></ion-nav-view>'
+    })
+
+    .state('home', {
+      url: '/home',
+      controller: 'adminCtrl',
+      templateUrl: 'admin/home.html',
+
+    })
+    .state('history', {
+      url: '/history',
+      controller: 'historyCtrl',
+      templateUrl: 'admin/history.html',
+
+    })
+    .state('home.segments', {
+      url: '/segments',
+      controller: 'segmentsCtrl',
+      templateUrl: 'admin/segments.html',
+
+    })
+    .state('home.user', {
+      url: '/user',
+      controller: 'userCtrl',
+      templateUrl: 'admin/user.html',
+
+    })
+    .state('home.message', {
+      url: '/message',
+      controller: 'messageCtrl',
+      templateUrl: 'admin/message.html',
+
+    })
+    .state('home.date', {
+      url: '/date',
+      controller: 'dateCtrl',
+      templateUrl: 'admin/date.html',
+
+    })
+    .state('home.recap', {
+      url: '/recap',
+      controller: 'recapCtrl',
+      templateUrl: 'admin/recap.html',
+
+    })
+
+
+    /* Fin Interface d'dministration */
 
     .state('login', {
       url: '/login',
@@ -785,24 +923,54 @@ CapMission.config(['$stateProvider', '$urlRouterProvider', '$ionicConfigProvider
       templateUrl: 'parent/remarque.html',
       controller: 'PRemarqueCtrl'
     })
-    //state pour l'envoi d'Email
+    //state pour l'envoi d'Email - PArent
     .state('remarqueE', {
       url: '/parent/remarque',
       templateUrl: 'parent/remarque.html',
       controller: 'PEmailController'
     })
+
+    //state pour l'envoi d'Email - Etudiant
+    .state('remarqueES', {
+      url: '/student/remarque',
+      templateUrl: 'student/remarque.html',
+      controller: 'SEmailController'
+    })
+
+    //state pour l'envoi d'Email - Teacher
+    .state('remarqueET', {
+      url: '/teacher/remarque',
+      templateUrl: 'teacher/remarque.html',
+      controller: 'TEmailController'
+    })
+
     //state pour demande d'info
     .state('information', {
       url: '/parent/demandeInfo',
       templateUrl: 'parent/demandeInfo.html',
       controller: 'PDemandeInfoController'
     })
-    //state pour demande d'info envoi Email
+    //state pour demande d'info envoi Email - Parent
     .state('informationE', {
       url: '/parent/demandeInfoE',
       templateUrl: 'parent/demandeInfo.html',
       controller: 'PDemandeInfoEmailController'
     })
+
+    //state pour demande d'info envoi Email - Etudiant
+    .state('informationS', {
+      url: '/student/demandeInfoE',
+      templateUrl: 'student/demandeInfo.html',
+      controller: 'SDemandeInfoEmailController'
+    })
+
+    //state pour demande d'info envoi Email - Teacher
+    .state('informationT', {
+      url: '/teacher/demandeInfoE',
+      templateUrl: 'teacher/demandeInfo.html',
+      controller: 'TDemandeInfoEmailController'
+    })
+
 
     //state pour choix matière
     .state('choixMatiere', {

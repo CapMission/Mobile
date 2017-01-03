@@ -2,7 +2,7 @@
 
 <ion-view  title='<img class="title-image" src="parent/icon.png"> Récapitulatif </img>' cache-view="false">
   <ion-nav-buttons side="right">
-    <a class="button button-icon ion-ios-more rotate-90 fs-s" ng-click="popover.show($event)"></a>
+    <a class="button button-icon ion-ios-more rotate-90 fs-s" ng-app="capMission.student" ng-controller="SProposCtrl" ng-click="popover.show($event)"></a>
   </ion-nav-buttons>
 
   <ion-tabs class="tabs-icon-top tabs-color-active-positive" ng-class="{'tabs-item-hide': $root.hideTabs}">
@@ -107,7 +107,7 @@
         <input ng-model="mail.from" type="hidden">
         <input ng-model="mail.subject" type="hidden"><br>
         <label class="item item-input">
-         <textarea class='autoExpand' rows='3' col="15" data-min-rows='3' ng-model="mail.body"
+         <textarea class='autoExpand textarea' rows='3' col="15" data-min-rows='3' ng-model="mail.body"
                    placeholder="Votre remarque" name="msg" required></textarea>
         </label>
 

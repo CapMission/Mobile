@@ -62,9 +62,9 @@
       <div class="col">{{recap.date | date:'dd MMM'}}</div>
       <div class="col">{{recap.periode.name.trunc(8)}}</div>
       <div class="col"><strong>{{recap.soldeRemain | number:2}}</strong></div>
-      <div class="col iconSize2"><b><a class="ion-ios-information-outline iconSize2"
+      <div class="col iconSize2"><b><div class="ion-ios-information-outline iconSize2"
                                     ng-click="modal.show();getRecap(recap.periode.name,recap.date,recap.soldeRemain,recap.tarifHour,recap.tarifPeriod,recap.nbreHours,recap.absence,recap.date)">
-      </a></b></div>
+      </div></b></div>
 
       <!--<div class="col"><a ng-app="capMission.student" ng-controller="SsoldeCtrl" href="#"
                           ng-click="showAlert(recap.id,recap.tarifHour,recap.tarifPeriod,recap.nbreHours,recap.absence)">Détails</a>
@@ -74,8 +74,8 @@
     <br>
 
     <div>
-      <a class="aRight" ng-show="sonSolde.entity.recaps.length > limit" href="" ng-click="showMore()">Plus détails <i
-        class="icon ion-ios-plus-empty"></i></a>
+      <div class="aRight" ng-show="sonSolde.entity.recaps.length > limit" ng-click="showMore()">Plus détails <i
+        class="icon ion-ios-plus-empty"></i></div>
     </div>
 
     <!---->
@@ -153,7 +153,7 @@
           <input ng-model="mail.from" type="hidden">
           <input ng-model="mail.subject" type="hidden">
           <label class="item item-input">
-            <center><textarea class='autoExpand' rows='3' col="30" data-min-rows='3' name="msg" ng-model="mail.body"
+            <center><textarea class='autoExpand textarea' rows='3' col="30" data-min-rows='3' name="msg" ng-model="mail.body"
                               placeholder="Votre message" required></textarea></center>
           </label>
           <br>

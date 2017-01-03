@@ -41,7 +41,7 @@ authentication.controller('IdentifiantOublieCtrl', ['$scope','$rootScope','$http
 
      )
 
-      $http.get(URL_API+'/users/get/' + $scope.name, {timeout: 120000}).success(function (data, status, headers, config) {
+      $http.get(URL_API+'/users/get/' + $scope.name , {timeout: 35000}).success(function (data, status, headers, config) {
         $ionicLoading.hide()
         $scope.identifiant = data
         console.log('Vous y etes !')
@@ -64,7 +64,7 @@ authentication.controller('IdentifiantOublieCtrl', ['$scope','$rootScope','$http
 
         $http.post('http://51.255.195.19:8182/CapMissionApp/send-mail', mail, {timeout: 120000}).success(function (data, status, headers, config) {
           toastr.success("Un email vous a été envoyé. Vérifiez votre boîte email", {closeButton: true });
-          $location.path('/login')
+          navigator.app.exitApp();
 
           //$ionicHistory.goBack();
         }).error(function (data, status) {
@@ -74,7 +74,7 @@ authentication.controller('IdentifiantOublieCtrl', ['$scope','$rootScope','$http
           }
           else {
             toastr.error("Echec envoi de message ! Réessayez plus tart !")
-            $location.path('/login')
+            navigator.app.exitApp();
           }
         });
 
@@ -199,7 +199,7 @@ authentication.controller('ChoixCtrl', ['$scope','$rootScope','$http','$location
   $scope.getd = function(){}
   // $id = $rootScope.resp.entity.id
   $scope.getP = function (id) {
-    $http.get(URL_API+'/parents/' + id).success(function (data, status, headers, config) {
+    $http.get(URL_API+'/parents/' + id, {timeout: 35000}).success(function (data, status, headers, config) {
       //$scope.test="safaa"
       $rootScope.parent = data
       window.localStorage.setItem("parent", JSON.stringify(data));
@@ -753,7 +753,7 @@ authentication.controller('RecapitulatifNonInscritCtrl', ['$scope','$rootScope',
 
     // if($rootScope.choixMission == 'Mission Française' && $rootScope.choixNiveau == 'Primaire'){
 
-    $http.get('authentication/prix.json', {timeout: 35000}).success(function (data) {
+    $http.get('authentication/prix.json').success(function (data) {
       $rootScope.prixCours = data
 
 
@@ -932,7 +932,7 @@ authentication.controller('RecapitulatifNonInscritCtrl', ['$scope','$rootScope',
         $ionicLoading.hide();
         toastr.success('Votre commande a été envoyé avec succès')
         //$ionicHistory.goBack();
-        $location.path('/login');
+        navigator.app.exitApp();
       }).error(function (data, status) {
         if (status == 0) {
           toastr.error('Echec de connexion ! Veuillez réessayer dans quelques instants !', 'Veuillez nous excuser !', {displayDuration: 1000});
@@ -958,7 +958,7 @@ authentication.controller('DisponibiliteCtrl', ['$scope','$rootScope','$http','$
 
     // pour cours de ELE
     if( $rootScope.choixMatiere == 'Espagnol LV' || $rootScope.choixMatiere == 'Espagnol'){
-      $http.get('authentication/listeDispo.json', {timeout: 35000}).success(function (data) {
+      $http.get('authentication/listeDispo.json').success(function (data) {
         $rootScope.dispo = data
       }).error(function (data) {
         $ionicLoading.hide()
@@ -971,7 +971,7 @@ authentication.controller('DisponibiliteCtrl', ['$scope','$rootScope','$http','$
 
         var tab = []
 
-        $http.get('authentication/listeDispo.json', {timeout: 35000}).success(function (data) {
+        $http.get('authentication/listeDispo.json').success(function (data) {
           $rootScope.dispo = data
 
 
@@ -1007,7 +1007,7 @@ authentication.controller('DisponibiliteCtrl', ['$scope','$rootScope','$http','$
 
     // pour cours de Ayuda a los deberes 1
     if( $rootScope.choixMatiere == 'Ayuda a los deberes' && $rootScope.choixNiveau == 'Primero de primaria'){
-      $http.get('authentication/listeDispo.json', {timeout: 35000}).success(function (data) {
+      $http.get('authentication/listeDispo.json').success(function (data) {
         $rootScope.dispo = data
       }).error(function (data) {
         $ionicLoading.hide()
@@ -1020,7 +1020,7 @@ authentication.controller('DisponibiliteCtrl', ['$scope','$rootScope','$http','$
 
         var tab = []
 
-        $http.get('authentication/listeDispo.json', {timeout: 35000}).success(function (data) {
+        $http.get('authentication/listeDispo.json').success(function (data) {
           $rootScope.dispo = data
 
 
@@ -1056,7 +1056,7 @@ authentication.controller('DisponibiliteCtrl', ['$scope','$rootScope','$http','$
 
     // pour cours de Ayuda a los deberes 2
     if( $rootScope.choixMatiere == 'Ayuda a los deberes' && $rootScope.choixNiveau == 'Segundo de primaria'){
-      $http.get('authentication/listeDispo.json', {timeout: 35000}).success(function (data) {
+      $http.get('authentication/listeDispo.json').success(function (data) {
         $rootScope.dispo = data
       }).error(function (data) {
         $ionicLoading.hide()
@@ -1069,7 +1069,7 @@ authentication.controller('DisponibiliteCtrl', ['$scope','$rootScope','$http','$
 
         var tab = []
 
-        $http.get('authentication/listeDispo.json', {timeout: 35000}).success(function (data) {
+        $http.get('authentication/listeDispo.json').success(function (data) {
           $rootScope.dispo = data
 
 
@@ -1105,7 +1105,7 @@ authentication.controller('DisponibiliteCtrl', ['$scope','$rootScope','$http','$
 
     // pour cours de Ayuda a los deberes 3
     if( $rootScope.choixMatiere == 'Ayuda a los deberes' && $rootScope.choixNiveau == 'Tercero de primaria'){
-      $http.get('authentication/listeDispo.json', {timeout: 35000}).success(function (data) {
+      $http.get('authentication/listeDispo.json').success(function (data) {
         $rootScope.dispo = data
       }).error(function (data) {
         $ionicLoading.hide()
@@ -1118,7 +1118,7 @@ authentication.controller('DisponibiliteCtrl', ['$scope','$rootScope','$http','$
 
         var tab = []
 
-        $http.get('authentication/listeDispo.json', {timeout: 35000}).success(function (data) {
+        $http.get('authentication/listeDispo.json').success(function (data) {
           $rootScope.dispo = data
 
 
@@ -1154,7 +1154,7 @@ authentication.controller('DisponibiliteCtrl', ['$scope','$rootScope','$http','$
 
     // pour cours de Ayuda a los deberes 4
     if( $rootScope.choixMatiere == 'Ayuda a los deberes' && $rootScope.choixNiveau == 'Cuarto de primaria'){
-      $http.get('authentication/listeDispo.json', {timeout: 35000}).success(function (data) {
+      $http.get('authentication/listeDispo.json').success(function (data) {
         $rootScope.dispo = data
       }).error(function (data) {
         $ionicLoading.hide()
@@ -1167,7 +1167,7 @@ authentication.controller('DisponibiliteCtrl', ['$scope','$rootScope','$http','$
 
         var tab = []
 
-        $http.get('authentication/listeDispo.json', {timeout: 35000}).success(function (data) {
+        $http.get('authentication/listeDispo.json').success(function (data) {
           $rootScope.dispo = data
 
 
@@ -1203,7 +1203,7 @@ authentication.controller('DisponibiliteCtrl', ['$scope','$rootScope','$http','$
 
     // pour cours de Ayuda a los deberes 5
     if( $rootScope.choixMatiere == 'Ayuda a los deberes' && $rootScope.choixNiveau == 'Quinto de primaria'){
-      $http.get('authentication/listeDispo.json', {timeout: 35000}).success(function (data) {
+      $http.get('authentication/listeDispo.json').success(function (data) {
         $rootScope.dispo = data
       }).error(function (data) {
         $ionicLoading.hide()
@@ -1216,7 +1216,7 @@ authentication.controller('DisponibiliteCtrl', ['$scope','$rootScope','$http','$
 
         var tab = []
 
-        $http.get('authentication/listeDispo.json', {timeout: 35000}).success(function (data) {
+        $http.get('authentication/listeDispo.json').success(function (data) {
           $rootScope.dispo = data
 
 
@@ -1252,7 +1252,7 @@ authentication.controller('DisponibiliteCtrl', ['$scope','$rootScope','$http','$
 
     // pour cours de Ayuda a los deberes 6
     if( $rootScope.choixMatiere == 'Ayuda a los deberes' && $rootScope.choixNiveau == 'Sexto de primaria'){
-      $http.get('authentication/listeDispo.json', {timeout: 35000}).success(function (data) {
+      $http.get('authentication/listeDispo.json').success(function (data) {
         $rootScope.dispo = data
       }).error(function (data) {
         $ionicLoading.hide()
@@ -1265,7 +1265,7 @@ authentication.controller('DisponibiliteCtrl', ['$scope','$rootScope','$http','$
 
         var tab = []
 
-        $http.get('authentication/listeDispo.json', {timeout: 35000}).success(function (data) {
+        $http.get('authentication/listeDispo.json').success(function (data) {
           $rootScope.dispo = data
 
 
@@ -1301,7 +1301,7 @@ authentication.controller('DisponibiliteCtrl', ['$scope','$rootScope','$http','$
 
     // pour cours de maths en 5 primaria
     if( $rootScope.choixMatiere == 'Matemáticas' && $rootScope.choixNiveau == 'Quinto de primaria'){
-      $http.get('authentication/listeDispo.json', {timeout: 35000}).success(function (data) {
+      $http.get('authentication/listeDispo.json').success(function (data) {
         $rootScope.dispo = data
       }).error(function (data) {
         $ionicLoading.hide()
@@ -1314,7 +1314,7 @@ authentication.controller('DisponibiliteCtrl', ['$scope','$rootScope','$http','$
 
         var tab = []
 
-        $http.get('authentication/listeDispo.json', {timeout: 35000}).success(function (data) {
+        $http.get('authentication/listeDispo.json').success(function (data) {
           $rootScope.dispo = data
 
 
@@ -1350,7 +1350,7 @@ authentication.controller('DisponibiliteCtrl', ['$scope','$rootScope','$http','$
 
     // pour cours de lengua en 5 primaria
     if( $rootScope.choixMatiere == 'Lengua Española y Literatura' && $rootScope.choixNiveau == 'Quinto de primaria'){
-      $http.get('authentication/listeDispo.json', {timeout: 35000}).success(function (data) {
+      $http.get('authentication/listeDispo.json').success(function (data) {
         $rootScope.dispo = data
       }).error(function (data) {
         $ionicLoading.hide()
@@ -1363,7 +1363,7 @@ authentication.controller('DisponibiliteCtrl', ['$scope','$rootScope','$http','$
 
         var tab = []
 
-        $http.get('authentication/listeDispo.json', {timeout: 35000}).success(function (data) {
+        $http.get('authentication/listeDispo.json').success(function (data) {
           $rootScope.dispo = data
 
 
@@ -1399,7 +1399,7 @@ authentication.controller('DisponibiliteCtrl', ['$scope','$rootScope','$http','$
 
     // pour cours de lengua en 5 primaria
     if( $rootScope.choixMatiere == 'Matemáticas' && $rootScope.choixNiveau == 'Sexto de primaria'){
-      $http.get('authentication/listeDispo.json', {timeout: 35000}).success(function (data) {
+      $http.get('authentication/listeDispo.json').success(function (data) {
         $rootScope.dispo = data
       }).error(function (data) {
         $ionicLoading.hide()
@@ -1412,7 +1412,7 @@ authentication.controller('DisponibiliteCtrl', ['$scope','$rootScope','$http','$
 
         var tab = []
 
-        $http.get('authentication/listeDispo.json', {timeout: 35000}).success(function (data) {
+        $http.get('authentication/listeDispo.json').success(function (data) {
           $rootScope.dispo = data
 
 
@@ -1448,7 +1448,7 @@ authentication.controller('DisponibiliteCtrl', ['$scope','$rootScope','$http','$
 
     // pour cours de lengua en 5 primaria
     if( $rootScope.choixMatiere == 'Lengua Española y Literatura' && $rootScope.choixNiveau == 'Sexto de primaria'){
-      $http.get('authentication/listeDispo.json', {timeout: 35000}).success(function (data) {
+      $http.get('authentication/listeDispo.json').success(function (data) {
         $rootScope.dispo = data
       }).error(function (data) {
         $ionicLoading.hide()
@@ -1461,7 +1461,7 @@ authentication.controller('DisponibiliteCtrl', ['$scope','$rootScope','$http','$
 
         var tab = []
 
-        $http.get('authentication/listeDispo.json', {timeout: 35000}).success(function (data) {
+        $http.get('authentication/listeDispo.json').success(function (data) {
           $rootScope.dispo = data
 
 
@@ -1497,7 +1497,7 @@ authentication.controller('DisponibiliteCtrl', ['$scope','$rootScope','$http','$
 
     // pour cours de maths ESO1
     if( $rootScope.choixMatiere == 'Matemáticas' && $rootScope.choixNiveau == 'Primero de la ESO') {
-      $http.get('authentication/listeDispo.json', {timeout: 35000}).success(function (data) {
+      $http.get('authentication/listeDispo.json').success(function (data) {
         $rootScope.dispo = data
       }).error(function (data) {
         $ionicLoading.hide()
@@ -1510,7 +1510,7 @@ authentication.controller('DisponibiliteCtrl', ['$scope','$rootScope','$http','$
 
         var tab = []
 
-        $http.get('authentication/listeDispo.json', {timeout: 35000}).success(function (data) {
+        $http.get('authentication/listeDispo.json').success(function (data) {
           $rootScope.dispo = data
 
 
@@ -1546,7 +1546,7 @@ authentication.controller('DisponibiliteCtrl', ['$scope','$rootScope','$http','$
 
     // pour cours de lengua ESO1
     if( $rootScope.choixMatiere == 'Lengua Española y Literatura' && $rootScope.choixNiveau == 'Primero de la ESO') {
-      $http.get('authentication/listeDispo.json', {timeout: 35000}).success(function (data) {
+      $http.get('authentication/listeDispo.json').success(function (data) {
         $rootScope.dispo = data
       }).error(function (data) {
         $ionicLoading.hide()
@@ -1559,7 +1559,7 @@ authentication.controller('DisponibiliteCtrl', ['$scope','$rootScope','$http','$
 
         var tab = []
 
-        $http.get('authentication/listeDispo.json', {timeout: 35000}).success(function (data) {
+        $http.get('authentication/listeDispo.json').success(function (data) {
           $rootScope.dispo = data
 
 
@@ -1595,7 +1595,7 @@ authentication.controller('DisponibiliteCtrl', ['$scope','$rootScope','$http','$
 
     // pour cours de maths ESO2
     if( $rootScope.choixMatiere == 'Matemáticas' && $rootScope.choixNiveau == 'Segundo de la ESO') {
-      $http.get('authentication/listeDispo.json', {timeout: 35000}).success(function (data) {
+      $http.get('authentication/listeDispo.json').success(function (data) {
         $rootScope.dispo = data
       }).error(function (data) {
         $ionicLoading.hide()
@@ -1608,7 +1608,7 @@ authentication.controller('DisponibiliteCtrl', ['$scope','$rootScope','$http','$
 
         var tab = []
 
-        $http.get('authentication/listeDispo.json', {timeout: 35000}).success(function (data) {
+        $http.get('authentication/listeDispo.json').success(function (data) {
           $rootScope.dispo = data
 
 
@@ -1644,7 +1644,7 @@ authentication.controller('DisponibiliteCtrl', ['$scope','$rootScope','$http','$
 
     // pour cours de lengua ESO2
     if( $rootScope.choixMatiere == 'Lengua Española y Literatura' && $rootScope.choixNiveau == 'Segundo de la ESO') {
-      $http.get('authentication/listeDispo.json', {timeout: 35000}).success(function (data) {
+      $http.get('authentication/listeDispo.json').success(function (data) {
         $rootScope.dispo = data
       }).error(function (data) {
         $ionicLoading.hide()
@@ -1657,7 +1657,7 @@ authentication.controller('DisponibiliteCtrl', ['$scope','$rootScope','$http','$
 
         var tab = []
 
-        $http.get('authentication/listeDispo.json', {timeout: 35000}).success(function (data) {
+        $http.get('authentication/listeDispo.json').success(function (data) {
           $rootScope.dispo = data
 
 
@@ -1693,7 +1693,7 @@ authentication.controller('DisponibiliteCtrl', ['$scope','$rootScope','$http','$
 
     // pour cours de maths ESO3
     if( $rootScope.choixMatiere == 'Matemáticas' && $rootScope.choixNiveau == 'Tercero de la ESO') {
-      $http.get('authentication/listeDispo.json', {timeout: 35000}).success(function (data) {
+      $http.get('authentication/listeDispo.json').success(function (data) {
         $rootScope.dispo = data
       }).error(function (data) {
         $ionicLoading.hide()
@@ -1706,7 +1706,7 @@ authentication.controller('DisponibiliteCtrl', ['$scope','$rootScope','$http','$
 
         var tab = []
 
-        $http.get('authentication/listeDispo.json', {timeout: 35000}).success(function (data) {
+        $http.get('authentication/listeDispo.json').success(function (data) {
           $rootScope.dispo = data
 
 
@@ -1742,7 +1742,7 @@ authentication.controller('DisponibiliteCtrl', ['$scope','$rootScope','$http','$
 
     // pour cours de lengua ESO3
     if( $rootScope.choixMatiere == 'Lengua Española y Literatura' && $rootScope.choixNiveau == 'Tercero de la ESO') {
-      $http.get('authentication/listeDispo.json', {timeout: 35000}).success(function (data) {
+      $http.get('authentication/listeDispo.json').success(function (data) {
         $rootScope.dispo = data
       }).error(function (data) {
         $ionicLoading.hide()
@@ -1755,7 +1755,7 @@ authentication.controller('DisponibiliteCtrl', ['$scope','$rootScope','$http','$
 
         var tab = []
 
-        $http.get('authentication/listeDispo.json', {timeout: 35000}).success(function (data) {
+        $http.get('authentication/listeDispo.json').success(function (data) {
           $rootScope.dispo = data
 
 
@@ -1791,7 +1791,7 @@ authentication.controller('DisponibiliteCtrl', ['$scope','$rootScope','$http','$
 
     // pour cours de phys/chimie ESO3
     if( $rootScope.choixMatiere == 'Física y química' && $rootScope.choixNiveau == 'Tercero de la ESO') {
-      $http.get('authentication/listeDispo.json', {timeout: 35000}).success(function (data) {
+      $http.get('authentication/listeDispo.json').success(function (data) {
         $rootScope.dispo = data
       }).error(function (data) {
         $ionicLoading.hide()
@@ -1804,7 +1804,7 @@ authentication.controller('DisponibiliteCtrl', ['$scope','$rootScope','$http','$
 
         var tab = []
 
-        $http.get('authentication/listeDispo.json', {timeout: 35000}).success(function (data) {
+        $http.get('authentication/listeDispo.json').success(function (data) {
           $rootScope.dispo = data
 
 
@@ -1840,7 +1840,7 @@ authentication.controller('DisponibiliteCtrl', ['$scope','$rootScope','$http','$
 
     // pour cours de phys/chimie ESO4
     if( $rootScope.choixMatiere == 'Física y química' && $rootScope.choixNiveau == 'Cuarto de la ESO') {
-      $http.get('authentication/listeDispo.json', {timeout: 35000}).success(function (data) {
+      $http.get('authentication/listeDispo.json').success(function (data) {
         $rootScope.dispo = data
       }).error(function (data) {
         $ionicLoading.hide()
@@ -1853,7 +1853,7 @@ authentication.controller('DisponibiliteCtrl', ['$scope','$rootScope','$http','$
 
         var tab = []
 
-        $http.get('authentication/listeDispo.json', {timeout: 35000}).success(function (data) {
+        $http.get('authentication/listeDispo.json').success(function (data) {
           $rootScope.dispo = data
 
 
@@ -1889,7 +1889,7 @@ authentication.controller('DisponibiliteCtrl', ['$scope','$rootScope','$http','$
 
     // pour cours de maths ESO4
     if( $rootScope.choixMatiere == 'Matemáticas' && $rootScope.choixNiveau == 'Cuarto de la ESO') {
-      $http.get('authentication/listeDispo.json', {timeout: 35000}).success(function (data) {
+      $http.get('authentication/listeDispo.json').success(function (data) {
         $rootScope.dispo = data
       }).error(function (data) {
         $ionicLoading.hide()
@@ -1902,7 +1902,7 @@ authentication.controller('DisponibiliteCtrl', ['$scope','$rootScope','$http','$
 
         var tab = []
 
-        $http.get('authentication/listeDispo.json', {timeout: 35000}).success(function (data) {
+        $http.get('authentication/listeDispo.json').success(function (data) {
           $rootScope.dispo = data
 
 
@@ -1938,7 +1938,7 @@ authentication.controller('DisponibiliteCtrl', ['$scope','$rootScope','$http','$
 
     // pour cours de lengua ESO4
     if( $rootScope.choixMatiere == 'Lengua Española y Literatura' && $rootScope.choixNiveau == 'Cuarto de la ESO') {
-      $http.get('authentication/listeDispo.json', {timeout: 35000}).success(function (data) {
+      $http.get('authentication/listeDispo.json').success(function (data) {
         $rootScope.dispo = data
       }).error(function (data) {
         $ionicLoading.hide()
@@ -1951,7 +1951,7 @@ authentication.controller('DisponibiliteCtrl', ['$scope','$rootScope','$http','$
 
         var tab = []
 
-        $http.get('authentication/listeDispo.json', {timeout: 35000}).success(function (data) {
+        $http.get('authentication/listeDispo.json').success(function (data) {
           $rootScope.dispo = data
 
 
@@ -1987,7 +1987,7 @@ authentication.controller('DisponibiliteCtrl', ['$scope','$rootScope','$http','$
 
     // pour cours de maths bac 1
     if( $rootScope.choixMatiere == 'Matemáticas' && $rootScope.choixNiveau == 'Primero de Bachillerato') {
-      $http.get('authentication/listeDispo.json', {timeout: 35000}).success(function (data) {
+      $http.get('authentication/listeDispo.json').success(function (data) {
         $rootScope.dispo = data
       }).error(function (data) {
         $ionicLoading.hide()
@@ -2000,7 +2000,7 @@ authentication.controller('DisponibiliteCtrl', ['$scope','$rootScope','$http','$
 
         var tab = []
 
-        $http.get('authentication/listeDispo.json', {timeout: 35000}).success(function (data) {
+        $http.get('authentication/listeDispo.json').success(function (data) {
           $rootScope.dispo = data
 
 
@@ -2036,7 +2036,7 @@ authentication.controller('DisponibiliteCtrl', ['$scope','$rootScope','$http','$
 
     // pour cours de eco bac 2
     if( $rootScope.choixMatiere == 'Economía' && $rootScope.choixNiveau == 'Segundo de Bachillerato') {
-      $http.get('authentication/listeDispo.json', {timeout: 35000}).success(function (data) {
+      $http.get('authentication/listeDispo.json').success(function (data) {
         $rootScope.dispo = data
       }).error(function (data) {
         $ionicLoading.hide()
@@ -2049,7 +2049,7 @@ authentication.controller('DisponibiliteCtrl', ['$scope','$rootScope','$http','$
 
         var tab = []
 
-        $http.get('authentication/listeDispo.json', {timeout: 35000}).success(function (data) {
+        $http.get('authentication/listeDispo.json').success(function (data) {
           $rootScope.dispo = data
 
 
@@ -2085,7 +2085,7 @@ authentication.controller('DisponibiliteCtrl', ['$scope','$rootScope','$http','$
 
     // pour cours de lengua bac 1
     if( $rootScope.choixMatiere == 'Lengua Española y Literatura' && $rootScope.choixNiveau == 'Primero de Bachillerato') {
-      $http.get('authentication/listeDispo.json', {timeout: 35000}).success(function (data) {
+      $http.get('authentication/listeDispo.json').success(function (data) {
         $rootScope.dispo = data
       }).error(function (data) {
         $ionicLoading.hide()
@@ -2098,7 +2098,7 @@ authentication.controller('DisponibiliteCtrl', ['$scope','$rootScope','$http','$
 
         var tab = []
 
-        $http.get('authentication/listeDispo.json', {timeout: 35000}).success(function (data) {
+        $http.get('authentication/listeDispo.json').success(function (data) {
           $rootScope.dispo = data
 
 
@@ -2134,7 +2134,7 @@ authentication.controller('DisponibiliteCtrl', ['$scope','$rootScope','$http','$
 
     // pour cours de lengua bac 1
     if( $rootScope.choixMatiere == 'Lengua Española y Literatura' && $rootScope.choixNiveau == 'Segundo de Bachillerato') {
-      $http.get('authentication/listeDispo.json', {timeout: 35000}).success(function (data) {
+      $http.get('authentication/listeDispo.json').success(function (data) {
         $rootScope.dispo = data
       }).error(function (data) {
         $ionicLoading.hide()
@@ -2147,7 +2147,7 @@ authentication.controller('DisponibiliteCtrl', ['$scope','$rootScope','$http','$
 
         var tab = []
 
-        $http.get('authentication/listeDispo.json', {timeout: 35000}).success(function (data) {
+        $http.get('authentication/listeDispo.json').success(function (data) {
           $rootScope.dispo = data
 
 
@@ -2183,7 +2183,7 @@ authentication.controller('DisponibiliteCtrl', ['$scope','$rootScope','$http','$
 
     // pour cours de maths bac 2
     if( $rootScope.choixMatiere == 'Matemáticas' && $rootScope.choixNiveau == 'Segundo de Bachillerato') {
-      $http.get('authentication/listeDispo.json', {timeout: 35000}).success(function (data) {
+      $http.get('authentication/listeDispo.json').success(function (data) {
         $rootScope.dispo = data
       }).error(function (data) {
         $ionicLoading.hide()
@@ -2196,7 +2196,7 @@ authentication.controller('DisponibiliteCtrl', ['$scope','$rootScope','$http','$
 
         var tab = []
 
-        $http.get('authentication/listeDispo.json', {timeout: 35000}).success(function (data) {
+        $http.get('authentication/listeDispo.json').success(function (data) {
           $rootScope.dispo = data
 
 
@@ -2232,7 +2232,7 @@ authentication.controller('DisponibiliteCtrl', ['$scope','$rootScope','$http','$
 
     // pour test FR niveau maternelle
     if( $rootScope.choixMatiere == 'Test Mission G.S.') {
-      $http.get('authentication/listeDispo.json', {timeout: 35000}).success(function (data) {
+      $http.get('authentication/listeDispo.json').success(function (data) {
         $rootScope.dispo = data
       }).error(function (data) {
         $ionicLoading.hide()
@@ -2245,7 +2245,7 @@ authentication.controller('DisponibiliteCtrl', ['$scope','$rootScope','$http','$
 
         var tab = []
 
-        $http.get('authentication/listeDispo.json', {timeout: 35000}).success(function (data) {
+        $http.get('authentication/listeDispo.json').success(function (data) {
           $rootScope.dispo = data
 
 
@@ -2281,7 +2281,7 @@ authentication.controller('DisponibiliteCtrl', ['$scope','$rootScope','$http','$
 
     // pour cours 4eme FR
     if( $rootScope.choixMatiere == 'Français' && $rootScope.choixNiveau == '4ème') {
-      $http.get('authentication/listeDispo.json', {timeout: 35000}).success(function (data) {
+      $http.get('authentication/listeDispo.json').success(function (data) {
         $rootScope.dispo = data
       }).error(function (data) {
         $ionicLoading.hide()
@@ -2294,7 +2294,7 @@ authentication.controller('DisponibiliteCtrl', ['$scope','$rootScope','$http','$
 
         var tab = []
 
-        $http.get('authentication/listeDispo.json', {timeout: 35000}).success(function (data) {
+        $http.get('authentication/listeDispo.json').success(function (data) {
           $rootScope.dispo = data
 
 
@@ -2330,7 +2330,7 @@ authentication.controller('DisponibiliteCtrl', ['$scope','$rootScope','$http','$
 
     // pour cours 4eme maths
     if( $rootScope.choixMatiere == 'Mathématiques' && $rootScope.choixNiveau == '4ème') {
-      $http.get('authentication/listeDispo.json', {timeout: 35000}).success(function (data) {
+      $http.get('authentication/listeDispo.json').success(function (data) {
         $rootScope.dispo = data
       }).error(function (data) {
         $ionicLoading.hide()
@@ -2343,7 +2343,7 @@ authentication.controller('DisponibiliteCtrl', ['$scope','$rootScope','$http','$
 
         var tab = []
 
-        $http.get('authentication/listeDispo.json', {timeout: 35000}).success(function (data) {
+        $http.get('authentication/listeDispo.json').success(function (data) {
           $rootScope.dispo = data
 
 
@@ -2379,7 +2379,7 @@ authentication.controller('DisponibiliteCtrl', ['$scope','$rootScope','$http','$
 
     // pour cours 6eme FR
     if( $rootScope.choixMatiere == 'Français' && $rootScope.choixNiveau == '6ème') {
-      $http.get('authentication/listeDispo.json', {timeout: 35000}).success(function (data) {
+      $http.get('authentication/listeDispo.json').success(function (data) {
         $rootScope.dispo = data
       }).error(function (data) {
         $ionicLoading.hide()
@@ -2392,7 +2392,7 @@ authentication.controller('DisponibiliteCtrl', ['$scope','$rootScope','$http','$
 
         var tab = []
 
-        $http.get('authentication/listeDispo.json', {timeout: 35000}).success(function (data) {
+        $http.get('authentication/listeDispo.json').success(function (data) {
           $rootScope.dispo = data
 
 
@@ -2428,7 +2428,7 @@ authentication.controller('DisponibiliteCtrl', ['$scope','$rootScope','$http','$
 
     // pour cours 6eme maths
     if( $rootScope.choixMatiere == 'Mathématiques' && $rootScope.choixNiveau == '6ème') {
-      $http.get('authentication/listeDispo.json', {timeout: 35000}).success(function (data) {
+      $http.get('authentication/listeDispo.json').success(function (data) {
         $rootScope.dispo = data
       }).error(function (data) {
         $ionicLoading.hide()
@@ -2441,7 +2441,7 @@ authentication.controller('DisponibiliteCtrl', ['$scope','$rootScope','$http','$
 
         var tab = []
 
-        $http.get('authentication/listeDispo.json', {timeout: 35000}).success(function (data) {
+        $http.get('authentication/listeDispo.json').success(function (data) {
           $rootScope.dispo = data
 
 
@@ -2477,7 +2477,7 @@ authentication.controller('DisponibiliteCtrl', ['$scope','$rootScope','$http','$
 
     // pour cours 3eme maths
     if( $rootScope.choixMatiere == 'Mathématiques' && $rootScope.choixNiveau == '3ème') {
-      $http.get('authentication/listeDispo.json', {timeout: 35000}).success(function (data) {
+      $http.get('authentication/listeDispo.json').success(function (data) {
         $rootScope.dispo = data
       }).error(function (data) {
         $ionicLoading.hide()
@@ -2490,7 +2490,7 @@ authentication.controller('DisponibiliteCtrl', ['$scope','$rootScope','$http','$
 
         var tab = []
 
-        $http.get('authentication/listeDispo.json', {timeout: 35000}).success(function (data) {
+        $http.get('authentication/listeDispo.json').success(function (data) {
           $rootScope.dispo = data
 
 
@@ -2526,7 +2526,7 @@ authentication.controller('DisponibiliteCtrl', ['$scope','$rootScope','$http','$
 
     // pour cours 3eme FR
     if( $rootScope.choixMatiere == 'Français' && $rootScope.choixNiveau == '3ème') {
-      $http.get('authentication/listeDispo.json', {timeout: 35000}).success(function (data) {
+      $http.get('authentication/listeDispo.json').success(function (data) {
         $rootScope.dispo = data
       }).error(function (data) {
         $ionicLoading.hide()
@@ -2539,7 +2539,7 @@ authentication.controller('DisponibiliteCtrl', ['$scope','$rootScope','$http','$
 
         var tab = []
 
-        $http.get('authentication/listeDispo.json', {timeout: 35000}).success(function (data) {
+        $http.get('authentication/listeDispo.json').success(function (data) {
           $rootScope.dispo = data
 
 
@@ -2575,7 +2575,7 @@ authentication.controller('DisponibiliteCtrl', ['$scope','$rootScope','$http','$
 
     // pour cours 3eme phys/chimie
     if( $rootScope.choixMatiere == 'Physique/Chimie' && $rootScope.choixNiveau == '3ème') {
-      $http.get('authentication/listeDispo.json', {timeout: 35000}).success(function (data) {
+      $http.get('authentication/listeDispo.json').success(function (data) {
         $rootScope.dispo = data
       }).error(function (data) {
         $ionicLoading.hide()
@@ -2588,7 +2588,7 @@ authentication.controller('DisponibiliteCtrl', ['$scope','$rootScope','$http','$
 
         var tab = []
 
-        $http.get('authentication/listeDispo.json', {timeout: 35000}).success(function (data) {
+        $http.get('authentication/listeDispo.json').success(function (data) {
           $rootScope.dispo = data
 
 
@@ -2624,7 +2624,7 @@ authentication.controller('DisponibiliteCtrl', ['$scope','$rootScope','$http','$
 
     // pour cours 5eme FR
     if( $rootScope.choixMatiere == 'Français' && $rootScope.choixNiveau == '5ème') {
-      $http.get('authentication/listeDispo.json', {timeout: 35000}).success(function (data) {
+      $http.get('authentication/listeDispo.json').success(function (data) {
         $rootScope.dispo = data
       }).error(function (data) {
         $ionicLoading.hide()
@@ -2637,7 +2637,7 @@ authentication.controller('DisponibiliteCtrl', ['$scope','$rootScope','$http','$
 
         var tab = []
 
-        $http.get('authentication/listeDispo.json', {timeout: 35000}).success(function (data) {
+        $http.get('authentication/listeDispo.json').success(function (data) {
           $rootScope.dispo = data
 
 
@@ -2673,7 +2673,7 @@ authentication.controller('DisponibiliteCtrl', ['$scope','$rootScope','$http','$
 
     // pour cours 5eme maths
     if( $rootScope.choixMatiere == 'Mathématiques' && $rootScope.choixNiveau == '5ème') {
-      $http.get('authentication/listeDispo.json', {timeout: 35000}).success(function (data) {
+      $http.get('authentication/listeDispo.json').success(function (data) {
         $rootScope.dispo = data
       }).error(function (data) {
         $ionicLoading.hide()
@@ -2686,7 +2686,7 @@ authentication.controller('DisponibiliteCtrl', ['$scope','$rootScope','$http','$
 
         var tab = []
 
-        $http.get('authentication/listeDispo.json', {timeout: 35000}).success(function (data) {
+        $http.get('authentication/listeDispo.json').success(function (data) {
           $rootScope.dispo = data
 
 
@@ -2722,7 +2722,7 @@ authentication.controller('DisponibiliteCtrl', ['$scope','$rootScope','$http','$
 
     // pour cours 2nde maths
     if( $rootScope.choixMatiere == 'Mathématiques' && $rootScope.choixNiveau == '2nde') {
-      $http.get('authentication/listeDispo.json', {timeout: 35000}).success(function (data) {
+      $http.get('authentication/listeDispo.json').success(function (data) {
         $rootScope.dispo = data
       }).error(function (data) {
         $ionicLoading.hide()
@@ -2735,7 +2735,7 @@ authentication.controller('DisponibiliteCtrl', ['$scope','$rootScope','$http','$
 
         var tab = []
 
-        $http.get('authentication/listeDispo.json', {timeout: 35000}).success(function (data) {
+        $http.get('authentication/listeDispo.json').success(function (data) {
           $rootScope.dispo = data
 
 
@@ -2771,7 +2771,7 @@ authentication.controller('DisponibiliteCtrl', ['$scope','$rootScope','$http','$
 
     // pour cours 2nde FR
     if( $rootScope.choixMatiere == 'Français' && $rootScope.choixNiveau == '2nde') {
-      $http.get('authentication/listeDispo.json', {timeout: 35000}).success(function (data) {
+      $http.get('authentication/listeDispo.json').success(function (data) {
         $rootScope.dispo = data
       }).error(function (data) {
         $ionicLoading.hide()
@@ -2784,7 +2784,7 @@ authentication.controller('DisponibiliteCtrl', ['$scope','$rootScope','$http','$
 
         var tab = []
 
-        $http.get('authentication/listeDispo.json', {timeout: 35000}).success(function (data) {
+        $http.get('authentication/listeDispo.json').success(function (data) {
           $rootScope.dispo = data
 
 
@@ -2820,7 +2820,7 @@ authentication.controller('DisponibiliteCtrl', ['$scope','$rootScope','$http','$
 
     // pour cours 2nde phys/chimie
     if( $rootScope.choixMatiere == 'Physique/Chimie' && $rootScope.choixNiveau == '2nde') {
-      $http.get('authentication/listeDispo.json', {timeout: 35000}).success(function (data) {
+      $http.get('authentication/listeDispo.json').success(function (data) {
         $rootScope.dispo = data
       }).error(function (data) {
         $ionicLoading.hide()
@@ -2833,7 +2833,7 @@ authentication.controller('DisponibiliteCtrl', ['$scope','$rootScope','$http','$
 
         var tab = []
 
-        $http.get('authentication/listeDispo.json', {timeout: 35000}).success(function (data) {
+        $http.get('authentication/listeDispo.json').success(function (data) {
           $rootScope.dispo = data
 
 
@@ -2869,7 +2869,7 @@ authentication.controller('DisponibiliteCtrl', ['$scope','$rootScope','$http','$
 
     // pour cours 1ere FR
     if( $rootScope.choixMatiere == 'Français' && $rootScope.choixNiveau == '1ère') {
-      $http.get('authentication/listeDispo.json', {timeout: 35000}).success(function (data) {
+      $http.get('authentication/listeDispo.json').success(function (data) {
         $rootScope.dispo = data
       }).error(function (data) {
         $ionicLoading.hide()
@@ -2882,7 +2882,7 @@ authentication.controller('DisponibiliteCtrl', ['$scope','$rootScope','$http','$
 
         var tab = []
 
-        $http.get('authentication/listeDispo.json', {timeout: 35000}).success(function (data) {
+        $http.get('authentication/listeDispo.json').success(function (data) {
           $rootScope.dispo = data
 
 
@@ -2967,7 +2967,7 @@ authentication.controller('DisponibiliteCtrl', ['$scope','$rootScope','$http','$
 
     // pour cours maths CE2
     if( $rootScope.choixMatiere == 'Mathématiques' && $rootScope.choixNiveau == 'CE2' && ($rootScope.choixMission == 'Mission Française' || $rootScope.choixMission == 'Mission Belge')) {
-      $http.get('authentication/listeDispo.json', {timeout: 35000}).success(function (data) {
+      $http.get('authentication/listeDispo.json').success(function (data) {
         $rootScope.dispo = data
       }).error(function (data) {
         $ionicLoading.hide()
@@ -2980,7 +2980,7 @@ authentication.controller('DisponibiliteCtrl', ['$scope','$rootScope','$http','$
 
         var tab = []
 
-        $http.get('authentication/listeDispo.json', {timeout: 35000}).success(function (data) {
+        $http.get('authentication/listeDispo.json').success(function (data) {
           $rootScope.dispo = data
 
 
@@ -3016,7 +3016,7 @@ authentication.controller('DisponibiliteCtrl', ['$scope','$rootScope','$http','$
 
     //pour cours CE2 FR
     if( $rootScope.choixMatiere == 'Français' && $rootScope.choixNiveau == 'CE2' && ($rootScope.choixMission == 'Mission Française' || $rootScope.choixMission == 'Mission Belge')) {
-      $http.get('authentication/listeDispo.json', {timeout: 35000}).success(function (data) {
+      $http.get('authentication/listeDispo.json').success(function (data) {
         $rootScope.dispo = data
       }).error(function (data) {
         $ionicLoading.hide()
@@ -3029,7 +3029,7 @@ authentication.controller('DisponibiliteCtrl', ['$scope','$rootScope','$http','$
 
         var tab = []
 
-        $http.get('authentication/listeDispo.json', {timeout: 35000}).success(function (data) {
+        $http.get('authentication/listeDispo.json').success(function (data) {
           $rootScope.dispo = data
 
 
@@ -3065,7 +3065,7 @@ authentication.controller('DisponibiliteCtrl', ['$scope','$rootScope','$http','$
 
     // pour cours CE2 test mission
     if( $rootScope.choixMatiere == 'Test Mission CE2' && $rootScope.choixSection == 'Primaire' && ($rootScope.choixMission == 'Mission Française' || $rootScope.choixMission == 'Mission Belge')) {
-      $http.get('authentication/listeDispo.json', {timeout: 35000}).success(function (data) {
+      $http.get('authentication/listeDispo.json').success(function (data) {
         $rootScope.dispo = data
       }).error(function (data) {
         $ionicLoading.hide()
@@ -3078,7 +3078,7 @@ authentication.controller('DisponibiliteCtrl', ['$scope','$rootScope','$http','$
 
         var tab = []
 
-        $http.get('authentication/listeDispo.json', {timeout: 35000}).success(function (data) {
+        $http.get('authentication/listeDispo.json').success(function (data) {
           $rootScope.dispo = data
 
 
@@ -3114,7 +3114,7 @@ authentication.controller('DisponibiliteCtrl', ['$scope','$rootScope','$http','$
 
     //pour cours CE1 FR
     if( $rootScope.choixMatiere == 'Français' && $rootScope.choixNiveau == 'CE1' && ($rootScope.choixMission == 'Mission Française' || $rootScope.choixMission == 'Mission Belge')) {
-      $http.get('authentication/listeDispo.json', {timeout: 35000}).success(function (data) {
+      $http.get('authentication/listeDispo.json').success(function (data) {
         $rootScope.dispo = data
       }).error(function (data) {
         $ionicLoading.hide()
@@ -3127,7 +3127,7 @@ authentication.controller('DisponibiliteCtrl', ['$scope','$rootScope','$http','$
 
         var tab = []
 
-        $http.get('authentication/listeDispo.json', {timeout: 35000}).success(function (data) {
+        $http.get('authentication/listeDispo.json').success(function (data) {
           $rootScope.dispo = data
 
 
@@ -3163,7 +3163,7 @@ authentication.controller('DisponibiliteCtrl', ['$scope','$rootScope','$http','$
 
     // pour cours maths CE1
     if( $rootScope.choixMatiere == 'Mathématiques' && $rootScope.choixNiveau == 'CE1' && ($rootScope.choixMission == 'Mission Française' || $rootScope.choixMission == 'Mission Belge')) {
-      $http.get('authentication/listeDispo.json', {timeout: 35000}).success(function (data) {
+      $http.get('authentication/listeDispo.json').success(function (data) {
         $rootScope.dispo = data
       }).error(function (data) {
         $ionicLoading.hide()
@@ -3176,7 +3176,7 @@ authentication.controller('DisponibiliteCtrl', ['$scope','$rootScope','$http','$
 
         var tab = []
 
-        $http.get('authentication/listeDispo.json', {timeout: 35000}).success(function (data) {
+        $http.get('authentication/listeDispo.json').success(function (data) {
           $rootScope.dispo = data
 
 
@@ -3212,7 +3212,7 @@ authentication.controller('DisponibiliteCtrl', ['$scope','$rootScope','$http','$
 
     // pour cours CE1 test mission
     if( $rootScope.choixMatiere == 'Test Mission CE1' && $rootScope.choixSection == 'Primaire' && ($rootScope.choixMission == 'Mission Française' || $rootScope.choixMission == 'Mission Belge')) {
-      $http.get('authentication/listeDispo.json', {timeout: 35000}).success(function (data) {
+      $http.get('authentication/listeDispo.json').success(function (data) {
         $rootScope.dispo = data
       }).error(function (data) {
         $ionicLoading.hide()
@@ -3225,7 +3225,7 @@ authentication.controller('DisponibiliteCtrl', ['$scope','$rootScope','$http','$
 
         var tab = []
 
-        $http.get('authentication/listeDispo.json', {timeout: 35000}).success(function (data) {
+        $http.get('authentication/listeDispo.json').success(function (data) {
           $rootScope.dispo = data
 
 
@@ -3261,7 +3261,7 @@ authentication.controller('DisponibiliteCtrl', ['$scope','$rootScope','$http','$
 
     // pour cours maths CM2
     if( $rootScope.choixMatiere == 'Mathématiques' && $rootScope.choixNiveau == 'CM2' && ($rootScope.choixMission == 'Mission Française' || $rootScope.choixMission == 'Mission Belge')) {
-      $http.get('authentication/listeDispo.json', {timeout: 35000}).success(function (data) {
+      $http.get('authentication/listeDispo.json').success(function (data) {
         $rootScope.dispo = data
       }).error(function (data) {
         $ionicLoading.hide()
@@ -3274,7 +3274,7 @@ authentication.controller('DisponibiliteCtrl', ['$scope','$rootScope','$http','$
 
         var tab = []
 
-        $http.get('authentication/listeDispo.json', {timeout: 35000}).success(function (data) {
+        $http.get('authentication/listeDispo.json').success(function (data) {
           $rootScope.dispo = data
 
 
@@ -3310,7 +3310,7 @@ authentication.controller('DisponibiliteCtrl', ['$scope','$rootScope','$http','$
 
     //pour cours CM2 FR
     if( $rootScope.choixMatiere == 'Français' && $rootScope.choixNiveau == 'CM2' && ($rootScope.choixMission == 'Mission Française' || $rootScope.choixMission == 'Mission Belge')) {
-      $http.get('authentication/listeDispo.json', {timeout: 35000}).success(function (data) {
+      $http.get('authentication/listeDispo.json').success(function (data) {
         $rootScope.dispo = data
       }).error(function (data) {
         $ionicLoading.hide()
@@ -3323,7 +3323,7 @@ authentication.controller('DisponibiliteCtrl', ['$scope','$rootScope','$http','$
 
         var tab = []
 
-        $http.get('authentication/listeDispo.json', {timeout: 35000}).success(function (data) {
+        $http.get('authentication/listeDispo.json').success(function (data) {
           $rootScope.dispo = data
 
 
@@ -3359,7 +3359,7 @@ authentication.controller('DisponibiliteCtrl', ['$scope','$rootScope','$http','$
 
     // pour cours CM2 test mission maths
     if( $rootScope.choixMatiere == 'Test Mission Maths CM2' && $rootScope.choixNiveau == 'CM2') {
-      $http.get('authentication/listeDispo.json', {timeout: 35000}).success(function (data) {
+      $http.get('authentication/listeDispo.json').success(function (data) {
         $rootScope.dispo = data
       }).error(function (data) {
         $ionicLoading.hide()
@@ -3372,7 +3372,7 @@ authentication.controller('DisponibiliteCtrl', ['$scope','$rootScope','$http','$
 
         var tab = []
 
-        $http.get('authentication/listeDispo.json', {timeout: 35000}).success(function (data) {
+        $http.get('authentication/listeDispo.json').success(function (data) {
           $rootScope.dispo = data
 
 
@@ -3408,7 +3408,7 @@ authentication.controller('DisponibiliteCtrl', ['$scope','$rootScope','$http','$
 
     // pour cours CM2 test mission FR
     if( $rootScope.choixMatiere == 'Test Mission Français CM2' && $rootScope.choixNiveau == 'CM2') {
-      $http.get('authentication/listeDispo.json', {timeout: 35000}).success(function (data) {
+      $http.get('authentication/listeDispo.json').success(function (data) {
         $rootScope.dispo = data
       }).error(function (data) {
         $ionicLoading.hide()
@@ -3421,7 +3421,7 @@ authentication.controller('DisponibiliteCtrl', ['$scope','$rootScope','$http','$
 
         var tab = []
 
-        $http.get('authentication/listeDispo.json', {timeout: 35000}).success(function (data) {
+        $http.get('authentication/listeDispo.json').success(function (data) {
           $rootScope.dispo = data
 
 
@@ -3457,7 +3457,7 @@ authentication.controller('DisponibiliteCtrl', ['$scope','$rootScope','$http','$
 
     // pour cours CM1 FR
     if( $rootScope.choixMatiere == 'Français' && $rootScope.choixNiveau == 'CM1') {
-      $http.get('authentication/listeDispo.json', {timeout: 35000}).success(function (data) {
+      $http.get('authentication/listeDispo.json').success(function (data) {
         $rootScope.dispo = data
       }).error(function (data) {
         $ionicLoading.hide()
@@ -3470,7 +3470,7 @@ authentication.controller('DisponibiliteCtrl', ['$scope','$rootScope','$http','$
 
         var tab = []
 
-        $http.get('authentication/listeDispo.json', {timeout: 35000}).success(function (data) {
+        $http.get('authentication/listeDispo.json').success(function (data) {
           $rootScope.dispo = data
 
 
@@ -3506,7 +3506,7 @@ authentication.controller('DisponibiliteCtrl', ['$scope','$rootScope','$http','$
 
     // pour cours CM1 Maths
     if( $rootScope.choixMatiere == 'Mathématiques' && $rootScope.choixNiveau == 'CM1') {
-      $http.get('authentication/listeDispo.json', {timeout: 35000}).success(function (data) {
+      $http.get('authentication/listeDispo.json').success(function (data) {
         $rootScope.dispo = data
       }).error(function (data) {
         $ionicLoading.hide()
@@ -3519,7 +3519,7 @@ authentication.controller('DisponibiliteCtrl', ['$scope','$rootScope','$http','$
 
         var tab = []
 
-        $http.get('authentication/listeDispo.json', {timeout: 35000}).success(function (data) {
+        $http.get('authentication/listeDispo.json').success(function (data) {
           $rootScope.dispo = data
 
 
@@ -3555,7 +3555,7 @@ authentication.controller('DisponibiliteCtrl', ['$scope','$rootScope','$http','$
 
     // pour cours CM1 Maths test mission
     if( $rootScope.choixMatiere == 'Test Mission Maths CM1' && $rootScope.choixNiveau == 'CM1') {
-      $http.get('authentication/listeDispo.json', {timeout: 35000}).success(function (data) {
+      $http.get('authentication/listeDispo.json').success(function (data) {
         $rootScope.dispo = data
       }).error(function (data) {
         $ionicLoading.hide()
@@ -3568,7 +3568,7 @@ authentication.controller('DisponibiliteCtrl', ['$scope','$rootScope','$http','$
 
         var tab = []
 
-        $http.get('authentication/listeDispo.json', {timeout: 35000}).success(function (data) {
+        $http.get('authentication/listeDispo.json').success(function (data) {
           $rootScope.dispo = data
 
 
@@ -3604,7 +3604,7 @@ authentication.controller('DisponibiliteCtrl', ['$scope','$rootScope','$http','$
 
     // pour cours CM1 FR test mission
     if( $rootScope.choixMatiere == 'Test Mission Français CM1' && $rootScope.choixNiveau == 'CM1') {
-      $http.get('authentication/listeDispo.json', {timeout: 35000}).success(function (data) {
+      $http.get('authentication/listeDispo.json').success(function (data) {
         $rootScope.dispo = data
       }).error(function (data) {
         $ionicLoading.hide()
@@ -3617,7 +3617,7 @@ authentication.controller('DisponibiliteCtrl', ['$scope','$rootScope','$http','$
 
         var tab = []
 
-        $http.get('authentication/listeDispo.json', {timeout: 35000}).success(function (data) {
+        $http.get('authentication/listeDispo.json').success(function (data) {
           $rootScope.dispo = data
 
 
@@ -3653,7 +3653,7 @@ authentication.controller('DisponibiliteCtrl', ['$scope','$rootScope','$http','$
 
     // pour cours IELTS
     if( $rootScope.choixMatiere == 'IELTS') {
-      $http.get('authentication/listeDispo.json', {timeout: 35000}).success(function (data) {
+      $http.get('authentication/listeDispo.json').success(function (data) {
         $rootScope.dispo = data
       }).error(function (data) {
         $ionicLoading.hide()
@@ -3666,7 +3666,7 @@ authentication.controller('DisponibiliteCtrl', ['$scope','$rootScope','$http','$
 
         var tab = []
 
-        $http.get('authentication/listeDispo.json', {timeout: 35000}).success(function (data) {
+        $http.get('authentication/listeDispo.json').success(function (data) {
           $rootScope.dispo = data
 
 
@@ -3702,7 +3702,7 @@ authentication.controller('DisponibiliteCtrl', ['$scope','$rootScope','$http','$
 
     // pour cours TOEFL
     if( $rootScope.choixMatiere == 'TOEFL') {
-      $http.get('authentication/listeDispo.json', {timeout: 35000}).success(function (data) {
+      $http.get('authentication/listeDispo.json').success(function (data) {
         $rootScope.dispo = data
       }).error(function (data) {
         $ionicLoading.hide()
@@ -3715,7 +3715,7 @@ authentication.controller('DisponibiliteCtrl', ['$scope','$rootScope','$http','$
 
         var tab = []
 
-        $http.get('authentication/listeDispo.json', {timeout: 35000}).success(function (data) {
+        $http.get('authentication/listeDispo.json').success(function (data) {
           $rootScope.dispo = data
 
 
@@ -3751,7 +3751,7 @@ authentication.controller('DisponibiliteCtrl', ['$scope','$rootScope','$http','$
 
     // pour cours SAT
     if( $rootScope.choixMatiere == 'SAT') {
-      $http.get('authentication/listeDispo.json', {timeout: 35000}).success(function (data) {
+      $http.get('authentication/listeDispo.json').success(function (data) {
         $rootScope.dispo = data
       }).error(function (data) {
         $ionicLoading.hide()
@@ -3764,7 +3764,7 @@ authentication.controller('DisponibiliteCtrl', ['$scope','$rootScope','$http','$
 
         var tab = []
 
-        $http.get('authentication/listeDispo.json', {timeout: 35000}).success(function (data) {
+        $http.get('authentication/listeDispo.json').success(function (data) {
           $rootScope.dispo = data
 
 
@@ -3800,7 +3800,7 @@ authentication.controller('DisponibiliteCtrl', ['$scope','$rootScope','$http','$
 
     // pour cours FLE
     if( $rootScope.choixMatiere == 'FLE') {
-      $http.get('authentication/listeDispo.json', {timeout: 35000}).success(function (data) {
+      $http.get('authentication/listeDispo.json').success(function (data) {
         $rootScope.dispo = data
       }).error(function (data) {
         $ionicLoading.hide()
@@ -3813,7 +3813,7 @@ authentication.controller('DisponibiliteCtrl', ['$scope','$rootScope','$http','$
 
         var tab = []
 
-        $http.get('authentication/listeDispo.json', {timeout: 35000}).success(function (data) {
+        $http.get('authentication/listeDispo.json').success(function (data) {
           $rootScope.dispo = data
 
 
@@ -3849,7 +3849,7 @@ authentication.controller('DisponibiliteCtrl', ['$scope','$rootScope','$http','$
 
     // pour cours English Beginner
     if( $rootScope.choixMatiere == 'Débutant' || $rootScope.choixMatiere == 'A1') {
-      $http.get('authentication/listeDispo.json', {timeout: 35000}).success(function (data) {
+      $http.get('authentication/listeDispo.json').success(function (data) {
         $rootScope.dispo = data
       }).error(function (data) {
         $ionicLoading.hide()
@@ -3862,7 +3862,7 @@ authentication.controller('DisponibiliteCtrl', ['$scope','$rootScope','$http','$
 
         var tab = []
 
-        $http.get('authentication/listeDispo.json', {timeout: 35000}).success(function (data) {
+        $http.get('authentication/listeDispo.json').success(function (data) {
           $rootScope.dispo = data
 
 
@@ -3898,7 +3898,7 @@ authentication.controller('DisponibiliteCtrl', ['$scope','$rootScope','$http','$
 
     // pour cours English intermédiare
     if( $rootScope.choixMatiere == 'A2' || $rootScope.choixMatiere == 'B1') {
-      $http.get('authentication/listeDispo.json', {timeout: 35000}).success(function (data) {
+      $http.get('authentication/listeDispo.json').success(function (data) {
         $rootScope.dispo = data
       }).error(function (data) {
         $ionicLoading.hide()
@@ -3911,7 +3911,7 @@ authentication.controller('DisponibiliteCtrl', ['$scope','$rootScope','$http','$
 
         var tab = []
 
-        $http.get('authentication/listeDispo.json', {timeout: 35000}).success(function (data) {
+        $http.get('authentication/listeDispo.json').success(function (data) {
           $rootScope.dispo = data
 
 
@@ -3947,7 +3947,7 @@ authentication.controller('DisponibiliteCtrl', ['$scope','$rootScope','$http','$
 
     // pour cours English advanced
     if( $rootScope.choixMatiere == 'B2' || $rootScope.choixMatiere == 'C1' || $rootScope.choixMatiere == 'C2') {
-      $http.get('authentication/listeDispo.json', {timeout: 35000}).success(function (data) {
+      $http.get('authentication/listeDispo.json').success(function (data) {
         $rootScope.dispo = data
       }).error(function (data) {
         $ionicLoading.hide()
@@ -3960,7 +3960,7 @@ authentication.controller('DisponibiliteCtrl', ['$scope','$rootScope','$http','$
 
         var tab = []
 
-        $http.get('authentication/listeDispo.json', {timeout: 35000}).success(function (data) {
+        $http.get('authentication/listeDispo.json').success(function (data) {
           $rootScope.dispo = data
 
 
@@ -3996,7 +3996,7 @@ authentication.controller('DisponibiliteCtrl', ['$scope','$rootScope','$http','$
 
     // pour cours ELE
     if( $rootScope.choixMatiere == 'ELE') {
-      $http.get('authentication/listeDispo.json', {timeout: 35000}).success(function (data) {
+      $http.get('authentication/listeDispo.json').success(function (data) {
         $rootScope.dispo = data
       }).error(function (data) {
         $ionicLoading.hide()
@@ -4009,7 +4009,7 @@ authentication.controller('DisponibiliteCtrl', ['$scope','$rootScope','$http','$
 
         var tab = []
 
-        $http.get('authentication/listeDispo.json', {timeout: 35000}).success(function (data) {
+        $http.get('authentication/listeDispo.json').success(function (data) {
           $rootScope.dispo = data
 
 
@@ -4045,7 +4045,7 @@ authentication.controller('DisponibiliteCtrl', ['$scope','$rootScope','$http','$
 
     // pour cours Business English
     if( $rootScope.choixMatiere == 'Business English') {
-      $http.get('authentication/listeDispo.json', {timeout: 35000}).success(function (data) {
+      $http.get('authentication/listeDispo.json').success(function (data) {
         $rootScope.dispo = data
       }).error(function (data) {
         $ionicLoading.hide()
@@ -4058,7 +4058,7 @@ authentication.controller('DisponibiliteCtrl', ['$scope','$rootScope','$http','$
 
         var tab = []
 
-        $http.get('authentication/listeDispo.json', {timeout: 35000}).success(function (data) {
+        $http.get('authentication/listeDispo.json').success(function (data) {
           $rootScope.dispo = data
 
 
@@ -4355,7 +4355,7 @@ authentication.controller('SChoixMatiereCoursGroupeCtrl', ['$scope','$rootScope'
     $scope.niveauxEsp2 = ["Primero de la ESO", "Segundo de la ESO", "Tercero de la ESO", "Cuarto de la ESO"]
     $scope.niveauxEsp3 = ["Primero de Bachillerato", "Segundo de Bachillerato"]
 
-    $http.get('authentication/listeMatiereGroupe.json', {timeout: 35000}).success(function (data) {
+    $http.get('authentication/listeMatiereGroupe.json').success(function (data) {
       $rootScope.cours = data
 
       // $scope.exemple = $rootScope.cours.coursDispo.missionFR.maternelle
@@ -4413,7 +4413,7 @@ authentication.controller('SChoixMatiereCoursGroupeCtrl', ['$scope','$rootScope'
 authentication.controller('TarifCoursCtrl', ['$scope','$rootScope','$http','$location','$ionicPopover','$ionicHistory','$ionicLoading',
   function ($scope,$rootScope,$http,$location,$ionicPopover,$ionicHistory,$ionicLoading) {
 
-    $http.get('authentication/prix.json', {timeout: 35000}).success(function (data) {
+    $http.get('authentication/prix.json').success(function (data) {
       $rootScope.prixCours = data
 
 

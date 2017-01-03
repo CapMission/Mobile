@@ -50,7 +50,7 @@
     <div class="card" ng-controller="PDemandeInfoEmailController">
       <i class="icon ion-ios-close close-modal" ng-click="modal.hide()"></i>
 
-      <p class="headerModal item-divider padding">Bonjour {{parent.entity.name}}, vous souhaitez avoir plus d'informations sur CapMission, sélectionnez un sujet dans la liste déroulante et envoyez-nous un
+      <p class="headerModal item-divider padding">Bonjour {{parent.entity.name}}, vous souhaitez avoir plus d'informations sur Cap Mission, sélectionnez un sujet dans la liste déroulante et envoyez-nous un
         message !</p>
 
       <form name="myForm" novalidate>
@@ -96,7 +96,7 @@
         <input ng-model="mail.from" type="hidden">
         <input ng-model="mail.subject" type="hidden"><br>
         <label class="item item-input">
-         <textarea class='autoExpand' rows='3' col="15" data-min-rows='3' ng-model="mail.body"
+         <textarea class='autoExpand textarea' rows='3' col="15" data-min-rows='3' ng-model="mail.body"
                    placeholder="Votre remarque" name="msg" required></textarea>
         </label>
         <br>

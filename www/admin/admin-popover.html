@@ -1,0 +1,20 @@
+<body ng-app="capMission.administ">
+<ion-popover-view class="fit1 platform-android">
+  <ion-content>
+    <div class="list">
+      <a class="item" ng-click="popover.hide();msgError()" href="#" ><i class="icon ion-person">
+        Profil
+      </i></a>
+      <hr>
+      <a class="item" href="#" ng-click="popover.hide();msgError()"><i class="icon ion-gear-b">
+        Paramètres
+      </i></a>
+      <a class="item" href="#" ng-controller="LogoutCtrl" ng-click="logout();popover.hide()"><i class="icon ion-android-exit">
+        Quitter l'application
+      </i></a>
+
+    </div>
+  </ion-content>
+</ion-popover-view>
+</body>
+

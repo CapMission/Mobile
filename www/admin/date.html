@@ -1,0 +1,40 @@
+<form >
+  <center><nobr><label class="divEmploi" for="first">Programmé</label>
+    <input id="first" type="radio" name="conten" ng-model="conten" value="first">
+    &nbsp; &nbsp; &nbsp; &nbsp;<label class="divEmploi" for="other">Immédiat</label>
+    <input id="other" type="radio" name="conten" ng-model="conten" ng-change="goRecapNotfNow(conten,dateEnvoi)" value="other">
+    <input type="hidden"  ng-model="value"  />
+    <input type="hidden"  ng-model="valseg" />
+  </nobr></center>
+</form>
+<br>
+<div class="wrapper">
+  <form name="myForm" id="myForm" novalidate >
+    <p class="divEmploi" ng-show="conten == 'first'">
+
+    <div ng-show="conten == 'first'">Veuillez choisir la date d'envoi de la notification</div> <br>
+    <center><input ng-show="conten == 'first'" type="datetime-local" ng-model="ndate" name="ndate" required>
+    </center><br>
+    <!--div ng-show="content == 'first'">Veuillez choisir l'heure d'envoi de la notification</div> <br>
+    <center><input ng-show="content == 'first'" type="time" ng-model="ntime" name="ntime" required></center-->
+
+    <div class="padding" ng-show="conten == 'first'">
+      <center>
+        <button type="button"  class="button icon-left ion-chevron-left button-stable"
+                ng-click="goUserBack(value, valseg)">Précédent
+        </button>
+        <button class="button icon-right ion-chevron-right button-stable"  ng-disabled="myForm.$invalid"
+                      ng-click="goRecapNotf(ndate)">Suivant
+      </button></center>
+      <br>
+    </div>
+    <div class="padding" ng-show="conten == 'first'">
+      <p ng-show="myForm.ndate.$error.required">* Date obligatoire</p>
+      <p ng-show="myForm.ntime.$error.required">* Heure obligatoire</p>
+    </div>
+    </p>
+
+  </form>
+</div>
+
+

@@ -3,7 +3,7 @@
     <p>
       <a href="" onclick="window.open('http://www.capmission.com', '_system');">
         <img class="halfsize" src="resources/img/logo.png" width="230" height="60" align="left>">
-      </a><a class="button button-icon ion-ios-more rotate-90 fs-s" ng-click="popover.show($event)"></a>
+      </a><a class="button button-icon ion-ios-more rotate-90 fs-s" ng-app="capMission.authentication" ng-controller="RoleCtrl" ng-click="popover.show($event)"></a>
     </p>
     <br><br><br>
     <div class="divRole">
@@ -31,6 +31,12 @@
         <button ng-click="getS(idStudent)" class="button buttonLogin icon-right ion-chevron-right">Etudiant</button>
       </center>
     </div><br>
+
+      <div  ng-app="capMission" ng-show="userID.entity.droitAdmin == 'true'" ng-controller="capController">
+        <center>
+          <button ng-click="goAdmin(resp.entity.id)" class="button buttonLogin icon-right ion-chevron-right">Administrateur</button>
+        </center>
+      </div><br>
 
       </div>
     <!--<a class="icon ios-walk-outline Quit" ng-app="capMission" ng-controller="LogoutCtrl" ng-click="logout()"></a>-->
